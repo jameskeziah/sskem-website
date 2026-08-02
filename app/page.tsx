@@ -58,9 +58,9 @@ import { institutionPathways } from "@/app/data/navigation";
 import { disclosureSample, siteFacts } from "@/app/data/site";
 
 export const metadata: Metadata = {
-  title: "Stage 2 Compliance Foundation",
+  title: "Stage 3 Admissions Review",
   description:
-    "Review the SSKEMS Mandatory Public Disclosure, document archive and Phase 1 design foundation.",
+    "Review the SSKEMS admissions information architecture, policy gates, Mandatory Public Disclosure and design foundation.",
 };
 
 const componentGroups = [
@@ -98,28 +98,28 @@ export default function Home() {
           <PageContainer className="phase-hero__grid">
             <Stack gap="32">
               <div>
-                <Eyebrow>SSKEMS digital foundation · Stage 2</Eyebrow>
+                <Eyebrow>SSKEMS digital foundation · Stage 3</Eyebrow>
                 <Heading as="h1" level="display" id="phase-title">
-                  Compliance before content migration.
+                  Admissions built around trust.
                 </Heading>
               </div>
               <Lead>
-                The Phase 1 system now supports a structured Mandatory Public Disclosure and document archive without presenting unapproved records as public fact.
+                The public admissions journey now separates enquiry, application and parent tracking while keeping unverified dates, fees, rules and personal-data workflows behind visible approval gates.
               </Lead>
               <Cluster gap="12">
-                <TextLink className="button button--primary" href="/mandatory-public-disclosure">Mandatory Public Disclosure</TextLink>
-                <TextLink className="button button--secondary" href="/documents">Search documents</TextLink>
+                <TextLink className="button button--primary" href="/admissions">Review admissions</TextLink>
+                <TextLink className="button button--secondary" href="/mandatory-public-disclosure">Public disclosure</TextLink>
               </Cluster>
               <Caption>Review environment · Not the final public homepage</Caption>
             </Stack>
             <aside className="phase-summary" aria-label="Phase status">
-              <div className="phase-summary__topline"><span>Compliance review</span><strong>02</strong></div>
-              <Heading as="h2" level="section">Five-section Appendix IX foundation</Heading>
+              <div className="phase-summary__topline"><span>Admissions review</span><strong>03</strong></div>
+              <Heading as="h2" level="section">Parent journeys with safe boundaries</Heading>
               <ul className="phase-summary__list">
-                <li><span aria-hidden="true">✓</span> HTML disclosure structure</li>
-                <li><span aria-hidden="true">✓</span> Controlled document taxonomy</li>
-                <li><span aria-hidden="true">✓</span> Stable record and history routes</li>
-                <li><span aria-hidden="true">○</span> Official files and approval pending</li>
+                <li><span aria-hidden="true">✓</span> Fifteen admissions routes</li>
+                <li><span aria-hidden="true">✓</span> Source-led age-rule gate</li>
+                <li><span aria-hidden="true">✓</span> Separate enquiry and application</li>
+                <li><span aria-hidden="true">○</span> Secure runtime activation pending</li>
               </ul>
               <div className="phase-summary__meter" role="progressbar" aria-label="Foundation decisions ready" aria-valuemin={0} aria-valuemax={4} aria-valuenow={3}><span /></div>
             </aside>
@@ -129,13 +129,14 @@ export default function Home() {
         <Section className="homepage-compliance" aria-labelledby="homepage-compliance-title">
           <PageContainer className="homepage-compliance__grid">
             <div>
-              <Eyebrow>Prominent compliance access</Eyebrow>
-              <Heading as="h2" level="page" id="homepage-compliance-title">Important school records, readable before animation.</Heading>
-              <Lead>The revised Appendix IX structure, archive filters and missing-record warnings are available as normal HTML links and continue to work without client JavaScript.</Lead>
+              <Eyebrow>Essential service access</Eyebrow>
+              <Heading as="h2" level="page" id="homepage-compliance-title">Admissions and public records, readable before animation.</Heading>
+              <Lead>The admissions guidance, Appendix IX structure and document archive remain normal HTML routes. Motion adds character without blocking essential information.</Lead>
             </div>
             <div className="homepage-compliance__actions">
-              <TextLink className="compliance-shortcut" href="/mandatory-public-disclosure"><span>01</span><strong>Mandatory Public Disclosure</strong><small>Open Appendix IX</small></TextLink>
-              <TextLink className="compliance-shortcut" href="/documents"><span>02</span><strong>Documents</strong><small>Search the archive</small></TextLink>
+              <TextLink className="compliance-shortcut" href="/admissions"><span>01</span><strong>Admissions</strong><small>Start with the right journey</small></TextLink>
+              <TextLink className="compliance-shortcut" href="/mandatory-public-disclosure"><span>02</span><strong>Mandatory Public Disclosure</strong><small>Open Appendix IX</small></TextLink>
+              <TextLink className="compliance-shortcut" href="/documents"><span>03</span><strong>Documents</strong><small>Search the archive</small></TextLink>
             </div>
           </PageContainer>
         </Section>

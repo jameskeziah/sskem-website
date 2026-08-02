@@ -58,3 +58,33 @@ test("mandatory disclosure mobile table card remains visually stable", async ({ 
 
   await expect(firstFact).toHaveScreenshot("mpd-mobile-fact-card.png");
 });
+
+test("admissions landing journey remains visually stable", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/admissions");
+  await page.evaluate(() => document.fonts.ready);
+  await page.locator(".skip-link").evaluate((element) => element.remove());
+
+  await expect(page.locator(".admissions-hero")).toHaveScreenshot("admissions-hero-desktop.png");
+  await expect(page.locator(".admissions-landing-actions")).toHaveScreenshot("admissions-actions-desktop.png");
+});
+
+test("age-rule gate remains visually stable", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/admissions/age-criteria");
+  await page.locator(".skip-link").evaluate((element) => element.remove());
+  const checker = page.locator(".eligibility-checker");
+  await checker.scrollIntoViewIfNeeded();
+
+  await expect(checker).toHaveScreenshot("admissions-age-checker-desktop.png");
+});
+
+test("mobile admissions enquiry remains visually stable", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 740 });
+  await page.goto("/admissions/enquire");
+  await page.locator(".skip-link").evaluate((element) => element.remove());
+  const form = page.locator(".admissions-form");
+  await form.scrollIntoViewIfNeeded();
+
+  await expect(form).toHaveScreenshot("admissions-enquiry-mobile.png");
+});

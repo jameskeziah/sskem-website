@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: "%s | SSKEMS",
   },
   description:
-    "The SSKEMS school website rebuild, including its accessible Mandatory Public Disclosure and document archive foundation.",
+    "The SSKEMS school website rebuild, including accessible admissions guidance, Mandatory Public Disclosure and a controlled document archive.",
   icons: {
     icon: "/sskem-logo.png",
     shortcut: "/sskem-logo.png",

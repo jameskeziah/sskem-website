@@ -50,9 +50,10 @@ export const primaryNavigation: NavigationItem[] = [
     children: [
       { label: "Process", href: "/admissions/process", description: "Admission steps and documents" },
       { label: "Age criteria", href: "/admissions/age-criteria", description: "Academic-year eligibility guidance" },
-      { label: "Fees", href: "/admissions/fees", description: "Approved fee information" },
+      { label: "Documents", href: "/admissions/documents-required", description: "Conditional document checklist" },
       { label: "Enquire", href: "/admissions/enquire", description: "Ask the admissions team" },
-      { label: "Apply", href: "/admissions/apply", description: "Application guidance" },
+      { label: "Apply", href: "/admissions/apply", description: "Formal application journey" },
+      { label: "Application status", href: "/admissions/application-status", description: "Secure parent tracking" },
     ],
   },
   {
@@ -90,4 +91,10 @@ export const searchableLinks = [
     { label: item.label, href: item.href },
     ...item.children.map(({ label, href }) => ({ label, href })),
   ]),
+  { label: "Admissions fees", href: "/admissions/fees" },
+  { label: "Admissions FAQ", href: "/admissions/faq" },
+  { label: "Visit SSKEMS", href: "/admissions/visit" },
+  { label: "RTE admissions", href: "/admissions/rte" },
+  { label: "Class IX and XI transfers", href: "/admissions/class-9-and-11-transfers" },
+  { label: "Senior-secondary admissions", href: "/admissions/senior-secondary" },
 ];

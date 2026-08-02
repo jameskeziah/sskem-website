@@ -217,3 +217,5 @@ export const infrastructureFacts = sqliteTable(
   },
   (table) => [uniqueIndex("uq_infrastructure_facts_key").on(table.factKey)],
 );
+
+export * from "./admissions-schema";

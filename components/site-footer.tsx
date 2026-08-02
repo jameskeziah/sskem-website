@@ -15,10 +15,12 @@ const footerGroups = [
   {
     title: "Admissions",
     links: [
+      { label: "Admissions overview", href: "/admissions" },
       { label: "Admission process", href: "/admissions/process" },
       { label: "Age criteria", href: "/admissions/age-criteria" },
-      { label: "Fees", href: "/admissions/fees" },
+      { label: "Documents required", href: "/admissions/documents-required" },
       { label: "Enquire now", href: "/admissions/enquire" },
+      { label: "Application status", href: "/admissions/application-status" },
     ],
   },
   {

@@ -8,6 +8,13 @@
       "when": 1785684632868,
       "tag": "0000_outgoing_the_professor",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1785691740437,
+      "tag": "0001_safe_proteus",
+      "breakpoints": true
     }
   ]
 }

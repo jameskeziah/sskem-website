@@ -52,7 +52,7 @@ test("server-renders the current SSKEMS website foundation", async () => {
   const html = await response.text();
   const title = textContent(html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? "");
   assert.match(title, /SSKEMS/i);
-  assert.match(title, /Stage 2/i);
+  assert.match(title, /Stage 3/i);
 
   const anchors = anchorsIn(html);
   assert.ok(
