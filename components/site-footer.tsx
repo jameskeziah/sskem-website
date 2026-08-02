@@ -22,11 +22,11 @@ const footerGroups = [
     ],
   },
   {
-    title: "Parent information",
+    title: "Compliance and Documents",
     links: [
-      { label: "Academic calendar", href: "/student-life/calendar" },
-      { label: "School uniform", href: "/student-life/uniform" },
       { label: "Mandatory Public Disclosure", href: "/mandatory-public-disclosure" },
+      { label: "Document archive", href: "/documents" },
+      { label: "Historical versions", href: "/documents/archive" },
       { label: "Contact", href: "/contact" },
     ],
   },

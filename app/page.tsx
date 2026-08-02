@@ -58,9 +58,9 @@ import { institutionPathways } from "@/app/data/navigation";
 import { disclosureSample, siteFacts } from "@/app/data/site";
 
 export const metadata: Metadata = {
-  title: "Phase 1 Design System",
+  title: "Stage 2 Compliance Foundation",
   description:
-    "Review the SSKEMS navigation contract, design tokens and reusable accessible component system.",
+    "Review the SSKEMS Mandatory Public Disclosure, document archive and Phase 1 design foundation.",
 };
 
 const componentGroups = [
@@ -98,33 +98,47 @@ export default function Home() {
           <PageContainer className="phase-hero__grid">
             <Stack gap="32">
               <div>
-                <Eyebrow>SSKEMS digital foundation · Phase 1</Eyebrow>
+                <Eyebrow>SSKEMS digital foundation · Stage 2</Eyebrow>
                 <Heading as="h1" level="display" id="phase-title">
-                  One trustworthy system before the storytelling begins.
+                  Compliance before content migration.
                 </Heading>
               </div>
               <Lead>
-                This review build establishes the verified navigation, shared design language and accessible components that every future SSKEMS page will use.
+                The Phase 1 system now supports a structured Mandatory Public Disclosure and document archive without presenting unapproved records as public fact.
               </Lead>
               <Cluster gap="12">
-                <a className="button button--primary" href="#navigation-contract">Review navigation</a>
-                <a className="button button--secondary" href="#component-catalogue">Explore components</a>
+                <TextLink className="button button--primary" href="/mandatory-public-disclosure">Mandatory Public Disclosure</TextLink>
+                <TextLink className="button button--secondary" href="/documents">Search documents</TextLink>
               </Cluster>
               <Caption>Review environment · Not the final public homepage</Caption>
             </Stack>
             <aside className="phase-summary" aria-label="Phase status">
-              <div className="phase-summary__topline"><span>Foundation review</span><strong>01</strong></div>
-              <Heading as="h2" level="section">Implementation ready for structured review</Heading>
+              <div className="phase-summary__topline"><span>Compliance review</span><strong>02</strong></div>
+              <Heading as="h2" level="section">Five-section Appendix IX foundation</Heading>
               <ul className="phase-summary__list">
-                <li><span aria-hidden="true">✓</span> Three-level token architecture</li>
-                <li><span aria-hidden="true">✓</span> Shared responsive components</li>
-                <li><span aria-hidden="true">✓</span> Keyboard patterns implemented</li>
-                <li><span aria-hidden="true">○</span> Pathway sign-off pending</li>
+                <li><span aria-hidden="true">✓</span> HTML disclosure structure</li>
+                <li><span aria-hidden="true">✓</span> Controlled document taxonomy</li>
+                <li><span aria-hidden="true">✓</span> Stable record and history routes</li>
+                <li><span aria-hidden="true">○</span> Official files and approval pending</li>
               </ul>
               <div className="phase-summary__meter" role="progressbar" aria-label="Foundation decisions ready" aria-valuemin={0} aria-valuemax={4} aria-valuenow={3}><span /></div>
             </aside>
           </PageContainer>
         </section>
+
+        <Section className="homepage-compliance" aria-labelledby="homepage-compliance-title">
+          <PageContainer className="homepage-compliance__grid">
+            <div>
+              <Eyebrow>Prominent compliance access</Eyebrow>
+              <Heading as="h2" level="page" id="homepage-compliance-title">Important school records, readable before animation.</Heading>
+              <Lead>The revised Appendix IX structure, archive filters and missing-record warnings are available as normal HTML links and continue to work without client JavaScript.</Lead>
+            </div>
+            <div className="homepage-compliance__actions">
+              <TextLink className="compliance-shortcut" href="/mandatory-public-disclosure"><span>01</span><strong>Mandatory Public Disclosure</strong><small>Open Appendix IX</small></TextLink>
+              <TextLink className="compliance-shortcut" href="/documents"><span>02</span><strong>Documents</strong><small>Search the archive</small></TextLink>
+            </div>
+          </PageContainer>
+        </Section>
 
         <Section tone="subtle" id="navigation-contract" aria-labelledby="navigation-title">
           <PageContainer>

@@ -44,7 +44,7 @@ function anchorsIn(html) {
   );
 }
 
-test("server-renders the SSKEMS Phase 1 foundation", async () => {
+test("server-renders the current SSKEMS website foundation", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
@@ -52,7 +52,7 @@ test("server-renders the SSKEMS Phase 1 foundation", async () => {
   const html = await response.text();
   const title = textContent(html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? "");
   assert.match(title, /SSKEMS/i);
-  assert.match(title, /Phase 1/i);
+  assert.match(title, /Stage 2/i);
 
   const anchors = anchorsIn(html);
   assert.ok(

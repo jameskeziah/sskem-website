@@ -1,8 +1,8 @@
 # SSKEMS School Website
 
-Phase 1 of the SSKEMS website rebuild: a verified design-token foundation,
-shared interface components, responsive global navigation, footer, and a
-review catalogue for desktop and mobile.
+Stages 1 and 2 of the SSKEMS website rebuild: the verified design-system and
+navigation foundation plus an accessible Mandatory Public Disclosure and
+structured document-archive review module.
 
 ## Local development
 
@@ -19,8 +19,8 @@ npm test
 ```
 
 The test command regenerates design tokens, creates a production build, checks
-the Phase 1 contracts, and runs accessibility, keyboard, responsive, and visual
-browser tests.
+the Phase 1 and Stage 2 contracts, validates document-publication safeguards,
+and runs accessibility, keyboard, responsive, archive-filter and visual tests.
 
 ## Current content policy
 
@@ -30,6 +30,13 @@ browser tests.
 - Public contact details are centralized in `app/data/site.ts`.
 - Design tokens are authored in `app/design-tokens.json` and generated into
   `app/tokens.css`.
+- `/mandatory-public-disclosure` follows the revised five-section Appendix IX
+  HTML structure without exposing unapproved PDFs.
+- `/documents` provides controlled taxonomy, native GET filters and stable
+  document/version routes.
+- The compliance schema and validation layer are foundations only; official
+  document ingestion, approvals, scanning and public-domain cutover remain
+  blocked until the school supplies approved records and operating decisions.
 
 ## Technology
 

@@ -80,6 +80,7 @@ export const primaryNavigation: NavigationItem[] = [
 
 export const utilityNavigation = [
   { label: "Mandatory Public Disclosure", href: "/mandatory-public-disclosure" },
+  { label: "Documents", href: "/documents" },
   { label: "Contact", href: "/contact" },
 ] as const;
 

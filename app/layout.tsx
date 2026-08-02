@@ -4,16 +4,18 @@ import "./tokens.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.sskemschool.com"),
   title: {
-    default: "Phase 1 Design System | SSKEMS",
+    default: "SSKEMS School Website",
     template: "%s | SSKEMS",
   },
   description:
-    "The Phase 1 design system, shared components and accessible global navigation for SSKEMS.",
+    "The SSKEMS school website rebuild, including its accessible Mandatory Public Disclosure and document archive foundation.",
   icons: {
     icon: "/sskem-logo.png",
     shortcut: "/sskem-logo.png",
   },
+  robots: { index: false, follow: true },
 };
 
 export const viewport: Viewport = {

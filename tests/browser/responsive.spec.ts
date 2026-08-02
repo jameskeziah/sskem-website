@@ -8,17 +8,19 @@ const viewports = [
 ];
 
 for (const viewport of viewports) {
-  test(`reflows without page-level horizontal loss at ${viewport.name}`, async ({ page }) => {
-    await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  for (const path of ["/", "/mandatory-public-disclosure", "/documents"]) {
+    test(`${path} reflows without page-level horizontal loss at ${viewport.name}`, async ({ page }) => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.goto(path);
+      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
-    const overflow = await page.evaluate(() => ({
-      clientWidth: document.documentElement.clientWidth,
-      scrollWidth: document.documentElement.scrollWidth,
-    }));
-    expect(overflow.scrollWidth - overflow.clientWidth).toBeLessThanOrEqual(1);
-  });
+      const overflow = await page.evaluate(() => ({
+        clientWidth: document.documentElement.clientWidth,
+        scrollWidth: document.documentElement.scrollWidth,
+      }));
+      expect(overflow.scrollWidth - overflow.clientWidth).toBeLessThanOrEqual(1);
+    });
+  }
 }
 
 test("supports reduced motion and representative multilingual content", async ({ page }) => {

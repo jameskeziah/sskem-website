@@ -6,8 +6,6 @@ import {
   Accordion,
   Alert,
   ContactCard,
-  DisclosureDocumentCard,
-  DocumentList,
   EmptyState,
   GalleryCard,
   ProgrammeCard,
@@ -36,7 +34,7 @@ import {
   primaryNavigation,
   utilityNavigation,
 } from "@/app/data/navigation";
-import { disclosureSample, siteFacts } from "@/app/data/site";
+import { siteFacts } from "@/app/data/site";
 
 type PageSection = {
   title: string;
@@ -377,20 +375,6 @@ const pageSpecs: Record<string, PageSpec> = {
       },
     ],
   },
-  "/mandatory-public-disclosure": {
-    eyebrow: "Statutory information",
-    title: "Mandatory Public Disclosure",
-    summary:
-      "A structured home for current statutory documents, their status, issuing authority and verification date.",
-    sections: [
-      {
-        title: "Verification first",
-        paragraphs: [
-          "The legacy document inventory is not being treated as the final disclosure set. Each document must be checked for version, academic year, authority, issue date and expiry before download is enabled.",
-        ],
-      },
-    ],
-  },
   "/contact": {
     eyebrow: "Contact SSKEMS",
     title: "Contact",
@@ -492,7 +476,7 @@ const allKnownPaths = new Set([
     item.href,
     ...item.children.map((child) => child.href),
   ]),
-  ...utilityNavigation.map((item) => item.href),
+  ...utilityNavigation.filter((item) => item.href === "/contact").map((item) => item.href),
   "/privacy",
   "/accessibility",
 ]);
@@ -538,26 +522,6 @@ function SpecialContent({ path }: { path: string }): ReactNode {
               />
             </Grid>
             <Caption>{siteFacts.factStatus}</Caption>
-          </Stack>
-        </PageContainer>
-      </Section>
-    );
-  }
-
-  if (path === "/mandatory-public-disclosure") {
-    return (
-      <Section tone="subtle" aria-labelledby="disclosure-register-title">
-        <PageContainer>
-          <Stack gap="24">
-            <Heading as="h2" level="section" id="disclosure-register-title">
-              Disclosure register preview
-            </Heading>
-            <Alert title="Downloads are not yet enabled" kind="warning">
-              The new register is showing status transparently while the source documents are checked.
-            </Alert>
-            <DocumentList label="Disclosure documents awaiting verification">
-              <DisclosureDocumentCard {...disclosureSample} />
-            </DocumentList>
           </Stack>
         </PageContainer>
       </Section>
