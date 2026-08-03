@@ -8,6 +8,8 @@ import {
   admissionsSectionLinks,
 } from "@/app/data/admissions";
 import { PageContainer } from "@/components/layout";
+import { AdmissionsHeroMotion } from "@/components/motion/admissions-hero-motion";
+import { AdmissionsTimelineMotion } from "@/components/motion/admissions-timeline-motion";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -77,12 +79,18 @@ export function AdmissionsPageFrame({
       <AdmissionsSectionNav />
       <main id="main-content" tabIndex={-1} className="admissions-page">
         <header className="admissions-hero">
-          <PageContainer className="admissions-hero__grid">
+          <AdmissionsHeroMotion className="page-container admissions-hero__grid">
             <div className="admissions-hero__copy">
-              <p className="eyebrow">{eyebrow}</p>
-              <h1>{title}</h1>
-              <p className="admissions-hero__marathi" lang="mr">प्रवेश माहिती आणि पालक मार्गदर्शन</p>
-              <p className="lead">{summary}</p>
+              <div className="admissions-hero__intro" data-motion-hero-intro>
+                <div className="admissions-hero__heading" data-motion-hero-heading data-motion-group="admissions-hero-heading" data-motion-item>
+                  <p className="eyebrow">{eyebrow}</p>
+                  <h1>{title}</h1>
+                </div>
+                <div className="admissions-hero__support" data-motion-hero-support data-motion-group="admissions-hero-support" data-motion-item>
+                  <p className="admissions-hero__marathi" lang="mr">प्रवेश माहिती आणि पालक मार्गदर्शन</p>
+                  <p className="lead">{summary}</p>
+                </div>
+              </div>
               <div className="admissions-cycle-line">
                 <span>{admissionsCycle.academicYear}</span>
                 <strong>{admissionsCycle.publicStatus}</strong>
@@ -96,7 +104,7 @@ export function AdmissionsPageFrame({
                 <Link href="/admissions/contact">Ask the school <span aria-hidden="true">→</span></Link>
               </aside>
             )}
-          </PageContainer>
+          </AdmissionsHeroMotion>
         </header>
         {reviewNotice ? <PageContainer><AdmissionsReviewNotice /></PageContainer> : null}
         {actions ? <PageContainer className="admissions-actions-wrap"><AdmissionsActions compact /></PageContainer> : null}
@@ -110,9 +118,9 @@ export function AdmissionsPageFrame({
 export function ProcessTimeline({ preview = false }: { preview?: boolean }) {
   const steps = preview ? admissionsProcess.slice(0, 4) : admissionsProcess;
   return (
-    <ol className="admissions-timeline">
+    <AdmissionsTimelineMotion preview={preview}>
       {steps.map((step, index) => (
-        <li key={step.title}>
+        <li data-motion-step data-motion-item key={step.title}>
           <span className="admissions-timeline__number">{String(index + 1).padStart(2, "0")}</span>
           <div>
             <h3>{step.title}</h3>
@@ -120,7 +128,7 @@ export function ProcessTimeline({ preview = false }: { preview?: boolean }) {
           </div>
         </li>
       ))}
-    </ol>
+    </AdmissionsTimelineMotion>
   );
 }
 

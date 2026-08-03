@@ -62,12 +62,30 @@
   --shadow-large: 0px 24px 60px -18px rgb(17 16 15 / 0.16);
   --border-width-default: 1px;
   --border-width-strong: 2px;
-  --motion-duration-fast: 120ms;
-  --motion-duration-normal: 220ms;
-  --motion-duration-slow: 420ms;
-  --motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
-  --motion-easing-enter: cubic-bezier(0.16, 1, 0.3, 1);
-  --motion-easing-exit: cubic-bezier(0.4, 0, 1, 1);
+  --motion-duration-instant: 0ms;
+  --motion-duration-micro: 120ms;
+  --motion-duration-fast: 180ms;
+  --motion-duration-standard: 260ms;
+  --motion-duration-deliberate: 380ms;
+  --motion-duration-slow: 520ms;
+  --motion-duration-ceremonial: 700ms;
+  --motion-ease-linear: linear;
+  --motion-ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --motion-ease-move: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-ease-emphasised: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-distance-reveal-desktop: 20px;
+  --motion-distance-reveal-tablet: 16px;
+  --motion-distance-reveal-mobile: 10px;
+  --motion-distance-parallax-desktop-maximum: 24px;
+  --motion-distance-parallax-tablet-maximum: 12px;
+  --motion-stagger-interface: 40ms;
+  --motion-stagger-cards: 60ms;
+  --motion-stagger-heading: 80ms;
+  --motion-stagger-mobile: 40ms;
+  --motion-scale-icon-hover-maximum: 1.02;
+  --motion-scale-gallery-hover-maximum: 1.025;
+  --motion-scale-image-mask-maximum: 1.03;
   --layout-content: 73.75rem;
   --layout-wide: 90rem;
   --layout-reading: 45rem;
@@ -104,8 +122,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --motion-duration-fast: 1ms;
-    --motion-duration-normal: 1ms;
-    --motion-duration-slow: 1ms;
+    --motion-duration-instant: 0ms;
+    --motion-duration-micro: 0ms;
+    --motion-duration-fast: 0ms;
+    --motion-duration-standard: 0ms;
+    --motion-duration-deliberate: 0ms;
+    --motion-duration-slow: 0ms;
+    --motion-duration-ceremonial: 0ms;
   }
 }

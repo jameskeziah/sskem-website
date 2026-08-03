@@ -54,6 +54,41 @@ function breadcrumbItems(pathname: string) {
   ];
 }
 
+function StaticNavigationFallback({ pathname }: { pathname: string }) {
+  return (
+    <details className="static-navigation-fallback">
+      <summary>Open full site navigation</summary>
+      <nav aria-label="Primary navigation without JavaScript">
+        <div className="page-container">
+          <strong>Site navigation</strong>
+          <ul>
+            {primaryNavigation.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} aria-current={pathname === item.href ? "page" : undefined}>{item.label}</Link>
+                <ul>
+                  {item.children.map((child) => (
+                    <li key={child.href}>
+                      <Link href={child.href} aria-current={pathname === child.href ? "page" : undefined}>{child.label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+            {utilityNavigation.map((item) => (
+              <li key={item.href}><Link href={item.href}>{item.label}</Link></li>
+            ))}
+          </ul>
+          <div className="static-navigation-fallback__contact">
+            <Link href="/admissions/enquire">Enquire now</Link>
+            <a href={`tel:${siteFacts.phone.replace(/\s/g, "")}`}>{siteFacts.phone}</a>
+            <a href={`mailto:${siteFacts.email}`}>{siteFacts.email}</a>
+          </div>
+        </div>
+      </nav>
+    </details>
+  );
+}
+
 export function SiteHeader() {
   const pathname = usePathname();
   const [openDesktop, setOpenDesktop] = useState<string | null>(null);
@@ -61,6 +96,7 @@ export function SiteHeader() {
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const headerRef = useRef<HTMLElement>(null);
   const headerNavRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
@@ -74,6 +110,12 @@ export function SiteHeader() {
     if (!query) return searchableLinks.slice(0, 8);
     return searchableLinks.filter((item) => item.label.toLowerCase().includes(query)).slice(0, 8);
   }, [searchTerm]);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    header?.setAttribute("data-navigation-enhanced", "true");
+    return () => header?.removeAttribute("data-navigation-enhanced");
+  }, []);
 
   useEffect(() => {
     function handlePointerDown(event: PointerEvent) {
@@ -179,7 +221,7 @@ export function SiteHeader() {
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to main content</a>
-      <header className="site-header">
+      <header ref={headerRef} className="site-header">
         <NoticeBar>
           Admissions information for 2026–27 is being verified. <Link href="/admissions/enquire">Enquire for current dates</Link>.
         </NoticeBar>
@@ -258,6 +300,7 @@ export function SiteHeader() {
         <div className="breadcrumb-bar">
           <div className="page-container"><Breadcrumbs items={breadcrumbItems(pathname)} /></div>
         </div>
+        <StaticNavigationFallback pathname={pathname} />
       </header>
 
       {mobileOpen ? (

@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useId, useState } from "react";
+import { FormEvent, useId, useState, type CSSProperties } from "react";
 
 import {
   admissionClassOptions,
@@ -135,7 +135,11 @@ export function ApplicationJourneyPrototype() {
         <span>Application blueprint</span>
         <strong>Step {activeStep + 1} of {applicationSteps.length}</strong>
         <div role="progressbar" aria-label="Application prototype progress" aria-valuemin={1} aria-valuemax={applicationSteps.length} aria-valuenow={activeStep + 1}>
-          <span style={{ width: `${((activeStep + 1) / applicationSteps.length) * 100}%` }} />
+          <span
+            style={{
+              "--application-progress": (activeStep + 1) / applicationSteps.length,
+            } as CSSProperties}
+          />
         </div>
       </div>
       <nav aria-label="Application steps" className="application-prototype__steps">

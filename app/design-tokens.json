@@ -101,15 +101,42 @@
     "motion": {
       "duration": {
         "$type": "duration",
-        "fast": { "$value": { "value": 120, "unit": "ms" } },
-        "normal": { "$value": { "value": 220, "unit": "ms" } },
-        "slow": { "$value": { "value": 420, "unit": "ms" } }
+        "instant": { "$value": { "value": 0, "unit": "ms" } },
+        "micro": { "$value": { "value": 120, "unit": "ms" } },
+        "fast": { "$value": { "value": 180, "unit": "ms" } },
+        "standard": { "$value": { "value": 260, "unit": "ms" } },
+        "deliberate": { "$value": { "value": 380, "unit": "ms" } },
+        "slow": { "$value": { "value": 520, "unit": "ms" } },
+        "ceremonial": { "$value": { "value": 700, "unit": "ms" } }
       },
-      "easing": {
+      "ease": {
         "$type": "cubicBezier",
-        "standard": { "$value": [0.2, 0, 0, 1] },
-        "enter": { "$value": [0.16, 1, 0.3, 1] },
-        "exit": { "$value": [0.4, 0, 1, 1] }
+        "linear": { "$type": "string", "$value": "linear", "$extensions": { "sskem": { "gsap": "none" } } },
+        "enter": { "$value": [0.16, 1, 0.3, 1], "$extensions": { "sskem": { "gsap": "power3.out" } } },
+        "exit": { "$value": [0.7, 0, 0.84, 0], "$extensions": { "sskem": { "gsap": "power2.in" } } },
+        "move": { "$value": [0.65, 0, 0.35, 1], "$extensions": { "sskem": { "gsap": "power2.inOut" } } },
+        "emphasised": { "$value": [0.22, 1, 0.36, 1], "$extensions": { "sskem": { "gsap": "power4.out" } } }
+      },
+      "distance": {
+        "$type": "dimension",
+        "revealDesktop": { "$value": { "value": 20, "unit": "px" } },
+        "revealTablet": { "$value": { "value": 16, "unit": "px" } },
+        "revealMobile": { "$value": { "value": 10, "unit": "px" } },
+        "parallaxDesktopMaximum": { "$value": { "value": 24, "unit": "px" } },
+        "parallaxTabletMaximum": { "$value": { "value": 12, "unit": "px" } }
+      },
+      "stagger": {
+        "$type": "duration",
+        "interface": { "$value": { "value": 40, "unit": "ms" } },
+        "cards": { "$value": { "value": 60, "unit": "ms" } },
+        "heading": { "$value": { "value": 80, "unit": "ms" } },
+        "mobile": { "$value": { "value": 40, "unit": "ms" } }
+      },
+      "scale": {
+        "$type": "number",
+        "iconHoverMaximum": { "$value": 1.02 },
+        "galleryHoverMaximum": { "$value": 1.025 },
+        "imageMaskMaximum": { "$value": 1.03 }
       }
     },
     "layout": {

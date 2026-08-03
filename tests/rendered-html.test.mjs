@@ -92,3 +92,22 @@ test("server-renders the current SSKEMS website foundation", async () => {
     /codex-preview|_sites-preview|SkeletonPreview|react-loading-skeleton|Building your site|Your site is taking shape/i,
   );
 });
+
+test("server-renders admissions motion in its readable final state", async () => {
+  const response = await render("/admissions");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  const readableText = textContent(html);
+  const anchors = anchorsIn(html);
+
+  assert.match(html, /data-motion-component=["']admissions-hero["']/i);
+  assert.match(html, /data-motion-component=["']admissions-steps["']/i);
+  assert.match(readableText, /Admissions, made clearer\./i);
+  assert.match(readableText, /Know what comes next\./i);
+  assert.ok(anchors.some((anchor) => anchor.href === "/admissions/enquire"));
+  assert.ok(anchors.some((anchor) => anchor.href === "/admissions/application-status"));
+  assert.match(html, /Primary navigation without JavaScript/i);
+  assert.match(html, /class=["']static-navigation-fallback["']/i);
+  assert.doesNotMatch(html, /style=["'][^"']*(?:opacity\s*:\s*0|visibility\s*:\s*hidden)/i);
+});

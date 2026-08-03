@@ -28,9 +28,9 @@ test("supports reduced motion and representative multilingual content", async ({
   await page.goto("/");
 
   const duration = await page.evaluate(() =>
-    getComputedStyle(document.documentElement).getPropertyValue("--motion-duration-normal").trim()
+    getComputedStyle(document.documentElement).getPropertyValue("--motion-duration-standard").trim()
   );
-  expect(duration).toBe("1ms");
+  expect(duration).toBe("0s");
   await expect(page.getByText("शिक्षण, संस्कार आणि आत्मविश्वास यांचा समतोल विकास.")).toBeVisible();
   await expect(page.getByText("शिक्षा, संस्कार और आत्मविश्वास का संतुलित विकास।")).toBeVisible();
 });
