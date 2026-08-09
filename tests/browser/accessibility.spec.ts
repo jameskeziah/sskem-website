@@ -24,6 +24,9 @@ test("has a concise landmark and heading structure", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
   await expect(page.getByRole("navigation", { name: "Primary navigation" })).toHaveCount(1);
   await expect(page.getByRole("navigation", { name: "Utility navigation" })).toHaveCount(1);
-  await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toHaveCount(1);
+  await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toHaveCount(0);
   await expect(page.getByRole("contentinfo")).toHaveCount(1);
+
+  await page.goto("/documents");
+  await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toHaveCount(1);
 });

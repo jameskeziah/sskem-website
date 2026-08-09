@@ -67,7 +67,7 @@ test("server-renders the current SSKEMS website foundation", async () => {
 
   assert.match(html, /<nav\b[^>]*\baria-label=["']Utility navigation["']/i);
   assert.match(html, /<nav\b[^>]*\baria-label=["']Primary navigation["']/i);
-  assert.match(html, /<nav\b[^>]*\baria-label=["']Breadcrumb["']/i);
+  assert.doesNotMatch(html, /<nav\b[^>]*\baria-label=["']Breadcrumb["']/i);
   assert.match(html, /<footer\b/i);
 
   assert.ok(
@@ -115,5 +115,6 @@ test("server-renders admissions motion in its readable final state", async () =>
   assert.ok(anchors.some((anchor) => anchor.href === "/admissions/application-status"));
   assert.match(html, /Primary navigation without JavaScript/i);
   assert.match(html, /class=["']static-navigation-fallback["']/i);
+  assert.match(html, /<nav\b[^>]*\baria-label=["']Breadcrumb["']/i);
   assert.doesNotMatch(html, /style=["'][^"']*(?:opacity\s*:\s*0|visibility\s*:\s*hidden)/i);
 });

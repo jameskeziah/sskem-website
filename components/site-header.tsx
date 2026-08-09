@@ -89,7 +89,7 @@ function StaticNavigationFallback({ pathname }: { pathname: string }) {
   );
 }
 
-export function SiteHeader() {
+export function SiteHeader({ showBreadcrumb = true }: { showBreadcrumb?: boolean } = {}) {
   const pathname = usePathname();
   const [openDesktop, setOpenDesktop] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -297,9 +297,11 @@ export function SiteHeader() {
           </IconButton>
         </div>
 
-        <div className="breadcrumb-bar">
-          <div className="page-container"><Breadcrumbs items={breadcrumbItems(pathname)} /></div>
-        </div>
+        {showBreadcrumb ? (
+          <div className="breadcrumb-bar">
+            <div className="page-container"><Breadcrumbs items={breadcrumbItems(pathname)} /></div>
+          </div>
+        ) : null}
         <StaticNavigationFallback pathname={pathname} />
       </header>
 

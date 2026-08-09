@@ -116,7 +116,7 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
     assert.doesNotMatch(code, /duration:\s*[\d.]|stagger:\s*[\d.]|delay:\s*[\d.]/);
   }
 
-  const [hero, timeline, admissions, homeHero, homeCampus, homeAchievements, homepage] = await Promise.all([
+  const [hero, timeline, admissions, homeHero, homeCampus, homeAchievements, homepage, homepageStyles] = await Promise.all([
     source("components/motion/admissions-hero-motion.tsx"),
     source("components/motion/admissions-timeline-motion.tsx"),
     source("components/admissions.tsx"),
@@ -124,6 +124,7 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
     source("components/motion/home-campus-motion.tsx"),
     source("components/motion/home-achievements-motion.tsx"),
     source("app/page.tsx"),
+    source("app/homepage.css"),
   ]);
   assert.match(hero, /data-motion-component="admissions-hero"/);
   assert.match(hero, /motionDistancePixels\.revealMobile/);
@@ -135,13 +136,17 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(admissions, /data-motion-step/);
   assert.match(admissions, /<AdmissionsTimelineMotion preview=\{preview\}>/);
   assert.match(homeHero, /data-motion-component="home-hero"/);
-  assert.match(homeHero, /data-motion-home-hero-accent/);
+  assert.match(homeHero, /conditions\.reduce \|\| !conditions\.mobile/);
+  assert.doesNotMatch(homeHero, /data-motion-home-hero-(?:accent|media|support)/);
   assert.doesNotMatch(homeHero, /motionScale/);
   assert.match(homeCampus, /data-motion-component="home-campus"/);
   assert.match(homeCampus, /ScrollTrigger/);
   assert.match(homeAchievements, /data-motion-component="home-achievements"/);
   assert.match(homeAchievements, /motionStaggerSeconds\.cards/);
   assert.match(homepage, /<HomeHeroMotion>/);
+  assert.match(homepage, /data-home-hero-art/);
+  assert.doesNotMatch(homepage, /data-motion-home-hero-(?:accent|media|support)/);
+  assert.match(homepageStyles, /background-image:\s*url\(["']\/og\.png["']\)/);
   assert.match(homepage, /<HomeCampusMotion>/);
   assert.match(homepage, /<HomeAchievementsMotion>/);
 });
