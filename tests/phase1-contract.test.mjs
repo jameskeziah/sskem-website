@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile, readdir } from "node:fs/promises";
+import { readFile, readdir, stat } from "node:fs/promises";
 import test from "node:test";
 
 const projectRoot = new URL("../", import.meta.url);
@@ -328,4 +328,57 @@ test("component sources do not contain arbitrary raw hex colours", async () => {
       `${file} contains a raw hex colour; use semantic or component tokens`,
     );
   }
+});
+
+test("catalogues homepage media and keeps pupil artwork behind publication gates", async () => {
+  const mediaFiles = [
+    "public/media/home/campus-main.jpeg",
+    "public/media/home/campus-grounds.jpeg",
+    "public/media/home/campus-entrance.jpeg",
+    "public/media/home/campus-courtyard.jpeg",
+    "public/media/home/class-x-results-2025-26.jpeg",
+    "public/media/home/xii-science-2025-26.jpeg",
+    "public/media/home/rangotsav-2025-26.jpeg",
+    "public/media/home/result-and-admissions-2025-26.jpg",
+    "public/og.png",
+  ];
+
+  for (const file of mediaFiles) {
+    const details = await stat(projectFile(file));
+    assert.ok(details.isFile(), `${file} must be a file`);
+    assert.ok(details.size >= 10_000, `${file} is unexpectedly small`);
+    assert.ok(details.size <= 2_000_000, `${file} exceeds the prototype media ceiling`);
+  }
+
+  const [homepage, layout, achievements, brief, publicationGate, packageText] = await Promise.all([
+    source("app/page.tsx"),
+    source("app/layout.tsx"),
+    source("components/motion/home-achievements-motion.tsx"),
+    source("docs/campus-media-brief.md"),
+    source("scripts/assert-publication-safety.mjs"),
+    source("package.json"),
+  ]);
+  const packageJson = JSON.parse(packageText);
+
+  for (const file of mediaFiles.slice(0, -1)) {
+    assert.match(homepage, new RegExp(file.replace("public", "").replaceAll(".", "\\.")));
+  }
+  assert.match(achievements, /data-publication-review=["']required["']/);
+  assert.match(homepage, /Approval gate/);
+  assert.match(homepage, /names, photographs, marks, award wording and institutional status require approval/i);
+  assert.match(layout, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false\s*\}/);
+  assert.match(brief, /parent or guardian media consent/i);
+  assert.match(brief, /Junior College\/institutional status[\s\S]*?pending/i);
+  assert.match(brief, /review markers, not access[\s\S]*?public build must omit those assets/i);
+  assert.match(brief, /npm run build:review[\s\S]*?access-controlled review environment/i);
+  assert.match(brief, /No autoplay sound/i);
+  assert.match(brief, /LCP ≤ 2\.5 seconds/i);
+  assert.match(publicationGate, /Public build blocked/);
+  assert.match(publicationGate, /visible approval message is not access control/i);
+  assert.match(publicationGate, /HOMEPAGE_REVIEW_MODE === "private"/);
+  assert.match(packageJson.scripts.prebuild, /assert-publication-safety\.mjs/);
+  assert.match(packageJson.scripts["build:review"], /HOMEPAGE_REVIEW_MODE=private/);
+  assert.match(packageJson.scripts.test, /HOMEPAGE_REVIEW_MODE=private/);
+  assert.match(packageJson.scripts["test:browser"], /HOMEPAGE_REVIEW_MODE=private/);
+  assert.match(packageJson.scripts["test:visual"], /HOMEPAGE_REVIEW_MODE=private/);
 });

@@ -1,4 +1,6 @@
 import { spawn } from "node:child_process";
+import { request as httpRequest } from "node:http";
+import { request as httpsRequest } from "node:https";
 import { setTimeout as delay } from "node:timers/promises";
 
 const projectRoot = new URL("../", import.meta.url);
@@ -6,25 +8,30 @@ const baseUrl = process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000";
 const previewUrl = new URL(baseUrl);
 let server;
 
-async function hasExpectedServer() {
-  try {
-    const response = await fetch(baseUrl, { signal: AbortSignal.timeout(1_500) });
-    const html = await response.text();
-    const stylesheet = html.match(/href=["']([^"']+\.css)["']/i)?.[1];
-    if (!response.ok || !html.includes("SSKEMS") || !stylesheet) return false;
-
-    const cssResponse = await fetch(new URL(stylesheet, baseUrl), {
-      signal: AbortSignal.timeout(1_500),
-    });
-    const css = await cssResponse.text();
-    return cssResponse.ok && css.includes("--surface-page");
-  } catch {
-    return false;
-  }
+function hasExpectedServer() {
+  return new Promise((resolve) => {
+    const healthUrl = new URL("/__preview-health", baseUrl);
+    const request = (healthUrl.protocol === "https:" ? httpsRequest : httpRequest)(
+      healthUrl,
+      {
+        agent: false,
+        headers: { connection: "close" },
+        method: "GET",
+      },
+      (response) => {
+        const expected = response.statusCode === 200 && response.headers["x-sskem-preview"] === "ready";
+        response.resume();
+        response.once("end", () => resolve(expected));
+      },
+    );
+    request.setTimeout(5_000, () => request.destroy());
+    request.once("error", () => resolve(false));
+    request.end();
+  });
 }
 
 async function waitForServer() {
-  const deadline = Date.now() + 30_000;
+  const deadline = Date.now() + 45_000;
   while (Date.now() < deadline) {
     if (await hasExpectedServer()) return;
     if (server?.exitCode !== null) {
@@ -44,34 +51,37 @@ async function stopServer() {
   ]);
 }
 
-if (!(await hasExpectedServer())) {
-  server = spawn(
+try {
+  if (!(await hasExpectedServer())) {
+    server = spawn(
+      process.execPath,
+      ["scripts/preview-server.mjs"],
+      {
+        cwd: projectRoot,
+        env: {
+          ...process.env,
+          PREVIEW_HOST: previewUrl.hostname,
+          PREVIEW_PORT: previewUrl.port || (previewUrl.protocol === "https:" ? "443" : "80"),
+          WRANGLER_LOG_PATH: ".wrangler/wrangler.log",
+        },
+        stdio: "inherit",
+      },
+    );
+    await waitForServer();
+  }
+
+  const playwright = spawn(
     process.execPath,
-    ["scripts/preview-server.mjs"],
+    ["node_modules/@playwright/test/cli.js", "test", ...process.argv.slice(2)],
     {
       cwd: projectRoot,
-      env: {
-        ...process.env,
-        PREVIEW_HOST: previewUrl.hostname,
-        PREVIEW_PORT: previewUrl.port || (previewUrl.protocol === "https:" ? "443" : "80"),
-        WRANGLER_LOG_PATH: ".wrangler/wrangler.log",
-      },
+      env: { ...process.env, PLAYWRIGHT_BASE_URL: baseUrl },
       stdio: "inherit",
     },
   );
-  await waitForServer();
+
+  const exitCode = await new Promise((resolve) => playwright.once("exit", resolve));
+  process.exitCode = exitCode ?? 1;
+} finally {
+  await stopServer();
 }
-
-const playwright = spawn(
-  process.execPath,
-  ["node_modules/@playwright/test/cli.js", "test", ...process.argv.slice(2)],
-  {
-    cwd: projectRoot,
-    env: { ...process.env, PLAYWRIGHT_BASE_URL: baseUrl },
-    stdio: "inherit",
-  },
-);
-
-const exitCode = await new Promise((resolve) => playwright.once("exit", resolve));
-await stopServer();
-process.exitCode = exitCode ?? 1;

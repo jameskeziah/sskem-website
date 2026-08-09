@@ -57,7 +57,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: "Shree Samarth Krupa English Medium School in Veral.",
       images: [socialImage],
     },
-    robots: { index: false, follow: true },
+    robots: { index: false, follow: false },
   };
 }
 

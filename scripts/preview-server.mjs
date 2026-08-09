@@ -56,6 +56,15 @@ async function send(nodeResponse, response) {
 const server = createServer(async (request, response) => {
   try {
     const url = new URL(request.url ?? "/", `http://${request.headers.host ?? `${previewHost}:${previewPort}`}`);
+    if (url.pathname === "/__preview-health") {
+      response.statusCode = 200;
+      response.setHeader("cache-control", "no-store");
+      response.setHeader("content-type", "text/plain; charset=utf-8");
+      response.setHeader("x-sskem-preview", "ready");
+      response.end("SSKEMS preview ready");
+      return;
+    }
+
     const asset = await staticResponse(url.pathname);
     if (asset) {
       await send(response, asset);

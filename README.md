@@ -18,6 +18,13 @@ npm run lint
 npm test
 ```
 
+`npm test` intentionally exercises the complete private-review prototype. A
+normal `npm run build` is the public-release path and is blocked while pupil
+artwork still carries the publication-review requirement. Use
+`npm run build:review` only for an access-controlled private review; it also
+emits `noindex, nofollow` metadata. Search-engine directives are not access
+control.
+
 The test command regenerates design tokens, creates a production build, checks
 the Phase 1, Stage 2 and Stage 3 contracts, validates document-publication and
 admissions safeguards, and runs accessibility, keyboard, responsive,
@@ -43,6 +50,12 @@ archive-filter and visual tests.
   prototypes. Real applicant information must not be entered until D1, private
   R2 storage, parent OTP, staff roles, notifications and security controls are
   configured.
+- The homepage art-direction prototype uses the supplied campus photography and
+  keeps all pupil/result artwork behind a visible publication-review gate. The
+  capture plan, consent requirements, delivery specification and approval
+  register are in `docs/campus-media-brief.md`.
+- `scripts/assert-publication-safety.mjs` prevents the normal production build
+  from packaging that review material until the gate is intentionally resolved.
 - `db/admissions-schema.ts` and its generated migration scaffold the audited
   workflow without activating persistence.
 - The compliance schema and validation layer are foundations only; official
