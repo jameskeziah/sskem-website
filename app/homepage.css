@@ -92,139 +92,150 @@
 .home-hero {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(var(--space-48), 7vw, var(--space-96));
-  background:
-    radial-gradient(circle at 88% 3%, color-mix(in srgb, var(--color-blue) 42%, transparent), transparent 31rem),
-    linear-gradient(145deg, var(--color-neutral-950), color-mix(in srgb, var(--color-neutral-950) 82%, var(--color-blue)));
+  padding: 0;
+  background: var(--color-neutral-950);
   color: var(--text-on-brand);
-}
-
-.home-hero::before {
-  position: absolute;
-  top: 7rem;
-  left: -13rem;
-  width: 28rem;
-  height: 28rem;
-  border: var(--border-width-default) solid color-mix(in srgb, var(--color-brand-300) 24%, transparent);
-  border-radius: var(--radius-pill);
-  content: "";
 }
 
 .home-hero__inner {
   position: relative;
   display: grid;
-  gap: clamp(var(--space-32), 5vw, var(--space-64));
+  min-height: clamp(38rem, 50vw, 46rem);
+  grid-template-columns: minmax(31rem, 44%) minmax(0, 56%);
+  overflow: hidden;
+  background: var(--color-neutral-950);
 }
 
 .home-hero__copy {
+  position: relative;
+  z-index: 3;
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(16rem, 0.45fr);
-  align-items: end;
-  gap: var(--space-32);
+  min-width: 0;
+  align-content: center;
+  gap: var(--space-24);
+  padding: clamp(var(--space-48), 4.5vw, var(--space-64));
+  clip-path: polygon(0 0, 100% 0, 78% 100%, 0 100%);
+  background: var(--color-neutral-950);
+}
+
+.home-hero__copy > * {
+  position: relative;
+  z-index: 1;
 }
 
 .home-hero__copy > .home-kicker {
-  grid-column: 1 / -1;
-  color: var(--color-brand-200);
+  color: var(--color-neutral-100);
+  letter-spacing: 0.24em;
+}
+
+.home-hero__copy > .home-kicker strong {
+  color: var(--color-brand-300);
 }
 
 .home-hero__title {
   display: grid;
   margin: 0;
-  font-family: var(--home-display);
-  font-size: clamp(4.5rem, 11.6vw, 10.75rem);
+  color: var(--color-neutral-50);
+  font-family: "Impact", "Arial Narrow", "Aptos Display", sans-serif;
+  font-size: clamp(4.75rem, 8vw, 8.25rem);
   font-stretch: condensed;
-  font-weight: 800;
-  letter-spacing: -0.075em;
-  line-height: 0.78;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.045em;
+  line-height: 0.84;
   text-transform: uppercase;
 }
 
-.home-hero__title span {
+.home-hero__title > span {
   display: block;
 }
 
-.home-hero__title-accent {
+.home-hero__punctuation {
+  display: inline;
   color: var(--color-brand-300);
-  font-family: var(--font-family-heading);
-  font-style: italic;
-  font-weight: var(--font-weight-regular);
-  letter-spacing: -0.06em;
-  text-transform: none;
 }
 
-.home-hero__support {
-  display: grid;
-  gap: var(--space-24);
-  padding-bottom: var(--space-12);
-}
-
-.home-hero__support > p {
-  max-width: 25rem;
+.home-hero__school-name {
+  max-width: 30rem;
   margin: 0;
+  padding-top: var(--space-12);
+  border-top: var(--border-width-strong) solid var(--color-brand-300);
   color: var(--color-neutral-200);
-  font-size: clamp(var(--font-size-300), 1.5vw, var(--font-size-400));
-  line-height: 1.55;
+  font-size: var(--font-size-200);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+.home-hero__accent {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(119deg, transparent 0 41%, var(--color-brand-300) 41.2% 46.8%, transparent 47%);
+  pointer-events: none;
 }
 
 .home-hero__media {
   position: relative;
-  min-height: 21rem;
+  z-index: 1;
+  min-width: 0;
+  min-height: 100%;
   overflow: hidden;
-  border: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 18%, transparent);
-  border-radius: var(--radius-large);
-  background: var(--color-neutral-900);
-  box-shadow: var(--shadow-large);
+  background:
+    radial-gradient(circle at 76% 10%, color-mix(in srgb, var(--color-blue) 42%, transparent), transparent 30rem),
+    var(--color-neutral-900);
 }
 
 .home-hero__media img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  min-height: inherit;
   object-fit: cover;
-  object-position: center;
+  object-position: 54% center;
 }
 
 .home-hero__media-shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 52%, color-mix(in srgb, var(--color-neutral-950) 76%, transparent));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--color-neutral-950) 18%, transparent), transparent 28%),
+    linear-gradient(180deg, transparent 66%, color-mix(in srgb, var(--color-neutral-950) 34%, transparent));
   pointer-events: none;
 }
 
 .home-hero__caption {
   position: absolute;
-  right: var(--space-24);
-  bottom: var(--space-16);
-  left: var(--space-24);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-16);
+  z-index: 2;
+  right: var(--space-32);
+  bottom: var(--space-24);
   margin: 0;
-  color: var(--text-on-brand);
+  color: var(--color-neutral-50);
   font-size: var(--font-size-100);
   font-weight: var(--font-weight-bold);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .home-hero__facts {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: var(--space-4) 0 0;
   border-block: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 20%, transparent);
 }
 
 .home-hero__facts > div {
   display: grid;
   gap: var(--space-4);
-  padding: var(--space-16) var(--space-24);
+  padding: var(--space-12);
   border-inline-end: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 20%, transparent);
 }
 
 .home-hero__facts > div:first-child {
-  padding-inline-start: 0;
+  padding-inline-start: var(--space-0);
 }
 
 .home-hero__facts > div:last-child {
@@ -242,10 +253,6 @@
   margin: 0;
   font-size: var(--font-size-400);
   font-weight: var(--font-weight-semibold);
-}
-
-.home-hero__facts a {
-  text-underline-offset: var(--space-4);
 }
 
 /* Foundation statement */
@@ -764,19 +771,48 @@
 }
 
 @media (max-width: 70rem) {
-  .home-hero__copy,
   .home-section-heading--split,
   .home-services__grid,
   .home-invitation__grid {
     grid-template-columns: 1fr;
   }
 
-  .home-hero__title {
-    max-width: 60rem;
+  .home-hero__inner {
+    min-height: 0;
+    grid-template-columns: 1fr;
   }
 
-  .home-hero__support {
-    max-width: 40rem;
+  .home-hero__copy {
+    min-height: 34rem;
+    padding: clamp(var(--space-48), 7vw, var(--space-64));
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+  }
+
+  .home-hero__title {
+    max-width: 50rem;
+    font-size: clamp(4.5rem, 12vw, 7.5rem);
+  }
+
+  .home-hero__media {
+    min-height: clamp(20rem, 60vw, 34rem);
+    overflow: visible;
+  }
+
+  .home-hero__accent {
+    display: none;
+  }
+
+  .home-hero__media::before {
+    position: absolute;
+    z-index: 3;
+    top: calc(var(--space-16) * -1);
+    left: -5%;
+    width: 110%;
+    height: var(--space-32);
+    transform: rotate(-5deg);
+    background: var(--color-brand-300);
+    content: "";
+    pointer-events: none;
   }
 
   .home-pathway-card {
@@ -802,27 +838,30 @@
   }
 
   .home-hero {
-    padding-block: var(--space-48) var(--space-64);
+    isolation: isolate;
   }
 
-  .home-hero::before {
-    top: 15rem;
-    left: -18rem;
+  .home-hero__copy {
+    min-height: 0;
+    gap: var(--space-16);
+    padding: var(--space-48) var(--space-16) var(--space-64);
   }
 
   .home-hero__title {
-    font-size: clamp(2.75rem, 13vw, 4.75rem);
-    letter-spacing: -0.065em;
-    line-height: 0.82;
+    font-size: clamp(3.15rem, 16.5vw, 4.75rem);
+    line-height: 0.84;
+  }
+
+  .home-hero__school-name {
+    font-size: var(--font-size-100);
   }
 
   .home-hero__media {
-    min-height: 17rem;
-    border-radius: var(--radius-medium);
+    min-height: clamp(18rem, 78vw, 24rem);
   }
 
   .home-hero__media img {
-    object-position: center;
+    object-position: 54% center;
   }
 
   .home-hero__facts {
@@ -831,7 +870,7 @@
 
   .home-hero__facts > div,
   .home-hero__facts > div:first-child {
-    padding: var(--space-12) 0;
+    padding: var(--space-8) 0;
     border-inline-end: 0;
     border-bottom: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 20%, transparent);
   }
@@ -923,10 +962,8 @@
     width: 100%;
   }
 
-  .home-hero__caption {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: var(--space-4);
+  .home-hero__title {
+    font-size: clamp(3rem, 16.5vw, 4.25rem);
   }
 
   .home-services__links a {
@@ -1009,11 +1046,12 @@
     color: var(--text-primary) !important;
   }
 
-  .home-hero__title-accent,
+  .home-hero__punctuation,
   .home-campus__closing a {
     color: var(--text-primary) !important;
   }
 
+  .home-hero__inner,
   .home-hero__media,
   .home-campus__gallery,
   .home-achievements__grid {

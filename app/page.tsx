@@ -95,62 +95,60 @@ export default function Home() {
       <SiteHeader />
       <main id="main-content" tabIndex={-1} className="home-page">
         <HomeHeroMotion>
-          <div className="home-shell home-hero__inner">
+          <div className="home-hero__inner">
             <div className="home-hero__copy">
               <p className="home-kicker" data-motion-home-hero-intro>
-                Shree Samarth Krupa English Medium School · Veral
+                <strong>SSKEMS</strong> · Veral
               </p>
-              <h1 id="home-title" className="home-hero__title" aria-label="Here, possibility begins">
-                <span data-motion-home-hero-heading>Here,</span>
+              <h1 id="home-title" className="home-hero__title" aria-label="Here, possibility begins.">
+                <span data-motion-home-hero-heading>
+                  Here<span className="home-hero__punctuation" aria-hidden="true">,</span>
+                </span>
                 <span data-motion-home-hero-heading>possibility</span>
-                <span className="home-hero__title-accent" data-motion-home-hero-heading>begins.</span>
+                <span data-motion-home-hero-heading>
+                  begins<span className="home-hero__punctuation" aria-hidden="true">.</span>
+                </span>
               </h1>
-              <div className="home-hero__support" data-motion-home-hero-support>
-                <p>
-                  A CBSE school in Veral where learning, character and confidence grow together.
-                </p>
-                <div className="home-actions">
-                  <Link className="home-button home-button--light" href="/school">
-                    Explore the school <span aria-hidden="true">→</span>
-                  </Link>
-                  <Link className="home-button home-button--outline-light" href="/admissions/enquire">
-                    Enquire now
-                  </Link>
+              <p className="home-hero__school-name" data-motion-home-hero-support>
+                Shree Samarth Krupa English Medium School
+              </p>
+
+              <dl className="home-hero__facts">
+                <div>
+                  <dt>CBSE affiliation</dt>
+                  <dd>{siteFacts.affiliationNumber}</dd>
                 </div>
+                <div>
+                  <dt>Location</dt>
+                  <dd>Veral, Khed · Ratnagiri</dd>
+                </div>
+              </dl>
+
+              <div className="home-actions">
+                <Link className="home-button home-button--light" href="/school">
+                  Explore the school <span aria-hidden="true">→</span>
+                </Link>
+                <Link className="home-button home-button--outline-light" href="/admissions/enquire">
+                  Admissions enquiry
+                </Link>
               </div>
             </div>
 
-            <div className="home-hero__media" data-motion-home-hero-media>
+            <div className="home-hero__accent" aria-hidden="true" data-motion-home-hero-accent />
+
+            <div className="home-hero__media">
               <Image
                 src="/media/home/campus-main.jpeg"
                 alt="The pink and white SSKEMS school building in Veral."
                 width={1400}
                 height={500}
-                sizes="(max-width: 768px) 100vw, 94vw"
+                sizes="(max-width: 70rem) 100vw, 62vw"
                 priority
                 unoptimized
               />
               <div className="home-hero__media-shade" aria-hidden="true" />
-              <p className="home-hero__caption">
-                <span>Campus view</span>
-                <span>Veral · Ratnagiri</span>
-              </p>
+              <p className="home-hero__caption">Campus · Veral</p>
             </div>
-
-            <dl className="home-hero__facts" data-motion-home-hero-support>
-              <div>
-                <dt>CBSE affiliation</dt>
-                <dd>{siteFacts.affiliationNumber}</dd>
-              </div>
-              <div>
-                <dt>Location</dt>
-                <dd>Veral, Khed</dd>
-              </div>
-              <div>
-                <dt>Start here</dt>
-                <dd><Link href="/admissions">Admissions guidance</Link></dd>
-              </div>
-            </dl>
           </div>
         </HomeHeroMotion>
 

@@ -9,7 +9,6 @@ import {
   motionDurationSeconds,
   motionEase,
   motionMedia,
-  motionScale,
   motionStaggerSeconds,
 } from "@/lib/motion";
 
@@ -36,8 +35,8 @@ export function HomeHeroMotion({ children }: { children: ReactNode }) {
         const intro = element.querySelector<HTMLElement>("[data-motion-home-hero-intro]");
         const headings = gsap.utils.toArray<HTMLElement>("[data-motion-home-hero-heading]", element);
         const support = gsap.utils.toArray<HTMLElement>("[data-motion-home-hero-support]", element);
-        const frame = element.querySelector<HTMLElement>("[data-motion-home-hero-media]");
-        const targets = [intro, ...headings, ...support, frame].filter(Boolean) as HTMLElement[];
+        const accent = element.querySelector<HTMLElement>("[data-motion-home-hero-accent]");
+        const targets = [intro, ...headings, ...support, accent].filter(Boolean) as HTMLElement[];
 
         if (conditions.reduce) {
           gsap.set(targets, { clearProps: "all" });
@@ -90,18 +89,15 @@ export function HomeHeroMotion({ children }: { children: ReactNode }) {
           },
         );
 
-        if (!conditions.mobile && frame) {
+        if (!conditions.mobile && accent) {
           gsap.fromTo(
-            frame,
+            accent,
             {
               clipPath: "inset(0 0 100% 0)",
-              scale: motionScale.imageMaskMaximum,
-              transformOrigin: "50% 50%",
-              willChange: "transform, clip-path",
+              willChange: "clip-path",
             },
             {
               clipPath: "inset(0 0 0% 0)",
-              scale: 1,
               duration: motionDurationSeconds.ceremonial,
               ease: motionEase.emphasised,
               clearProps: "all",

@@ -114,7 +114,7 @@ test("reduced motion leaves the homepage story in its final static state", async
 
   await page.locator("[data-motion-component='home-campus']").scrollIntoViewIfNeeded();
   await page.locator("[data-motion-component='home-achievements']").scrollIntoViewIfNeeded();
-  const states = await page.locator("[data-motion-home-hero-heading], [data-motion-home-hero-media], [data-motion-home-campus-copy], [data-motion-home-campus-frame], [data-motion-home-achievement]").evaluateAll((elements) =>
+  const states = await page.locator("[data-motion-home-hero-heading], [data-motion-home-hero-accent], [data-motion-home-campus-copy], [data-motion-home-campus-frame], [data-motion-home-achievement]").evaluateAll((elements) =>
     elements.map((element) => {
       const style = getComputedStyle(element);
       return {

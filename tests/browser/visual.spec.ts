@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test("desktop homepage story remains visually stable", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
 
@@ -14,6 +15,7 @@ test("desktop homepage story remains visually stable", async ({ page }) => {
 
 test("mobile homepage arrival remains visually stable", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 740 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
   await page.locator(".skip-link").evaluate((element) => element.remove());
@@ -23,6 +25,7 @@ test("mobile homepage arrival remains visually stable", async ({ page }) => {
 
 test("mobile navigation remains visually stable", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 740 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await page.getByRole("button", { name: "Open navigation" }).click();
 
@@ -31,6 +34,7 @@ test("mobile navigation remains visually stable", async ({ page }) => {
 
 test("achievement publication review remains visually stable", async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 900 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   const achievements = page.locator(".home-achievements");
   await achievements.scrollIntoViewIfNeeded();

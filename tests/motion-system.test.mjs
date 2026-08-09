@@ -135,7 +135,8 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(admissions, /data-motion-step/);
   assert.match(admissions, /<AdmissionsTimelineMotion preview=\{preview\}>/);
   assert.match(homeHero, /data-motion-component="home-hero"/);
-  assert.match(homeHero, /motionScale\.imageMaskMaximum/);
+  assert.match(homeHero, /data-motion-home-hero-accent/);
+  assert.doesNotMatch(homeHero, /motionScale/);
   assert.match(homeCampus, /data-motion-component="home-campus"/);
   assert.match(homeCampus, /ScrollTrigger/);
   assert.match(homeAchievements, /data-motion-component="home-achievements"/);
