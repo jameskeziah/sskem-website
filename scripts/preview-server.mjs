@@ -6,6 +6,8 @@ import { fileURLToPath } from "node:url";
 const projectRoot = fileURLToPath(new URL("../", import.meta.url));
 const clientRoot = resolve(projectRoot, "dist/client");
 const { default: worker } = await import(new URL("../dist/server/index.js", import.meta.url));
+const previewHost = process.env.PREVIEW_HOST ?? "127.0.0.1";
+const previewPort = Number.parseInt(process.env.PREVIEW_PORT ?? "3000", 10);
 
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
@@ -53,7 +55,7 @@ async function send(nodeResponse, response) {
 
 const server = createServer(async (request, response) => {
   try {
-    const url = new URL(request.url ?? "/", `http://${request.headers.host ?? "127.0.0.1:3000"}`);
+    const url = new URL(request.url ?? "/", `http://${request.headers.host ?? `${previewHost}:${previewPort}`}`);
     const asset = await staticResponse(url.pathname);
     if (asset) {
       await send(response, asset);
@@ -81,8 +83,8 @@ const server = createServer(async (request, response) => {
   }
 });
 
-server.listen(3000, "127.0.0.1", () => {
-  process.stdout.write("SSKEMS production preview: http://127.0.0.1:3000\n");
+server.listen(previewPort, previewHost, () => {
+  process.stdout.write(`SSKEMS production preview: http://${previewHost}:${previewPort}\n`);
 });
 
 for (const signal of ["SIGINT", "SIGTERM"]) {

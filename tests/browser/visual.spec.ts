@@ -1,13 +1,24 @@
 import { expect, test } from "@playwright/test";
 
-test("desktop foundation hero and pathway contract remain visually stable", async ({ page }) => {
+test("desktop homepage story remains visually stable", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
 
   await expect(page.locator(".site-header")).toHaveScreenshot("site-header-desktop.png");
-  await expect(page.locator(".phase-hero")).toHaveScreenshot("phase-hero-desktop.png");
-  await expect(page.locator("#navigation-contract")).toHaveScreenshot("navigation-contract-desktop.png");
+  await page.locator(".skip-link").evaluate((element) => element.remove());
+  await expect(page.locator(".home-hero")).toHaveScreenshot("home-hero-desktop.png");
+  await expect(page.locator(".home-campus")).toHaveScreenshot("home-campus-desktop.png");
+  await expect(page.locator(".home-pathways")).toHaveScreenshot("home-pathways-desktop.png");
+});
+
+test("mobile homepage arrival remains visually stable", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 740 });
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+  await page.locator(".skip-link").evaluate((element) => element.remove());
+
+  await expect(page.locator(".home-hero")).toHaveScreenshot("home-hero-mobile.png");
 });
 
 test("mobile navigation remains visually stable", async ({ page }) => {
@@ -18,15 +29,15 @@ test("mobile navigation remains visually stable", async ({ page }) => {
   await expect(page).toHaveScreenshot("mobile-navigation.png");
 });
 
-test("form component states remain visually stable", async ({ page }) => {
+test("achievement publication review remains visually stable", async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 900 });
   await page.goto("/");
-  const controls = page.locator("#controls");
-  await controls.scrollIntoViewIfNeeded();
+  const achievements = page.locator(".home-achievements");
+  await achievements.scrollIntoViewIfNeeded();
   await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
   await page.locator(".skip-link").evaluate((element) => element.remove());
 
-  await expect(controls).toHaveScreenshot("control-states-laptop.png");
+  await expect(achievements).toHaveScreenshot("home-achievements-laptop.png");
 });
 
 test("mandatory disclosure structure remains visually stable", async ({ page }) => {

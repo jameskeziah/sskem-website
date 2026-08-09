@@ -2,14 +2,22 @@ import { spawn } from "node:child_process";
 import { setTimeout as delay } from "node:timers/promises";
 
 const projectRoot = new URL("../", import.meta.url);
-const baseUrl = "http://127.0.0.1:3000";
+const baseUrl = process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000";
+const previewUrl = new URL(baseUrl);
 let server;
 
 async function hasExpectedServer() {
   try {
     const response = await fetch(baseUrl, { signal: AbortSignal.timeout(1_500) });
     const html = await response.text();
-    return response.ok && html.includes("SSKEMS");
+    const stylesheet = html.match(/href=["']([^"']+\.css)["']/i)?.[1];
+    if (!response.ok || !html.includes("SSKEMS") || !stylesheet) return false;
+
+    const cssResponse = await fetch(new URL(stylesheet, baseUrl), {
+      signal: AbortSignal.timeout(1_500),
+    });
+    const css = await cssResponse.text();
+    return cssResponse.ok && css.includes("--surface-page");
   } catch {
     return false;
   }
@@ -42,7 +50,12 @@ if (!(await hasExpectedServer())) {
     ["scripts/preview-server.mjs"],
     {
       cwd: projectRoot,
-      env: { ...process.env, WRANGLER_LOG_PATH: ".wrangler/wrangler.log" },
+      env: {
+        ...process.env,
+        PREVIEW_HOST: previewUrl.hostname,
+        PREVIEW_PORT: previewUrl.port || (previewUrl.protocol === "https:" ? "443" : "80"),
+        WRANGLER_LOG_PATH: ".wrangler/wrangler.log",
+      },
       stdio: "inherit",
     },
   );
@@ -52,7 +65,11 @@ if (!(await hasExpectedServer())) {
 const playwright = spawn(
   process.execPath,
   ["node_modules/@playwright/test/cli.js", "test", ...process.argv.slice(2)],
-  { cwd: projectRoot, env: process.env, stdio: "inherit" },
+  {
+    cwd: projectRoot,
+    env: { ...process.env, PLAYWRIGHT_BASE_URL: baseUrl },
+    stdio: "inherit",
+  },
 );
 
 const exitCode = await new Promise((resolve) => playwright.once("exit", resolve));

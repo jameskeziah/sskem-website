@@ -17,10 +17,14 @@ timings.
 | Admissions architectural mask | 4 | Initial page entry | Bottom-to-top clipped decorative layer | Authored static mask | `slow`, `emphasised` | None | Once | Static mask, no travel | Static final state | GSAP |
 | Admissions four-step preview | 4 | `top 82%` | `opacity: 0`, bounded vertical travel | Fully visible at authored position | `deliberate`, `enter` | `60ms` desktop/tablet, `40ms` mobile; four items maximum | Once | Four items maximum, `y: 10px` | Static final state | GSAP + ScrollTrigger |
 | Full eight-step process | 3 | Each four-step group at `top 82%` | Four related items share one reveal | Fully visible at authored position | `deliberate`, `enter` | No item stagger | Once | Two groups of four; no scrub | Static final state | GSAP + ScrollTrigger |
+| Homepage arrival heading | 4 | Initial page entry | `opacity: 0`, bounded vertical travel | Fully visible at authored position | `slow`, `emphasised` | Heading token; three lines maximum | Once | `y: 10px` | Static final state | GSAP |
+| Homepage campus frame | 4 | Initial page entry | Inset clip and scale capped at `1.03` | Authored campus panorama | `ceremonial`, `emphasised` | None | Once | Static image; copy receives the mobile reveal | Static final state | GSAP |
+| Homepage campus chapter | 4 | Section at `top 82%` | Copy reveal plus three bounded image masks | Fully visible at authored position | `deliberate` through `slow` | Card token; three frames maximum | Once | Copy reveal only | Static final state | GSAP + ScrollTrigger |
+| Homepage publication review | 4 | Section at `top 82%` | Four supplied artwork cards share one reveal | Fully visible at authored position | `deliberate`, `enter` | `60ms` desktop/tablet, `40ms` mobile | Once | Bounded `y: 10px` | Static final state | GSAP + ScrollTrigger |
 
-The hero cycle status, hero-side contact link, admissions actions, forms,
-notices, disclosure records, document lists, tables, dates, and legal content
-remain outside all reveal timelines.
+Homepage essential-service links, the publication approval note, hero facts,
+admissions actions, forms, notices, disclosure records, document lists, tables,
+dates, and legal content remain outside all reveal timelines.
 
 ## CSS-owned feedback and orientation
 
@@ -49,8 +53,10 @@ slow client bundles without introducing layout shift.
 
 ## Deliberate exclusions
 
-The current review homepage does not receive a Level 4 narrative sequence.
-Homepage crest motion, campus-image masks, and restrained parallax remain
-deferred until the public homepage art direction and authentic school imagery
-are approved. Pinning, scrubbing on content, smooth-scroll libraries, custom
-cursors, counters, continuous loops, and global reveal scanners are prohibited.
+The approved homepage prototype uses the supplied campus photography for a
+bounded Level 4 arrival, one campus chapter, and one publication-review group.
+Student-result artwork remains behind a visible approval gate until accuracy,
+institutional status, and publication consent are confirmed. Crest motion and
+scroll-linked parallax remain deferred. Pinning, scrubbing on content,
+smooth-scroll libraries, custom cursors, counters, continuous loops, and global
+reveal scanners are prohibited.

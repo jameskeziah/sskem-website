@@ -97,7 +97,13 @@ test("publishes the approved motion tokens to CSS and GSAP", async () => {
 test("keeps motion in narrow, scoped and reversible client islands", async () => {
   const directory = projectFile("components/motion/");
   const files = (await readdir(directory)).filter((file) => file.endsWith(".tsx"));
-  assert.deepEqual(files.sort(), ["admissions-hero-motion.tsx", "admissions-timeline-motion.tsx"]);
+  assert.deepEqual(files.sort(), [
+    "admissions-hero-motion.tsx",
+    "admissions-timeline-motion.tsx",
+    "home-achievements-motion.tsx",
+    "home-campus-motion.tsx",
+    "home-hero-motion.tsx",
+  ]);
 
   for (const file of files) {
     const code = await readFile(new URL(file, directory), "utf8");
@@ -110,10 +116,14 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
     assert.doesNotMatch(code, /duration:\s*[\d.]|stagger:\s*[\d.]|delay:\s*[\d.]/);
   }
 
-  const [hero, timeline, admissions] = await Promise.all([
+  const [hero, timeline, admissions, homeHero, homeCampus, homeAchievements, homepage] = await Promise.all([
     source("components/motion/admissions-hero-motion.tsx"),
     source("components/motion/admissions-timeline-motion.tsx"),
     source("components/admissions.tsx"),
+    source("components/motion/home-hero-motion.tsx"),
+    source("components/motion/home-campus-motion.tsx"),
+    source("components/motion/home-achievements-motion.tsx"),
+    source("app/page.tsx"),
   ]);
   assert.match(hero, /data-motion-component="admissions-hero"/);
   assert.match(hero, /motionDistancePixels\.revealMobile/);
@@ -124,18 +134,31 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(timeline, /items\.slice\(4, 8\)/);
   assert.match(admissions, /data-motion-step/);
   assert.match(admissions, /<AdmissionsTimelineMotion preview=\{preview\}>/);
+  assert.match(homeHero, /data-motion-component="home-hero"/);
+  assert.match(homeHero, /motionScale\.imageMaskMaximum/);
+  assert.match(homeCampus, /data-motion-component="home-campus"/);
+  assert.match(homeCampus, /ScrollTrigger/);
+  assert.match(homeAchievements, /data-motion-component="home-achievements"/);
+  assert.match(homeAchievements, /motionStaggerSeconds\.cards/);
+  assert.match(homepage, /<HomeHeroMotion>/);
+  assert.match(homepage, /<HomeCampusMotion>/);
+  assert.match(homepage, /<HomeAchievementsMotion>/);
 });
 
 test("rejects prohibited, unbounded and layout-changing motion patterns", async () => {
-  const [globals, admissions, compliance, hero, timeline] = await Promise.all([
+  const [globals, admissions, compliance, homepage, hero, timeline, homeHero, homeCampus, homeAchievements] = await Promise.all([
     source("app/globals.css"),
     source("app/admissions.css"),
     source("app/compliance.css"),
+    source("app/homepage.css"),
     source("components/motion/admissions-hero-motion.tsx"),
     source("components/motion/admissions-timeline-motion.tsx"),
+    source("components/motion/home-hero-motion.tsx"),
+    source("components/motion/home-campus-motion.tsx"),
+    source("components/motion/home-achievements-motion.tsx"),
   ]);
-  const cssFiles = { globals, admissions, compliance };
-  const combined = `${globals}\n${admissions}\n${compliance}\n${hero}\n${timeline}`;
+  const cssFiles = { globals, admissions, compliance, homepage };
+  const combined = `${globals}\n${admissions}\n${compliance}\n${homepage}\n${hero}\n${timeline}\n${homeHero}\n${homeCampus}\n${homeAchievements}`;
 
   assert.doesNotMatch(combined, /motion-duration-normal|motion-easing-standard/);
   assert.doesNotMatch(combined, /animation\s*:[^;]*(?:infinite|linear\s+infinite)/i);
@@ -143,9 +166,9 @@ test("rejects prohibited, unbounded and layout-changing motion patterns", async 
   assert.doesNotMatch(combined, /\b(?:bounce|elastic|back\.|ScrollSmoother|Lenis|Locomotive)\b/i);
   assert.doesNotMatch(combined, /\bpin\s*:\s*true|\bscrub\s*:/i);
   assert.doesNotMatch(combined, /repeat\s*:\s*-?1|cursor-follow|gyroscope|autoplay\s+sound/i);
-  assert.doesNotMatch(`${globals}\n${admissions}`, /(?:phase|admissions)-hero[^{}]*\{[^{}]*animation\s*:/s);
-  assert.doesNotMatch(`${globals}\n${admissions}\n${compliance}`, /\b(?:[1-9]\d*)ms\b/);
-  assert.doesNotMatch(`${globals}\n${admissions}\n${compliance}`, /\bwill-change\s*:/);
+  assert.doesNotMatch(`${globals}\n${admissions}\n${homepage}`, /(?:phase|admissions|home)-hero[^{}]*\{[^{}]*animation\s*:/s);
+  assert.doesNotMatch(`${globals}\n${admissions}\n${compliance}\n${homepage}`, /\b(?:[1-9]\d*)ms\b/);
+  assert.doesNotMatch(`${globals}\n${admissions}\n${compliance}\n${homepage}`, /\bwill-change\s*:/);
 
   for (const [name, css] of Object.entries(cssFiles)) {
     const finePointer = css.indexOf("@media (hover: hover) and (pointer: fine)");
@@ -156,9 +179,10 @@ test("rejects prohibited, unbounded and layout-changing motion patterns", async 
 });
 
 test("keeps essential navigation and content available without JavaScript", async () => {
-  const [header, admissions, globals] = await Promise.all([
+  const [header, admissions, homepage, globals] = await Promise.all([
     source("components/site-header.tsx"),
     source("components/admissions.tsx"),
+    source("app/page.tsx"),
     source("app/globals.css"),
   ]);
 
@@ -169,6 +193,10 @@ test("keeps essential navigation and content available without JavaScript", asyn
   assert.match(admissions, /<h1>\{title\}<\/h1>/);
   assert.match(admissions, /<Link href="\/admissions\/contact">Ask the school/);
   assert.doesNotMatch(admissions, /style=\{\{[^}]*opacity:\s*0/);
+  assert.match(homepage, /Here,/);
+  assert.match(homepage, /href="\/admissions\/enquire"/);
+  assert.match(homepage, /Mandatory Public Disclosure/);
+  assert.doesNotMatch(homepage, /style=\{\{[^}]*opacity:\s*0/);
   assert.match(globals, /site-header:not\(\[data-navigation-enhanced="true"\]\) \.mobile-menu-button/);
   assert.match(globals, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
   assert.match(globals, /scroll-behavior:\s*auto\s*!important/);

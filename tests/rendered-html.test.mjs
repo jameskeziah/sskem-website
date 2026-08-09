@@ -52,7 +52,7 @@ test("server-renders the current SSKEMS website foundation", async () => {
   const html = await response.text();
   const title = textContent(html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? "");
   assert.match(title, /SSKEMS/i);
-  assert.match(title, /Stage 3/i);
+  assert.match(title, /Shree Samarth Krupa/i);
 
   const anchors = anchorsIn(html);
   assert.ok(
@@ -87,6 +87,12 @@ test("server-renders the current SSKEMS website foundation", async () => {
   );
 
   assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, "The page must have one h1");
+  assert.match(html, /data-motion-component=["']home-hero["']/i);
+  assert.match(html, /data-motion-component=["']home-campus["']/i);
+  assert.match(html, /data-motion-component=["']home-achievements["']/i);
+  assert.match(textContent(html), /Here, possibility begins\./i);
+  assert.match(html, /data-publication-review=["']required["']/i);
+  assert.doesNotMatch(html, /style=["'][^"']*(?:opacity\s*:\s*0|visibility\s*:\s*hidden)/i);
   assert.doesNotMatch(
     html,
     /codex-preview|_sites-preview|SkeletonPreview|react-loading-skeleton|Building your site|Your site is taking shape/i,

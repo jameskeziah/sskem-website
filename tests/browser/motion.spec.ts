@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const localBaseUrl = "http://127.0.0.1:3000";
+const localBaseUrl = process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000";
 
 async function computedTranslateY(locator: import("@playwright/test").Locator) {
   return locator.evaluate((element) => {
@@ -31,6 +31,30 @@ test("keeps admissions readable and navigable when hydration scripts fail", asyn
     }),
   );
   expect(finalStates.every((state) => state.opacity === "1" && state.transform === "none")).toBe(true);
+});
+
+test("keeps the homepage narrative readable when hydration scripts fail", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 740 });
+  await page.route("**/*.js", (route) => route.abort());
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+
+  await expect(page.getByRole("heading", { level: 1, name: /Here, possibility begins/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Enquire now/i }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: "Mandatory Public Disclosure", exact: true }).first()).toBeVisible();
+  await expect(page.locator(".mobile-menu-button")).toBeHidden();
+
+  const fallback = page.locator(".static-navigation-fallback");
+  await expect(fallback).toBeVisible();
+  await fallback.locator("summary").click();
+  await expect(page.getByRole("navigation", { name: "Primary navigation without JavaScript" })).toBeVisible();
+
+  const finalStates = await page.locator("[data-motion-home-hero-heading], [data-motion-home-campus-frame], [data-motion-home-achievement]").evaluateAll((elements) =>
+    elements.map((element) => {
+      const style = getComputedStyle(element);
+      return { opacity: style.opacity, transform: style.transform, clipPath: style.clipPath };
+    }),
+  );
+  expect(finalStates.every((state) => state.opacity === "1" && state.transform === "none" && state.clipPath === "none")).toBe(true);
 });
 
 test("provides the static navigation fallback when JavaScript is disabled", async ({ browser }) => {
@@ -81,6 +105,31 @@ test("reduced motion leaves every motion target in its final static state", asyn
   expect(states.every((state) => state.transform === "none")).toBe(true);
   expect(states.every((state) => state.clipPath === "none")).toBe(true);
   expect(states.every((state) => state.animationDuration === "0s")).toBe(true);
+});
+
+test("reduced motion leaves the homepage story in its final static state", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+
+  await page.locator("[data-motion-component='home-campus']").scrollIntoViewIfNeeded();
+  await page.locator("[data-motion-component='home-achievements']").scrollIntoViewIfNeeded();
+  const states = await page.locator("[data-motion-home-hero-heading], [data-motion-home-hero-media], [data-motion-home-campus-copy], [data-motion-home-campus-frame], [data-motion-home-achievement]").evaluateAll((elements) =>
+    elements.map((element) => {
+      const style = getComputedStyle(element);
+      return {
+        opacity: style.opacity,
+        transform: style.transform,
+        clipPath: style.clipPath,
+        willChange: style.willChange,
+      };
+    }),
+  );
+
+  expect(states.every((state) => state.opacity === "1")).toBe(true);
+  expect(states.every((state) => state.transform === "none")).toBe(true);
+  expect(states.every((state) => state.clipPath === "none")).toBe(true);
+  expect(states.every((state) => state.willChange === "auto")).toBe(true);
 });
 
 test("fine-pointer hover stays inside the approved lift limits and focus does not move", async ({ page }) => {

@@ -1,350 +1,333 @@
 import type { Metadata } from "next";
-import { SiteHeader } from "@/components/site-header";
+import Image from "next/image";
+import Link from "next/link";
+
 import { SiteFooter } from "@/components/site-footer";
-import {
-  AspectRatio,
-  Cluster,
-  Divider,
-  Grid,
-  PageContainer,
-  ReadingContainer,
-  Section,
-  Stack,
-  VisuallyHidden,
-} from "@/components/layout";
-import {
-  Caption,
-  DownloadLink,
-  ExternalLink,
-  Eyebrow,
-  Heading,
-  Lead,
-  List,
-  Quote,
-  Text,
-  TextLink,
-} from "@/components/typography";
-import {
-  Button,
-  Checkbox,
-  ErrorSummary,
-  FormField,
-  IconButton,
-  Input,
-  RadioGroup,
-  SearchInput,
-  Select,
-  Textarea,
-} from "@/components/controls";
-import {
-  Accordion,
-  Alert,
-  ContactCard,
-  DataTable,
-  DisclosureDocumentCard,
-  DocumentList,
-  EmptyState,
-  ErrorState,
-  FacultyCard,
-  GalleryCard,
-  LeadershipCard,
-  Pagination,
-  ProgrammeCard,
-  ResponsiveImage,
-  Statistic,
-  VideoEmbed,
-} from "@/components/content";
-import { institutionPathways } from "@/app/data/navigation";
-import { disclosureSample, siteFacts } from "@/app/data/site";
+import { SiteHeader } from "@/components/site-header";
+import { HomeAchievementsMotion } from "@/components/motion/home-achievements-motion";
+import { HomeCampusMotion } from "@/components/motion/home-campus-motion";
+import { HomeHeroMotion } from "@/components/motion/home-hero-motion";
+import { siteFacts } from "@/app/data/site";
+
+import "./homepage.css";
 
 export const metadata: Metadata = {
-  title: "Stage 3 Admissions Review",
+  title: "Shree Samarth Krupa English Medium School, Veral",
   description:
-    "Review the SSKEMS admissions information architecture, policy gates, Mandatory Public Disclosure and design foundation.",
+    "Explore SSKEMS in Veral, including the CBSE school, admissions guidance, campus, student life and Mandatory Public Disclosure.",
 };
 
-const componentGroups = [
+const pathways = [
   {
-    label: "Layout",
-    items: ["PageContainer", "ReadingContainer", "Section", "Stack", "Inline", "Grid", "Cluster", "Divider", "AspectRatio", "VisuallyHidden"],
+    number: "01",
+    title: "School",
+    description: "Begin with the school overview, academics, faculty and campus information.",
+    href: "/school",
+    link: "Explore the school",
   },
   {
-    label: "Typography",
-    items: ["Heading", "Text", "Lead", "Eyebrow", "Caption", "TextLink", "ExternalLink", "DownloadLink", "List", "Quote"],
+    number: "02",
+    title: "Admissions",
+    description: "Review the process, current criteria status, document guidance and enquiry route.",
+    href: "/admissions",
+    link: "Plan your next step",
   },
   {
-    label: "Controls",
-    items: ["Button", "IconButton", "Input", "Textarea", "Select", "Checkbox", "RadioGroup", "FormField", "FieldHint", "FieldError", "ErrorSummary", "SearchInput"],
+    number: "03",
+    title: "Student life",
+    description: "Find clubs, the calendar, uniform guidance and photographs from school life.",
+    href: "/student-life",
+    link: "Discover student life",
   },
-  {
-    label: "Content",
-    items: ["NoticeBar", "Alert", "Breadcrumbs", "ProgrammeCard", "DisclosureDocumentCard", "DocumentList", "ContactCard", "LeadershipCard", "FacultyCard", "Statistic", "Accordion", "DataTable", "ResponsiveImage", "VideoEmbed", "GalleryCard", "EmptyState", "ErrorState", "Pagination"],
-  },
-];
+] as const;
 
-const brandSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
-const neutralSteps = [0, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
+const serviceLinks = [
+  {
+    number: "01",
+    label: "Admissions",
+    description: "Clear guidance before you enquire",
+    href: "/admissions",
+  },
+  {
+    number: "02",
+    label: "Mandatory Public Disclosure",
+    description: "Open the Appendix IX disclosure",
+    href: "/mandatory-public-disclosure",
+  },
+  {
+    number: "03",
+    label: "Documents",
+    description: "Search the controlled archive",
+    href: "/documents",
+  },
+] as const;
 
-function StatusMark({ status }: { status: "active" | "pending" }) {
-  return <span className={`status-badge status-badge--${status}`}>{status === "active" ? "Confirmed active" : "Management confirmation required"}</span>;
-}
+const achievementArtwork = [
+  {
+    src: "/media/home/class-x-results-2025-26.jpeg",
+    title: "Class X results",
+    meta: "School-supplied creative · 2025–26",
+    alt: "SSKEMS Class X results artwork showing six student achievers and their published percentages.",
+  },
+  {
+    src: "/media/home/xii-science-2025-26.jpeg",
+    title: "XII Science batch",
+    meta: "School-supplied creative · 2025–26",
+    alt: "SSKEMS XII Science batch results artwork showing seven student achievers and their published percentages.",
+  },
+  {
+    src: "/media/home/rangotsav-2025-26.jpeg",
+    title: "Rangotsav recognition",
+    meta: "School-supplied creative · 2025–26",
+    alt: "SSKEMS Rangotsav celebration artwork showing five pupils named as Art Maestro award recipients.",
+  },
+  {
+    src: "/media/home/result-and-admissions-2025-26.jpg",
+    title: "Results and admissions update",
+    meta: "School-supplied creative · 2025–26",
+    alt: "Combined SSKEMS Class X first-rank and engineering and medical admissions guidance artwork.",
+  },
+] as const;
 
 export default function Home() {
   return (
     <>
       <SiteHeader />
-      <main id="main-content" tabIndex={-1}>
-        <section className="phase-hero" aria-labelledby="phase-title">
-          <PageContainer className="phase-hero__grid">
-            <Stack gap="32">
-              <div>
-                <Eyebrow>SSKEMS digital foundation · Stage 3</Eyebrow>
-                <Heading as="h1" level="display" id="phase-title">
-                  Admissions built around trust.
-                </Heading>
+      <main id="main-content" tabIndex={-1} className="home-page">
+        <HomeHeroMotion>
+          <div className="home-shell home-hero__inner">
+            <div className="home-hero__copy">
+              <p className="home-kicker" data-motion-home-hero-intro>
+                Shree Samarth Krupa English Medium School · Veral
+              </p>
+              <h1 id="home-title" className="home-hero__title" aria-label="Here, possibility begins">
+                <span data-motion-home-hero-heading>Here,</span>
+                <span data-motion-home-hero-heading>possibility</span>
+                <span className="home-hero__title-accent" data-motion-home-hero-heading>begins.</span>
+              </h1>
+              <div className="home-hero__support" data-motion-home-hero-support>
+                <p>
+                  A CBSE school in Veral where learning, character and confidence grow together.
+                </p>
+                <div className="home-actions">
+                  <Link className="home-button home-button--light" href="/school">
+                    Explore the school <span aria-hidden="true">→</span>
+                  </Link>
+                  <Link className="home-button home-button--outline-light" href="/admissions/enquire">
+                    Enquire now
+                  </Link>
+                </div>
               </div>
-              <Lead>
-                The public admissions journey now separates enquiry, application and parent tracking while keeping unverified dates, fees, rules and personal-data workflows behind visible approval gates.
-              </Lead>
-              <Cluster gap="12">
-                <TextLink className="button button--primary" href="/admissions">Review admissions</TextLink>
-                <TextLink className="button button--secondary" href="/mandatory-public-disclosure">Public disclosure</TextLink>
-              </Cluster>
-              <Caption>Review environment · Not the final public homepage</Caption>
-            </Stack>
-            <aside className="phase-summary" aria-label="Phase status">
-              <div className="phase-summary__topline"><span>Admissions review</span><strong>03</strong></div>
-              <Heading as="h2" level="section">Parent journeys with safe boundaries</Heading>
-              <ul className="phase-summary__list">
-                <li><span aria-hidden="true">✓</span> Fifteen admissions routes</li>
-                <li><span aria-hidden="true">✓</span> Source-led age-rule gate</li>
-                <li><span aria-hidden="true">✓</span> Separate enquiry and application</li>
-                <li><span aria-hidden="true">○</span> Secure runtime activation pending</li>
-              </ul>
-              <div className="phase-summary__meter" role="progressbar" aria-label="Foundation decisions ready" aria-valuemin={0} aria-valuemax={4} aria-valuenow={3}><span /></div>
-            </aside>
-          </PageContainer>
+            </div>
+
+            <div className="home-hero__media" data-motion-home-hero-media>
+              <Image
+                src="/media/home/campus-main.jpeg"
+                alt="The pink and white SSKEMS school building in Veral."
+                width={1400}
+                height={500}
+                sizes="(max-width: 768px) 100vw, 94vw"
+                priority
+                unoptimized
+              />
+              <div className="home-hero__media-shade" aria-hidden="true" />
+              <p className="home-hero__caption">
+                <span>Campus view</span>
+                <span>Veral · Ratnagiri</span>
+              </p>
+            </div>
+
+            <dl className="home-hero__facts" data-motion-home-hero-support>
+              <div>
+                <dt>CBSE affiliation</dt>
+                <dd>{siteFacts.affiliationNumber}</dd>
+              </div>
+              <div>
+                <dt>Location</dt>
+                <dd>Veral, Khed</dd>
+              </div>
+              <div>
+                <dt>Start here</dt>
+                <dd><Link href="/admissions">Admissions guidance</Link></dd>
+              </div>
+            </dl>
+          </div>
+        </HomeHeroMotion>
+
+        <section className="home-manifesto" aria-labelledby="manifesto-title">
+          <div className="home-shell home-manifesto__grid">
+            <p className="home-chapter-label"><span>01</span> Our foundation</p>
+            <div>
+              <h2 id="manifesto-title">
+                Knowledge for today.
+                <span>Character for every tomorrow.</span>
+              </h2>
+              <p className="home-manifesto__lead">
+                Education should help every learner understand the world, find their voice and move through life with confidence.
+              </p>
+              <div className="home-language-lines" aria-label="Our educational direction in Marathi and Hindi">
+                <p lang="mr">शिक्षण, संस्कार आणि आत्मविश्वास यांचा समतोल विकास.</p>
+                <p lang="hi">शिक्षा, संस्कार और आत्मविश्वास का संतुलित विकास।</p>
+              </div>
+            </div>
+          </div>
         </section>
 
-        <Section className="homepage-compliance" aria-labelledby="homepage-compliance-title">
-          <PageContainer className="homepage-compliance__grid">
-            <div>
-              <Eyebrow>Essential service access</Eyebrow>
-              <Heading as="h2" level="page" id="homepage-compliance-title">Admissions and public records, readable before animation.</Heading>
-              <Lead>The admissions guidance, Appendix IX structure and document archive remain normal HTML routes. Motion adds character without blocking essential information.</Lead>
+        <HomeCampusMotion>
+          <div className="home-shell">
+            <div className="home-campus__heading" data-motion-home-campus-copy>
+              <p className="home-chapter-label home-chapter-label--light"><span>02</span> The campus</p>
+              <h2 id="campus-title">A closer look at where the day begins.</h2>
+              <p>Three views of the SSKEMS campus and grounds in Veral.</p>
             </div>
-            <div className="homepage-compliance__actions">
-              <TextLink className="compliance-shortcut" href="/admissions"><span>01</span><strong>Admissions</strong><small>Start with the right journey</small></TextLink>
-              <TextLink className="compliance-shortcut" href="/mandatory-public-disclosure"><span>02</span><strong>Mandatory Public Disclosure</strong><small>Open Appendix IX</small></TextLink>
-              <TextLink className="compliance-shortcut" href="/documents"><span>03</span><strong>Documents</strong><small>Search the archive</small></TextLink>
-            </div>
-          </PageContainer>
-        </Section>
 
-        <Section tone="subtle" id="navigation-contract" aria-labelledby="navigation-title">
-          <PageContainer>
-            <div className="section-heading">
-              <Eyebrow>01 · Navigation contract</Eyebrow>
-              <Heading as="h2" level="page" id="navigation-title">Lead with what is verified.</Heading>
-              <Lead>Only the CBSE School is currently treated as a confirmed institutional pathway. Junior College and Institute remain out of primary navigation until management approves their current status and content.</Lead>
+            <div className="home-campus__gallery">
+              <figure className="home-campus__frame home-campus__frame--grounds" data-motion-home-campus-frame>
+                <Image
+                  src="/media/home/campus-grounds.jpeg"
+                  alt="SSKEMS school building seen across the open grounds."
+                  width={1400}
+                  height={500}
+                  sizes="(max-width: 768px) 100vw, 68vw"
+                  unoptimized
+                />
+                <figcaption>Across the grounds</figcaption>
+              </figure>
+              <figure className="home-campus__frame home-campus__frame--entrance" data-motion-home-campus-frame>
+                <Image
+                  src="/media/home/campus-entrance.jpeg"
+                  alt="The front entrance of the SSKEMS school building."
+                  width={1400}
+                  height={500}
+                  sizes="(max-width: 768px) 100vw, 35vw"
+                  unoptimized
+                />
+                <figcaption>At the entrance</figcaption>
+              </figure>
+              <figure className="home-campus__frame home-campus__frame--courtyard" data-motion-home-campus-frame>
+                <Image
+                  src="/media/home/campus-courtyard.jpeg"
+                  alt="A shaded view of the SSKEMS campus from the grounds."
+                  width={1400}
+                  height={500}
+                  sizes="(max-width: 768px) 100vw, 42vw"
+                  unoptimized
+                />
+                <figcaption>Campus perspective</figcaption>
+              </figure>
             </div>
-            <Grid min="card" gap="24" className="pathway-grid">
-              {institutionPathways.map((pathway, index) => (
-                <article className={`pathway-card pathway-card--${pathway.status}`} data-index={`0${index + 1}`} key={pathway.href}>
-                  <StatusMark status={pathway.status} />
-                  <Heading as="h3" level="section">{pathway.label}</Heading>
-                  <Text>{pathway.evidence}</Text>
-                  {pathway.status === "active" ? <TextLink href={pathway.href}>Open pathway</TextLink> : <Caption>Hidden from primary navigation</Caption>}
+
+            <div className="home-campus__closing" data-motion-home-campus-copy>
+              <p>One campus. Many beginnings.</p>
+              <Link href="/school/facilities">Explore the campus <span aria-hidden="true">→</span></Link>
+            </div>
+          </div>
+        </HomeCampusMotion>
+
+        <section className="home-pathways" aria-labelledby="pathways-title">
+          <div className="home-shell">
+            <div className="home-section-heading home-section-heading--split">
+              <div>
+                <p className="home-chapter-label"><span>03</span> Find your way</p>
+                <h2 id="pathways-title">The right information, without the search.</h2>
+              </div>
+              <p>Start with the part of school life that matters to you today.</p>
+            </div>
+            <div className="home-pathways__grid">
+              {pathways.map((pathway) => (
+                <article className="home-pathway-card" key={pathway.href}>
+                  <span className="home-pathway-card__number">{pathway.number}</span>
+                  <div>
+                    <h3>{pathway.title}</h3>
+                    <p>{pathway.description}</p>
+                  </div>
+                  <Link href={pathway.href}>
+                    {pathway.link} <span aria-hidden="true">→</span>
+                  </Link>
                 </article>
               ))}
-            </Grid>
-            <Alert title="Approval needed" kind="warning">
-              Management and parent representatives should confirm the labels, hierarchy and status of Junior College and Institute before Phase 1 is signed off.
-            </Alert>
-          </PageContainer>
-        </Section>
+            </div>
+          </div>
+        </section>
 
-        <Section id="tokens" aria-labelledby="tokens-title">
-          <PageContainer>
-            <div className="section-heading section-heading--split">
+        <section className="home-services" aria-labelledby="services-title">
+          <div className="home-shell home-services__grid">
+            <div className="home-services__intro">
+              <p className="home-chapter-label home-chapter-label--light"><span>04</span> Essential access</p>
+              <h2 id="services-title">Trust is built by making important information easy to reach.</h2>
+              <p>Admissions guidance, public disclosure and document records remain readable and usable before any animation loads.</p>
+            </div>
+            <nav className="home-services__links" aria-label="Essential school information">
+              {serviceLinks.map((item) => (
+                <Link href={item.href} key={item.href}>
+                  <span>{item.number}</span>
+                  <strong>{item.label}</strong>
+                  <small>{item.description}</small>
+                  <i aria-hidden="true">→</i>
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </section>
+
+        <HomeAchievementsMotion>
+          <div className="home-shell">
+            <div className="home-section-heading home-section-heading--split">
               <div>
-                <Eyebrow>02 · Design tokens</Eyebrow>
-                <Heading as="h2" level="page" id="tokens-title">A system, not a collection of guesses.</Heading>
+                <p className="home-chapter-label"><span>05</span> Publication review</p>
+                <h2 id="achievements-title">Effort deserves a thoughtful stage.</h2>
               </div>
-              <Text>The palette is provisional, sampled from the current crest, and must pass a final photography and contrast review before brand approval.</Text>
-            </div>
-            <div className="token-board">
-              <div className="token-board__group">
-                <Heading as="h3" level="subsection">Reference · Brand</Heading>
-                <div className="swatch-row" aria-label="Brand reference colour scale">
-                  {brandSteps.map((step) => <div className="swatch" key={step}><span style={{ background: `var(--color-brand-${step})` }} /><small>{step}</small></div>)}
-                </div>
+              <div className="home-achievements__review" id="achievement-review-note">
+                <strong>Approval gate</strong>
+                <p>These supplied creatives are staged for private review. Names, photographs, marks, award wording and institutional status require approval before public publication.</p>
               </div>
-              <div className="token-board__group">
-                <Heading as="h3" level="subsection">Reference · Neutral</Heading>
-                <div className="swatch-row" aria-label="Neutral reference colour scale">
-                  {neutralSteps.map((step) => <div className="swatch" key={step}><span style={{ background: `var(--color-neutral-${step})` }} /><small>{step}</small></div>)}
-                </div>
-              </div>
-              <Divider />
-              <Grid min="compact" gap="16">
-                <div className="token-level"><span>01</span><strong>Reference</strong><small>Raw values</small></div>
-                <div className="token-level"><span>02</span><strong>Semantic</strong><small>Purpose-led aliases</small></div>
-                <div className="token-level"><span>03</span><strong>Component</strong><small>Necessary exceptions</small></div>
-              </Grid>
             </div>
-          </PageContainer>
-        </Section>
 
-        <Section tone="brand" id="primitives" aria-labelledby="primitives-title">
-          <PageContainer>
-            <div className="section-heading section-heading--light">
-              <Eyebrow>03 · Layout and type</Eyebrow>
-              <Heading as="h2" level="page" id="primitives-title">Structure that survives real content.</Heading>
-              <Lead>Containers, spacing and typography remain legible from 320px screens through wide desktops, large text and multilingual content.</Lead>
-            </div>
-            <Grid min="card" gap="24">
-              <article className="primitive-panel">
-                <Eyebrow>Reading container</Eyebrow>
-                <Heading as="h3" level="section">Clear hierarchy</Heading>
-                <Text>Every page receives one clear first-level heading and a predictable content rhythm.</Text>
-                <Text lang="mr">शिक्षण, संस्कार आणि आत्मविश्वास यांचा समतोल विकास.</Text>
-                <Text lang="hi">शिक्षा, संस्कार और आत्मविश्वास का संतुलित विकास।</Text>
-              </article>
-              <article className="primitive-panel primitive-panel--ratio">
-                <Eyebrow>Aspect ratio</Eyebrow>
-                <AspectRatio ratio="landscape" className="ratio-demo"><span>16:10 responsive media frame</span></AspectRatio>
-              </article>
-            </Grid>
-            <ReadingContainer className="type-specimen">
-              <Eyebrow>Typography specimen</Eyebrow>
-              <Heading as="h3" level="page">A composed voice for important information.</Heading>
-              <Lead>Lead text makes the key idea easy to find. Body text remains calm, readable and direct.</Lead>
-              <Text>Text links are <TextLink href="#controls">visually identifiable</TextLink>, while <ExternalLink href="https://www.cbse.gov.in/">external destinations</ExternalLink> communicate their behaviour.</Text>
-              <Quote cite="Component content principle">Say what is known. Label what is pending. Never decorate uncertainty into fact.</Quote>
-            </ReadingContainer>
-          </PageContainer>
-        </Section>
-
-        <Section tone="subtle" id="controls" aria-labelledby="controls-title">
-          <PageContainer>
-            <div className="section-heading">
-              <Eyebrow>04 · Controls and forms</Eyebrow>
-              <Heading as="h2" level="page" id="controls-title">Every state is part of the component.</Heading>
-              <Lead>Targets, focus rings, validation messages and disabled states are designed into the foundation—not left to individual pages.</Lead>
-            </div>
-            <div className="control-lab">
-              <div className="control-lab__buttons">
-                <Heading as="h3" level="subsection">Actions</Heading>
-                <Cluster gap="12">
-                  <Button type="button">Primary action</Button>
-                  <Button type="button" variant="secondary">Secondary action</Button>
-                  <Button type="button" variant="quiet">Quiet action</Button>
-                  <Button type="button" disabled>Disabled</Button>
-                  <Button type="button" loading>Loading</Button>
-                  <IconButton type="button" label="Example icon control"><span aria-hidden="true">+</span></IconButton>
-                </Cluster>
-              </div>
-              <form className="control-lab__form" aria-label="Component state examples">
-                <ErrorSummary errors={[{ href: "#example-email", message: "Enter a valid email address" }]} />
-                <Grid min="card" gap="24">
-                  <Stack gap="16">
-                    <FormField id="example-name" label="Parent or guardian’s full name" hint="Use the name we should use when contacting you.">
-                      <Input autoComplete="name" defaultValue="Anita Patil" />
-                    </FormField>
-                    <FormField id="example-email" label="Email address" error="Enter a valid email address">
-                      <Input type="email" defaultValue="anita@" />
-                    </FormField>
-                    <FormField id="example-reference" label="Internal reference" hint="This value is read-only.">
-                      <Input readOnly value="SSKEMS-2026-001" />
-                    </FormField>
-                  </Stack>
-                  <Stack gap="16">
-                    <FormField id="example-year" label="Academic year">
-                      <Select defaultValue="2026"><option value="2026">2026–27</option><option value="2027">2027–28</option></Select>
-                    </FormField>
-                    <FormField id="example-note" label="Additional details for the admissions team, including any accessibility or communication support required" optional>
-                      <Textarea rows={4} placeholder="No additional details provided" />
-                    </FormField>
-                    <SearchInput aria-label="Search component example" placeholder="Search school information" />
-                    <Checkbox label="I agree to be contacted about this enquiry" defaultChecked />
-                    <RadioGroup legend="Preferred contact method" name="contact-method" defaultValue="phone" options={[{ label: "Phone", value: "phone" }, { label: "Email", value: "email" }]} />
-                  </Stack>
-                </Grid>
-              </form>
-            </div>
-          </PageContainer>
-        </Section>
-
-        <Section id="content-components" aria-labelledby="content-title">
-          <PageContainer>
-            <div className="section-heading">
-              <Eyebrow>05 · Shared content</Eyebrow>
-              <Heading as="h2" level="page" id="content-title">Built first for admissions and trust.</Heading>
-              <Lead>Structured components make key facts easier to maintain, verify and understand.</Lead>
-            </div>
-            <Grid min="card" gap="24">
-              <ProgrammeCard eyebrow="Confirmed pathway" title="CBSE School" description="A landing-card pattern for a verified institutional offering." href="/school" />
-              <ContactCard title="School office" phone={siteFacts.phone} email={siteFacts.email} hours={siteFacts.workingHours.weekdays} />
-              <LeadershipCard name="Name awaiting verification" role="Leadership profile example" message="This component keeps an unverified profile visibly provisional." />
-            </Grid>
-            <div className="content-showcase-grid">
-              <Stack gap="24">
-                <DocumentList label="Disclosure component example">
-                  <DisclosureDocumentCard {...disclosureSample} />
-                </DocumentList>
-                <DownloadLink format="PDF" size="Size pending" year="2026–27">Example disclosure document</DownloadLink>
-                <Accordion items={[
-                  { title: "How will document status be shown?", content: <Text>Every disclosure identifies whether it is current, archived or awaiting verification.</Text> },
-                  { title: "What happens when a value is missing?", content: <Text>The interface names the missing value instead of presenting a blank or invented fact.</Text> },
-                ]} />
-              </Stack>
-              <Stack gap="24">
-                <div className="statistic-row"><Statistic value={siteFacts.affiliationNumber} label="CBSE affiliation number" /><Statistic value="1" label="Confirmed pathway" /></div>
-                <FacultyCard name="Faculty name pending" department="Department pending" qualification="Qualification awaiting verification" />
-                <GalleryCard title="Campus image pending" meta="Missing-image state" />
-              </Stack>
-            </div>
-            <Grid min="card" gap="24">
-              <Alert title="Information example" kind="information">Use for neutral, time-sensitive guidance.</Alert>
-              <Alert title="Success example" kind="success">Use only after an action is confirmed.</Alert>
-              <Alert title="Warning example" kind="warning">Use when facts or actions need attention.</Alert>
-              <Alert title="Error example" kind="danger">Use for a blocking error with recovery guidance.</Alert>
-            </Grid>
-            <Grid min="card" gap="24">
-              <EmptyState title="No verified notices" description="When approved notices are added, they will appear here." />
-              <ErrorState title="Document unavailable" description="Try again later or contact the school office for an accessible copy." />
-            </Grid>
-            <DataTable caption="Disclosure metadata example" headers={["Document", "Year", "Status"]} rows={[["Affiliation status", "2026–27", "Verification required"], ["Fee structure", "2026–27", "Verification required"]]} />
-            <div className="media-component-grid">
-              <figure className="media-specimen">
-                <ResponsiveImage src="/sskem-logo.png" alt="Current SSKEMS crest and wordmark" width={1498} height={586} sizes="(max-width: 760px) 100vw, 50vw" />
-                <figcaption>Responsive image component using the existing school identity.</figcaption>
-              </figure>
-              <VideoEmbed title="Video component empty-state example" />
-            </div>
-            <Pagination current={1} total={4} baseHref="/about/news" />
-          </PageContainer>
-        </Section>
-
-        <Section tone="brand" id="component-catalogue" aria-labelledby="catalogue-title">
-          <PageContainer>
-            <div className="section-heading section-heading--light">
-              <Eyebrow>06 · Component catalogue</Eyebrow>
-              <Heading as="h2" level="page" id="catalogue-title">Fifty implemented building blocks. One source of truth.</Heading>
-              <Lead>Every listed component is connected to the shared token layer. Interaction, assistive-technology and high-zoom verification remains part of the approval gate.</Lead>
-            </div>
-            <div className="component-index">
-              {componentGroups.map((group) => (
-                <section key={group.label} aria-labelledby={`group-${group.label.toLowerCase()}`}>
-                  <Heading as="h3" level="subsection" id={`group-${group.label.toLowerCase()}`}>{group.label}</Heading>
-                  <List>{group.items.map((item) => <li key={item}><span>{item}</span><small>Implemented</small></li>)}</List>
-                </section>
+            <div className="home-achievements__grid" aria-describedby="achievement-review-note">
+              {achievementArtwork.map((artwork, index) => (
+                <article className="home-achievement-card" data-motion-home-achievement key={artwork.src}>
+                  <a href={artwork.src} target="_blank" rel="noreferrer" aria-label={`Open full-size ${artwork.title} artwork in a new tab`}>
+                    <span className="home-achievement-card__media">
+                      <Image
+                        src={artwork.src}
+                        alt={artwork.alt}
+                        width={1400}
+                        height={500}
+                        sizes="(max-width: 768px) 100vw, 48vw"
+                        unoptimized
+                      />
+                    </span>
+                    <span className="home-achievement-card__body">
+                      <span><i>{String(index + 1).padStart(2, "0")}</i>{artwork.meta}</span>
+                      <strong>{artwork.title}</strong>
+                      <small>Open full artwork <span aria-hidden="true">→</span></small>
+                    </span>
+                  </a>
+                </article>
               ))}
             </div>
-            <VisuallyHidden>End of the Phase 1 component catalogue.</VisuallyHidden>
-          </PageContainer>
-        </Section>
+          </div>
+        </HomeAchievementsMotion>
+
+        <section className="home-invitation" aria-labelledby="invitation-title">
+          <div className="home-shell home-invitation__grid">
+            <div>
+              <p className="home-chapter-label"><span>06</span> Begin a conversation</p>
+              <h2 id="invitation-title">Your next chapter starts with one clear step.</h2>
+            </div>
+            <div className="home-invitation__action">
+              <p>Current dates, availability, criteria and fees are being verified. The school office can guide you with the latest information.</p>
+              <div className="home-actions">
+                <Link className="home-button home-button--dark" href="/admissions/enquire">Make an enquiry <span aria-hidden="true">→</span></Link>
+                <Link className="home-button home-button--outline-dark" href="/contact">Contact the school</Link>
+              </div>
+              <p className="home-invitation__contact">
+                <a href={`tel:${siteFacts.mobile}`}>{siteFacts.mobile}</a>
+                <a href={`mailto:${siteFacts.email}`}>{siteFacts.email}</a>
+              </p>
+            </div>
+          </div>
+        </section>
       </main>
       <SiteFooter />
     </>
