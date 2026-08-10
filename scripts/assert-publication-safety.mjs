@@ -1,13 +1,13 @@
 import { access, readFile } from "node:fs/promises";
 
+import {
+  approvalSummary,
+  loadApprovalManifest,
+  validateApprovalManifest,
+} from "../lib/approval-manifest.mjs";
+
 const projectRoot = new URL("../", import.meta.url);
 const privateReviewMode = process.env.HOMEPAGE_REVIEW_MODE === "private";
-const reviewAssetPaths = [
-  "public/media/home/class-x-results-2025-26.jpeg",
-  "public/media/home/xii-science-2025-26.jpeg",
-  "public/media/home/rangotsav-2025-26.jpeg",
-  "public/media/home/result-and-admissions-2025-26.jpg",
-];
 
 async function exists(path) {
   try {
@@ -19,37 +19,61 @@ async function exists(path) {
   }
 }
 
-const [achievementMotion, homepage, assetChecks] = await Promise.all([
+const [manifest, achievementMotion, homepage] = await Promise.all([
+  loadApprovalManifest(),
   readFile(new URL("components/motion/home-achievements-motion.tsx", projectRoot), "utf8"),
   readFile(new URL("app/page.tsx", projectRoot), "utf8"),
-  Promise.all(reviewAssetPaths.map(async (path) => ({ path, exists: await exists(path) }))),
 ]);
-
-const presentAssets = assetChecks.filter((asset) => asset.exists).map((asset) => asset.path);
-const requiresReview =
-  achievementMotion.includes('data-publication-review="required"') ||
-  homepage.includes("These supplied creatives are staged for private review") ||
-  presentAssets.length > 0;
-
-if (!requiresReview) {
-  process.stdout.write("Homepage publication gate: no review-required artwork detected.\n");
-} else if (privateReviewMode) {
-  process.stdout.write(
-    `Homepage publication gate: private-review build acknowledged (${presentAssets.length} protected assets).\n`,
+const issues = validateApprovalManifest(manifest);
+if (issues.length) {
+  throw new Error(
+    `Approval manifest validation failed:\n${issues
+      .slice(0, 12)
+      .map((issue) => `- ${issue.path}: ${issue.message} [${issue.code}]`)
+      .join("\n")}`,
   );
-} else {
-  const listedAssets = presentAssets.length
-    ? `\nDetected review assets:\n- ${presentAssets.join("\n- ")}`
-    : "";
+}
+
+const mediaRecords = manifest.records.filter((record) => record.kind === "media" && record.decision !== "withdrawn");
+const assetChecks = await Promise.all(
+  mediaRecords.map(async (record) => ({ record, exists: await exists(record.sourcePointer) })),
+);
+const missingAssets = assetChecks.filter((asset) => !asset.exists).map((asset) => asset.record.id);
+if (missingAssets.length) {
+  throw new Error(`Approval manifest references missing media:\n- ${missingAssets.join("\n- ")}`);
+}
+
+const protectedMedia = mediaRecords.filter((record) => record.checkProfile === "pupil-media");
+const sourceStillRequiresReview =
+  achievementMotion.includes('data-publication-review="required"') ||
+  homepage.includes("These supplied creatives are staged for private review");
+const protectedMediaReady = protectedMedia.every((record) => record.decision === "approved");
+if (sourceStillRequiresReview && protectedMediaReady) {
+  throw new Error(
+    "Approval manifest marks pupil media approved, but the homepage still declares publication review required. Resolve the source and manifest together.",
+  );
+}
+
+const summary = approvalSummary(manifest);
+if (privateReviewMode) {
+  process.stdout.write(
+    `Publication approvals: manifest valid; private review acknowledged (${summary.blockingRecords.length} release blockers across ${summary.total} records).\n`,
+  );
+} else if (!summary.releaseReady) {
+  const counts = summary.blockingByKind;
   throw new Error(
     [
-      "Public build blocked: the homepage still contains pupil artwork marked for publication review.",
-      "The visible approval message is not access control.",
+      "Public build blocked by the structured approval manifest.",
+      `Unapproved scope: ${counts.media} media, ${counts.claim} claims and ${counts.document} documents (${summary.blockingRecords.length} release blockers).`,
+      "Run `npm run approvals:audit` for the summary or `npm run approvals:release` for the blocking IDs.",
       "Use `npm run build:review` only for an access-controlled private review.",
-      "For public release, complete the approval register and remove the review requirement through an intentional code change.",
-      listedAssets,
-    ]
-      .filter(Boolean)
-      .join("\n"),
+      "Private evidence stays outside the repository; add only opaque controlled-record references to the manifest.",
+    ].join("\n"),
   );
+} else if (sourceStillRequiresReview) {
+  throw new Error(
+    "Approval manifest is release-ready, but the homepage still declares publication review required. Remove the review-only presentation through an intentional code change.",
+  );
+} else {
+  process.stdout.write("Publication approvals: manifest valid and public release ready.\n");
 }

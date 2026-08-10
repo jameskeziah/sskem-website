@@ -124,8 +124,11 @@ notes. Do not store consent evidence in the public web repository.
 
 ## 8. Approval register
 
-The content owner should copy this table into the school's controlled approval
-record and attach evidence there.
+The machine-readable release register is `content/approval-manifest.json`; its
+operating procedure is in `docs/approval-manifest.md`. The content owner should
+attach actual evidence only in the school's controlled approval system and put
+its opaque record reference in the manifest. The table below remains a human
+capture checklist, not the release source of truth.
 
 | Asset group | Accuracy | Consent | Rights/source | Institutional claim | Management approval | Publish |
 | --- | --- | --- | --- | --- | --- | --- |

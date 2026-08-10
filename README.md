@@ -25,6 +25,12 @@ artwork still carries the publication-review requirement. Use
 emits `noindex, nofollow` metadata. Search-engine directives are not access
 control.
 
+Publication decisions are tracked in `content/approval-manifest.json`. Run
+`npm run approvals:audit` for a structural summary and
+`npm run approvals:release` for the exact media, claim and document blockers.
+Only opaque references belong in the manifest; private evidence remains in the
+school's controlled record system.
+
 The test command regenerates design tokens, creates a production build, checks
 the Phase 1, Stage 2 and Stage 3 contracts, validates document-publication and
 admissions safeguards, and runs accessibility, keyboard, responsive,
@@ -55,7 +61,8 @@ archive-filter and visual tests.
   capture plan, consent requirements, delivery specification and approval
   register are in `docs/campus-media-brief.md`.
 - `scripts/assert-publication-safety.mjs` prevents the normal production build
-  from packaging that review material until the gate is intentionally resolved.
+  from packaging review material until the structured approval manifest is
+  release-ready and the review-only source treatment is intentionally resolved.
 - `db/admissions-schema.ts` and its generated migration scaffold the audited
   workflow without activating persistence.
 - The compliance schema and validation layer are foundations only; official

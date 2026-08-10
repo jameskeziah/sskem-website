@@ -350,11 +350,12 @@ test("catalogues homepage media and keeps pupil artwork behind publication gates
     assert.ok(details.size <= 2_000_000, `${file} exceeds the prototype media ceiling`);
   }
 
-  const [homepage, layout, achievements, brief, publicationGate, packageText] = await Promise.all([
+  const [homepage, layout, achievements, brief, publicationGuide, publicationGate, packageText] = await Promise.all([
     source("app/page.tsx"),
     source("app/layout.tsx"),
     source("components/motion/home-achievements-motion.tsx"),
     source("docs/campus-media-brief.md"),
+    source("docs/approval-manifest.md"),
     source("scripts/assert-publication-safety.mjs"),
     source("package.json"),
   ]);
@@ -371,12 +372,17 @@ test("catalogues homepage media and keeps pupil artwork behind publication gates
   assert.match(brief, /Junior College\/institutional status[\s\S]*?pending/i);
   assert.match(brief, /review markers, not access[\s\S]*?public build must omit those assets/i);
   assert.match(brief, /npm run build:review[\s\S]*?access-controlled review environment/i);
+  assert.match(brief, /content\/approval-manifest\.json[\s\S]*?release source of truth/i);
   assert.match(brief, /No autoplay sound/i);
   assert.match(brief, /LCP ≤ 2\.5 seconds/i);
-  assert.match(publicationGate, /Public build blocked/);
-  assert.match(publicationGate, /visible approval message is not access control/i);
+  assert.match(publicationGuide, /Never place[\s\S]*?consent forms[\s\S]*?private file paths/i);
+  assert.match(publicationGuide, /separation of duties/i);
+  assert.match(publicationGate, /Public build blocked by the structured approval manifest/);
+  assert.match(publicationGate, /loadApprovalManifest/);
   assert.match(publicationGate, /HOMEPAGE_REVIEW_MODE === "private"/);
   assert.match(packageJson.scripts.prebuild, /assert-publication-safety\.mjs/);
+  assert.match(packageJson.scripts["approvals:audit"], /audit-approval-manifest\.mjs/);
+  assert.match(packageJson.scripts["approvals:release"], /--release/);
   assert.match(packageJson.scripts["build:review"], /HOMEPAGE_REVIEW_MODE=private/);
   assert.match(packageJson.scripts.test, /HOMEPAGE_REVIEW_MODE=private/);
   assert.match(packageJson.scripts["test:browser"], /HOMEPAGE_REVIEW_MODE=private/);
