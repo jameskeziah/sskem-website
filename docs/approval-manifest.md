@@ -45,11 +45,22 @@ Document approval continues to require the established upload/approval
 separation of duties. The private evidence system—not this manifest—must record
 the actual uploader and approver identities.
 
+Candidate Appendix IX PDFs use the guarded intake procedure in
+`docs/document-ingestion.md`. It renders every page for review, assesses the text
+layer, rejects interactive content and binds publication to the staged SHA-256
+receipt. The local pipeline does not replace the controlled malware scan.
+
 ## Commands
 
 - `npm run approvals:audit` validates structure and prints the current summary.
 - `npm run approvals:release` prints every blocking ID and fails unless the
   registry is ready for public release.
+- `npm run documents:inspect -- --record ID --input PATH` performs static PDF,
+  page-count and text-layer checks without publishing anything.
+- `npm run documents:prepare -- --record ID --input PATH` creates an ignored
+  candidate bundle, page previews and privacy-safe receipt.
+- `npm run documents:publish -- --record ID --input PATH --public-filename NAME.pdf`
+  requires approval, verified scan evidence and an exact staged hash match.
 - `npm run build:review` permits the owner-only review build when the manifest is
   structurally valid.
 - `npm run build` consumes the same manifest and refuses a public build while

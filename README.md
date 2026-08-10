@@ -41,6 +41,12 @@ pipeline documented in `docs/campus-media-ingestion.md`. It validates production
 dimensions, preserves composition, strips embedded metadata, creates responsive
 AVIF/WebP/JPEG variants and refuses public output for unapproved records.
 
+Appendix IX PDFs are prepared through the guarded document pipeline documented
+in `docs/document-ingestion.md`. It rejects encrypted or interactive PDFs,
+assesses the text layer, renders every page for review and binds publication to
+the exact staged SHA-256 receipt. Malware scanning remains an external,
+controlled-system requirement and is never implied by the local pipeline.
+
 The test command regenerates design tokens, creates a production build, checks
 the Phase 1, Stage 2 and Stage 3 contracts, validates document-publication and
 admissions safeguards, and runs accessibility, keyboard, responsive,
@@ -75,9 +81,10 @@ archive-filter and visual tests.
   release-ready and the review-only source treatment is intentionally resolved.
 - `db/admissions-schema.ts` and its generated migration scaffold the audited
   workflow without activating persistence.
-- The compliance schema and validation layer are foundations only; official
-  document ingestion, approvals, scanning and public-domain cutover remain
-  blocked until the school supplies approved records and operating decisions.
+- The compliance schema and guarded intake pipeline are ready; the twelve real
+  Appendix IX PDFs, their controlled malware scans, metadata, privacy and
+  accessibility reviews, approvals and public-domain cutover remain blocked
+  until the school supplies approved records and operating decisions.
 
 ## Technology
 

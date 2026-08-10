@@ -170,6 +170,19 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
             </dl>
           </section>
 
+          <section className="review-document-intake" aria-labelledby="review-document-intake-title">
+            <div className="review-section-heading">
+              <div><p className="eyebrow">Appendix IX document gate</p><h2 id="review-document-intake-title">Every PDF is rendered, checked and bound to its approval.</h2></div>
+              <p>The intake pipeline rejects encrypted or interactive PDFs, prepares page-by-page visual previews and refuses publication unless the reviewed file hash matches an approved document record.</p>
+            </div>
+            <dl className="review-document-intake__grid">
+              <div><dt>Static PDF</dt><dd><strong>Active content rejected</strong><span>Scripts, attachments, launch actions and forms stop intake.</span></dd></div>
+              <div><dt>Visual QA</dt><dd><strong>Every page rendered</strong><span>Numbered previews support legibility and completeness review.</span></dd></div>
+              <div><dt>Accessibility</dt><dd><strong>Text layer assessed</strong><span>Sparse or scanned pages are flagged for OCR and remediation.</span></dd></div>
+              <div><dt>Publication</dt><dd><strong>Exact hash required</strong><span>External malware-scan evidence and manifest approval remain mandatory.</span></dd></div>
+            </dl>
+          </section>
+
           <section className="review-queue" aria-labelledby="review-queue-title">
             <div className="review-section-heading">
               <div><p className="eyebrow">Complete register</p><h2 id="review-queue-title">Review every release dependency</h2></div>

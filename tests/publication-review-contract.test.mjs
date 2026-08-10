@@ -26,6 +26,9 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /Production media gate/);
   assert.match(page, /AVIF · WebP · JPEG/);
   assert.match(page, /EXIF, XMP and IPTC are stripped and rechecked\./);
+  assert.match(page, /Appendix IX document gate/);
+  assert.match(page, /Every PDF is rendered, checked and bound to its approval\./);
+  assert.match(page, /External malware-scan evidence and manifest approval remain mandatory\./);
   assert.match(page, /Evidence stays in the school’s controlled system\./);
   assert.match(page, /Download review worksheet/);
   assert.match(route, /approvalQueueCsv\(\)/);

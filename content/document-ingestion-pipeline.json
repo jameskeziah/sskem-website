@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "pipelineId": "sskem-public-document",
+  "allowedExtension": ".pdf",
+  "maximumInputBytes": 25000000,
+  "maximumPages": 300,
+  "minimumTextCharactersPerPage": 40,
+  "renderDpi": 120,
+  "stagingRoot": "work/document-intake",
+  "publicRoot": "public/documents/production",
+  "publicFilenamePattern": "^[a-z0-9]+(?:-[a-z0-9]+)*\\.pdf$",
+  "prohibitedPdfTokens": [
+    "/JavaScript",
+    "/JS",
+    "/OpenAction",
+    "/AA",
+    "/Launch",
+    "/EmbeddedFile",
+    "/Filespec",
+    "/RichMedia",
+    "/XFA",
+    "/AcroForm"
+  ]
+}
