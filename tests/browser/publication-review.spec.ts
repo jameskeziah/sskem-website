@@ -5,6 +5,8 @@ test("prioritises campus-media approval and filters the canonical queue", async 
 
   await expect(page.getByRole("heading", { level: 1, name: "Approval queue" })).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: "33 governed records" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Approved masters become responsive, privacy-clean assets." })).toBeVisible();
+  await expect(page.getByText("AVIF · WebP · JPEG")).toBeVisible();
 
   const firstBatch = page.getByRole("region", { name: "Approve the four campus photographs first." });
   await expect(firstBatch.getByText("Start here")).toHaveCount(4);

@@ -23,6 +23,9 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(data, /export function approvalQueueCsv/);
   assert.match(page, /approvalManifest/);
   assert.match(page, /Approve the four campus photographs first\./);
+  assert.match(page, /Production media gate/);
+  assert.match(page, /AVIF · WebP · JPEG/);
+  assert.match(page, /EXIF, XMP and IPTC are stripped and rechecked\./);
   assert.match(page, /Evidence stays in the school’s controlled system\./);
   assert.match(page, /Download review worksheet/);
   assert.match(route, /approvalQueueCsv\(\)/);

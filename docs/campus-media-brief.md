@@ -121,6 +121,10 @@ notes. Do not store consent evidence in the public web repository.
   traffic. Lazy-load below-fold media and provide explicit dimensions.
 - Filenames use a stable subject/date/sequence convention; captions and alt text
   describe the actual scene rather than repeating promotional copy.
+- Use the controlled workflow in `docs/campus-media-ingestion.md` to inspect and
+  prepare new masters. It preserves the source composition, strips embedded
+  metadata, produces responsive AVIF/WebP/JPEG variants and refuses public
+  output while the matching manifest record is unapproved.
 
 ## 8. Approval register
 

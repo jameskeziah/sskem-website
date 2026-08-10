@@ -36,6 +36,11 @@ manifest-driven approval queue with filters, check progress and a downloadable
 coordination worksheet. It is unavailable outside private review mode and is
 not a substitute for the controlled evidence system.
 
+Approved replacement photography is prepared through the guarded campus-media
+pipeline documented in `docs/campus-media-ingestion.md`. It validates production
+dimensions, preserves composition, strips embedded metadata, creates responsive
+AVIF/WebP/JPEG variants and refuses public output for unapproved records.
+
 The test command regenerates design tokens, creates a production build, checks
 the Phase 1, Stage 2 and Stage 3 contracts, validates document-publication and
 admissions safeguards, and runs accessibility, keyboard, responsive,

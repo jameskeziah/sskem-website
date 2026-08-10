@@ -157,6 +157,19 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
             </div>
           </section>
 
+          <section className="review-media-intake" aria-labelledby="review-media-intake-title">
+            <div className="review-section-heading">
+              <div><p className="eyebrow">Production media gate</p><h2 id="review-media-intake-title">Approved masters become responsive, privacy-clean assets.</h2></div>
+              <p>The production pipeline preserves the photograph’s composition, strips embedded metadata and refuses public output until its exact manifest record is approved.</p>
+            </div>
+            <dl className="review-media-intake__grid">
+              <div><dt>Master size</dt><dd><strong>2400 × 1350 minimum</strong><span>Long edge × short edge; never enlarged.</span></dd></div>
+              <div><dt>Responsive formats</dt><dd><strong>AVIF · WebP · JPEG</strong><span>Five widths from 480 to 2000 pixels.</span></dd></div>
+              <div><dt>Privacy</dt><dd><strong>Metadata removed</strong><span>EXIF, XMP and IPTC are stripped and rechecked.</span></dd></div>
+              <div><dt>Publication</dt><dd><strong>Approval required</strong><span>Staging is separate from public output.</span></dd></div>
+            </dl>
+          </section>
+
           <section className="review-queue" aria-labelledby="review-queue-title">
             <div className="review-section-heading">
               <div><p className="eyebrow">Complete register</p><h2 id="review-queue-title">Review every release dependency</h2></div>

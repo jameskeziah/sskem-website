@@ -131,6 +131,8 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /Approval queue/i);
   assert.match(readableText, /33 governed records/i);
   assert.match(readableText, /Approve the four campus photographs first\./i);
+  assert.match(readableText, /Approved masters become responsive, privacy-clean assets\./i);
+  assert.match(readableText, /AVIF · WebP · JPEG/i);
   assert.match(readableText, /Showing 5 of 33 records\./i);
   assert.match(html, /media-campus-main/);
   assert.match(html, /media-campus-grounds/);

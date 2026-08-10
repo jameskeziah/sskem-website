@@ -65,6 +65,7 @@
 .review-safety,
 .review-summary,
 .review-first-batch,
+.review-media-intake,
 .review-queue,
 .review-finish {
   margin-top: clamp(var(--space-48), 7vw, var(--space-96));
@@ -141,6 +142,48 @@
   background: var(--color-brand-50);
   border-radius: var(--radius-large);
   padding: clamp(var(--space-24), 5vw, var(--space-64));
+}
+
+.review-media-intake__grid {
+  display: grid;
+  gap: var(--space-16);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+
+.review-media-intake__grid > div {
+  background: var(--color-brand-950);
+  border-radius: var(--radius-large);
+  color: var(--text-on-brand);
+  padding: var(--space-24);
+}
+
+.review-media-intake__grid dt {
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.review-media-intake__grid dd {
+  margin: var(--space-16) 0 0;
+}
+
+.review-media-intake__grid dd strong,
+.review-media-intake__grid dd span {
+  display: block;
+}
+
+.review-media-intake__grid dd strong {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-400);
+  line-height: 1.1;
+}
+
+.review-media-intake__grid dd span {
+  color: color-mix(in srgb, var(--text-on-brand) 76%, transparent);
+  font-size: var(--font-size-200);
+  margin-top: var(--space-8);
 }
 
 .review-card-grid {
@@ -390,6 +433,7 @@
 
 @media (max-width: 44rem) {
   .review-summary__grid,
+  .review-media-intake__grid,
   .review-card-grid,
   .review-filters {
     grid-template-columns: 1fr;

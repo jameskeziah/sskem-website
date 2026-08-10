@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "pipelineId": "sskem-campus-media",
+  "allowedInputFormats": ["jpeg", "png", "tiff"],
+  "allowedColourSpaces": ["srgb", "rgb"],
+  "minimumMaster": {
+    "longEdge": 2400,
+    "shortEdge": 1350
+  },
+  "stagingRoot": "work/media-intake",
+  "publicRoot": "public/media/home/production",
+  "profiles": {
+    "campus-responsive": {
+      "description": "Uncropped responsive derivatives for approved campus photography.",
+      "widths": [480, 768, 1200, 1600, 2000],
+      "formats": {
+        "avif": { "quality": 58, "minimumQuality": 42, "effort": 6, "maximumBytes": 350000 },
+        "webp": { "quality": 80, "minimumQuality": 64, "effort": 5, "maximumBytes": 400000 },
+        "jpeg": { "quality": 84, "minimumQuality": 68, "maximumBytes": 500000 }
+      }
+    }
+  }
+}
