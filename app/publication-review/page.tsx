@@ -1,0 +1,194 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+import {
+  approvalManifest,
+  approvalProgress,
+  approvalSummary,
+  checkStateLabels,
+  decisionLabels,
+  filterApprovalRecords,
+  firstReviewBatch,
+  kindLabels,
+  type ApprovalDecision,
+  type ApprovalKind,
+  type ApprovalRecord,
+} from "@/app/data/publication-approval";
+import { PageContainer } from "@/components/layout";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+
+import "./review.css";
+
+export const metadata: Metadata = {
+  title: "Publication Review",
+  description: "Owner-only approval queue for SSKEMS media, claims and public documents.",
+  robots: { index: false, follow: false, nocache: true },
+};
+
+type SearchParams = Record<string, string | string[] | undefined>;
+
+function value(params: SearchParams, key: string) {
+  const result = params[key];
+  return Array.isArray(result) ? result[0] ?? "" : result ?? "";
+}
+
+function validKind(value: string): value is ApprovalKind {
+  return value === "media" || value === "claim" || value === "document";
+}
+
+function validDecision(value: string): value is ApprovalDecision {
+  return value === "blocked" || value === "review-required" || value === "approved" || value === "withdrawn";
+}
+
+function ReviewCard({ record, recommended = false }: { record: ApprovalRecord; recommended?: boolean }) {
+  const progress = approvalProgress(record);
+  const pending = Object.entries(record.checks).filter(([, state]) => state !== "verified" && state !== "not-applicable");
+
+  return (
+    <article className="review-card" data-decision={record.decision}>
+      <div className="review-card__heading">
+        <div>
+          <span className="review-card__kind">{kindLabels[record.kind]}</span>
+          {recommended ? <span className="review-card__priority">Start here</span> : null}
+          <h3>{record.title}</h3>
+          <code>{record.id}</code>
+        </div>
+        <span className="review-card__decision">{decisionLabels[record.decision]}</span>
+      </div>
+
+      <div
+        className="review-card__progress"
+        role="progressbar"
+        aria-label="Approval checks complete"
+        aria-valuemin={0}
+        aria-valuemax={progress.total}
+        aria-valuenow={progress.complete}
+      >
+        <span style={{ width: `${(progress.complete / progress.total) * 100}%` }} />
+      </div>
+      <p className="review-card__progress-label">{progress.complete} of {progress.total} checks complete</p>
+
+      <details>
+        <summary>Review requirements</summary>
+        <div className="review-card__details">
+          <ul className="review-checks">
+            {Object.entries(record.checks).map(([check, state]) => (
+              <li data-state={state} key={check}>
+                <span aria-hidden="true">{state === "verified" || state === "not-applicable" ? "✓" : "○"}</span>
+                <span>{check.replaceAll("-", " ")}</span>
+                <strong>{checkStateLabels[state]}</strong>
+              </li>
+            ))}
+          </ul>
+          <dl className="review-card__metadata">
+            <div><dt>Source</dt><dd><code>{record.sourcePointer}</code></dd></div>
+            <div><dt>Public placement</dt><dd>{record.publicTargets.map((target) => <Link href={target} key={target}>{target}</Link>)}</dd></div>
+            <div><dt>Evidence</dt><dd>{record.evidenceReferences.length ? `${record.evidenceReferences.length} controlled reference(s) recorded` : "Opaque controlled-record reference required"}</dd></div>
+          </dl>
+          <p>{record.notes}</p>
+          {pending.length ? <p className="review-card__next"><strong>Next:</strong> complete {pending.map(([check]) => check.replaceAll("-", " ")).join(", ")}.</p> : null}
+        </div>
+      </details>
+    </article>
+  );
+}
+
+export default async function PublicationReviewPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  if (process.env.HOMEPAGE_REVIEW_MODE !== "private") notFound();
+
+  const params = await searchParams;
+  const selectedKind = value(params, "kind");
+  const selectedDecision = value(params, "decision");
+  const kind = validKind(selectedKind) ? selectedKind : "";
+  const decision = validDecision(selectedDecision) ? selectedDecision : "";
+  const records = filterApprovalRecords(kind, decision);
+  const summary = approvalSummary();
+
+  return (
+    <>
+      <SiteHeader />
+      <main id="main-content" tabIndex={-1} className="publication-review-page">
+        <header className="review-hero">
+          <PageContainer className="review-hero__grid">
+            <div>
+              <p className="eyebrow">Owner-only publication control</p>
+              <h1>Approval queue</h1>
+              <p className="lead">Clear the real evidence and sign-off work behind every homepage image, public claim and Appendix IX document.</p>
+            </div>
+            <aside className="review-hero__status" aria-label="Current public release status">
+              <span>Public release</span>
+              <strong>{summary.releaseReady ? "Ready" : "Blocked"}</strong>
+              <p>{summary.releaseBlockers.length} governed records still require approval.</p>
+            </aside>
+          </PageContainer>
+        </header>
+
+        <PageContainer>
+          <section className="review-safety" aria-labelledby="review-safety-title">
+            <div>
+              <p className="eyebrow">Privacy boundary</p>
+              <h2 id="review-safety-title">Evidence stays in the school’s controlled system.</h2>
+            </div>
+            <p>This dashboard shows status only. Store consent forms, certificates, pupil records and approver identities outside the website; record only their opaque reference IDs in the manifest.</p>
+          </section>
+
+          <section className="review-summary" aria-labelledby="review-summary-title">
+            <div className="review-section-heading">
+              <div><p className="eyebrow">Manifest snapshot</p><h2 id="review-summary-title">{summary.total} governed records</h2></div>
+              <p>Last updated {approvalManifest.updatedOn}</p>
+            </div>
+            <dl className="review-summary__grid">
+              <div><dt>Media</dt><dd>{summary.byKind.media}</dd></div>
+              <div><dt>Claims</dt><dd>{summary.byKind.claim}</dd></div>
+              <div><dt>Documents</dt><dd>{summary.byKind.document}</dd></div>
+              <div><dt>Approved</dt><dd>{summary.byDecision.approved}</dd></div>
+            </dl>
+          </section>
+
+          <section className="review-first-batch" aria-labelledby="review-first-batch-title">
+            <div className="review-section-heading">
+              <div><p className="eyebrow">Recommended first batch</p><h2 id="review-first-batch-title">Approve the four campus photographs first.</h2></div>
+              <p>They unlock the strongest homepage imagery without waiting for pupil-result consent and verification.</p>
+            </div>
+            <div className="review-card-grid">
+              {firstReviewBatch.map((record) => <ReviewCard record={record} recommended key={record.id} />)}
+            </div>
+          </section>
+
+          <section className="review-queue" aria-labelledby="review-queue-title">
+            <div className="review-section-heading">
+              <div><p className="eyebrow">Complete register</p><h2 id="review-queue-title">Review every release dependency</h2></div>
+              <Link className="button button--quiet" href="/publication-review/export">Download review worksheet</Link>
+            </div>
+
+            <form className="review-filters" method="get" action="/publication-review">
+              <label><span>Content type</span><select name="kind" defaultValue={kind}><option value="">All types</option><option value="media">Media</option><option value="claim">Claims</option><option value="document">Documents</option></select></label>
+              <label><span>Decision</span><select name="decision" defaultValue={decision}><option value="">All decisions</option><option value="review-required">Review required</option><option value="blocked">Blocked</option><option value="approved">Approved</option><option value="withdrawn">Withdrawn</option></select></label>
+              <button className="button button--primary" type="submit">Apply filters</button>
+              <Link className="button button--quiet" href="/publication-review">Clear</Link>
+            </form>
+
+            <p className="review-result-count" aria-live="polite">Showing {records.length} of {summary.total} records.</p>
+            <div className="review-card-grid">
+              {records.map((record) => <ReviewCard record={record} key={record.id} />)}
+            </div>
+          </section>
+
+          <section className="review-finish" aria-labelledby="review-finish-title">
+            <p className="eyebrow">Approval sequence</p>
+            <h2 id="review-finish-title">Verify → reference → approve → audit → release.</h2>
+            <ol>
+              <li>Verify each required check independently.</li>
+              <li>Record an opaque evidence reference—never the private evidence itself.</li>
+              <li>Add the approving role and timestamp only after every check passes.</li>
+              <li>Run the release audit and remove review-only treatment in a separate public-release change.</li>
+            </ol>
+          </section>
+        </PageContainer>
+      </main>
+      <SiteFooter />
+    </>
+  );
+}

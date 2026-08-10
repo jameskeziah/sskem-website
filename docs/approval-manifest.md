@@ -54,3 +54,17 @@ the actual uploader and approver identities.
   structurally valid.
 - `npm run build` consumes the same manifest and refuses a public build while
   any public target is unapproved.
+
+## Owner-only reviewer dashboard
+
+The private review deployment exposes `/publication-review`. It reads the
+canonical manifest directly, shows the current release blockers, supports
+kind/decision filters and prioritises the four campus photographs as the first
+review batch. The route returns a not-found response outside
+`HOMEPAGE_REVIEW_MODE=private` and is excluded from the public sitemap.
+
+The dashboard can download a CSV worksheet from
+`/publication-review/export`. The worksheet is a working aid for coordination;
+the JSON manifest remains the release source of truth. It deliberately omits
+private evidence and approver identities. Store those in the school's
+controlled system and copy only opaque references into the manifest.

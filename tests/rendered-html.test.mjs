@@ -1,14 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-async function render(pathname = "/") {
+async function render(pathname = "/", headers = { accept: "text/html" }) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
     new Request(`http://localhost${pathname}`, {
-      headers: { accept: "text/html" },
+      headers,
     }),
     {
       ASSETS: {
@@ -117,4 +117,43 @@ test("server-renders admissions motion in its readable final state", async () =>
   assert.match(html, /class=["']static-navigation-fallback["']/i);
   assert.match(html, /<nav\b[^>]*\baria-label=["']Breadcrumb["']/i);
   assert.doesNotMatch(html, /style=["'][^"']*(?:opacity\s*:\s*0|visibility\s*:\s*hidden)/i);
+});
+
+test("server-renders the private publication approval queue from the manifest", async () => {
+  const response = await render("/publication-review?kind=media&decision=review-required");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  const readableText = textContent(html);
+
+  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
+  assert.match(readableText, /Owner-only publication control/i);
+  assert.match(readableText, /Approval queue/i);
+  assert.match(readableText, /33 governed records/i);
+  assert.match(readableText, /Approve the four campus photographs first\./i);
+  assert.match(readableText, /Showing 5 of 33 records\./i);
+  assert.match(html, /media-campus-main/);
+  assert.match(html, /media-campus-grounds/);
+  assert.match(html, /media-campus-entrance/);
+  assert.match(html, /media-campus-courtyard/);
+  assert.match(html, /href=["']\/publication-review\/export["']/i);
+  assert.match(readableText, /Evidence stays in the school’s controlled system\./i);
+  assert.doesNotMatch(html, /style=["'][^"']*(?:opacity\s*:\s*0|visibility\s*:\s*hidden)/i);
+});
+
+test("exports the owner-only approval worksheet without private evidence", async () => {
+  const response = await render("/publication-review/export", { accept: "text/csv" });
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/csv\b/i);
+  assert.match(response.headers.get("cache-control") ?? "", /private, no-store/i);
+  assert.match(response.headers.get("content-disposition") ?? "", /sskem-publication-approval-queue-2026-08-10\.csv/i);
+
+  const csv = await response.text();
+  const rows = csv.trim().split(/\r?\n/);
+  assert.equal(rows.length, 34, "Worksheet must contain one header and 33 manifest rows");
+  assert.match(rows[0], /^record_id,kind,title,decision,check_profile/);
+  assert.match(csv, /media-campus-main,media,Main campus exterior,review-required/);
+  assert.match(csv, /document-mpd-c-4,document,Parent Teacher Association list,blocked/);
+  assert.doesNotMatch(csv, /[a-z]:\\|file:\/\//i);
+  assert.doesNotMatch(csv, /\b[\w.+-]+@[\w.-]+\.[a-z]{2,}\b/i);
 });

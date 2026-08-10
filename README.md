@@ -31,6 +31,11 @@ Publication decisions are tracked in `content/approval-manifest.json`. Run
 Only opaque references belong in the manifest; private evidence remains in the
 school's controlled record system.
 
+The owner-only review deployment also provides `/publication-review`, a
+manifest-driven approval queue with filters, check progress and a downloadable
+coordination worksheet. It is unavailable outside private review mode and is
+not a substitute for the controlled evidence system.
+
 The test command regenerates design tokens, creates a production build, checks
 the Phase 1, Stage 2 and Stage 3 contracts, validates document-publication and
 admissions safeguards, and runs accessibility, keyboard, responsive,
