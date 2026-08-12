@@ -34,16 +34,32 @@ const footerGroups = [
   },
 ];
 
-export function SiteFooter() {
+export type SiteFooterContact = {
+  phone: string;
+  email: string;
+  location: string;
+  weekdays: string;
+  saturday: string;
+};
+
+const defaultContact: SiteFooterContact = {
+  phone: siteFacts.phone,
+  email: siteFacts.email,
+  location: siteFacts.location,
+  weekdays: siteFacts.workingHours.weekdays,
+  saturday: siteFacts.workingHours.saturday,
+};
+
+export function SiteFooter({ contact = defaultContact }: { contact?: SiteFooterContact } = {}) {
   return (
     <footer className="site-footer">
       <div className="page-container site-footer__grid">
         <div className="site-footer__identity">
           <p className="eyebrow">Established in Veral</p>
           <h2>{siteFacts.shortName}</h2>
-          <p>{siteFacts.name}<br />{siteFacts.location}</p>
-          <p><a href={`tel:${siteFacts.phone.replace(/\s/g, "")}`}>{siteFacts.phone}</a><br /><a href={`mailto:${siteFacts.email}`}>{siteFacts.email}</a></p>
-          <p className="caption">{siteFacts.workingHours.weekdays}<br />{siteFacts.workingHours.saturday}</p>
+          <p>{siteFacts.name}<br />{contact.location}</p>
+          <p><a href={`tel:${contact.phone.replace(/\s/g, "")}`}>{contact.phone}</a><br /><a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+          <p className="caption">{contact.weekdays}<br />{contact.saturday}</p>
         </div>
         {footerGroups.map((group) => (
           <nav key={group.title} aria-label={`${group.title} footer links`}>

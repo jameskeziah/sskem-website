@@ -811,6 +811,64 @@
   font-weight: var(--font-weight-bold);
 }
 
+/* Approved public events */
+.home-events {
+  padding-block: clamp(var(--space-64), 10vw, 9rem);
+  background: var(--surface-page);
+}
+
+.home-events__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-24);
+}
+
+.home-event-card {
+  display: flex;
+  min-height: 22rem;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(var(--space-24), 4vw, var(--space-40));
+  border: var(--border-width-default) solid var(--border-default);
+  border-radius: var(--radius-large);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-small);
+}
+
+.home-event-card time {
+  color: var(--action-primary);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-event-card h3 {
+  margin: var(--space-24) 0 var(--space-16);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-600);
+  line-height: 1.05;
+}
+
+.home-event-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.home-event-card .home-event-card__location {
+  margin-top: var(--space-16);
+  color: var(--text-primary);
+  font-size: var(--font-size-200);
+  font-weight: var(--font-weight-bold);
+}
+
+.home-event-card a {
+  margin-top: auto;
+  padding-top: var(--space-24);
+  font-weight: var(--font-weight-bold);
+}
+
 /* Closing invitation */
 .home-invitation {
   padding-block: clamp(var(--space-64), 10vw, 9rem);
@@ -863,8 +921,13 @@
 @media (max-width: 70rem) {
   .home-section-heading--split,
   .home-services__grid,
+  .home-events__grid,
   .home-invitation__grid {
     grid-template-columns: 1fr;
+  }
+
+  .home-event-card {
+    min-height: auto;
   }
 
   .home-pathway-card {

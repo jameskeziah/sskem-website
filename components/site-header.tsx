@@ -9,6 +9,30 @@ import { IconButton, SearchInput } from "./controls";
 import { primaryNavigation, searchableLinks, utilityNavigation } from "@/app/data/navigation";
 import { siteFacts } from "@/app/data/site";
 
+export type SiteHeaderEditorial = {
+  notice: {
+    message: string;
+    href: string | null;
+    linkLabel: string;
+  };
+  contact: {
+    phone: string;
+    email: string;
+  };
+};
+
+const defaultEditorial: SiteHeaderEditorial = {
+  notice: {
+    message: "Admissions information for 2026–27 is being verified.",
+    href: "/admissions/enquire",
+    linkLabel: "Enquire for current dates",
+  },
+  contact: {
+    phone: siteFacts.phone,
+    email: siteFacts.email,
+  },
+};
+
 const focusableSelector = [
   "a[href]",
   "button:not([disabled])",
@@ -54,7 +78,7 @@ function breadcrumbItems(pathname: string) {
   ];
 }
 
-function StaticNavigationFallback({ pathname }: { pathname: string }) {
+function StaticNavigationFallback({ pathname, contact }: { pathname: string; contact: SiteHeaderEditorial["contact"] }) {
   return (
     <details className="static-navigation-fallback">
       <summary>Open full site navigation</summary>
@@ -80,8 +104,8 @@ function StaticNavigationFallback({ pathname }: { pathname: string }) {
           </ul>
           <div className="static-navigation-fallback__contact">
             <Link href="/admissions/enquire">Enquire now</Link>
-            <a href={`tel:${siteFacts.phone.replace(/\s/g, "")}`}>{siteFacts.phone}</a>
-            <a href={`mailto:${siteFacts.email}`}>{siteFacts.email}</a>
+            <a href={`tel:${contact.phone.replace(/\s/g, "")}`}>{contact.phone}</a>
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
           </div>
         </div>
       </nav>
@@ -89,7 +113,20 @@ function StaticNavigationFallback({ pathname }: { pathname: string }) {
   );
 }
 
-export function SiteHeader({ showBreadcrumb = true }: { showBreadcrumb?: boolean } = {}) {
+export function SiteHeader({
+  showBreadcrumb = true,
+  editorial,
+}: {
+  showBreadcrumb?: boolean;
+  editorial?: {
+    notice?: SiteHeaderEditorial["notice"] | null;
+    contact?: SiteHeaderEditorial["contact"];
+  };
+} = {}) {
+  const activeEditorial: SiteHeaderEditorial = {
+    notice: editorial?.notice ?? defaultEditorial.notice,
+    contact: editorial?.contact ?? defaultEditorial.contact,
+  };
   const pathname = usePathname();
   const [openDesktop, setOpenDesktop] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -223,7 +260,9 @@ export function SiteHeader({ showBreadcrumb = true }: { showBreadcrumb?: boolean
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <header ref={headerRef} className="site-header">
         <NoticeBar>
-          Admissions information for 2026–27 is being verified. <Link href="/admissions/enquire">Enquire for current dates</Link>.
+          {activeEditorial.notice.message}{activeEditorial.notice.href ? (
+            <> <Link href={activeEditorial.notice.href}>{activeEditorial.notice.linkLabel}</Link>.</>
+          ) : null}
         </NoticeBar>
 
         <div className="utility-bar">
@@ -302,7 +341,7 @@ export function SiteHeader({ showBreadcrumb = true }: { showBreadcrumb?: boolean
             <div className="page-container"><Breadcrumbs items={breadcrumbItems(pathname)} /></div>
           </div>
         ) : null}
-        <StaticNavigationFallback pathname={pathname} />
+        <StaticNavigationFallback pathname={pathname} contact={activeEditorial.contact} />
       </header>
 
       {mobileOpen ? (
@@ -339,8 +378,8 @@ export function SiteHeader({ showBreadcrumb = true }: { showBreadcrumb?: boolean
             </nav>
             <div className="mobile-drawer__utility">
               {utilityNavigation.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}
-              <a href={`tel:${siteFacts.phone.replace(/\s/g, "")}`}>{siteFacts.phone}</a>
-              <a href={`mailto:${siteFacts.email}`}>{siteFacts.email}</a>
+              <a href={`tel:${activeEditorial.contact.phone.replace(/\s/g, "")}`}>{activeEditorial.contact.phone}</a>
+              <a href={`mailto:${activeEditorial.contact.email}`}>{activeEditorial.contact.email}</a>
             </div>
             <Link className="button button--primary button--full" href="/admissions/enquire">Enquire now</Link>
           </div>

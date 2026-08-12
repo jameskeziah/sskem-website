@@ -1,0 +1,556 @@
+import approvalManifestData from "../../content/approval-manifest.json" with { type: "json" };
+
+// @ts-expect-error Node's native type-stripping test runner requires the explicit TypeScript extension.
+import { admissionsCycle as fallbackAdmissionsCycle } from "../../app/data/admissions.ts";
+// @ts-expect-error Node's native type-stripping test runner requires the explicit TypeScript extension.
+import { siteFacts } from "../../app/data/site.ts";
+
+export type HomepageContact = {
+  location: string;
+  phone: string;
+  mobile: string;
+  email: string;
+  principalEmail: string;
+  workingHours: {
+    weekdays: string;
+    saturday: string;
+  };
+};
+
+export type HomepageNotice = {
+  title: string;
+  message: string;
+  href: string | null;
+};
+
+export type HomepageAdmissionsCycle = {
+  academicYear: string;
+  institution: string;
+  publicStatus: string;
+  publicMessage: string;
+  verifiedAt: string | null;
+};
+
+export type HomepageEvent = {
+  title: string;
+  summary: string | null;
+  startAt: string;
+  endAt: string | null;
+  location: string | null;
+  href: string | null;
+};
+
+export type HomepageEditorialSource = "fallback" | "mixed" | "sanity";
+
+export type HomepageEditorialReason =
+  | "missing-config"
+  | "invalid-config"
+  | "fetch-failed"
+  | "invalid-response"
+  | "no-approved-content"
+  | "approved-content";
+
+export type HomepageEditorialStatus = {
+  source: HomepageEditorialSource;
+  reason: HomepageEditorialReason;
+  remoteAccepted: number;
+  remoteRejected: number;
+};
+
+export type HomepageEditorialContent = {
+  contact: HomepageContact;
+  notice: HomepageNotice | null;
+  admissionsCycle: HomepageAdmissionsCycle;
+  events: HomepageEvent[];
+  status: HomepageEditorialStatus;
+};
+
+type ApprovalManifestInput = {
+  records?: readonly {
+    id?: unknown;
+    decision?: unknown;
+    expiresAt?: unknown;
+  }[];
+};
+
+type EditorialEnvironment = {
+  SANITY_PROJECT_ID?: string;
+  SANITY_DATASET?: string;
+  SANITY_API_VERSION?: string;
+};
+
+export type HomepageEditorialOptions = {
+  env?: EditorialEnvironment;
+  fetchImpl?: typeof fetch;
+  manifest?: ApprovalManifestInput;
+  now?: Date | string | number;
+};
+
+type UnknownRecord = Record<string, unknown>;
+
+type SanityEditorialResult = {
+  contacts: unknown[];
+  notices: unknown[];
+  admissionsCycles: unknown[];
+  events: unknown[];
+};
+
+type Selection<T> = {
+  value: T | null;
+  accepted: number;
+  rejected: number;
+};
+
+const DEFAULT_SANITY_API_VERSION = "2026-08-12";
+const REQUEST_TIMEOUT_MS = 4_000;
+const MAX_CANDIDATES_PER_TYPE = 20;
+const MAX_HOMEPAGE_EVENTS = 3;
+const DATE_ONLY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const PROJECT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
+const DATASET_PATTERN = /^[a-z0-9][a-z0-9_-]{0,63}$/;
+
+const SANITY_QUERY = `{
+  "contacts": *[_type == "siteSettings" && !(_id in path("drafts.**"))]
+    | order(_updatedAt desc)[0...${MAX_CANDIDATES_PER_TYPE}] {
+      contact { location, phone, mobile, email, principalEmail, workingHours { weekdays, saturday } },
+      publication { state, approvalRecordId, validFrom, validUntil }
+    },
+  "notices": *[_type == "announcement" && !(_id in path("drafts.**"))]
+    | order(_updatedAt desc)[0...${MAX_CANDIDATES_PER_TYPE}] {
+      title, message, href,
+      publication { state, approvalRecordId, validFrom, validUntil }
+    },
+  "admissionsCycles": *[_type == "admissionCycle" && !(_id in path("drafts.**"))]
+    | order(_updatedAt desc)[0...${MAX_CANDIDATES_PER_TYPE}] {
+      academicYear, institution, publicStatus, publicMessage, verifiedAt,
+      publication { state, approvalRecordId, validFrom, validUntil }
+    },
+  "events": *[_type == "event" && !(_id in path("drafts.**"))]
+    | order(startAt asc)[0...${MAX_CANDIDATES_PER_TYPE}] {
+      title, summary, startAt, endAt, location, href,
+      publication { state, approvalRecordId, validFrom, validUntil }
+    }
+}`;
+
+const fallbackContact: HomepageContact = {
+  location: siteFacts.location,
+  phone: siteFacts.phone,
+  mobile: siteFacts.mobile,
+  email: siteFacts.email,
+  principalEmail: siteFacts.principalEmail,
+  workingHours: {
+    weekdays: siteFacts.workingHours.weekdays,
+    saturday: siteFacts.workingHours.saturday,
+  },
+};
+
+const safeFallback: Omit<HomepageEditorialContent, "status"> = {
+  contact: fallbackContact,
+  notice: null,
+  admissionsCycle: {
+    academicYear: fallbackAdmissionsCycle.academicYear,
+    institution: fallbackAdmissionsCycle.institution,
+    publicStatus: fallbackAdmissionsCycle.publicStatus,
+    publicMessage: fallbackAdmissionsCycle.publicMessage,
+    verifiedAt: fallbackAdmissionsCycle.verifiedAt,
+  },
+  events: [],
+};
+
+function fallbackResult(reason: HomepageEditorialReason, remoteRejected = 0): HomepageEditorialContent {
+  return {
+    ...safeFallback,
+    contact: { ...safeFallback.contact, workingHours: { ...safeFallback.contact.workingHours } },
+    admissionsCycle: { ...safeFallback.admissionsCycle },
+    events: [],
+    status: {
+      source: "fallback",
+      reason,
+      remoteAccepted: 0,
+      remoteRejected,
+    },
+  };
+}
+
+function isRecord(value: unknown): value is UnknownRecord {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function hasOwn(record: UnknownRecord, key: string) {
+  return Object.prototype.hasOwnProperty.call(record, key);
+}
+
+function sanitizePlainText(value: unknown, maximumLength: number): string | null {
+  if (typeof value !== "string") return null;
+
+  const sanitized = value
+    .normalize("NFKC")
+    .replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200D\u2060\uFEFF]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!sanitized || sanitized.length > maximumLength || /[<>]/.test(sanitized)) return null;
+  return sanitized;
+}
+
+function sanitizePhone(value: unknown): string | null {
+  const phone = sanitizePlainText(value, 32);
+  if (!phone || !/^\+?[0-9][0-9 ()-]{5,30}$/.test(phone)) return null;
+  return phone;
+}
+
+function sanitizeEmail(value: unknown): string | null {
+  const email = sanitizePlainText(value, 254);
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return null;
+  return email.toLowerCase();
+}
+
+function sanitizeHref(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const href = value.trim();
+  if (
+    !href ||
+    href.length > 500 ||
+    /[\u0000-\u001F\u007F\\<>"']/.test(href) ||
+    href.startsWith("//")
+  ) {
+    return null;
+  }
+
+  try {
+    if (href.startsWith("/")) {
+      const url = new URL(href, "https://www.sskemschool.com");
+      if (url.origin !== "https://www.sskemschool.com") return null;
+      return `${url.pathname}${url.search}${url.hash}`;
+    }
+
+    const url = new URL(href);
+    if (url.protocol !== "https:" || url.username || url.password) return null;
+    return url.href;
+  } catch {
+    return null;
+  }
+}
+
+function parseDateBoundary(value: unknown, endOfDay: boolean): number | null {
+  if (typeof value !== "string" || value.length > 40) return null;
+
+  if (DATE_ONLY_PATTERN.test(value)) {
+    const [year, month, day] = value.split("-").map(Number);
+    const parsed = Date.UTC(year, month - 1, day, endOfDay ? 23 : 0, endOfDay ? 59 : 0, endOfDay ? 59 : 0, endOfDay ? 999 : 0);
+    const check = new Date(parsed);
+    if (
+      check.getUTCFullYear() !== year ||
+      check.getUTCMonth() !== month - 1 ||
+      check.getUTCDate() !== day
+    ) {
+      return null;
+    }
+    return parsed;
+  }
+
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function sanitizeDateTime(value: unknown): string | null {
+  const parsed = parseDateBoundary(value, false);
+  return parsed === null ? null : new Date(parsed).toISOString();
+}
+
+function resolveNow(value: HomepageEditorialOptions["now"]): number {
+  if (value instanceof Date) return Number.isFinite(value.getTime()) ? value.getTime() : Date.now();
+  if (typeof value === "number") return Number.isFinite(value) ? value : Date.now();
+  if (typeof value === "string") {
+    const parsed = Date.parse(value);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return Date.now();
+}
+
+function approvedRecordIds(manifest: ApprovalManifestInput, now: number) {
+  const approved = new Set<string>();
+  if (!Array.isArray(manifest.records)) return approved;
+
+  for (const record of manifest.records) {
+    if (!isRecord(record) || typeof record.id !== "string" || record.decision !== "approved") continue;
+    if (record.expiresAt !== null && record.expiresAt !== undefined) {
+      const expiresAt = parseDateBoundary(record.expiresAt, true);
+      if (expiresAt === null || expiresAt < now) continue;
+    }
+    approved.add(record.id);
+  }
+
+  return approved;
+}
+
+function hasCurrentPublicationGate(candidate: UnknownRecord, approvals: Set<string>, now: number) {
+  if (!isRecord(candidate.publication)) return false;
+  const publication = candidate.publication;
+  if (publication.state !== "published" || typeof publication.approvalRecordId !== "string") return false;
+  if (!approvals.has(publication.approvalRecordId)) return false;
+
+  const validFrom = parseDateBoundary(publication.validFrom, false);
+  const validUntil = parseDateBoundary(publication.validUntil, true);
+  return validFrom !== null && validUntil !== null && validFrom <= now && now <= validUntil && validFrom <= validUntil;
+}
+
+function parseContact(candidate: UnknownRecord): HomepageContact | null {
+  if (!isRecord(candidate.contact)) return null;
+  const contact = candidate.contact;
+  const overrides: Partial<HomepageContact> = {};
+  let suppliedFields = 0;
+
+  for (const [key, parser] of [
+    ["location", (value: unknown) => sanitizePlainText(value, 180)],
+    ["phone", sanitizePhone],
+    ["mobile", sanitizePhone],
+    ["email", sanitizeEmail],
+    ["principalEmail", sanitizeEmail],
+  ] as const) {
+    if (!hasOwn(contact, key) || contact[key] === null || contact[key] === undefined) continue;
+    const value = parser(contact[key]);
+    if (value === null) return null;
+    Object.assign(overrides, { [key]: value });
+    suppliedFields += 1;
+  }
+
+  let workingHours = fallbackContact.workingHours;
+  if (hasOwn(contact, "workingHours") && contact.workingHours !== null && contact.workingHours !== undefined) {
+    if (!isRecord(contact.workingHours)) return null;
+    const hours: Partial<HomepageContact["workingHours"]> = {};
+    for (const key of ["weekdays", "saturday"] as const) {
+      if (!hasOwn(contact.workingHours, key) || contact.workingHours[key] === null || contact.workingHours[key] === undefined) continue;
+      const value = sanitizePlainText(contact.workingHours[key], 120);
+      if (value === null) return null;
+      hours[key] = value;
+      suppliedFields += 1;
+    }
+    workingHours = { ...fallbackContact.workingHours, ...hours };
+  }
+
+  if (suppliedFields === 0) return null;
+  return { ...fallbackContact, ...overrides, workingHours };
+}
+
+function parseNotice(candidate: UnknownRecord): HomepageNotice | null {
+  const title = sanitizePlainText(candidate.title, 120);
+  const message = sanitizePlainText(candidate.message, 500);
+  if (!title || !message) return null;
+
+  let href: string | null = null;
+  if (candidate.href !== null && candidate.href !== undefined) {
+    href = sanitizeHref(candidate.href);
+    if (!href) return null;
+  }
+
+  return { title, message, href };
+}
+
+function parseAdmissionsCycle(candidate: UnknownRecord): HomepageAdmissionsCycle | null {
+  const overrides: Partial<HomepageAdmissionsCycle> = {};
+  let suppliedFields = 0;
+
+  for (const [key, maximumLength] of [
+    ["academicYear", 32],
+    ["institution", 160],
+    ["publicStatus", 160],
+    ["publicMessage", 600],
+  ] as const) {
+    if (!hasOwn(candidate, key) || candidate[key] === null || candidate[key] === undefined) continue;
+    const value = sanitizePlainText(candidate[key], maximumLength);
+    if (value === null) return null;
+    Object.assign(overrides, { [key]: value });
+    suppliedFields += 1;
+  }
+
+  if (hasOwn(candidate, "verifiedAt") && candidate.verifiedAt !== null && candidate.verifiedAt !== undefined) {
+    const verifiedAt = sanitizeDateTime(candidate.verifiedAt);
+    if (!verifiedAt) return null;
+    overrides.verifiedAt = verifiedAt;
+    suppliedFields += 1;
+  }
+
+  if (suppliedFields === 0) return null;
+  return { ...safeFallback.admissionsCycle, ...overrides };
+}
+
+function parseEvent(candidate: UnknownRecord, now: number): HomepageEvent | null {
+  const title = sanitizePlainText(candidate.title, 160);
+  const startAt = sanitizeDateTime(candidate.startAt);
+  if (!title || !startAt || Date.parse(startAt) <= now) return null;
+
+  let summary: string | null = null;
+  if (candidate.summary !== null && candidate.summary !== undefined) {
+    summary = sanitizePlainText(candidate.summary, 500);
+    if (!summary) return null;
+  }
+
+  let endAt: string | null = null;
+  if (candidate.endAt !== null && candidate.endAt !== undefined) {
+    endAt = sanitizeDateTime(candidate.endAt);
+    if (!endAt || Date.parse(endAt) < Date.parse(startAt)) return null;
+  }
+
+  let location: string | null = null;
+  if (candidate.location !== null && candidate.location !== undefined) {
+    location = sanitizePlainText(candidate.location, 180);
+    if (!location) return null;
+  }
+
+  let href: string | null = null;
+  if (candidate.href !== null && candidate.href !== undefined) {
+    href = sanitizeHref(candidate.href);
+    if (!href) return null;
+  }
+
+  return { title, summary, startAt, endAt, location, href };
+}
+
+function selectFirst<T>(
+  candidates: unknown[],
+  approvals: Set<string>,
+  now: number,
+  parser: (candidate: UnknownRecord) => T | null,
+): Selection<T> {
+  let rejected = 0;
+  for (const candidate of candidates) {
+    if (!isRecord(candidate) || !hasCurrentPublicationGate(candidate, approvals, now)) {
+      rejected += 1;
+      continue;
+    }
+    const value = parser(candidate);
+    if (value !== null) return { value, accepted: 1, rejected };
+    rejected += 1;
+  }
+  return { value: null, accepted: 0, rejected };
+}
+
+function selectEvents(candidates: unknown[], approvals: Set<string>, now: number): Selection<HomepageEvent[]> {
+  const events: HomepageEvent[] = [];
+  let rejected = 0;
+
+  for (const candidate of candidates) {
+    if (!isRecord(candidate) || !hasCurrentPublicationGate(candidate, approvals, now)) {
+      rejected += 1;
+      continue;
+    }
+    const event = parseEvent(candidate, now);
+    if (!event) {
+      rejected += 1;
+      continue;
+    }
+    events.push(event);
+    if (events.length === MAX_HOMEPAGE_EVENTS) break;
+  }
+
+  events.sort((left, right) => Date.parse(left.startAt) - Date.parse(right.startAt));
+  return { value: events, accepted: events.length, rejected };
+}
+
+function parseSanityResponse(value: unknown): SanityEditorialResult | null {
+  if (!isRecord(value) || !isRecord(value.result)) return null;
+  const result = value.result;
+  if (
+    !Array.isArray(result.contacts) ||
+    !Array.isArray(result.notices) ||
+    !Array.isArray(result.admissionsCycles) ||
+    !Array.isArray(result.events)
+  ) {
+    return null;
+  }
+  return {
+    contacts: result.contacts,
+    notices: result.notices,
+    admissionsCycles: result.admissionsCycles,
+    events: result.events,
+  };
+}
+
+function configuredEnvironment(env: EditorialEnvironment) {
+  const projectId = env.SANITY_PROJECT_ID?.trim() ?? "";
+  const dataset = env.SANITY_DATASET?.trim() ?? "";
+  const apiVersion = env.SANITY_API_VERSION?.trim() || DEFAULT_SANITY_API_VERSION;
+  if (!projectId || !dataset) return { state: "missing" as const };
+  if (
+    !PROJECT_ID_PATTERN.test(projectId) ||
+    !DATASET_PATTERN.test(dataset) ||
+    !DATE_ONLY_PATTERN.test(apiVersion) ||
+    parseDateBoundary(apiVersion, false) === null
+  ) {
+    return { state: "invalid" as const };
+  }
+  return { state: "ready" as const, projectId, dataset, apiVersion };
+}
+
+/**
+ * Server-only homepage editorial boundary. Call this from a Server Component or
+ * server loader; do not import it into a Client Component.
+ */
+export async function getHomepageEditorialContent(
+  options: HomepageEditorialOptions = {},
+): Promise<HomepageEditorialContent> {
+  if (typeof window !== "undefined") {
+    throw new Error("Homepage editorial content is available on the server only.");
+  }
+
+  const environment = configuredEnvironment(options.env ?? {
+    SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
+    SANITY_DATASET: process.env.SANITY_DATASET,
+    SANITY_API_VERSION: process.env.SANITY_API_VERSION,
+  });
+  if (environment.state === "missing") return fallbackResult("missing-config");
+  if (environment.state === "invalid") return fallbackResult("invalid-config");
+
+  const now = resolveNow(options.now);
+  const fetchImpl = options.fetchImpl ?? globalThis.fetch;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const endpoint = new URL(
+    `https://${environment.projectId}.api.sanity.io/v${environment.apiVersion}/data/query/${environment.dataset}`,
+  );
+  endpoint.searchParams.set("query", SANITY_QUERY);
+
+  let payload: unknown;
+  try {
+    const response = await fetchImpl(endpoint, {
+      method: "GET",
+      headers: { accept: "application/json" },
+      cache: "no-store",
+      signal: controller.signal,
+    });
+    if (!response.ok) return fallbackResult("fetch-failed");
+    payload = await response.json();
+  } catch {
+    return fallbackResult("fetch-failed");
+  } finally {
+    clearTimeout(timeout);
+  }
+
+  const remote = parseSanityResponse(payload);
+  if (!remote) return fallbackResult("invalid-response");
+
+  const approvals = approvedRecordIds(options.manifest ?? approvalManifestData, now);
+  const contact = selectFirst(remote.contacts, approvals, now, parseContact);
+  const notice = selectFirst(remote.notices, approvals, now, parseNotice);
+  const admissionsCycle = selectFirst(remote.admissionsCycles, approvals, now, parseAdmissionsCycle);
+  const events = selectEvents(remote.events, approvals, now);
+  const accepted = contact.accepted + notice.accepted + admissionsCycle.accepted + events.accepted;
+  const rejected = contact.rejected + notice.rejected + admissionsCycle.rejected + events.rejected;
+
+  if (accepted === 0) return fallbackResult("no-approved-content", rejected);
+
+  const coreRemote = contact.value !== null && notice.value !== null && admissionsCycle.value !== null;
+  return {
+    contact: contact.value ?? { ...fallbackContact, workingHours: { ...fallbackContact.workingHours } },
+    notice: notice.value,
+    admissionsCycle: admissionsCycle.value ?? { ...safeFallback.admissionsCycle },
+    events: events.value ?? [],
+    status: {
+      source: coreRemote ? "sanity" : "mixed",
+      reason: "approved-content",
+      remoteAccepted: accepted,
+      remoteRejected: rejected,
+    },
+  };
+}

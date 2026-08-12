@@ -8,6 +8,7 @@ import { HomeAchievementsMotion } from "@/components/motion/home-achievements-mo
 import { HomeCampusMotion } from "@/components/motion/home-campus-motion";
 import { HomeHeroMotion } from "@/components/motion/home-hero-motion";
 import { siteFacts } from "@/app/data/site";
+import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 
 import "./homepage.css";
 
@@ -89,10 +90,32 @@ const achievementArtwork = [
   },
 ] as const;
 
-export default function Home() {
+const eventDateFormatter = new Intl.DateTimeFormat("en-IN", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  timeZone: "Asia/Kolkata",
+});
+
+export default async function Home() {
+  const editorial = await getHomepageEditorialContent();
+
   return (
     <>
-      <SiteHeader showBreadcrumb={false} />
+      <SiteHeader
+        showBreadcrumb={false}
+        editorial={{
+          notice: editorial.notice ? {
+            message: editorial.notice.message,
+            href: editorial.notice.href,
+            linkLabel: editorial.notice.title,
+          } : null,
+          contact: {
+            phone: editorial.contact.phone,
+            email: editorial.contact.email,
+          },
+        }}
+      />
       <main id="main-content" tabIndex={-1} className="home-page">
         <HomeHeroMotion>
           <div className="home-hero__desktop-poster" data-home-hero-art aria-hidden="true" />
@@ -306,27 +329,58 @@ export default function Home() {
           </div>
         </HomeAchievementsMotion>
 
+        {editorial.events.length ? (
+          <section className="home-events" aria-labelledby="events-title">
+            <div className="home-shell">
+              <div className="home-section-heading home-section-heading--split">
+                <div>
+                  <p className="home-chapter-label"><span>06</span> Coming up</p>
+                  <h2 id="events-title">Dates worth keeping close.</h2>
+                </div>
+                <p>Only current, approved public events appear here.</p>
+              </div>
+              <div className="home-events__grid">
+                {editorial.events.map((event) => (
+                  <article className="home-event-card" key={`${event.startAt}-${event.title}`}>
+                    <time dateTime={event.startAt}>{eventDateFormatter.format(new Date(event.startAt))}</time>
+                    <h3>{event.title}</h3>
+                    {event.summary ? <p>{event.summary}</p> : null}
+                    {event.location ? <p className="home-event-card__location">{event.location}</p> : null}
+                    {event.href ? <Link href={event.href}>Event details <span aria-hidden="true">→</span></Link> : null}
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
         <section className="home-invitation" aria-labelledby="invitation-title">
           <div className="home-shell home-invitation__grid">
             <div>
-              <p className="home-chapter-label"><span>06</span> Begin a conversation</p>
+              <p className="home-chapter-label"><span>{editorial.events.length ? "07" : "06"}</span> Begin a conversation</p>
               <h2 id="invitation-title">Your next chapter starts with one clear step.</h2>
             </div>
             <div className="home-invitation__action">
-              <p>Current dates, availability, criteria and fees are being verified. The school office can guide you with the latest information.</p>
+              <p>{editorial.admissionsCycle.publicMessage}</p>
               <div className="home-actions">
                 <Link className="home-button home-button--dark" href="/admissions/enquire">Make an enquiry <span aria-hidden="true">→</span></Link>
                 <Link className="home-button home-button--outline-dark" href="/contact">Contact the school</Link>
               </div>
               <p className="home-invitation__contact">
-                <a href={`tel:${siteFacts.mobile}`}>{siteFacts.mobile}</a>
-                <a href={`mailto:${siteFacts.email}`}>{siteFacts.email}</a>
+                <a href={`tel:${editorial.contact.mobile.replace(/\s/g, "")}`}>{editorial.contact.mobile}</a>
+                <a href={`mailto:${editorial.contact.email}`}>{editorial.contact.email}</a>
               </p>
             </div>
           </div>
         </section>
       </main>
-      <SiteFooter />
+      <SiteFooter contact={{
+        phone: editorial.contact.phone,
+        email: editorial.contact.email,
+        location: editorial.contact.location,
+        weekdays: editorial.contact.workingHours.weekdays,
+        saturday: editorial.contact.workingHours.saturday,
+      }} />
     </>
   );
 }

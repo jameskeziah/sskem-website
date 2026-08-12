@@ -18,6 +18,7 @@ import {
 import { PageContainer } from "@/components/layout";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 
 import "./review.css";
 
@@ -105,6 +106,14 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
   const decision = validDecision(selectedDecision) ? selectedDecision : "";
   const records = filterApprovalRecords(kind, decision);
   const summary = approvalSummary();
+  const editorial = await getHomepageEditorialContent();
+  const cmsState = editorial.status.reason === "missing-config"
+    ? "Ready for connection"
+    : editorial.status.reason === "invalid-config"
+      ? "Configuration needs attention"
+      : editorial.status.source === "fallback"
+        ? "Safe fallback active"
+        : "Approved content connected";
 
   return (
     <>
@@ -132,6 +141,23 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <h2 id="review-safety-title">Evidence stays in the school’s controlled system.</h2>
             </div>
             <p>This dashboard shows status only. Store consent forms, certificates, pupil records and approver identities outside the website; record only their opaque reference IDs in the manifest.</p>
+          </section>
+
+          <section className="review-cms" aria-labelledby="review-cms-title">
+            <div className="review-section-heading">
+              <div>
+                <p className="eyebrow">Editorial CMS</p>
+                <h2 id="review-cms-title">Sanity delivery status</h2>
+              </div>
+              <p>The website accepts only published, currently valid records whose opaque approval ID is approved in the canonical manifest.</p>
+            </div>
+            <dl className="review-cms__grid">
+              <div><dt>Connection</dt><dd><strong>{cmsState}</strong><span>{editorial.status.reason.replaceAll("-", " ")}</span></dd></div>
+              <div><dt>Homepage source</dt><dd><strong>{editorial.status.source}</strong><span>Verified local content remains available.</span></dd></div>
+              <div><dt>Accepted records</dt><dd><strong>{editorial.status.remoteAccepted}</strong><span>Across contact, notice, admissions and events.</span></dd></div>
+              <div><dt>Rejected records</dt><dd><strong>{editorial.status.remoteRejected}</strong><span>Nothing rejected reaches public output.</span></dd></div>
+            </dl>
+            <p className="review-cms__boundary">Applicant records, pupil data, controlled documents, consent evidence and approver identities never enter this CMS.</p>
           </section>
 
           <section className="review-summary" aria-labelledby="review-summary-title">
@@ -214,7 +240,13 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
           </section>
         </PageContainer>
       </main>
-      <SiteFooter />
+      <SiteFooter contact={{
+        phone: editorial.contact.phone,
+        email: editorial.contact.email,
+        location: editorial.contact.location,
+        weekdays: editorial.contact.workingHours.weekdays,
+        saturday: editorial.contact.workingHours.saturday,
+      }} />
     </>
   );
 }

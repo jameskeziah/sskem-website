@@ -91,6 +91,8 @@ test("server-renders the current SSKEMS website foundation", async () => {
   assert.match(html, /data-motion-component=["']home-campus["']/i);
   assert.match(html, /data-motion-component=["']home-achievements["']/i);
   assert.match(textContent(html), /Here, possibility begins\./i);
+  assert.match(textContent(html), /Admissions information for 2026–27 is being verified\./i);
+  assert.doesNotMatch(html, /class=["']home-events["']/i);
   assert.match(html, /data-publication-review=["']required["']/i);
   assert.doesNotMatch(html, /style=["'][^"']*(?:opacity\s*:\s*0|visibility\s*:\s*hidden)/i);
   assert.doesNotMatch(
@@ -140,6 +142,10 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(html, /media-campus-courtyard/);
   assert.match(html, /href=["']\/publication-review\/export["']/i);
   assert.match(readableText, /Evidence stays in the school’s controlled system\./i);
+  assert.match(readableText, /Editorial CMS/i);
+  assert.match(readableText, /Sanity delivery status/i);
+  assert.match(readableText, /Ready for connection/i);
+  assert.match(readableText, /Applicant records, pupil data, controlled documents, consent evidence and approver identities never enter this CMS\./i);
   assert.doesNotMatch(html, /style=["'][^"']*(?:opacity\s*:\s*0|visibility\s*:\s*hidden)/i);
 });
 
