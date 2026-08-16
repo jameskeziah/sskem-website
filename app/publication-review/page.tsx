@@ -23,6 +23,7 @@ import { PageContainer } from "@/components/layout";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
+import { editorialPublicationBindingSummary } from "@/lib/cms/editorial-publication-binding";
 
 import "./review.css";
 
@@ -111,6 +112,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
   const records = filterApprovalRecords(kind, decision);
   const summary = approvalSummary();
   const editorial = await getHomepageEditorialContent();
+  const bindingSummary = editorialPublicationBindingSummary();
   const cmsState = editorial.status.reason === "missing-config"
     ? "Ready for connection"
     : editorial.status.reason === "invalid-config"
@@ -153,15 +155,16 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
                 <p className="eyebrow">Editorial CMS</p>
                 <h2 id="review-cms-title">Sanity delivery status</h2>
               </div>
-              <p>The website accepts only published, currently valid records whose opaque approval ID is approved in the canonical manifest.</p>
+              <p>The website accepts only published, currently valid records whose exact Sanity revision and sanitized public-output digest match an approved review receipt.</p>
             </div>
             <dl className="review-cms__grid">
               <div><dt>Connection</dt><dd><strong>{cmsState}</strong><span>{editorial.status.reason.replaceAll("-", " ")}</span></dd></div>
               <div><dt>Homepage source</dt><dd><strong>{editorial.status.source}</strong><span>Verified local content remains available.</span></dd></div>
               <div><dt>Accepted records</dt><dd><strong>{editorial.status.remoteAccepted}</strong><span>Across contact, notice, admissions and events.</span></dd></div>
               <div><dt>Rejected records</dt><dd><strong>{editorial.status.remoteRejected}</strong><span>Nothing rejected reaches public output.</span></dd></div>
+              <div><dt>Exact bindings</dt><dd><strong>{bindingSummary.valid} of {bindingSummary.recorded}</strong><span>Revision or digest mismatch fails closed.</span></dd></div>
             </dl>
-            <p className="review-cms__boundary">Applicant records, pupil data, controlled documents, consent evidence and approver identities never enter this CMS.</p>
+            <p className="review-cms__boundary">A CMS edit creates a new revision and requires a new review receipt. Applicant records, pupil data, controlled documents, consent evidence and approver identities never enter this CMS.</p>
           </section>
 
           <section className="review-cutover" aria-labelledby="review-cutover-title">

@@ -85,13 +85,41 @@ must validate data again.
    manifest record ID. The ID is a reference, not evidence.
 5. A **Publisher** changes the exact reviewed document to `published` only
    after approval. Studio validation refuses `published` without an approval ID.
-6. The public website independently accepts the document only when the adapter
-   confirms the publication state, approval record and validity window.
+6. A technical operator records the exact published document ID, `_rev` and
+   SHA-256 digest of the adapter's sanitized public projection in
+   `content/editorial-publication-bindings.json`. The registry stores the
+   accountable role and public-safe notes, never an approver identity or the
+   controlled evidence.
+7. The public website independently accepts the document only when the adapter
+   confirms the publication state, approval record, validity window, exact
+   revision and exact content digest.
 
 The adapter fails closed: draft, in-review, retired, missing-window,
-not-yet-valid, expired, missing-approval and unapproved records do not become
-public CMS content.
+not-yet-valid, expired, missing-approval, unapproved, unbound, changed-revision
+and digest-mismatched records do not become public CMS content.
 Changing a CMS state does not change the canonical manifest decision.
+
+## Exact revision and digest binding
+
+`content/editorial-publication-bindings.json` is a public-safe receipt registry,
+not an approval system. Each entry binds one claim approval record to one
+published Sanity document ID, one exact `_rev` and one lowercase SHA-256 digest.
+The digest covers canonical JSON containing the content type, document ID,
+revision and the exact sanitized projection that the adapter would display.
+Object keys are sorted and array order is preserved.
+
+One approval record cannot bind multiple revisions, and one document revision
+cannot have multiple bindings. Draft IDs are rejected. A valid binding remains
+insufficient on its own: the referenced claim must also be currently approved
+in `content/approval-manifest.json`, and the CMS publication window must be
+current. Run `npm run editorial:bindings:audit` after every registry edit.
+
+The repository starts with zero bindings because no real Sanity revision has
+completed the controlled approval process. This is intentional: connecting a
+dataset cannot make its records public until exact review receipts are added.
+If an editor changes any accepted record, Sanity creates a different revision;
+the adapter refuses it until the changed public projection is reviewed and a
+new binding replaces the old one.
 
 ## Roles
 
@@ -133,7 +161,7 @@ the site from rendering.
 - If Sanity is unreachable, returns malformed data or has no eligible record,
   the adapter returns the corresponding safe local fallback.
 - A CMS value never replaces the fallback unless it passes the adapter's
-  publication and approval checks.
+  publication, approval, exact-revision and content-digest checks.
 - Optional CMS lists may be empty rather than displaying a draft, expired or
   unapproved item.
 - Admissions continues to use its honest local verification/availability
@@ -165,7 +193,7 @@ speed up migration.
 
 ## Verification of the current slice
 
-The eight tests in `tests/cms-editorial.test.mjs` currently prove that the
+The nine tests in `tests/cms-editorial.test.mjs` currently prove that the
 server adapter:
 
 - makes no request and returns the reviewed local fallback when Sanity is not
@@ -179,8 +207,15 @@ server adapter:
 - rejects executable links;
 - safely merges partial approved contact/admissions values with local fallbacks,
   normalises email, sorts events and limits the homepage result to three; and
+- rejects both content edits and revision changes after an exact review receipt
+  has been recorded; and
 - fails closed to local content on network failure or a malformed Content Lake
   response.
+
+The four tests in `tests/editorial-publication-bindings.test.mjs` additionally
+prove that the repository registry and approval manifest pass a joint audit,
+unsafe draft/digest/reference values are rejected, and one approval cannot
+silently authorize multiple revisions or be bound before approval.
 
 The root test suite must include this file before the CMS slice is treated as a
 release gate. Studio schema validation is currently implemented in schema code,
@@ -196,9 +231,9 @@ Manual acceptance before connecting a real dataset:
 
 ## Later phases and unimplemented acceptance gates
 
-The first slice does **not** yet promise authenticated draft preview, webhook
-revalidation, tagged caching, revision/digest binding, route-target approvals,
-CMS asset publication, CMS document uploads or a mandatory-CMS mode. Those
+The current slice does **not** yet promise authenticated draft preview, webhook
+revalidation, tagged caching, route-target approvals, CMS asset publication,
+CMS document uploads or a mandatory-CMS mode. Those
 features require separate design, implementation and tests before this contract
 can describe them as active controls.
 

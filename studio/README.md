@@ -19,7 +19,7 @@ The following are prohibited in this Studio and in Sanity assets:
 
 ## Publication rules
 
-Every document includes the reusable `publication` object. A document marked `published` must have an `approvalRecordId`, `validFrom`, and `validUntil`; Studio validation blocks publication without them. Sanity validation runs in the Studio, so the website's server-only CMS adapter independently enforces the same rule and rejects expired or unapproved content.
+Every document includes the reusable `publication` object. A document marked `published` must have an `approvalRecordId`, `validFrom`, and `validUntil`; Studio validation blocks publication without them. Sanity validation runs in the Studio, so the website's server-only CMS adapter independently enforces the same rule and rejects expired or unapproved content. The adapter additionally requires the exact published `_rev` and SHA-256 digest of its sanitized public projection to match `content/editorial-publication-bindings.json`; editing a published document therefore requires a new review receipt.
 
 Keep Sanity drafts and preview access separate from the public website. Public pages should query only the approved, currently valid projection defined by that adapter.
 

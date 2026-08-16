@@ -11,7 +11,7 @@ export const publication = defineType({
   title: 'Publication control',
   type: 'object',
   description:
-    'Public release metadata only. Approval evidence and approver identities remain outside Sanity.',
+    'Public release metadata only. The website also requires an external receipt for this exact document revision and public-output digest. Approval evidence and approver identities remain outside Sanity.',
   options: {
     collapsible: true,
     collapsed: false,

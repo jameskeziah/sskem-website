@@ -1,0 +1,13 @@
+{
+  "$schema": "./editorial-publication-bindings.schema.json",
+  "schemaVersion": 1,
+  "registryId": "sskem-editorial-publication-bindings",
+  "updatedOn": "2026-08-16",
+  "policy": {
+    "privateEvidenceStoredInRepository": false,
+    "exactRevisionRequired": true,
+    "exactContentDigestRequired": true,
+    "notes": "This registry stores public-safe review receipts only. Private evidence, approver identities and Sanity credentials remain outside the repository."
+  },
+  "bindings": []
+}

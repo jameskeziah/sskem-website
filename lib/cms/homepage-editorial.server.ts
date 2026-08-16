@@ -1,5 +1,13 @@
 import approvalManifestData from "../../content/approval-manifest.json" with { type: "json" };
 
+import {
+  createEditorialBindingIndex,
+  editorialPublicationBindings,
+  hasMatchingEditorialBinding,
+  type EditorialContentType,
+  type EditorialPublicationBindingsInput,
+} from "./editorial-publication-binding.ts";
+
 // @ts-expect-error Node's native type-stripping test runner requires the explicit TypeScript extension.
 import { admissionsCycle as fallbackAdmissionsCycle } from "../../app/data/admissions.ts";
 // @ts-expect-error Node's native type-stripping test runner requires the explicit TypeScript extension.
@@ -83,6 +91,7 @@ export type HomepageEditorialOptions = {
   env?: EditorialEnvironment;
   fetchImpl?: typeof fetch;
   manifest?: ApprovalManifestInput;
+  bindings?: EditorialPublicationBindingsInput;
   now?: Date | string | number;
 };
 
@@ -112,21 +121,25 @@ const DATASET_PATTERN = /^[a-z0-9][a-z0-9_-]{0,63}$/;
 const SANITY_QUERY = `{
   "contacts": *[_type == "siteSettings" && !(_id in path("drafts.**"))]
     | order(_updatedAt desc)[0...${MAX_CANDIDATES_PER_TYPE}] {
+      _id, _rev, _type,
       contact { location, phone, mobile, email, principalEmail, workingHours { weekdays, saturday } },
       publication { state, approvalRecordId, validFrom, validUntil }
     },
   "notices": *[_type == "announcement" && !(_id in path("drafts.**"))]
     | order(_updatedAt desc)[0...${MAX_CANDIDATES_PER_TYPE}] {
+      _id, _rev, _type,
       title, message, href,
       publication { state, approvalRecordId, validFrom, validUntil }
     },
   "admissionsCycles": *[_type == "admissionCycle" && !(_id in path("drafts.**"))]
     | order(_updatedAt desc)[0...${MAX_CANDIDATES_PER_TYPE}] {
+      _id, _rev, _type,
       academicYear, institution, publicStatus, publicMessage, verifiedAt,
       publication { state, approvalRecordId, validFrom, validUntil }
     },
   "events": *[_type == "event" && !(_id in path("drafts.**"))]
     | order(startAt asc)[0...${MAX_CANDIDATES_PER_TYPE}] {
+      _id, _rev, _type,
       title, summary, startAt, endAt, location, href,
       publication { state, approvalRecordId, validFrom, validUntil }
     }
@@ -407,12 +420,14 @@ function parseEvent(candidate: UnknownRecord, now: number): HomepageEvent | null
   return { title, summary, startAt, endAt, location, href };
 }
 
-function selectFirst<T>(
+async function selectFirst<T>(
   candidates: unknown[],
   approvals: Set<string>,
   now: number,
+  contentType: EditorialContentType,
+  bindings: ReturnType<typeof createEditorialBindingIndex>,
   parser: (candidate: UnknownRecord) => T | null,
-): Selection<T> {
+): Promise<Selection<T>> {
   let rejected = 0;
   for (const candidate of candidates) {
     if (!isRecord(candidate) || !hasCurrentPublicationGate(candidate, approvals, now)) {
@@ -420,13 +435,20 @@ function selectFirst<T>(
       continue;
     }
     const value = parser(candidate);
-    if (value !== null) return { value, accepted: 1, rejected };
+    if (value !== null && await hasMatchingEditorialBinding({ candidate, contentType, projection: value, index: bindings })) {
+      return { value, accepted: 1, rejected };
+    }
     rejected += 1;
   }
   return { value: null, accepted: 0, rejected };
 }
 
-function selectEvents(candidates: unknown[], approvals: Set<string>, now: number): Selection<HomepageEvent[]> {
+async function selectEvents(
+  candidates: unknown[],
+  approvals: Set<string>,
+  now: number,
+  bindings: ReturnType<typeof createEditorialBindingIndex>,
+): Promise<Selection<HomepageEvent[]>> {
   const events: HomepageEvent[] = [];
   let rejected = 0;
 
@@ -436,7 +458,7 @@ function selectEvents(candidates: unknown[], approvals: Set<string>, now: number
       continue;
     }
     const event = parseEvent(candidate, now);
-    if (!event) {
+    if (!event || !await hasMatchingEditorialBinding({ candidate, contentType: "event", projection: event, index: bindings })) {
       rejected += 1;
       continue;
     }
@@ -531,10 +553,13 @@ export async function getHomepageEditorialContent(
   if (!remote) return fallbackResult("invalid-response");
 
   const approvals = approvedRecordIds(options.manifest ?? approvalManifestData, now);
-  const contact = selectFirst(remote.contacts, approvals, now, parseContact);
-  const notice = selectFirst(remote.notices, approvals, now, parseNotice);
-  const admissionsCycle = selectFirst(remote.admissionsCycles, approvals, now, parseAdmissionsCycle);
-  const events = selectEvents(remote.events, approvals, now);
+  const bindings = createEditorialBindingIndex(options.bindings ?? editorialPublicationBindings);
+  const [contact, notice, admissionsCycle, events] = await Promise.all([
+    selectFirst(remote.contacts, approvals, now, "siteSettings", bindings, parseContact),
+    selectFirst(remote.notices, approvals, now, "announcement", bindings, parseNotice),
+    selectFirst(remote.admissionsCycles, approvals, now, "admissionCycle", bindings, parseAdmissionsCycle),
+    selectEvents(remote.events, approvals, now, bindings),
+  ]);
   const accepted = contact.accepted + notice.accepted + admissionsCycle.accepted + events.accepted;
   const rejected = contact.rejected + notice.rejected + admissionsCycle.rejected + events.rejected;
 

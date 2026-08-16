@@ -3,6 +3,7 @@ import test from "node:test";
 
 import { admissionsCycle as fallbackAdmissionsCycle } from "../app/data/admissions.ts";
 import { siteFacts } from "../app/data/site.ts";
+import { digestEditorialProjection } from "../lib/cms/editorial-publication-binding.ts";
 import { getHomepageEditorialContent } from "../lib/cms/homepage-editorial.server.ts";
 
 const NOW = "2026-08-12T06:00:00.000Z";
@@ -21,6 +22,41 @@ function gate(approvalRecordId, overrides = {}) {
     validFrom: "2026-08-01",
     validUntil: "2026-08-31",
     ...overrides,
+  };
+}
+
+function sanityRecord(contentType, documentId, fields, revision = `rev-${documentId}`) {
+  return { _id: documentId, _rev: revision, _type: contentType, ...fields };
+}
+
+async function bindingRegistry(...entries) {
+  const bindings = await Promise.all(entries.map(async ({ candidate, projection }, index) => ({
+    bindingId: `cms-binding-test-${index + 1}`,
+    approvalRecordId: candidate.publication.approvalRecordId,
+    contentType: candidate._type,
+    documentId: candidate._id,
+    revision: candidate._rev,
+    contentDigestSha256: await digestEditorialProjection({
+      contentType: candidate._type,
+      documentId: candidate._id,
+      revision: candidate._rev,
+      projection,
+    }),
+    boundOn: "2026-08-12",
+    ownerRole: "website-publisher",
+    notes: "Test-only exact public projection receipt.",
+  })));
+
+  return {
+    $schema: "./editorial-publication-bindings.schema.json",
+    schemaVersion: 1,
+    registryId: "sskem-editorial-publication-bindings",
+    policy: {
+      privateEvidenceStoredInRepository: false,
+      exactRevisionRequired: true,
+      exactContentDigestRequired: true,
+    },
+    bindings,
   };
 }
 
@@ -125,26 +161,28 @@ test("accepts only approved records whose publication window is current", async 
       message: "This should remain hidden.",
       publication: gate("claim-future", { validFrom: "2026-09-01", validUntil: "2026-09-30" }),
     },
-    {
+    sanityRecord("announcement", "notice-current", {
       title: "Current notice",
       message: "The school office is accepting enquiries.",
       href: "/admissions/enquire",
       publication: gate("claim-current"),
-    },
+    }),
   ];
+  const currentProjection = {
+    title: "Current notice",
+    message: "The school office is accepting enquiries.",
+    href: "/admissions/enquire",
+  };
 
   const result = await getHomepageEditorialContent({
     env,
     now: NOW,
     manifest: manifest("claim-future", "claim-current"),
+    bindings: await bindingRegistry({ candidate: notices[1], projection: currentProjection }),
     fetchImpl: mockFetch(emptyResult({ notices })),
   });
 
-  assert.deepEqual(result.notice, {
-    title: "Current notice",
-    message: "The school office is accepting enquiries.",
-    href: "/admissions/enquire",
-  });
+  assert.deepEqual(result.notice, currentProjection);
   assert.equal(result.status.source, "mixed");
   assert.equal(result.status.remoteAccepted, 1);
   assert.equal(result.status.remoteRejected, 1);
@@ -197,7 +235,7 @@ test("rejects malformed and executable links instead of exposing them", async ()
 });
 
 test("safely merges valid approved fields with fallbacks and limits events to three", async () => {
-  const events = [1, 2, 3, 4].map((day) => ({
+  const events = [1, 2, 3, 4].map((day) => sanityRecord("event", `event-${day}`, {
     title: `School event ${day}`,
     summary: day === 1 ? "A public school event." : undefined,
     startAt: `2026-09-0${day}T09:00:00+05:30`,
@@ -206,20 +244,45 @@ test("safely merges valid approved fields with fallbacks and limits events to th
     href: day === 1 ? "https://www.sskemschool.com/student-life/calendar" : undefined,
     publication: gate(`claim-event-${day}`, { validUntil: "2026-09-30" }),
   }));
+  const saturdayHours = "Saturday, 10 a.m.–1 p.m.";
+  const contact = sanityRecord("siteSettings", "site-settings", {
+    contact: { email: "OFFICE@SSKEMSCHOOL.COM", workingHours: { saturday: saturdayHours } },
+    publication: gate("claim-contact"),
+  });
+  const admissions = sanityRecord("admissionCycle", "admissions-2026", {
+    publicStatus: "Enquiries available",
+    publication: gate("claim-admissions"),
+  });
+  const contactProjection = {
+    location: siteFacts.location,
+    phone: siteFacts.phone,
+    mobile: siteFacts.mobile,
+    email: "office@sskemschool.com",
+    principalEmail: siteFacts.principalEmail,
+    workingHours: { weekdays: siteFacts.workingHours.weekdays, saturday: saturdayHours },
+  };
+  const admissionsProjection = { ...fallbackAdmissionsCycle, publicStatus: "Enquiries available" };
+  const eventProjections = [1, 2, 3].map((day) => ({
+    title: `School event ${day}`,
+    summary: day === 1 ? "A public school event." : null,
+    startAt: `2026-09-0${day}T03:30:00.000Z`,
+    endAt: `2026-09-0${day}T05:30:00.000Z`,
+    location: "SSKEMS campus",
+    href: day === 1 ? "https://www.sskemschool.com/student-life/calendar" : null,
+  }));
 
   const result = await getHomepageEditorialContent({
     env,
     now: NOW,
     manifest: manifest("claim-contact", "claim-admissions", ...events.map((_, index) => `claim-event-${index + 1}`)),
+    bindings: await bindingRegistry(
+      { candidate: contact, projection: contactProjection },
+      { candidate: admissions, projection: admissionsProjection },
+      ...events.slice(0, 3).map((candidate, index) => ({ candidate, projection: eventProjections[index] })),
+    ),
     fetchImpl: mockFetch(emptyResult({
-      contacts: [{
-        contact: { email: "OFFICE@SSKEMSCHOOL.COM", workingHours: { saturday: "Saturday, 10 a.m.–1 p.m." } },
-        publication: gate("claim-contact"),
-      }],
-      admissionsCycles: [{
-        publicStatus: "Enquiries available",
-        publication: gate("claim-admissions"),
-      }],
+      contacts: [contact],
+      admissionsCycles: [admissions],
       events,
     })),
   });
@@ -227,7 +290,7 @@ test("safely merges valid approved fields with fallbacks and limits events to th
   assert.equal(result.contact.email, "office@sskemschool.com");
   assert.equal(result.contact.location, siteFacts.location);
   assert.equal(result.contact.workingHours.weekdays, siteFacts.workingHours.weekdays);
-  assert.equal(result.contact.workingHours.saturday, "Saturday, 10 a.m.–1 p.m.");
+  assert.equal(result.contact.workingHours.saturday, saturdayHours);
   assert.equal(result.admissionsCycle.publicStatus, "Enquiries available");
   assert.equal(result.admissionsCycle.publicMessage, fallbackAdmissionsCycle.publicMessage);
   assert.equal(result.events.length, 3);
@@ -235,6 +298,37 @@ test("safely merges valid approved fields with fallbacks and limits events to th
   assert.equal(result.events[0].href, "https://www.sskemschool.com/student-life/calendar");
   assert.equal(result.status.source, "mixed");
   assert.equal(result.status.remoteAccepted, 5);
+});
+
+test("rejects edits and revision changes after an exact CMS review receipt is recorded", async () => {
+  const reviewed = sanityRecord("announcement", "notice-integrity", {
+    title: "Office notice",
+    message: "The office is open on Monday.",
+    href: "/contact",
+    publication: gate("claim-integrity"),
+  }, "rev-reviewed");
+  const reviewedProjection = {
+    title: "Office notice",
+    message: "The office is open on Monday.",
+    href: "/contact",
+  };
+  const bindings = await bindingRegistry({ candidate: reviewed, projection: reviewedProjection });
+
+  for (const candidate of [
+    { ...reviewed, message: "The office is open every day." },
+    { ...reviewed, _rev: "rev-after-edit" },
+  ]) {
+    const result = await getHomepageEditorialContent({
+      env,
+      now: NOW,
+      manifest: manifest("claim-integrity"),
+      bindings,
+      fetchImpl: mockFetch(emptyResult({ notices: [candidate] })),
+    });
+    assert.equal(result.notice, null);
+    assert.equal(result.status.reason, "no-approved-content");
+    assert.equal(result.status.remoteRejected, 1);
+  }
 });
 
 test("fails closed on network and malformed Content Lake responses", async () => {
