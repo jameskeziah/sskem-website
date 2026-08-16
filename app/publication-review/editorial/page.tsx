@@ -141,6 +141,7 @@ export default async function EditorialReviewPage() {
           <div className="editorial-review-toolbar">
             <Link href="/publication-review">← Back to approval queue</Link>
             <Link className="button button--quiet" href="/publication-review/editorial-site-settings-packet">Download first site settings packet</Link>
+            <Link className="button button--quiet" href="/publication-review/editorial-announcement-packet">Download announcement intake packet</Link>
           </div>
 
           <section className="review-safety" aria-labelledby="editorial-review-boundary-title">
@@ -156,7 +157,7 @@ export default async function EditorialReviewPage() {
               <p className="eyebrow">Sanity connection</p>
               <h2 id="editorial-review-empty-title">No review candidates are available.</h2>
               <p>Status: {review.status.reason.replaceAll("-", " ")}. Verified local homepage content remains active.</p>
-              <p>The site settings packet can still be reviewed now; it performs no external CMS write and clearly lists the two blocking claim approvals.</p>
+              <p>The site settings and announcement packets can still be reviewed now. Neither performs an external CMS write; the announcement packet remains source-required until exact school copy is supplied.</p>
             </section>
           ) : review.items.length ? (
             <section className="editorial-review-list" aria-labelledby="editorial-review-list-title">

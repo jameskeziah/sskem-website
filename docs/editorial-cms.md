@@ -202,6 +202,29 @@ revision, and return to the exact-output screen for the binding receipt. Buildin
 the importer does not authorize or execute the external write; the current two
 blocked claims still prevent it.
 
+## First announcement intake packet
+
+The private editorial screen also downloads an announcement intake packet from
+`/publication-review/editorial-announcement-packet`. There is currently no
+authoritative homepage announcement in the repository, so the schema-backed
+intake deliberately contains no title, message, link or approval ID. Its status
+is `source-required`, `sanityDraft` is null, and no generic admissions or news
+copy is invented.
+
+The intake has two explicit stages:
+
+1. `awaiting-authoritative-source` requires all candidate fields and the
+   approval reference to remain null.
+2. `candidate-ready` requires an exact 5-100 character title, an exact 10-500
+   character public message, and either no link, an internal path, or an HTTPS
+   URL. The packet then requires a matching canonical claim; only a current
+   approved claim changes the result to `ready-for-manual-draft`.
+
+The packet never writes to Sanity, creates a claim, grants approval, supplies a
+publication window or stores evidence. Run `npm run editorial:announcement:audit`
+after every intake edit. Complete the actual `siteSettings` proof before importing
+this announcement so the chronological migration order remains intact.
+
 ## Roles
 
 | Role | May | Must not |
@@ -312,6 +335,11 @@ The five tests in `tests/site-settings-import.test.mjs` prove that local plannin
 makes no request, blocked or unacknowledged writes fail before the network, the
 approved path creates only the canonical draft, receipts exclude the token, and
 a rejected create is never retried as an overwrite.
+
+The four tests in `tests/announcement-migration.test.mjs` prove that missing
+source copy never becomes a placeholder, candidate copy still requires its own
+claim, only an approved current claim reports draft readiness, and unsafe links
+or copy inserted in awaiting-source mode are rejected.
 
 The root test suite must include this file before the CMS slice is treated as a
 release gate. Studio schema validation is currently implemented in schema code,

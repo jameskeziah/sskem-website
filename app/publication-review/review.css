@@ -561,6 +561,7 @@
 .editorial-review-toolbar {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-16);
   justify-content: space-between;
   margin-top: var(--space-24);

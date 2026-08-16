@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/editorial-announcement-intake.schema.json",
+  "title": "SSKEMS first announcement intake",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "intakeId", "sourcePointer", "sourceStatus", "target", "policy", "approvalRecordId", "candidate"],
+  "properties": {
+    "$schema": { "const": "./editorial-announcement-intake.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "intakeId": { "const": "cms-announcement-first-record" },
+    "sourcePointer": { "const": "content/editorial-announcement-intake.json#candidate" },
+    "sourceStatus": { "enum": ["awaiting-authoritative-source", "candidate-ready"] },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contentType", "documentId"],
+      "properties": {
+        "contentType": { "const": "announcement" },
+        "documentId": { "const": "announcement-homepage-first" }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["externalWritePerformed", "draftOnly", "privateDataAllowed", "placeholderPublicationAllowed", "notes"],
+      "properties": {
+        "externalWritePerformed": { "const": false },
+        "draftOnly": { "const": true },
+        "privateDataAllowed": { "const": false },
+        "placeholderPublicationAllowed": { "const": false },
+        "notes": { "type": "string", "minLength": 3 }
+      }
+    },
+    "approvalRecordId": {
+      "type": ["string", "null"],
+      "pattern": "^claim-[a-z0-9-]+$"
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "message", "href"],
+      "properties": {
+        "title": { "type": ["string", "null"] },
+        "message": { "type": ["string", "null"] },
+        "href": { "type": ["string", "null"] }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "sourceStatus": { "const": "awaiting-authoritative-source" } } },
+      "then": {
+        "properties": {
+          "approvalRecordId": { "const": null },
+          "candidate": {
+            "properties": {
+              "title": { "const": null },
+              "message": { "const": null },
+              "href": { "const": null }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "sourceStatus": { "const": "candidate-ready" } } },
+      "then": {
+        "properties": {
+          "candidate": {
+            "properties": {
+              "title": { "type": "string", "minLength": 5, "maxLength": 100 },
+              "message": { "type": "string", "minLength": 10, "maxLength": 500 },
+              "href": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

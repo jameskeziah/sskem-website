@@ -97,3 +97,9 @@ companion importer is local-plan-only by default and requires both approvals,
 an explicit apply flag, an exact external-write acknowledgement and a
 process-only credential before it can create `drafts.site-settings`. It cannot
 publish or replace an existing draft.
+
+The announcement intake packet is intentionally source-required. It contains no
+placeholder notice and does not add a speculative manifest claim. Once the
+school supplies exact dated copy, create a matching claim record with only opaque
+evidence references; the packet remains review-required until that claim is
+current and approved.

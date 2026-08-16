@@ -74,6 +74,25 @@ test("downloads the guarded first site settings migration packet", async ({ page
   expect(packet.guardrails.approvalGrantedByPacket).toBe(false);
 });
 
+test("downloads an announcement intake packet without invented public copy", async ({ page }) => {
+  await page.goto("/publication-review/editorial");
+
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("link", { name: "Download announcement intake packet" }).click();
+  const download = await downloadPromise;
+  const path = await download.path();
+  expect(download.suggestedFilename()).toMatch(/^sskem-announcement-intake-\d{4}-\d{2}-\d{2}\.json$/);
+  expect(path).not.toBeNull();
+
+  const packet = JSON.parse(await readFile(path, "utf8"));
+  expect(packet.status).toBe("source-required");
+  expect(packet.candidate).toBeNull();
+  expect(packet.sanityDraft).toBeNull();
+  expect(packet.blockingRequirements).toEqual(["authoritative-announcement-source", "matching-claim-approval-record"]);
+  expect(packet.guardrails.placeholderCopyIncluded).toBe(false);
+  expect(packet.guardrails.externalWritePerformed).toBe(false);
+});
+
 test("rejects editorial receipt requests without platform identity", async () => {
   const baseUrl = process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000";
   const response = await fetch(new URL("/publication-review/editorial-receipt?type=announcement&id=notice&revision=rev-1", baseUrl));
@@ -84,4 +103,8 @@ test("rejects editorial receipt requests without platform identity", async () =>
   const packetResponse = await fetch(new URL("/publication-review/editorial-site-settings-packet", baseUrl));
   expect(packetResponse.status).toBe(401);
   expect(packetResponse.headers.get("cache-control")).toBe("private, no-store");
+
+  const announcementPacketResponse = await fetch(new URL("/publication-review/editorial-announcement-packet", baseUrl));
+  expect(announcementPacketResponse.status).toBe(401);
+  expect(announcementPacketResponse.headers.get("cache-control")).toBe("private, no-store");
 });

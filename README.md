@@ -46,6 +46,11 @@ command now prepares the matching create-only draft mutation locally; its write
 path remains blocked until both claims, explicit acknowledgement and a
 process-only Sanity credential all pass.
 
+The same private editorial screen provides a first announcement intake packet.
+Because no authoritative announcement copy has been supplied, it contains no
+placeholder text or draft and reports `source-required`; real copy still needs
+its own canonical claim approval before draft readiness.
+
 Approved replacement photography is prepared through the guarded campus-media
 pipeline documented in `docs/campus-media-ingestion.md`. It validates production
 dimensions, preserves composition, strips embedded metadata, creates responsive

@@ -1,0 +1,24 @@
+{
+  "$schema": "./editorial-announcement-intake.schema.json",
+  "schemaVersion": 1,
+  "intakeId": "cms-announcement-first-record",
+  "sourcePointer": "content/editorial-announcement-intake.json#candidate",
+  "sourceStatus": "awaiting-authoritative-source",
+  "target": {
+    "contentType": "announcement",
+    "documentId": "announcement-homepage-first"
+  },
+  "policy": {
+    "externalWritePerformed": false,
+    "draftOnly": true,
+    "privateDataAllowed": false,
+    "placeholderPublicationAllowed": false,
+    "notes": "No announcement copy has been supplied. Do not invent dates, admissions availability, deadlines or calls to action."
+  },
+  "approvalRecordId": null,
+  "candidate": {
+    "title": null,
+    "message": null,
+    "href": null
+  }
+}
