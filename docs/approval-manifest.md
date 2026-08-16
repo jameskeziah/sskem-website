@@ -92,4 +92,8 @@ internet-accessible deployment.
 The editorial screen also downloads the first `siteSettings` migration packet.
 Its seven fields are mapped to `claim-complete-address` and
 `claim-public-contact`; both must be approved before the packet reports draft
-readiness. Downloading it does not write to Sanity or approve either claim.
+readiness. Downloading it does not write to Sanity or approve either claim. The
+companion importer is local-plan-only by default and requires both approvals,
+an explicit apply flag, an exact external-write acknowledgement and a
+process-only credential before it can create `drafts.site-settings`. It cannot
+publish or replace an existing draft.

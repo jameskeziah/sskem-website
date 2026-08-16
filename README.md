@@ -41,7 +41,10 @@ private Sites access policy remains the authorization boundary; review mode or
 sign-in alone is not a substitute for controlled access and evidence handling.
 The editorial screen can also download a first `siteSettings` migration packet
 that maps every public contact field to its required address/contact claims. It
-is a local draft aid only and performs no external CMS write.
+is a local draft aid only and performs no external CMS write. A guarded operator
+command now prepares the matching create-only draft mutation locally; its write
+path remains blocked until both claims, explicit acknowledgement and a
+process-only Sanity credential all pass.
 
 Approved replacement photography is prepared through the guarded campus-media
 pipeline documented in `docs/campus-media-ingestion.md`. It validates production

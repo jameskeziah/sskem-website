@@ -174,9 +174,33 @@ It contains neither approval evidence nor approver identities, and deliberately
 omits `lastReviewedAt` and publication dates until a human review supplies them.
 
 Run `npm run editorial:site-settings:audit` after changing the field map. Once
-both claims pass, use the packet as a manual draft aid, complete Studio review,
-publish the exact reviewed revision, and return to the exact-output screen for
-the binding receipt. There is no automated external CMS write in this slice.
+both claims pass, the guarded importer can create the first draft without
+granting approval or publishing it. Its default mode is a local plan and makes
+no network request:
+
+```text
+npm run editorial:site-settings:import
+```
+
+The external create requires all of the following at the same time:
+
+- both controlling claims are current and approved in the canonical manifest;
+- `SANITY_PROJECT_ID`, `SANITY_DATASET`, the pinned `SANITY_API_VERSION`, and a
+  process-only `SANITY_IMPORT_TOKEN` with the minimum required write access;
+- the `--apply` flag; and
+- the exact acknowledgement
+  `--acknowledge-external-write=cms-site-settings-first-record`.
+
+The importer uses a single `create` mutation for `drafts.site-settings`. It does
+not use `createOrReplace`, does not publish, and refuses to overwrite an existing
+draft. Keep the import token out of `.env`, `.env.example`, Studio configuration,
+logs, receipts and the repository. If the request outcome or response receipt is
+uncertain, inspect Sanity transaction history before retrying.
+
+After the draft is created, complete Studio review, publish the exact reviewed
+revision, and return to the exact-output screen for the binding receipt. Building
+the importer does not authorize or execute the external write; the current two
+blocked claims still prevent it.
 
 ## Roles
 
@@ -283,6 +307,11 @@ claims.
 The three tests in `tests/site-settings-migration.test.mjs` prove complete field
 coverage, the two-claim readiness gate and rejection of an incomplete or
 redirected source map.
+
+The five tests in `tests/site-settings-import.test.mjs` prove that local planning
+makes no request, blocked or unacknowledged writes fail before the network, the
+approved path creates only the canonical draft, receipts exclude the token, and
+a rejected create is never retried as an overwrite.
 
 The root test suite must include this file before the CMS slice is treated as a
 release gate. Studio schema validation is currently implemented in schema code,
