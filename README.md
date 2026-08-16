@@ -39,6 +39,9 @@ These routes are unavailable outside private review mode. The editorial screen
 and receipt endpoint also enforce dispatch-owned ChatGPT sign-in, while the
 private Sites access policy remains the authorization boundary; review mode or
 sign-in alone is not a substitute for controlled access and evidence handling.
+The editorial screen can also download a first `siteSettings` migration packet
+that maps every public contact field to its required address/contact claims. It
+is a local draft aid only and performs no external CMS write.
 
 Approved replacement photography is prepared through the guarded campus-media
 pipeline documented in `docs/campus-media-ingestion.md`. It validates production

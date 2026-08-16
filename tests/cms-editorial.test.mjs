@@ -15,10 +15,10 @@ function manifest(...approvedIds) {
   };
 }
 
-function gate(approvalRecordId, overrides = {}) {
+function gate(approvalRecordIds, overrides = {}) {
   return {
     state: "published",
-    approvalRecordId,
+    approvalRecordIds: Array.isArray(approvalRecordIds) ? approvalRecordIds : [approvalRecordIds],
     validFrom: "2026-08-01",
     validUntil: "2026-08-31",
     ...overrides,
@@ -32,7 +32,7 @@ function sanityRecord(contentType, documentId, fields, revision = `rev-${documen
 async function bindingRegistry(...entries) {
   const bindings = await Promise.all(entries.map(async ({ candidate, projection }, index) => ({
     bindingId: `cms-binding-test-${index + 1}`,
-    approvalRecordId: candidate.publication.approvalRecordId,
+    approvalRecordIds: candidate.publication.approvalRecordIds,
     contentType: candidate._type,
     documentId: candidate._id,
     revision: candidate._rev,
@@ -369,6 +369,33 @@ test("previews only the sanitized public projection and generates an exact bindi
   });
   assert.equal(bound.status.bound, 1);
   assert.equal(bound.items[0].status, "bound");
+});
+
+test("requires every claim in a multi-claim CMS approval set", async () => {
+  const candidate = sanityRecord("siteSettings", "site-settings", {
+    contact: { location: "Veral, Khed, Ratnagiri", email: "info@sskemschool.com" },
+    publication: gate(["claim-complete-address", "claim-public-contact"]),
+  }, "rev-contact-set");
+
+  const partiallyApproved = await getHomepageEditorialReview({
+    env,
+    now: NOW,
+    manifest: manifest("claim-public-contact"),
+    bindings: await bindingRegistry(),
+    fetchImpl: mockFetch(emptyResult({ contacts: [candidate] })),
+  });
+  assert.equal(partiallyApproved.items[0].status, "blocked");
+  assert.equal(partiallyApproved.items[0].checks.manifestApproved, false);
+
+  const fullyApproved = await getHomepageEditorialReview({
+    env,
+    now: NOW,
+    manifest: manifest("claim-complete-address", "claim-public-contact"),
+    bindings: await bindingRegistry(),
+    fetchImpl: mockFetch(emptyResult({ contacts: [candidate] })),
+  });
+  assert.equal(fullyApproved.items[0].status, "ready-to-bind");
+  assert.deepEqual(fullyApproved.items[0].receiptProposal.approvalRecordIds, ["claim-complete-address", "claim-public-contact"]);
 });
 
 test("fails closed on network and malformed Content Lake responses", async () => {

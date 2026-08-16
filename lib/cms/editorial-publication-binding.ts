@@ -4,7 +4,7 @@ export type EditorialContentType = "siteSettings" | "announcement" | "admissionC
 
 export type EditorialPublicationBinding = {
   bindingId?: unknown;
-  approvalRecordId?: unknown;
+  approvalRecordIds?: unknown;
   contentType?: unknown;
   documentId?: unknown;
   revision?: unknown;
@@ -76,8 +76,15 @@ function validRegistryPolicy(registry: EditorialPublicationBindingsInput) {
     && registry.policy?.exactContentDigestRequired === true;
 }
 
-function bindingKey(approvalRecordId: string, contentType: EditorialContentType, documentId: string, revision: string) {
-  return `${approvalRecordId}\u0000${contentType}\u0000${documentId}\u0000${revision}`;
+export function editorialApprovalRecordIds(value: unknown): string[] | null {
+  if (!Array.isArray(value) || value.length === 0) return null;
+  const ids = value.filter((id): id is string => typeof id === "string" && approvalRecordIdPattern.test(id));
+  if (ids.length !== value.length || new Set(ids).size !== ids.length) return null;
+  return [...ids].sort();
+}
+
+function bindingKey(approvalRecordIds: readonly string[], contentType: EditorialContentType, documentId: string, revision: string) {
+  return `${[...approvalRecordIds].sort().join(",")}\u0000${contentType}\u0000${documentId}\u0000${revision}`;
 }
 
 export function editorialDocumentIdentity(candidate: UnknownRecord, contentType: EditorialContentType) {
@@ -101,7 +108,7 @@ export function createEditorialBindingIndex(
   const approvalCounts = new Map<string, number>();
   const documentRevisionCounts = new Map<string, number>();
   const validBindings: {
-    approvalRecordId: string;
+    approvalRecordIds: string[];
     contentType: EditorialContentType;
     documentId: string;
     revision: string;
@@ -109,9 +116,9 @@ export function createEditorialBindingIndex(
   }[] = [];
 
   for (const binding of registry.bindings) {
+    const approvalRecordIds = editorialApprovalRecordIds(binding?.approvalRecordIds);
     if (
-      typeof binding?.approvalRecordId !== "string"
-      || !approvalRecordIdPattern.test(binding.approvalRecordId)
+      !approvalRecordIds
       || typeof binding.contentType !== "string"
       || !allowedContentTypes.has(binding.contentType as EditorialContentType)
       || typeof binding.documentId !== "string"
@@ -124,10 +131,12 @@ export function createEditorialBindingIndex(
 
     const contentType = binding.contentType as EditorialContentType;
     const documentRevision = `${contentType}\u0000${binding.documentId}\u0000${binding.revision}`;
-    approvalCounts.set(binding.approvalRecordId, (approvalCounts.get(binding.approvalRecordId) ?? 0) + 1);
+    for (const approvalRecordId of approvalRecordIds) {
+      approvalCounts.set(approvalRecordId, (approvalCounts.get(approvalRecordId) ?? 0) + 1);
+    }
     documentRevisionCounts.set(documentRevision, (documentRevisionCounts.get(documentRevision) ?? 0) + 1);
     validBindings.push({
-      approvalRecordId: binding.approvalRecordId,
+      approvalRecordIds,
       contentType,
       documentId: binding.documentId,
       revision: binding.revision,
@@ -137,8 +146,8 @@ export function createEditorialBindingIndex(
 
   for (const binding of validBindings) {
     const documentRevision = `${binding.contentType}\u0000${binding.documentId}\u0000${binding.revision}`;
-    if (approvalCounts.get(binding.approvalRecordId) !== 1 || documentRevisionCounts.get(documentRevision) !== 1) continue;
-    index.set(bindingKey(binding.approvalRecordId, binding.contentType, binding.documentId, binding.revision), binding.digest);
+    if (binding.approvalRecordIds.some((id) => approvalCounts.get(id) !== 1) || documentRevisionCounts.get(documentRevision) !== 1) continue;
+    index.set(bindingKey(binding.approvalRecordIds, binding.contentType, binding.documentId, binding.revision), binding.digest);
   }
 
   return index;
@@ -159,9 +168,9 @@ export async function hasMatchingEditorialBinding(input: {
     || Array.isArray(candidate.publication)
   ) return false;
 
-  const approvalRecordId = (candidate.publication as UnknownRecord).approvalRecordId;
-  if (typeof approvalRecordId !== "string") return false;
-  const expectedDigest = index.get(bindingKey(approvalRecordId, contentType, identity.documentId, identity.revision));
+  const approvalRecordIds = editorialApprovalRecordIds((candidate.publication as UnknownRecord).approvalRecordIds);
+  if (!approvalRecordIds) return false;
+  const expectedDigest = index.get(bindingKey(approvalRecordIds, contentType, identity.documentId, identity.revision));
   if (!expectedDigest) return false;
 
   const actualDigest = await digestEditorialProjection({

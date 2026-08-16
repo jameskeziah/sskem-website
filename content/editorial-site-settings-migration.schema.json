@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/editorial-site-settings-migration.schema.json",
+  "title": "SSKEMS first siteSettings migration map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "migrationId", "sourcePointer", "target", "policy", "fields"],
+  "properties": {
+    "$schema": { "const": "./editorial-site-settings-migration.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "migrationId": { "const": "cms-site-settings-first-record" },
+    "sourcePointer": { "const": "app/data/site.ts#siteFacts" },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contentType", "documentId"],
+      "properties": {
+        "contentType": { "const": "siteSettings" },
+        "documentId": { "const": "site-settings" }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["externalWritePerformed", "draftOnly", "privateDataAllowed", "notes"],
+      "properties": {
+        "externalWritePerformed": { "const": false },
+        "draftOnly": { "const": true },
+        "privateDataAllowed": { "const": false },
+        "notes": { "type": "string", "minLength": 3 }
+      }
+    },
+    "fields": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field", "approvalRecordId"],
+        "properties": {
+          "field": {
+            "enum": [
+              "contact.location",
+              "contact.phone",
+              "contact.mobile",
+              "contact.email",
+              "contact.principalEmail",
+              "contact.workingHours.weekdays",
+              "contact.workingHours.saturday"
+            ]
+          },
+          "approvalRecordId": { "type": "string", "pattern": "^claim-[a-z0-9-]+$" }
+        }
+      }
+    }
+  }
+}

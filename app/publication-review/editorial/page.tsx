@@ -76,7 +76,7 @@ function EditorialReviewCard({ item }: { item: EditorialReviewItem }) {
 
       <dl className="editorial-review-card__meta">
         <div><dt>Revision</dt><dd><code>{item.revision ?? "Unavailable"}</code></dd></div>
-        <div><dt>Approval record</dt><dd><code>{item.approvalRecordId ?? "Missing or invalid"}</code></dd></div>
+        <div><dt>Approval records</dt><dd><code>{item.approvalRecordIds.length ? item.approvalRecordIds.join(", ") : "Missing or invalid"}</code></dd></div>
         <div><dt>Valid from</dt><dd>{item.validFrom ?? "Missing"}</dd></div>
         <div><dt>Valid until</dt><dd>{item.validUntil ?? "Missing"}</dd></div>
       </dl>
@@ -138,7 +138,10 @@ export default async function EditorialReviewPage() {
         </header>
 
         <PageContainer>
-          <div className="editorial-review-back"><Link href="/publication-review">← Back to approval queue</Link></div>
+          <div className="editorial-review-toolbar">
+            <Link href="/publication-review">← Back to approval queue</Link>
+            <Link className="button button--quiet" href="/publication-review/editorial-site-settings-packet">Download first site settings packet</Link>
+          </div>
 
           <section className="review-safety" aria-labelledby="editorial-review-boundary-title">
             <div>
@@ -153,6 +156,7 @@ export default async function EditorialReviewPage() {
               <p className="eyebrow">Sanity connection</p>
               <h2 id="editorial-review-empty-title">No review candidates are available.</h2>
               <p>Status: {review.status.reason.replaceAll("-", " ")}. Verified local homepage content remains active.</p>
+              <p>The site settings packet can still be reviewed now; it performs no external CMS write and clearly lists the two blocking claim approvals.</p>
             </section>
           ) : review.items.length ? (
             <section className="editorial-review-list" aria-labelledby="editorial-review-list-title">

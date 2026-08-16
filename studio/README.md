@@ -15,11 +15,11 @@ The following are prohibited in this Studio and in Sanity assets:
 - controlled evidence, internal approval files, or audit attachments;
 - authentication secrets, API tokens, or operational credentials.
 
-`approvalRecordId` is an opaque reference to an approval record held in the school-controlled evidence system. It must never contain an approver's identity or the evidence itself.
+`approvalRecordIds` is the exact set of opaque claim references needed by the displayed fields. The values point to approval records held in the school-controlled evidence system; they must never contain an approver's identity or the evidence itself.
 
 ## Publication rules
 
-Every document includes the reusable `publication` object. A document marked `published` must have an `approvalRecordId`, `validFrom`, and `validUntil`; Studio validation blocks publication without them. Sanity validation runs in the Studio, so the website's server-only CMS adapter independently enforces the same rule and rejects expired or unapproved content. The adapter additionally requires the exact published `_rev` and SHA-256 digest of its sanitized public projection to match `content/editorial-publication-bindings.json`; editing a published document therefore requires a new review receipt.
+Every document includes the reusable `publication` object. A document marked `published` must have one or more unique `approvalRecordIds`, `validFrom`, and `validUntil`; Studio validation blocks publication without them. Sanity validation runs in the Studio, so the website's server-only CMS adapter independently requires every referenced claim to be approved and rejects expired or unapproved content. The adapter additionally requires the exact published `_rev`, approval-ID set and SHA-256 digest of its sanitized public projection to match `content/editorial-publication-bindings.json`; editing a published document or its approval set therefore requires a new review receipt.
 
 Keep Sanity drafts and preview access separate from the public website. Public pages should query only the approved, currently valid projection defined by that adapter.
 

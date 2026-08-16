@@ -1,0 +1,25 @@
+{
+  "$schema": "./editorial-site-settings-migration.schema.json",
+  "schemaVersion": 1,
+  "migrationId": "cms-site-settings-first-record",
+  "sourcePointer": "app/data/site.ts#siteFacts",
+  "target": {
+    "contentType": "siteSettings",
+    "documentId": "site-settings"
+  },
+  "policy": {
+    "externalWritePerformed": false,
+    "draftOnly": true,
+    "privateDataAllowed": false,
+    "notes": "The packet is a public-safe review aid. It does not write to Sanity, approve claims or supply publication dates."
+  },
+  "fields": [
+    { "field": "contact.location", "approvalRecordId": "claim-complete-address" },
+    { "field": "contact.phone", "approvalRecordId": "claim-public-contact" },
+    { "field": "contact.mobile", "approvalRecordId": "claim-public-contact" },
+    { "field": "contact.email", "approvalRecordId": "claim-public-contact" },
+    { "field": "contact.principalEmail", "approvalRecordId": "claim-public-contact" },
+    { "field": "contact.workingHours.weekdays", "approvalRecordId": "claim-public-contact" },
+    { "field": "contact.workingHours.saturday", "approvalRecordId": "claim-public-contact" }
+  ]
+}

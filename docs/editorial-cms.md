@@ -46,7 +46,7 @@ exactly:
 | Field | Meaning |
 | --- | --- |
 | `publication.state` | `draft`, `inReview`, `published` or `retired` |
-| `publication.approvalRecordId` | Opaque ID of the matching publication-approval record; required when state is `published` |
+| `publication.approvalRecordIds` | Exact unique set of opaque claim-approval IDs required by the displayed fields; at least one is required when state is `published` |
 | `publication.validFrom` | Start of the public display window |
 | `publication.validUntil` | End of the public display window; Studio rejects a supplied end earlier than its supplied start |
 
@@ -59,7 +59,7 @@ The four document types and their current homepage projections are:
 
 | Type | Studio fields | Fields read by the first-slice adapter |
 | --- | --- | --- |
-| `siteSettings` | `schoolName`, `shortName`, `affiliationNumber`, public `contact` and `publication` | `contact.location`, `phone`, `mobile`, `email`, `principalEmail` and `workingHours` |
+| `siteSettings` | public `contact` and `publication` | `contact.location`, `phone`, `mobile`, `email`, `principalEmail` and `workingHours` |
 | `announcement` | `title`, `message`, optional internal-path/HTTPS `href` and `publication` | `title`, `message` and `href` |
 | `admissionCycle` | `institution`, `academicYear`, `publicStatus`, `publicMessage`, `verifiedAt` and `publication` | the same public fields |
 | `event` | `title`, optional `summary`, required `startAt`, optional `endAt`, `location`, internal-path/HTTPS `href` and `publication` | the same public fields |
@@ -81,17 +81,19 @@ must validate data again.
    `content/approval-manifest.json`. Private evidence and approver identities
    remain in the school's controlled system; the manifest stores only opaque
    evidence references and approving role.
-4. The CMS document's `publication.approvalRecordId` is set to the matching
-   manifest record ID. The ID is a reference, not evidence.
+4. The CMS document's `publication.approvalRecordIds` is set to the exact set
+   of matching manifest claim IDs. The IDs are references, not evidence. Every
+   referenced claim must pass independently; one approved claim cannot cover an
+   unrelated field.
 5. A **Publisher** changes the exact reviewed document to `published` only
-   after approval. Studio validation refuses `published` without an approval ID.
+   after approval. Studio validation refuses `published` without approval IDs.
 6. A technical operator records the exact published document ID, `_rev` and
    SHA-256 digest of the adapter's sanitized public projection in
    `content/editorial-publication-bindings.json`. The registry stores the
    accountable role and public-safe notes, never an approver identity or the
    controlled evidence.
 7. The public website independently accepts the document only when the adapter
-   confirms the publication state, approval record, validity window, exact
+   confirms the publication state, every approval record, validity window, exact
    revision and exact content digest.
 
 The adapter fails closed: draft, in-review, retired, missing-window,
@@ -102,15 +104,15 @@ Changing a CMS state does not change the canonical manifest decision.
 ## Exact revision and digest binding
 
 `content/editorial-publication-bindings.json` is a public-safe receipt registry,
-not an approval system. Each entry binds one claim approval record to one
-published Sanity document ID, one exact `_rev` and one lowercase SHA-256 digest.
+not an approval system. Each entry binds an exact set of claim approval records
+to one published Sanity document ID, one exact `_rev` and one lowercase SHA-256 digest.
 The digest covers canonical JSON containing the content type, document ID,
 revision and the exact sanitized projection that the adapter would display.
 Object keys are sorted and array order is preserved.
 
 One approval record cannot bind multiple revisions, and one document revision
 cannot have multiple bindings. Draft IDs are rejected. A valid binding remains
-insufficient on its own: the referenced claim must also be currently approved
+insufficient on its own: every referenced claim must also be currently approved
 in `content/approval-manifest.json`, and the CMS publication window must be
 current. Run `npm run editorial:bindings:audit` after every registry edit.
 
@@ -135,7 +137,7 @@ digest. A binding receipt download is enabled only when all of these pass:
 
 - the published document identity and revision are valid;
 - the public projection passes server sanitization;
-- the referenced claim is currently approved in the canonical manifest; and
+- every referenced claim is currently approved in the canonical manifest; and
 - the publication window is current.
 
 The download route re-fetches and re-validates the requested revision on the
@@ -154,6 +156,27 @@ remains the authorization boundary; sign-in alone does not prove school or
 workspace membership. `HOMEPAGE_REVIEW_MODE=private` only makes the routes
 available and is not authentication by itself. Search directives are never
 treated as access control.
+
+## First site settings migration packet
+
+The authenticated review screen can download a public-safe first-record packet
+from `/publication-review/editorial-site-settings-packet`. The packet is built
+from `app/data/site.ts#siteFacts` through the schema-backed field map in
+`content/editorial-site-settings-migration.json`. It compares all seven public
+contact fields with their controlling claims and prepares a `draft`
+`siteSettings` candidate without writing to Sanity.
+
+The complete address requires `claim-complete-address`; phone, mobile, public
+emails and working hours require `claim-public-contact`. Both claims must be
+current and approved. The current manifest blocks both, so the packet honestly
+reports `review-required` and cannot imply migration or publication readiness.
+It contains neither approval evidence nor approver identities, and deliberately
+omits `lastReviewedAt` and publication dates until a human review supplies them.
+
+Run `npm run editorial:site-settings:audit` after changing the field map. Once
+both claims pass, use the packet as a manual draft aid, complete Studio review,
+publish the exact reviewed revision, and return to the exact-output screen for
+the binding receipt. There is no automated external CMS write in this slice.
 
 ## Roles
 
@@ -227,7 +250,7 @@ speed up migration.
 
 ## Verification of the current slice
 
-The ten tests in `tests/cms-editorial.test.mjs` currently prove that the
+The eleven tests in `tests/cms-editorial.test.mjs` currently prove that the
 server adapter:
 
 - makes no request and returns the reviewed local fallback when Sanity is not
@@ -245,13 +268,21 @@ server adapter:
   has been recorded; and
 - exposes only the sanitized public projection to private review and generates
   a receipt for the exact reviewed revision; and
+- requires every claim in a multi-claim approval set before generating a
+  receipt; and
 - fails closed to local content on network failure or a malformed Content Lake
   response.
 
-The four tests in `tests/editorial-publication-bindings.test.mjs` additionally
+The five tests in `tests/editorial-publication-bindings.test.mjs` additionally
 prove that the repository registry and approval manifest pass a joint audit,
 unsafe draft/digest/reference values are rejected, and one approval cannot
-silently authorize multiple revisions or be bound before approval.
+silently authorize multiple revisions or be bound before approval. They also
+prove that one revision may require an exact set of independently approved
+claims.
+
+The three tests in `tests/site-settings-migration.test.mjs` prove complete field
+coverage, the two-claim readiness gate and rejection of an incomplete or
+redirected source map.
 
 The root test suite must include this file before the CMS slice is treated as a
 release gate. Studio schema validation is currently implemented in schema code,

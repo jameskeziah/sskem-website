@@ -26,7 +26,7 @@ function registry(bindingOverrides = {}) {
     },
     bindings: [{
       bindingId: "cms-binding-school-name",
-      approvalRecordId: "claim-school-name",
+      approvalRecordIds: ["claim-school-name"],
       contentType: "siteSettings",
       documentId: "site-settings",
       revision: "rev-reviewed",
@@ -55,7 +55,7 @@ test("the repository binding registry and canonical manifest pass their joint au
 test("binding validation rejects draft IDs, malformed digests and missing manifest references", () => {
   const manifest = { records: [approvedManifestRecord()] };
   const issues = validateEditorialPublicationBindings(registry({
-    approvalRecordId: "claim-missing",
+    approvalRecordIds: ["claim-missing"],
     documentId: "drafts.site-settings",
     contentDigestSha256: "not-a-digest",
   }), manifest);
@@ -81,4 +81,15 @@ test("a binding cannot be recorded before the canonical claim is approved", () =
   const manifest = { records: [{ ...approvedManifestRecord(), decision: "review-required" }] };
   const issues = validateEditorialPublicationBindings(registry(), manifest);
   assert.ok(issues.some((issue) => issue.code === "approval-decision"));
+});
+
+test("a binding may require an exact set of independently approved claims", () => {
+  const candidate = registry({ approvalRecordIds: ["claim-complete-address", "claim-public-contact"] });
+  const manifest = {
+    records: [
+      approvedManifestRecord("claim-complete-address"),
+      approvedManifestRecord("claim-public-contact"),
+    ],
+  };
+  assert.deepEqual(validateEditorialPublicationBindings(candidate, manifest), []);
 });

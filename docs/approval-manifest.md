@@ -88,3 +88,8 @@ ChatGPT sign-in, while the private Sites access policy provides the actual
 workspace authorization boundary. `HOMEPAGE_REVIEW_MODE=private` is only a
 route-availability gate and must never be used as the sole protection on an
 internet-accessible deployment.
+
+The editorial screen also downloads the first `siteSettings` migration packet.
+Its seven fields are mapped to `claim-complete-address` and
+`claim-public-contact`; both must be approved before the packet reports draft
+readiness. Downloading it does not write to Sanity or approve either claim.

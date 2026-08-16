@@ -558,11 +558,15 @@
   padding-left: var(--space-24);
 }
 
-.editorial-review-back {
+.editorial-review-toolbar {
+  align-items: center;
+  display: flex;
+  gap: var(--space-16);
+  justify-content: space-between;
   margin-top: var(--space-24);
 }
 
-.editorial-review-back a {
+.editorial-review-toolbar > a:first-child {
   font-weight: var(--font-weight-bold);
 }
 
@@ -769,12 +773,14 @@
 
 
   .review-cms__actions,
+  .editorial-review-toolbar,
   .editorial-review-card__heading {
     align-items: stretch;
     flex-direction: column;
   }
 
   .review-cms__actions .button,
+  .editorial-review-toolbar .button,
   .editorial-review-card__status {
     align-self: flex-start;
   }

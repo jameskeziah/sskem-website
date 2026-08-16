@@ -3,6 +3,7 @@ import approvalManifestData from "../../content/approval-manifest.json" with { t
 import {
   createEditorialBindingIndex,
   digestEditorialProjection,
+  editorialApprovalRecordIds,
   editorialDocumentIdentity,
   editorialPublicationBindings,
   hasMatchingEditorialBinding,
@@ -77,7 +78,7 @@ export type HomepageEditorialContent = {
 
 export type EditorialReviewReceipt = {
   bindingId: string;
-  approvalRecordId: string;
+  approvalRecordIds: string[];
   contentType: EditorialContentType;
   documentId: string;
   revision: string;
@@ -91,7 +92,7 @@ export type EditorialReviewItem = {
   contentType: EditorialContentType;
   documentId: string | null;
   revision: string | null;
-  approvalRecordId: string | null;
+  approvalRecordIds: string[];
   validFrom: string | null;
   validUntil: string | null;
   projection: HomepageContact | HomepageNotice | HomepageAdmissionsCycle | HomepageEvent | null;
@@ -167,32 +168,31 @@ const MAX_HOMEPAGE_EVENTS = 3;
 const DATE_ONLY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const PROJECT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const DATASET_PATTERN = /^[a-z0-9][a-z0-9_-]{0,63}$/;
-const CLAIM_APPROVAL_ID_PATTERN = /^claim-[a-z0-9-]+$/;
 
 const SANITY_QUERY = `{
   "contacts": *[_type == "siteSettings" && !(_id in path("drafts.**"))]
     | order(_updatedAt desc)[0...${MAX_CANDIDATES_PER_TYPE}] {
       _id, _rev, _type,
       contact { location, phone, mobile, email, principalEmail, workingHours { weekdays, saturday } },
-      publication { state, approvalRecordId, validFrom, validUntil }
+      publication { state, approvalRecordIds, validFrom, validUntil }
     },
   "notices": *[_type == "announcement" && !(_id in path("drafts.**"))]
     | order(_updatedAt desc)[0...${MAX_CANDIDATES_PER_TYPE}] {
       _id, _rev, _type,
       title, message, href,
-      publication { state, approvalRecordId, validFrom, validUntil }
+      publication { state, approvalRecordIds, validFrom, validUntil }
     },
   "admissionsCycles": *[_type == "admissionCycle" && !(_id in path("drafts.**"))]
     | order(_updatedAt desc)[0...${MAX_CANDIDATES_PER_TYPE}] {
       _id, _rev, _type,
       academicYear, institution, publicStatus, publicMessage, verifiedAt,
-      publication { state, approvalRecordId, validFrom, validUntil }
+      publication { state, approvalRecordIds, validFrom, validUntil }
     },
   "events": *[_type == "event" && !(_id in path("drafts.**"))]
     | order(startAt asc)[0...${MAX_CANDIDATES_PER_TYPE}] {
       _id, _rev, _type,
       title, summary, startAt, endAt, location, href,
-      publication { state, approvalRecordId, validFrom, validUntil }
+      publication { state, approvalRecordIds, validFrom, validUntil }
     }
 }`;
 
@@ -360,8 +360,8 @@ function hasCurrentPublicationWindow(candidate: UnknownRecord, now: number) {
 
 function hasCurrentPublicationGate(candidate: UnknownRecord, approvals: Set<string>, now: number) {
   if (!hasCurrentPublicationWindow(candidate, now) || !isRecord(candidate.publication)) return false;
-  const approvalRecordId = candidate.publication.approvalRecordId;
-  return typeof approvalRecordId === "string" && approvals.has(approvalRecordId);
+  const approvalRecordIds = editorialApprovalRecordIds(candidate.publication.approvalRecordIds);
+  return approvalRecordIds !== null && approvalRecordIds.every((approvalRecordId) => approvals.has(approvalRecordId));
 }
 
 function parseContact(candidate: UnknownRecord): HomepageContact | null {
@@ -673,11 +673,8 @@ async function prepareEditorialReviewItem(input: {
   const identity = editorialDocumentIdentity(record, contentType);
   const projection = identity ? reviewProjection(contentType, record, now) : null;
   const publication = isRecord(record.publication) ? record.publication : {};
-  const approvalRecordId = typeof publication.approvalRecordId === "string"
-    && CLAIM_APPROVAL_ID_PATTERN.test(publication.approvalRecordId)
-    ? publication.approvalRecordId
-    : null;
-  const manifestApproved = approvalRecordId !== null && approvals.has(approvalRecordId);
+  const approvalRecordIds = editorialApprovalRecordIds(publication.approvalRecordIds) ?? [];
+  const manifestApproved = approvalRecordIds.length > 0 && approvalRecordIds.every((approvalRecordId) => approvals.has(approvalRecordId));
   const publicationWindowCurrent = hasCurrentPublicationWindow(record, now);
   const contentDigestSha256 = identity && projection
     ? await digestEditorialProjection({ contentType, ...identity, projection })
@@ -687,7 +684,7 @@ async function prepareEditorialReviewItem(input: {
     && projection
     && await hasMatchingEditorialBinding({ candidate: record, contentType, projection, index: bindings }),
   );
-  const receiptReady = Boolean(identity && projection && approvalRecordId && manifestApproved && publicationWindowCurrent && contentDigestSha256);
+  const receiptReady = Boolean(identity && projection && manifestApproved && publicationWindowCurrent && contentDigestSha256);
   const blockers: string[] = [];
 
   if (!identity) blockers.push("Published document identity or revision is invalid.");
@@ -696,10 +693,10 @@ async function prepareEditorialReviewItem(input: {
   if (!publicationWindowCurrent) blockers.push("The published display window is missing, invalid or not current.");
   if (receiptReady && !exactBinding) blockers.push("The exact revision receipt has not been added to the binding registry.");
 
-  const receiptProposal: EditorialReviewReceipt | null = receiptReady && identity && approvalRecordId && contentDigestSha256
+  const receiptProposal: EditorialReviewReceipt | null = receiptReady && identity && approvalRecordIds.length && contentDigestSha256
     ? {
         bindingId: `cms-binding-${contentType.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}-${contentDigestSha256.slice(0, 12)}`,
-        approvalRecordId,
+        approvalRecordIds,
         contentType,
         documentId: identity.documentId,
         revision: identity.revision,
@@ -714,7 +711,7 @@ async function prepareEditorialReviewItem(input: {
     contentType,
     documentId: identity?.documentId ?? null,
     revision: identity?.revision ?? null,
-    approvalRecordId,
+    approvalRecordIds,
     validFrom: safePublicationValue(publication.validFrom),
     validUntil: safePublicationValue(publication.validUntil),
     projection,

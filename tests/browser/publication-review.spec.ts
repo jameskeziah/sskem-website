@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+
 import { expect, test } from "@playwright/test";
 
 test("prioritises campus-media approval and filters the canonical queue", async ({ page }) => {
@@ -55,10 +57,31 @@ test("opens the private exact-output CMS review without exposing raw records", a
   await expect(page.getByText("Verified local homepage content remains active.")).toBeVisible();
 });
 
+test("downloads the guarded first site settings migration packet", async ({ page }) => {
+  await page.goto("/publication-review/editorial");
+
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("link", { name: "Download first site settings packet" }).click();
+  const download = await downloadPromise;
+  const path = await download.path();
+  expect(download.suggestedFilename()).toMatch(/^sskem-site-settings-migration-\d{4}-\d{2}-\d{2}\.json$/);
+  expect(path).not.toBeNull();
+
+  const packet = JSON.parse(await readFile(path, "utf8"));
+  expect(packet.status).toBe("review-required");
+  expect(packet.blockingApprovalRecordIds).toEqual(["claim-complete-address", "claim-public-contact"]);
+  expect(packet.guardrails.externalWritePerformed).toBe(false);
+  expect(packet.guardrails.approvalGrantedByPacket).toBe(false);
+});
+
 test("rejects editorial receipt requests without platform identity", async () => {
   const baseUrl = process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000";
   const response = await fetch(new URL("/publication-review/editorial-receipt?type=announcement&id=notice&revision=rev-1", baseUrl));
 
   expect(response.status).toBe(401);
   expect(response.headers.get("cache-control")).toBe("private, no-store");
+
+  const packetResponse = await fetch(new URL("/publication-review/editorial-site-settings-packet", baseUrl));
+  expect(packetResponse.status).toBe(401);
+  expect(packetResponse.headers.get("cache-control")).toBe("private, no-store");
 });

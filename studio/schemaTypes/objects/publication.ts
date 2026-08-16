@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 type PublicationValue = {
   state?: 'draft' | 'inReview' | 'published' | 'retired'
@@ -34,17 +34,31 @@ export const publication = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'approvalRecordId',
-      title: 'Approval record ID',
-      type: 'string',
+      name: 'approvalRecordIds',
+      title: 'Approval record IDs',
+      type: 'array',
       description:
-        'Opaque ID only. Do not enter an approver name, email, signature, evidence, or internal notes.',
+        'Opaque claim IDs only. Include every claim needed by the displayed fields. Do not enter approver identities, evidence or internal notes.',
+      of: [
+        defineArrayMember({
+          type: 'string',
+          validation: (rule) =>
+            rule.regex(/^claim-[a-z0-9-]+$/, {
+              name: 'claim approval ID',
+              invert: false,
+            }),
+        }),
+      ],
       validation: (rule) =>
         rule.custom((value, context) => {
           const parent = context.parent as PublicationValue | undefined
 
-          if (parent?.state === 'published' && (!value || !value.trim())) {
-            return 'An approval record ID is required before this content can be marked published.'
+          if (parent?.state === 'published' && (!Array.isArray(value) || value.length === 0)) {
+            return 'At least one approval record ID is required before this content can be marked published.'
+          }
+
+          if (Array.isArray(value) && new Set(value).size !== value.length) {
+            return 'Approval record IDs must be unique.'
           }
 
           return true

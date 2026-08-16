@@ -26,10 +26,15 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["bindingId", "approvalRecordId", "contentType", "documentId", "revision", "contentDigestSha256", "boundOn", "ownerRole", "notes"],
+        "required": ["bindingId", "approvalRecordIds", "contentType", "documentId", "revision", "contentDigestSha256", "boundOn", "ownerRole", "notes"],
         "properties": {
           "bindingId": { "type": "string", "pattern": "^cms-binding-[a-z0-9-]+$" },
-          "approvalRecordId": { "type": "string", "pattern": "^claim-[a-z0-9-]+$" },
+          "approvalRecordIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^claim-[a-z0-9-]+$" }
+          },
           "contentType": { "enum": ["siteSettings", "announcement", "admissionCycle", "event"] },
           "documentId": { "type": "string", "pattern": "^(?!drafts\\.)[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
           "revision": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
