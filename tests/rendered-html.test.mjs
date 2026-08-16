@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render(pathname = "/", headers = { accept: "text/html" }) {
+async function render(pathname = "/", headers = { accept: "text/html" }, redirect = "follow") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
@@ -9,6 +10,7 @@ async function render(pathname = "/", headers = { accept: "text/html" }) {
   return worker.fetch(
     new Request(`http://localhost${pathname}`, {
       headers,
+      redirect,
     }),
     {
       ASSETS: {
@@ -146,6 +148,11 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /Sanity delivery status/i);
   assert.match(readableText, /Ready for connection/i);
   assert.match(readableText, /Applicant records, pupil data, controlled documents, consent evidence and approver identities never enter this CMS\./i);
+  assert.match(readableText, /Legacy cutover/i);
+  assert.match(readableText, /Old WordPress links now have a controlled destination\./i);
+  assert.match(readableText, /35 Captured 2026-08-16/i);
+  assert.match(readableText, /33 Mapped directly to final modern routes\./i);
+  assert.match(html, /href=["']\/publication-review\/cutover-export["']/i);
   assert.doesNotMatch(html, /style=["'][^"']*(?:opacity\s*:\s*0|visibility\s*:\s*hidden)/i);
 });
 
@@ -162,6 +169,47 @@ test("exports the owner-only approval worksheet without private evidence", async
   assert.match(rows[0], /^record_id,kind,title,decision,check_profile/);
   assert.match(csv, /media-campus-main,media,Main campus exterior,review-required/);
   assert.match(csv, /document-mpd-c-4,document,Parent Teacher Association list,blocked/);
+  assert.doesNotMatch(csv, /[a-z]:\\|file:\/\//i);
+  assert.doesNotMatch(csv, /\b[\w.+-]+@[\w.-]+\.[a-z]{2,}\b/i);
+});
+
+test("serves every inventoried legacy route without redirect chains", async () => {
+  const inventory = JSON.parse(await readFile(new URL("../content/legacy-cutover-inventory.json", import.meta.url), "utf8"));
+  const destinationStatuses = new Map();
+
+  for (const record of inventory.records) {
+    const response = await render(record.legacyPath, { accept: "text/html" }, "manual");
+    if (record.disposition === "retain") {
+      assert.equal(response.status, 200, `${record.legacyPath} must remain directly available`);
+      continue;
+    }
+
+    assert.ok([301, 308].includes(response.status), `${record.legacyPath} must permanently redirect, received ${response.status}`);
+    const location = response.headers.get("location");
+    assert.ok(location, `${record.legacyPath} must include a Location header`);
+    const destination = new URL(location, "http://localhost");
+    assert.equal(destination.pathname.replace(/\/$/, "") || "/", record.targetPath);
+
+    if (!destinationStatuses.has(record.targetPath)) {
+      destinationStatuses.set(record.targetPath, (await render(record.targetPath)).status);
+    }
+    assert.equal(destinationStatuses.get(record.targetPath), 200, `${record.targetPath} must resolve directly`);
+  }
+});
+
+test("exports the owner-only legacy cutover worksheet", async () => {
+  const response = await render("/publication-review/cutover-export", { accept: "text/csv" });
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/csv\b/i);
+  assert.match(response.headers.get("cache-control") ?? "", /private, no-store/i);
+  assert.match(response.headers.get("content-disposition") ?? "", /sskem-legacy-cutover-2026-08-16\.csv/i);
+
+  const csv = await response.text();
+  const rows = csv.trim().split(/\r?\n/);
+  assert.equal(rows.length, 36, "Worksheet must contain one header and 35 route rows");
+  assert.match(rows[0], /^"id","title","legacyPath","disposition","targetPath"/);
+  assert.match(csv, /"legacy-gallery-2026","Gallery 2026","\/gallery-2026","redirect","\/student-life\/gallery"/);
+  assert.match(csv, /"legacy-contact","Contact","\/contact","retain","\/contact"/);
   assert.doesNotMatch(csv, /[a-z]:\\|file:\/\//i);
   assert.doesNotMatch(csv, /\b[\w.+-]+@[\w.-]+\.[a-z]{2,}\b/i);
 });

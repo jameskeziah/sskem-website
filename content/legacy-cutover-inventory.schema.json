@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/legacy-cutover-inventory.schema.json",
+  "title": "SSKEMS legacy cutover inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "inventoryId", "capturedOn", "sourceOrigin", "policy", "records"],
+  "properties": {
+    "$schema": { "const": "./legacy-cutover-inventory.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "inventoryId": { "const": "sskem-wordpress-cutover" },
+    "capturedOn": { "type": "string", "format": "date" },
+    "sourceOrigin": { "const": "https://www.sskemschool.com" },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["legacyContentIsEvidence", "legacyUploadsCopied", "redirectsMayPublishLegacyContent", "notes"],
+      "properties": {
+        "legacyContentIsEvidence": { "const": false },
+        "legacyUploadsCopied": { "const": false },
+        "redirectsMayPublishLegacyContent": { "const": false },
+        "notes": { "type": "string", "minLength": 20 }
+      }
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "legacyPath", "category", "disposition", "targetPath", "implementation", "contentReview", "risk", "ownerRole", "observedOn", "notes"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^legacy-[a-z0-9-]+$" },
+          "title": { "type": "string", "minLength": 2, "maxLength": 160 },
+          "legacyPath": { "type": "string", "pattern": "^/(?:[a-z0-9-]+/)*[a-z0-9-]*$" },
+          "category": { "enum": ["home", "disclosure", "about", "admissions", "academics", "student-life", "media", "contact"] },
+          "disposition": { "enum": ["retain", "redirect", "rewrite", "archive-review", "discard"] },
+          "targetPath": { "type": "string", "pattern": "^/(?:[a-z0-9-]+/)*[a-z0-9-]*$" },
+          "implementation": { "enum": ["current-route", "dedicated-route", "catch-all-redirect", "pending"] },
+          "contentReview": { "enum": ["not-required", "required", "approval-blocked"] },
+          "risk": { "enum": ["low", "medium", "high"] },
+          "ownerRole": { "type": "string", "pattern": "^[a-z][a-z0-9-]{2,63}$" },
+          "observedOn": { "type": "string", "format": "date" },
+          "notes": { "type": "string", "minLength": 10, "maxLength": 500 }
+        }
+      }
+    }
+  }
+}

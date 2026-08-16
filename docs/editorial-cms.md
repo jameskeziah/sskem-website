@@ -143,8 +143,10 @@ the site from rendering.
 
 ## WordPress migration order
 
-1. Freeze a WordPress URL/content inventory and assign each item an owner and a
-   disposition: migrate, rewrite, archive, redirect or discard.
+1. Maintain the schema-backed WordPress URL inventory in
+   `content/legacy-cutover-inventory.json`; its owner roles, dispositions and
+   direct redirect targets are implemented and audited through
+   `docs/legacy-cutover.md`.
 2. Run the four-type Sanity slice alongside the local fallback. Do not change
    public routes during initial comparison.
 3. Migrate one approved `siteSettings` record, then announcements, the current

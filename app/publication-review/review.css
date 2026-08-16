@@ -64,6 +64,7 @@
 
 .review-safety,
 .review-cms,
+.review-cutover,
 .review-summary,
 .review-first-batch,
 .review-media-intake,
@@ -167,6 +168,78 @@
 .review-cms__boundary {
   margin: var(--space-24) 0 0;
   color: var(--text-secondary);
+}
+
+.review-cutover {
+  background: var(--color-brand-950);
+  border-radius: var(--radius-large);
+  color: var(--text-on-brand);
+  padding: clamp(var(--space-24), 5vw, var(--space-48));
+}
+
+.review-cutover .eyebrow,
+.review-cutover .review-section-heading > p {
+  color: inherit;
+}
+
+.review-cutover__grid {
+  display: grid;
+  gap: var(--space-16);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+
+.review-cutover__grid > div {
+  background: color-mix(in srgb, var(--color-neutral-0) 10%, transparent);
+  border: var(--border-width-default) solid color-mix(in srgb, var(--color-neutral-0) 24%, transparent);
+  border-radius: var(--radius-medium);
+  padding: var(--space-24);
+}
+
+.review-cutover__grid dt {
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.review-cutover__grid dd {
+  margin: var(--space-12) 0 0;
+}
+
+.review-cutover__grid dd strong,
+.review-cutover__grid dd span {
+  display: block;
+}
+
+.review-cutover__grid dd strong {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-500);
+  line-height: 1;
+}
+
+.review-cutover__grid dd span {
+  color: color-mix(in srgb, var(--text-on-brand) 76%, transparent);
+  font-size: var(--font-size-200);
+  margin-top: var(--space-8);
+}
+
+.review-cutover__actions {
+  align-items: center;
+  display: flex;
+  gap: var(--space-16);
+  justify-content: space-between;
+  margin-top: var(--space-24);
+}
+
+.review-cutover__actions p {
+  margin: 0;
+}
+
+.review-cutover__actions .button {
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  flex: 0 0 auto;
 }
 
 .review-summary__grid > div {
@@ -495,6 +568,7 @@
 
 @media (max-width: 44rem) {
   .review-cms__grid,
+  .review-cutover__grid,
   .review-summary__grid,
   .review-media-intake__grid,
   .review-document-intake__grid,
@@ -510,5 +584,10 @@
 
   .review-card__metadata > div {
     grid-template-columns: 1fr;
+  }
+
+  .review-cutover__actions {
+    align-items: stretch;
+    flex-direction: column;
   }
 }

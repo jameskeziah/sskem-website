@@ -15,6 +15,10 @@ import {
   type ApprovalKind,
   type ApprovalRecord,
 } from "@/app/data/publication-approval";
+import {
+  legacyCutoverDashboard,
+  legacyCutoverInventory,
+} from "@/app/data/legacy-cutover";
 import { PageContainer } from "@/components/layout";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -158,6 +162,26 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <div><dt>Rejected records</dt><dd><strong>{editorial.status.remoteRejected}</strong><span>Nothing rejected reaches public output.</span></dd></div>
             </dl>
             <p className="review-cms__boundary">Applicant records, pupil data, controlled documents, consent evidence and approver identities never enter this CMS.</p>
+          </section>
+
+          <section className="review-cutover" aria-labelledby="review-cutover-title">
+            <div className="review-section-heading">
+              <div>
+                <p className="eyebrow">Legacy cutover</p>
+                <h2 id="review-cutover-title">Old WordPress links now have a controlled destination.</h2>
+              </div>
+              <p>Permanent redirects preserve route continuity without copying old claims, pupil media, forms or downloads into the rebuilt site.</p>
+            </div>
+            <dl className="review-cutover__grid">
+              <div><dt>Routes inventoried</dt><dd><strong>{legacyCutoverDashboard.total}</strong><span>Captured {legacyCutoverInventory.capturedOn}</span></dd></div>
+              <div><dt>Permanent redirects</dt><dd><strong>{legacyCutoverDashboard.redirects}</strong><span>Mapped directly to final modern routes.</span></dd></div>
+              <div><dt>High-risk sources</dt><dd><strong>{legacyCutoverDashboard.highRisk}</strong><span>Forms, identities, claims or pupil media.</span></dd></div>
+              <div><dt>Route readiness</dt><dd><strong>{legacyCutoverDashboard.pendingImplementation === 0 ? "Ready" : "Incomplete"}</strong><span>{legacyCutoverDashboard.approvalBlocked} legacy content items still need approval or replacement.</span></dd></div>
+            </dl>
+            <div className="review-cutover__actions">
+              <p>Redirect readiness does not make the legacy content approved.</p>
+              <Link className="button button--quiet" href="/publication-review/cutover-export">Download cutover worksheet</Link>
+            </div>
           </section>
 
           <section className="review-summary" aria-labelledby="review-summary-title">

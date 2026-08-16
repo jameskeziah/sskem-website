@@ -9,6 +9,8 @@
     "tokens:build": "node scripts/generate-tokens.mjs",
     "approvals:audit": "node scripts/audit-approval-manifest.mjs",
     "approvals:release": "node scripts/audit-approval-manifest.mjs --release",
+    "cutover:audit": "node scripts/audit-legacy-cutover.mjs",
+    "cutover:release": "node scripts/audit-legacy-cutover.mjs --release",
     "media:inspect": "node scripts/prepare-campus-media.mjs --inspect",
     "media:prepare": "node scripts/prepare-campus-media.mjs",
     "media:publish": "node scripts/prepare-campus-media.mjs --publish",
@@ -24,7 +26,7 @@
     "studio:dev": "npm --prefix studio run dev",
     "studio:build": "npm --prefix studio run build",
     "studio:typecheck": "npm --prefix studio run typecheck",
-    "test:contract": "npm run tokens:build && node --experimental-strip-types --test tests/approval-manifest.test.mjs tests/campus-media-pipeline.test.mjs tests/cms-editorial.test.mjs tests/document-ingestion-pipeline.test.mjs tests/publication-review-contract.test.mjs tests/phase1-contract.test.mjs tests/stage2-disclosure.test.mjs tests/document-compliance.test.mjs tests/stage3-admissions.test.mjs tests/motion-system.test.mjs",
+    "test:contract": "npm run tokens:build && node --experimental-strip-types --test tests/approval-manifest.test.mjs tests/campus-media-pipeline.test.mjs tests/cms-editorial.test.mjs tests/document-ingestion-pipeline.test.mjs tests/legacy-cutover.test.mjs tests/publication-review-contract.test.mjs tests/phase1-contract.test.mjs tests/stage2-disclosure.test.mjs tests/document-compliance.test.mjs tests/stage3-admissions.test.mjs tests/motion-system.test.mjs",
     "test:browser": "cross-env HOMEPAGE_REVIEW_MODE=private npm run test:browser:review",
     "test:browser:review": "npm run build && node scripts/run-browser-tests.mjs",
     "test:visual": "cross-env HOMEPAGE_REVIEW_MODE=private npm run test:visual:review",
@@ -32,8 +34,8 @@
     "test:visual:update": "cross-env HOMEPAGE_REVIEW_MODE=private npm run test:visual:update:review",
     "test:visual:update:review": "npm run build && node scripts/run-browser-tests.mjs tests/browser/visual.spec.ts --update-snapshots",
     "test": "cross-env HOMEPAGE_REVIEW_MODE=private npm run test:review",
-    "test:review": "npm run build && node --experimental-strip-types --test tests/approval-manifest.test.mjs tests/campus-media-pipeline.test.mjs tests/cms-editorial.test.mjs tests/document-ingestion-pipeline.test.mjs tests/publication-review-contract.test.mjs tests/phase1-contract.test.mjs tests/stage2-disclosure.test.mjs tests/document-compliance.test.mjs tests/stage3-admissions.test.mjs tests/motion-system.test.mjs tests/rendered-html.test.mjs && node scripts/run-browser-tests.mjs",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "test:review": "npm run build && node --experimental-strip-types --test tests/approval-manifest.test.mjs tests/campus-media-pipeline.test.mjs tests/cms-editorial.test.mjs tests/document-ingestion-pipeline.test.mjs tests/legacy-cutover.test.mjs tests/publication-review-contract.test.mjs tests/phase1-contract.test.mjs tests/stage2-disclosure.test.mjs tests/document-compliance.test.mjs tests/stage3-admissions.test.mjs tests/motion-system.test.mjs tests/rendered-html.test.mjs && node scripts/run-browser-tests.mjs",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern studio/dist",
     "db:generate": "drizzle-kit generate"
   },
   "dependencies": {

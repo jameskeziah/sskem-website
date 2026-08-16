@@ -9,6 +9,9 @@ test("prioritises campus-media approval and filters the canonical queue", async 
   await expect(page.getByText("AVIF · WebP · JPEG")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Every PDF is rendered, checked and bound to its approval." })).toBeVisible();
   await expect(page.getByText("External malware-scan evidence and manifest approval remain mandatory.")).toBeVisible();
+  const cutover = page.getByRole("region", { name: "Old WordPress links now have a controlled destination." });
+  await expect(cutover).toBeVisible();
+  await expect(cutover.getByText("33", { exact: true })).toBeVisible();
 
   const firstBatch = page.getByRole("region", { name: "Approve the four campus photographs first." });
   await expect(firstBatch.getByText("Start here")).toHaveCount(4);
@@ -29,4 +32,14 @@ test("downloads the private coordination worksheet", async ({ page }) => {
   const download = await downloadPromise;
 
   expect(download.suggestedFilename()).toBe("sskem-publication-approval-queue-2026-08-10.csv");
+});
+
+test("downloads the owner-only cutover worksheet", async ({ page }) => {
+  await page.goto("/publication-review");
+
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("link", { name: "Download cutover worksheet" }).click();
+  const download = await downloadPromise;
+
+  expect(download.suggestedFilename()).toBe("sskem-legacy-cutover-2026-08-16.csv");
 });

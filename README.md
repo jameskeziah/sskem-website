@@ -47,6 +47,11 @@ assesses the text layer, renders every page for review and binds publication to
 the exact staged SHA-256 receipt. Malware scanning remains an external,
 controlled-system requirement and is never implied by the local pipeline.
 
+Legacy WordPress route continuity is controlled by the schema-backed inventory
+documented in `docs/legacy-cutover.md`. It implements direct permanent redirects
+to safe rebuilt destinations without copying old claims, forms, uploads or pupil
+media. Route readiness is separate from publication approval.
+
 The test command regenerates design tokens, creates a production build, checks
 the Phase 1, Stage 2 and Stage 3 contracts, validates document-publication and
 admissions safeguards, and runs accessibility, keyboard, responsive,
@@ -85,6 +90,9 @@ archive-filter and visual tests.
   Appendix IX PDFs, their controlled malware scans, metadata, privacy and
   accessibility reviews, approvals and public-domain cutover remain blocked
   until the school supplies approved records and operating decisions.
+- `content/legacy-cutover-inventory.json` maps the observed WordPress route
+  surface to direct rebuilt destinations. The owner dashboard exposes the route
+  audit separately from the 33 publication blockers.
 
 ## Technology
 

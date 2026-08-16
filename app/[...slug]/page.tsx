@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import type { ReactNode } from "react";
 
 import {
@@ -34,6 +34,10 @@ import {
   primaryNavigation,
   utilityNavigation,
 } from "@/app/data/navigation";
+import {
+  legacyCatchAllRedirects,
+  legacyCatchAllRedirectTarget,
+} from "@/app/data/legacy-cutover";
 import { siteFacts } from "@/app/data/site";
 
 type PageSection = {
@@ -698,7 +702,8 @@ function RoutePage({ path, spec }: { path: string; spec: PageSpec }) {
 }
 
 export function generateStaticParams() {
-  return [...allKnownPaths].map((path) => ({ slug: path.slice(1).split("/") }));
+  return [...new Set([...allKnownPaths, ...legacyCatchAllRedirects.keys()])]
+    .map((path) => ({ slug: path.slice(1).split("/") }));
 }
 
 export async function generateMetadata({ params }: RouteProps): Promise<Metadata> {
@@ -719,6 +724,8 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
 export default async function CatchAllPage({ params }: RouteProps) {
   const { slug } = await params;
   const path = `/${slug.join("/")}`;
+  const legacyTarget = legacyCatchAllRedirectTarget(path);
+  if (legacyTarget) permanentRedirect(legacyTarget);
   const spec = pageSpecs[path];
 
   if (!spec || !allKnownPaths.has(path)) {
