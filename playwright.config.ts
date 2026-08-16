@@ -12,6 +12,10 @@ export default defineConfig({
     browserName: "chromium",
     colorScheme: "light",
     locale: "en-IN",
+    extraHTTPHeaders: {
+      "oai-authenticated-user-id": "local-private-review-test",
+      "oai-authenticated-user-email": "reviewer@example.invalid",
+    },
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },

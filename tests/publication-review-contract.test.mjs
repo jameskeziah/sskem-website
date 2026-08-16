@@ -9,11 +9,13 @@ async function source(path) {
 }
 
 test("builds the reviewer queue directly from the canonical approval manifest", async () => {
-  const [data, page, route, cutoverRoute, cutoverData, manifestText] = await Promise.all([
+  const [data, page, route, cutoverRoute, editorialPage, editorialRoute, cutoverData, manifestText] = await Promise.all([
     source("app/data/publication-approval.ts"),
     source("app/publication-review/page.tsx"),
     source("app/publication-review/export/route.ts"),
     source("app/publication-review/cutover-export/route.ts"),
+    source("app/publication-review/editorial/page.tsx"),
+    source("app/publication-review/editorial-receipt/route.ts"),
     source("app/data/legacy-cutover.ts"),
     source("content/approval-manifest.json"),
   ]);
@@ -34,6 +36,7 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /Evidence stays in the school’s controlled system\./);
   assert.match(page, /Editorial CMS/);
   assert.match(page, /Sanity delivery status/);
+  assert.match(page, /Review exact CMS revisions/);
   assert.match(page, /Applicant records, pupil data, controlled documents, consent evidence and approver identities never enter this CMS\./);
   assert.match(page, /getHomepageEditorialContent/);
   assert.match(page, /Legacy cutover/);
@@ -41,15 +44,21 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /Download cutover worksheet/);
   assert.match(page, /Download review worksheet/);
   assert.match(route, /approvalQueueCsv\(\)/);
+  assert.match(editorialPage, /Exact sanitized public output/);
+  assert.match(editorialPage, /getHomepageEditorialReview/);
+  assert.match(editorialRoute, /item\.receiptProposal/);
+  assert.match(editorialRoute, /private, no-store/);
   assert.match(cutoverRoute, /legacyCutoverCsv\(\)/);
   assert.match(cutoverData, /legacy-cutover-inventory\.json/);
 });
 
 test("keeps the dashboard, worksheet and private evidence outside public delivery", async () => {
-  const [page, route, cutoverRoute, sitemap, guide] = await Promise.all([
+  const [page, route, cutoverRoute, editorialPage, editorialRoute, sitemap, guide] = await Promise.all([
     source("app/publication-review/page.tsx"),
     source("app/publication-review/export/route.ts"),
     source("app/publication-review/cutover-export/route.ts"),
+    source("app/publication-review/editorial/page.tsx"),
+    source("app/publication-review/editorial-receipt/route.ts"),
     source("app/sitemap.ts"),
     source("docs/approval-manifest.md"),
   ]);
@@ -60,6 +69,11 @@ test("keeps the dashboard, worksheet and private evidence outside public deliver
   assert.match(route, /["']cache-control["']:\s*["']private, no-store["']/);
   assert.match(cutoverRoute, /process\.env\.HOMEPAGE_REVIEW_MODE !== ["']private["'][\s\S]*?status:\s*404/);
   assert.match(cutoverRoute, /["']cache-control["']:\s*["']private, no-store["']/);
+  assert.match(editorialPage, /process\.env\.HOMEPAGE_REVIEW_MODE !== ["']private["'][\s\S]*?notFound\(\)/);
+  assert.match(editorialPage, /requireChatGPTUser\(["']\/publication-review\/editorial["']\)/);
+  assert.match(editorialPage, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false,\s*nocache:\s*true\s*\}/);
+  assert.match(editorialRoute, /process\.env\.HOMEPAGE_REVIEW_MODE !== ["']private["'][\s\S]*?status:\s*404/);
+  assert.match(editorialRoute, /getChatGPTUser\(\)[\s\S]*?status:\s*401/);
   assert.doesNotMatch(sitemap, /publication-review/);
   assert.match(guide, /Owner-only reviewer dashboard[\s\S]*?\/publication-review/i);
   assert.match(guide, /worksheet[\s\S]*?working aid[\s\S]*?manifest remains the release source of truth/i);

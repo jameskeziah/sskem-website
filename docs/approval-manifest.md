@@ -79,3 +79,12 @@ The dashboard can download a CSV worksheet from
 the JSON manifest remains the release source of truth. It deliberately omits
 private evidence and approver identities. Store those in the school's
 controlled system and copy only opaque references into the manifest.
+
+The linked `/publication-review/editorial` screen reviews exact published
+Sanity revisions without exposing raw CMS records. It produces a downloadable
+binding proposal only after the corresponding claim approval and display
+window are current. The screen and receipt endpoint require dispatch-owned
+ChatGPT sign-in, while the private Sites access policy provides the actual
+workspace authorization boundary. `HOMEPAGE_REVIEW_MODE=private` is only a
+route-availability gate and must never be used as the sole protection on an
+internet-accessible deployment.

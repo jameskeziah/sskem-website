@@ -2,6 +2,8 @@ import approvalManifestData from "../../content/approval-manifest.json" with { t
 
 import {
   createEditorialBindingIndex,
+  digestEditorialProjection,
+  editorialDocumentIdentity,
   editorialPublicationBindings,
   hasMatchingEditorialBinding,
   type EditorialContentType,
@@ -73,6 +75,50 @@ export type HomepageEditorialContent = {
   status: HomepageEditorialStatus;
 };
 
+export type EditorialReviewReceipt = {
+  bindingId: string;
+  approvalRecordId: string;
+  contentType: EditorialContentType;
+  documentId: string;
+  revision: string;
+  contentDigestSha256: string;
+  boundOn: string;
+  ownerRole: "website-publisher";
+  notes: string;
+};
+
+export type EditorialReviewItem = {
+  contentType: EditorialContentType;
+  documentId: string | null;
+  revision: string | null;
+  approvalRecordId: string | null;
+  validFrom: string | null;
+  validUntil: string | null;
+  projection: HomepageContact | HomepageNotice | HomepageAdmissionsCycle | HomepageEvent | null;
+  contentDigestSha256: string | null;
+  status: "blocked" | "ready-to-bind" | "bound";
+  checks: {
+    identityValid: boolean;
+    projectionValid: boolean;
+    manifestApproved: boolean;
+    publicationWindowCurrent: boolean;
+    exactBinding: boolean;
+  };
+  blockers: string[];
+  receiptProposal: EditorialReviewReceipt | null;
+};
+
+export type HomepageEditorialReview = {
+  status: {
+    reason: "missing-config" | "invalid-config" | "fetch-failed" | "invalid-response" | "review-ready";
+    candidates: number;
+    readyToBind: number;
+    bound: number;
+    blocked: number;
+  };
+  items: EditorialReviewItem[];
+};
+
 type ApprovalManifestInput = {
   records?: readonly {
     id?: unknown;
@@ -110,6 +156,10 @@ type Selection<T> = {
   rejected: number;
 };
 
+type SanityFetchResult =
+  | { state: "ready"; remote: SanityEditorialResult; now: number }
+  | { state: "fallback"; reason: "missing-config" | "invalid-config" | "fetch-failed" | "invalid-response"; now: number };
+
 const DEFAULT_SANITY_API_VERSION = "2026-08-12";
 const REQUEST_TIMEOUT_MS = 4_000;
 const MAX_CANDIDATES_PER_TYPE = 20;
@@ -117,6 +167,7 @@ const MAX_HOMEPAGE_EVENTS = 3;
 const DATE_ONLY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const PROJECT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const DATASET_PATTERN = /^[a-z0-9][a-z0-9_-]{0,63}$/;
+const CLAIM_APPROVAL_ID_PATTERN = /^claim-[a-z0-9-]+$/;
 
 const SANITY_QUERY = `{
   "contacts": *[_type == "siteSettings" && !(_id in path("drafts.**"))]
@@ -297,15 +348,20 @@ function approvedRecordIds(manifest: ApprovalManifestInput, now: number) {
   return approved;
 }
 
-function hasCurrentPublicationGate(candidate: UnknownRecord, approvals: Set<string>, now: number) {
+function hasCurrentPublicationWindow(candidate: UnknownRecord, now: number) {
   if (!isRecord(candidate.publication)) return false;
   const publication = candidate.publication;
-  if (publication.state !== "published" || typeof publication.approvalRecordId !== "string") return false;
-  if (!approvals.has(publication.approvalRecordId)) return false;
+  if (publication.state !== "published") return false;
 
   const validFrom = parseDateBoundary(publication.validFrom, false);
   const validUntil = parseDateBoundary(publication.validUntil, true);
   return validFrom !== null && validUntil !== null && validFrom <= now && now <= validUntil && validFrom <= validUntil;
+}
+
+function hasCurrentPublicationGate(candidate: UnknownRecord, approvals: Set<string>, now: number) {
+  if (!hasCurrentPublicationWindow(candidate, now) || !isRecord(candidate.publication)) return false;
+  const approvalRecordId = candidate.publication.approvalRecordId;
+  return typeof approvalRecordId === "string" && approvals.has(approvalRecordId);
 }
 
 function parseContact(candidate: UnknownRecord): HomepageContact | null {
@@ -505,26 +561,16 @@ function configuredEnvironment(env: EditorialEnvironment) {
   return { state: "ready" as const, projectId, dataset, apiVersion };
 }
 
-/**
- * Server-only homepage editorial boundary. Call this from a Server Component or
- * server loader; do not import it into a Client Component.
- */
-export async function getHomepageEditorialContent(
-  options: HomepageEditorialOptions = {},
-): Promise<HomepageEditorialContent> {
-  if (typeof window !== "undefined") {
-    throw new Error("Homepage editorial content is available on the server only.");
-  }
-
+async function fetchSanityEditorial(options: HomepageEditorialOptions): Promise<SanityFetchResult> {
+  const now = resolveNow(options.now);
   const environment = configuredEnvironment(options.env ?? {
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
     SANITY_DATASET: process.env.SANITY_DATASET,
     SANITY_API_VERSION: process.env.SANITY_API_VERSION,
   });
-  if (environment.state === "missing") return fallbackResult("missing-config");
-  if (environment.state === "invalid") return fallbackResult("invalid-config");
+  if (environment.state === "missing") return { state: "fallback", reason: "missing-config", now };
+  if (environment.state === "invalid") return { state: "fallback", reason: "invalid-config", now };
 
-  const now = resolveNow(options.now);
   const fetchImpl = options.fetchImpl ?? globalThis.fetch;
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
@@ -541,16 +587,34 @@ export async function getHomepageEditorialContent(
       cache: "no-store",
       signal: controller.signal,
     });
-    if (!response.ok) return fallbackResult("fetch-failed");
+    if (!response.ok) return { state: "fallback", reason: "fetch-failed", now };
     payload = await response.json();
   } catch {
-    return fallbackResult("fetch-failed");
+    return { state: "fallback", reason: "fetch-failed", now };
   } finally {
     clearTimeout(timeout);
   }
 
   const remote = parseSanityResponse(payload);
-  if (!remote) return fallbackResult("invalid-response");
+  return remote
+    ? { state: "ready", remote, now }
+    : { state: "fallback", reason: "invalid-response", now };
+}
+
+/**
+ * Server-only homepage editorial boundary. Call this from a Server Component or
+ * server loader; do not import it into a Client Component.
+ */
+export async function getHomepageEditorialContent(
+  options: HomepageEditorialOptions = {},
+): Promise<HomepageEditorialContent> {
+  if (typeof window !== "undefined") {
+    throw new Error("Homepage editorial content is available on the server only.");
+  }
+
+  const fetched = await fetchSanityEditorial(options);
+  if (fetched.state === "fallback") return fallbackResult(fetched.reason);
+  const { remote, now } = fetched;
 
   const approvals = approvedRecordIds(options.manifest ?? approvalManifestData, now);
   const bindings = createEditorialBindingIndex(options.bindings ?? editorialPublicationBindings);
@@ -577,5 +641,134 @@ export async function getHomepageEditorialContent(
       remoteAccepted: accepted,
       remoteRejected: rejected,
     },
+  };
+}
+
+function reviewProjection(
+  contentType: EditorialContentType,
+  candidate: UnknownRecord,
+  now: number,
+): EditorialReviewItem["projection"] {
+  switch (contentType) {
+    case "siteSettings": return parseContact(candidate);
+    case "announcement": return parseNotice(candidate);
+    case "admissionCycle": return parseAdmissionsCycle(candidate);
+    case "event": return parseEvent(candidate, now);
+  }
+}
+
+function safePublicationValue(value: unknown) {
+  return sanitizePlainText(value, 40);
+}
+
+async function prepareEditorialReviewItem(input: {
+  candidate: unknown;
+  contentType: EditorialContentType;
+  approvals: Set<string>;
+  bindings: ReturnType<typeof createEditorialBindingIndex>;
+  now: number;
+}): Promise<EditorialReviewItem> {
+  const { candidate, contentType, approvals, bindings, now } = input;
+  const record = isRecord(candidate) ? candidate : {};
+  const identity = editorialDocumentIdentity(record, contentType);
+  const projection = identity ? reviewProjection(contentType, record, now) : null;
+  const publication = isRecord(record.publication) ? record.publication : {};
+  const approvalRecordId = typeof publication.approvalRecordId === "string"
+    && CLAIM_APPROVAL_ID_PATTERN.test(publication.approvalRecordId)
+    ? publication.approvalRecordId
+    : null;
+  const manifestApproved = approvalRecordId !== null && approvals.has(approvalRecordId);
+  const publicationWindowCurrent = hasCurrentPublicationWindow(record, now);
+  const contentDigestSha256 = identity && projection
+    ? await digestEditorialProjection({ contentType, ...identity, projection })
+    : null;
+  const exactBinding = Boolean(
+    identity
+    && projection
+    && await hasMatchingEditorialBinding({ candidate: record, contentType, projection, index: bindings }),
+  );
+  const receiptReady = Boolean(identity && projection && approvalRecordId && manifestApproved && publicationWindowCurrent && contentDigestSha256);
+  const blockers: string[] = [];
+
+  if (!identity) blockers.push("Published document identity or revision is invalid.");
+  if (!projection) blockers.push("The public projection did not pass server sanitization.");
+  if (!manifestApproved) blockers.push("The canonical claim approval is missing, expired or not approved.");
+  if (!publicationWindowCurrent) blockers.push("The published display window is missing, invalid or not current.");
+  if (receiptReady && !exactBinding) blockers.push("The exact revision receipt has not been added to the binding registry.");
+
+  const receiptProposal: EditorialReviewReceipt | null = receiptReady && identity && approvalRecordId && contentDigestSha256
+    ? {
+        bindingId: `cms-binding-${contentType.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}-${contentDigestSha256.slice(0, 12)}`,
+        approvalRecordId,
+        contentType,
+        documentId: identity.documentId,
+        revision: identity.revision,
+        contentDigestSha256,
+        boundOn: new Date(now).toISOString().slice(0, 10),
+        ownerRole: "website-publisher",
+        notes: `Exact sanitized ${contentType} public projection reviewed for this published revision.`,
+      }
+    : null;
+
+  return {
+    contentType,
+    documentId: identity?.documentId ?? null,
+    revision: identity?.revision ?? null,
+    approvalRecordId,
+    validFrom: safePublicationValue(publication.validFrom),
+    validUntil: safePublicationValue(publication.validUntil),
+    projection,
+    contentDigestSha256,
+    status: exactBinding && receiptReady ? "bound" : receiptReady ? "ready-to-bind" : "blocked",
+    checks: {
+      identityValid: identity !== null,
+      projectionValid: projection !== null,
+      manifestApproved,
+      publicationWindowCurrent,
+      exactBinding,
+    },
+    blockers,
+    receiptProposal,
+  };
+}
+
+/**
+ * Owner-review view of the exact public Sanity projection. It never exposes raw
+ * CMS documents, drafts, tokens or fields outside the homepage allowlist.
+ */
+export async function getHomepageEditorialReview(
+  options: HomepageEditorialOptions = {},
+): Promise<HomepageEditorialReview> {
+  if (typeof window !== "undefined") throw new Error("Editorial review is available on the server only.");
+
+  const fetched = await fetchSanityEditorial(options);
+  if (fetched.state === "fallback") {
+    return {
+      status: { reason: fetched.reason, candidates: 0, readyToBind: 0, bound: 0, blocked: 0 },
+      items: [],
+    };
+  }
+
+  const approvals = approvedRecordIds(options.manifest ?? approvalManifestData, fetched.now);
+  const bindings = createEditorialBindingIndex(options.bindings ?? editorialPublicationBindings);
+  const groups: { contentType: EditorialContentType; candidates: unknown[] }[] = [
+    { contentType: "siteSettings", candidates: fetched.remote.contacts },
+    { contentType: "announcement", candidates: fetched.remote.notices },
+    { contentType: "admissionCycle", candidates: fetched.remote.admissionsCycles },
+    { contentType: "event", candidates: fetched.remote.events },
+  ];
+  const items = await Promise.all(groups.flatMap(({ contentType, candidates }) => candidates.map((candidate) => (
+    prepareEditorialReviewItem({ candidate, contentType, approvals, bindings, now: fetched.now })
+  ))));
+
+  return {
+    status: {
+      reason: "review-ready",
+      candidates: items.length,
+      readyToBind: items.filter((item) => item.status === "ready-to-bind").length,
+      bound: items.filter((item) => item.status === "bound").length,
+      blocked: items.filter((item) => item.status === "blocked").length,
+    },
+    items,
   };
 }

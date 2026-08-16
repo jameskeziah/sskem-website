@@ -164,7 +164,10 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <div><dt>Rejected records</dt><dd><strong>{editorial.status.remoteRejected}</strong><span>Nothing rejected reaches public output.</span></dd></div>
               <div><dt>Exact bindings</dt><dd><strong>{bindingSummary.valid} of {bindingSummary.recorded}</strong><span>Revision or digest mismatch fails closed.</span></dd></div>
             </dl>
-            <p className="review-cms__boundary">A CMS edit creates a new revision and requires a new review receipt. Applicant records, pupil data, controlled documents, consent evidence and approver identities never enter this CMS.</p>
+            <div className="review-cms__actions">
+              <p className="review-cms__boundary">A CMS edit creates a new revision and requires a new review receipt. Applicant records, pupil data, controlled documents, consent evidence and approver identities never enter this CMS.</p>
+              <Link className="button button--quiet" href="/publication-review/editorial">Review exact CMS revisions</Link>
+            </div>
           </section>
 
           <section className="review-cutover" aria-labelledby="review-cutover-title">

@@ -33,8 +33,12 @@ school's controlled record system.
 
 The owner-only review deployment also provides `/publication-review`, a
 manifest-driven approval queue with filters, check progress and a downloadable
-coordination worksheet. It is unavailable outside private review mode and is
-not a substitute for the controlled evidence system.
+coordination worksheet, plus `/publication-review/editorial` for reviewing the
+exact sanitized Sanity projection and downloading its revision-bound receipt.
+These routes are unavailable outside private review mode. The editorial screen
+and receipt endpoint also enforce dispatch-owned ChatGPT sign-in, while the
+private Sites access policy remains the authorization boundary; review mode or
+sign-in alone is not a substitute for controlled access and evidence handling.
 
 Approved replacement photography is prepared through the guarded campus-media
 pipeline documented in `docs/campus-media-ingestion.md`. It validates production

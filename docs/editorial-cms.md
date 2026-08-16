@@ -121,6 +121,40 @@ If an editor changes any accepted record, Sanity creates a different revision;
 the adapter refuses it until the changed public projection is reviewed and a
 new binding replaces the old one.
 
+## Private exact-output review
+
+The private review deployment exposes `/publication-review/editorial`. It
+queries the same server-only adapter and shows only the allowlisted, sanitized
+projection that the public homepage would receive. It never displays the raw
+Sanity document, draft fields, credentials or fields outside the four homepage
+projections.
+
+For each published candidate the screen shows the exact document ID, `_rev`,
+approval reference, display window, sanitized JSON projection and SHA-256
+digest. A binding receipt download is enabled only when all of these pass:
+
+- the published document identity and revision are valid;
+- the public projection passes server sanitization;
+- the referenced claim is currently approved in the canonical manifest; and
+- the publication window is current.
+
+The download route re-fetches and re-validates the requested revision on the
+server. It returns a single public-safe binding object with private no-store
+headers; it does not write the registry or approve the claim. Add the proposed
+object to `content/editorial-publication-bindings.json`, run
+`npm run editorial:bindings:audit`, and review the resulting change normally.
+If Sanity changes between screen review and download, the exact revision no
+longer matches and the request is refused.
+
+This screen uses dispatch-owned ChatGPT sign-in and the private Sites access
+policy, not an app-owned password or OAuth stack. The page requires an
+authenticated platform user, and the receipt endpoint independently rejects
+requests without the authenticated-user headers. The private Site access policy
+remains the authorization boundary; sign-in alone does not prove school or
+workspace membership. `HOMEPAGE_REVIEW_MODE=private` only makes the routes
+available and is not authentication by itself. Search directives are never
+treated as access control.
+
 ## Roles
 
 | Role | May | Must not |
@@ -193,7 +227,7 @@ speed up migration.
 
 ## Verification of the current slice
 
-The nine tests in `tests/cms-editorial.test.mjs` currently prove that the
+The ten tests in `tests/cms-editorial.test.mjs` currently prove that the
 server adapter:
 
 - makes no request and returns the reviewed local fallback when Sanity is not
@@ -209,6 +243,8 @@ server adapter:
   normalises email, sorts events and limits the homepage result to three; and
 - rejects both content edits and revision changes after an exact review receipt
   has been recorded; and
+- exposes only the sanitized public projection to private review and generates
+  a receipt for the exact reviewed revision; and
 - fails closed to local content on network failure or a malformed Content Lake
   response.
 
@@ -231,7 +267,7 @@ Manual acceptance before connecting a real dataset:
 
 ## Later phases and unimplemented acceptance gates
 
-The current slice does **not** yet promise authenticated draft preview, webhook
+The current slice does **not** yet promise draft preview, webhook
 revalidation, tagged caching, route-target approvals, CMS asset publication,
 CMS document uploads or a mandatory-CMS mode. Those
 features require separate design, implementation and tests before this contract

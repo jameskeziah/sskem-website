@@ -43,3 +43,22 @@ test("downloads the owner-only cutover worksheet", async ({ page }) => {
 
   expect(download.suggestedFilename()).toBe("sskem-legacy-cutover-2026-08-16.csv");
 });
+
+test("opens the private exact-output CMS review without exposing raw records", async ({ page }) => {
+  await page.goto("/publication-review");
+  await page.getByRole("link", { name: "Review exact CMS revisions" }).click();
+
+  await expect(page).toHaveURL(/\/publication-review\/editorial$/);
+  await expect(page.getByRole("heading", { level: 1, name: "Editorial revision review" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Raw CMS records never reach this screen." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "No review candidates are available." })).toBeVisible();
+  await expect(page.getByText("Verified local homepage content remains active.")).toBeVisible();
+});
+
+test("rejects editorial receipt requests without platform identity", async () => {
+  const baseUrl = process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000";
+  const response = await fetch(new URL("/publication-review/editorial-receipt?type=announcement&id=notice&revision=rev-1", baseUrl));
+
+  expect(response.status).toBe(401);
+  expect(response.headers.get("cache-control")).toBe("private, no-store");
+});

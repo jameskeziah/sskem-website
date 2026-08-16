@@ -80,6 +80,18 @@ function bindingKey(approvalRecordId: string, contentType: EditorialContentType,
   return `${approvalRecordId}\u0000${contentType}\u0000${documentId}\u0000${revision}`;
 }
 
+export function editorialDocumentIdentity(candidate: UnknownRecord, contentType: EditorialContentType) {
+  if (
+    candidate._type !== contentType
+    || typeof candidate._id !== "string"
+    || !documentIdPattern.test(candidate._id)
+    || typeof candidate._rev !== "string"
+    || !revisionPattern.test(candidate._rev)
+  ) return null;
+
+  return { documentId: candidate._id, revision: candidate._rev };
+}
+
 export function createEditorialBindingIndex(
   registry: EditorialPublicationBindingsInput = editorialPublicationBindings,
 ): BindingIndex {
@@ -139,12 +151,9 @@ export async function hasMatchingEditorialBinding(input: {
   index: BindingIndex;
 }): Promise<boolean> {
   const { candidate, contentType, projection, index } = input;
+  const identity = editorialDocumentIdentity(candidate, contentType);
   if (
-    candidate._type !== contentType
-    || typeof candidate._id !== "string"
-    || !documentIdPattern.test(candidate._id)
-    || typeof candidate._rev !== "string"
-    || !revisionPattern.test(candidate._rev)
+    !identity
     || typeof candidate.publication !== "object"
     || candidate.publication === null
     || Array.isArray(candidate.publication)
@@ -152,13 +161,13 @@ export async function hasMatchingEditorialBinding(input: {
 
   const approvalRecordId = (candidate.publication as UnknownRecord).approvalRecordId;
   if (typeof approvalRecordId !== "string") return false;
-  const expectedDigest = index.get(bindingKey(approvalRecordId, contentType, candidate._id, candidate._rev));
+  const expectedDigest = index.get(bindingKey(approvalRecordId, contentType, identity.documentId, identity.revision));
   if (!expectedDigest) return false;
 
   const actualDigest = await digestEditorialProjection({
     contentType,
-    documentId: candidate._id,
-    revision: candidate._rev,
+    documentId: identity.documentId,
+    revision: identity.revision,
     projection,
   });
   return actualDigest === expectedDigest;

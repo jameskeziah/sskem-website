@@ -8,7 +8,7 @@ const viewports = [
 ];
 
 for (const viewport of viewports) {
-  for (const path of ["/", "/mandatory-public-disclosure", "/documents", "/publication-review"]) {
+  for (const path of ["/", "/mandatory-public-disclosure", "/documents", "/publication-review", "/publication-review/editorial"]) {
     test(`${path} reflows without page-level horizontal loss at ${viewport.name}`, async ({ page }) => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto(path);

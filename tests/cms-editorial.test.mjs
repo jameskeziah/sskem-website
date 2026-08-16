@@ -4,7 +4,7 @@ import test from "node:test";
 import { admissionsCycle as fallbackAdmissionsCycle } from "../app/data/admissions.ts";
 import { siteFacts } from "../app/data/site.ts";
 import { digestEditorialProjection } from "../lib/cms/editorial-publication-binding.ts";
-import { getHomepageEditorialContent } from "../lib/cms/homepage-editorial.server.ts";
+import { getHomepageEditorialContent, getHomepageEditorialReview } from "../lib/cms/homepage-editorial.server.ts";
 
 const NOW = "2026-08-12T06:00:00.000Z";
 const env = { SANITY_PROJECT_ID: "sskemtest", SANITY_DATASET: "production" };
@@ -329,6 +329,46 @@ test("rejects edits and revision changes after an exact CMS review receipt is re
     assert.equal(result.status.reason, "no-approved-content");
     assert.equal(result.status.remoteRejected, 1);
   }
+});
+
+test("previews only the sanitized public projection and generates an exact binding receipt", async () => {
+  const candidate = sanityRecord("announcement", "notice-review", {
+    title: "  Office   notice  ",
+    message: "Enquiries are available during office hours.",
+    href: "/contact",
+    internalNotes: "This field is outside the public projection.",
+    publication: gate("claim-review"),
+  }, "rev-review");
+  const projection = {
+    title: "Office notice",
+    message: "Enquiries are available during office hours.",
+    href: "/contact",
+  };
+
+  const unbound = await getHomepageEditorialReview({
+    env,
+    now: NOW,
+    manifest: manifest("claim-review"),
+    bindings: await bindingRegistry(),
+    fetchImpl: mockFetch(emptyResult({ notices: [candidate] })),
+  });
+
+  assert.equal(unbound.status.readyToBind, 1);
+  assert.equal(unbound.items[0].status, "ready-to-bind");
+  assert.deepEqual(unbound.items[0].projection, projection);
+  assert.doesNotMatch(JSON.stringify(unbound.items[0]), /internalNotes|outside the public projection/);
+  assert.equal(unbound.items[0].receiptProposal.contentDigestSha256, unbound.items[0].contentDigestSha256);
+  assert.equal(unbound.items[0].receiptProposal.revision, "rev-review");
+
+  const bound = await getHomepageEditorialReview({
+    env,
+    now: NOW,
+    manifest: manifest("claim-review"),
+    bindings: await bindingRegistry({ candidate, projection }),
+    fetchImpl: mockFetch(emptyResult({ notices: [candidate] })),
+  });
+  assert.equal(bound.status.bound, 1);
+  assert.equal(bound.items[0].status, "bound");
 });
 
 test("fails closed on network and malformed Content Lake responses", async () => {
