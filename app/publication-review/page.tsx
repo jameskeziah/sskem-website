@@ -226,6 +226,10 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <div><dt>Privacy</dt><dd><strong>Metadata removed</strong><span>EXIF, XMP and IPTC are stripped and rechecked.</span></dd></div>
               <div><dt>Exact activation</dt><dd><strong>{mediaPublication.valid} of {mediaPublication.required} bound</strong><span>Only approved, receipt-matched derivative sets count.</span></dd></div>
             </dl>
+            <div className="review-media-intake__actions">
+              <p>Give the content owner or photographer one canonical four-shot brief; it contains no evidence, approver identity or controlled source path.</p>
+              <Link className="button button--quiet" href="/publication-review/campus-media-packet">Download campus capture packet</Link>
+            </div>
           </section>
 
           <section className="review-document-intake" aria-labelledby="review-document-intake-title">

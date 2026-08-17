@@ -170,7 +170,8 @@
   color: var(--text-secondary);
 }
 
-.review-cms__actions {
+.review-cms__actions,
+.review-media-intake__actions {
   align-items: center;
   display: flex;
   gap: var(--space-24);
@@ -178,8 +179,14 @@
   margin-top: var(--space-24);
 }
 
-.review-cms__actions .button {
+.review-cms__actions .button,
+.review-media-intake__actions .button {
   flex: 0 0 auto;
+}
+
+.review-media-intake__actions p {
+  margin: 0;
+  color: var(--text-secondary);
 }
 
 .review-cutover {
@@ -774,6 +781,7 @@
 
 
   .review-cms__actions,
+  .review-media-intake__actions,
   .editorial-review-toolbar,
   .editorial-review-card__heading {
     align-items: stretch;
@@ -781,6 +789,7 @@
   }
 
   .review-cms__actions .button,
+  .review-media-intake__actions .button,
   .editorial-review-toolbar .button,
   .editorial-review-card__status {
     align-self: flex-start;

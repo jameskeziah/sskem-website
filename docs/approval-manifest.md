@@ -80,6 +80,12 @@ the JSON manifest remains the release source of truth. It deliberately omits
 private evidence and approver identities. Store those in the school's
 controlled system and copy only opaque references into the manifest.
 
+The authenticated `/publication-review/campus-media-packet` download is the
+canonical production handoff for the four campus exterior masters. It derives
+shot roles, technical limits, approval checks and activation status from the
+manifest and media pipeline. It does not grant approval or include evidence,
+approver identities, private source paths or pupil-photography requests.
+
 The linked `/publication-review/editorial` screen reviews exact published
 Sanity revisions without exposing raw CMS records. It produces a downloadable
 binding proposal only after the corresponding claim approval and display

@@ -9,6 +9,7 @@ test("prioritises campus-media approval and filters the canonical queue", async 
   await expect(page.getByRole("heading", { level: 2, name: "33 governed records" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Approved masters become responsive, privacy-clean assets." })).toBeVisible();
   await expect(page.getByText("AVIF · WebP · JPEG")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Download campus capture packet" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Every PDF is rendered, checked and bound to its approval." })).toBeVisible();
   await expect(page.getByText("External malware-scan evidence and manifest approval remain mandatory.")).toBeVisible();
   const cutover = page.getByRole("region", { name: "Old WordPress links now have a controlled destination." });
@@ -44,6 +45,24 @@ test("downloads the owner-only cutover worksheet", async ({ page }) => {
   const download = await downloadPromise;
 
   expect(download.suggestedFilename()).toBe("sskem-legacy-cutover-2026-08-16.csv");
+});
+
+test("downloads the guarded four-shot campus capture packet", async ({ page }) => {
+  await page.goto("/publication-review");
+
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("link", { name: "Download campus capture packet" }).click();
+  const download = await downloadPromise;
+  const path = await download.path();
+  expect(download.suggestedFilename()).toMatch(/^sskem-campus-media-capture-\d{4}-\d{2}-\d{2}\.json$/);
+  expect(path).not.toBeNull();
+
+  const packet = JSON.parse(await readFile(path, "utf8"));
+  expect(packet.status).toBe("capture-and-approval-required");
+  expect(packet.summary).toEqual({ requiredShots: 4, approvedRecords: 0, activeBindings: 0 });
+  expect(packet.shots).toHaveLength(4);
+  expect(packet.guardrails.privateEvidenceIncluded).toBe(false);
+  expect(packet.guardrails.pupilPhotographyRequested).toBe(false);
 });
 
 test("opens the private exact-output CMS review without exposing raw records", async ({ page }) => {
@@ -107,4 +126,8 @@ test("rejects editorial receipt requests without platform identity", async () =>
   const announcementPacketResponse = await fetch(new URL("/publication-review/editorial-announcement-packet", baseUrl));
   expect(announcementPacketResponse.status).toBe(401);
   expect(announcementPacketResponse.headers.get("cache-control")).toBe("private, no-store");
+
+  const campusPacketResponse = await fetch(new URL("/publication-review/campus-media-packet", baseUrl));
+  expect(campusPacketResponse.status).toBe(401);
+  expect(campusPacketResponse.headers.get("cache-control")).toBe("private, no-store");
 });

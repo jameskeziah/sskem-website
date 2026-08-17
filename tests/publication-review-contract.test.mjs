@@ -9,7 +9,7 @@ async function source(path) {
 }
 
 test("builds the reviewer queue directly from the canonical approval manifest", async () => {
-  const [data, page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, migrationConfig, announcementConfig, cutoverData, manifestText] = await Promise.all([
+  const [data, page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, campusPacketRoute, migrationConfig, announcementConfig, cutoverData, manifestText] = await Promise.all([
     source("app/data/publication-approval.ts"),
     source("app/publication-review/page.tsx"),
     source("app/publication-review/export/route.ts"),
@@ -18,6 +18,7 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
     source("app/publication-review/editorial-receipt/route.ts"),
     source("app/publication-review/editorial-site-settings-packet/route.ts"),
     source("app/publication-review/editorial-announcement-packet/route.ts"),
+    source("app/publication-review/campus-media-packet/route.ts"),
     source("content/editorial-site-settings-migration.json"),
     source("content/editorial-announcement-intake.json"),
     source("app/data/legacy-cutover.ts"),
@@ -34,6 +35,7 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /Production media gate/);
   assert.match(page, /campusMediaPublicationSummary/);
   assert.match(page, /Exact activation/);
+  assert.match(page, /Download campus capture packet/);
   assert.match(page, /AVIF · WebP · JPEG/);
   assert.match(page, /EXIF, XMP and IPTC are stripped and rechecked\./);
   assert.match(page, /Appendix IX document gate/);
@@ -58,6 +60,7 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(packetRoute, /createSiteSettingsMigrationPacket/);
   assert.match(editorialPage, /Download announcement intake packet/);
   assert.match(announcementPacketRoute, /createAnnouncementMigrationPacket/);
+  assert.match(campusPacketRoute, /createCampusMediaCapturePacket/);
   assert.match(migrationConfig, /claim-complete-address/);
   assert.match(migrationConfig, /claim-public-contact/);
   assert.match(announcementConfig, /awaiting-authoritative-source/);
@@ -67,7 +70,7 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
 });
 
 test("keeps the dashboard, worksheet and private evidence outside public delivery", async () => {
-  const [page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, sitemap, guide] = await Promise.all([
+  const [page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, campusPacketRoute, sitemap, guide] = await Promise.all([
     source("app/publication-review/page.tsx"),
     source("app/publication-review/export/route.ts"),
     source("app/publication-review/cutover-export/route.ts"),
@@ -75,6 +78,7 @@ test("keeps the dashboard, worksheet and private evidence outside public deliver
     source("app/publication-review/editorial-receipt/route.ts"),
     source("app/publication-review/editorial-site-settings-packet/route.ts"),
     source("app/publication-review/editorial-announcement-packet/route.ts"),
+    source("app/publication-review/campus-media-packet/route.ts"),
     source("app/sitemap.ts"),
     source("docs/approval-manifest.md"),
   ]);
@@ -96,6 +100,9 @@ test("keeps the dashboard, worksheet and private evidence outside public deliver
   assert.match(announcementPacketRoute, /process\.env\.HOMEPAGE_REVIEW_MODE !== ["']private["'][\s\S]*?status:\s*404/);
   assert.match(announcementPacketRoute, /getChatGPTUser\(\)[\s\S]*?status:\s*401/);
   assert.match(announcementPacketRoute, /["']cache-control["']:\s*["']private, no-store["']/);
+  assert.match(campusPacketRoute, /process\.env\.HOMEPAGE_REVIEW_MODE !== ["']private["'][\s\S]*?status:\s*404/);
+  assert.match(campusPacketRoute, /getChatGPTUser\(\)[\s\S]*?status:\s*401/);
+  assert.match(campusPacketRoute, /["']cache-control["']:\s*["']private, no-store["']/);
   assert.doesNotMatch(sitemap, /publication-review/);
   assert.match(guide, /Owner-only reviewer dashboard[\s\S]*?\/publication-review/i);
   assert.match(guide, /worksheet[\s\S]*?working aid[\s\S]*?manifest remains the release source of truth/i);

@@ -143,6 +143,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(html, /media-campus-entrance/);
   assert.match(html, /media-campus-courtyard/);
   assert.match(html, /href=["']\/publication-review\/export["']/i);
+  assert.match(html, /href=["']\/publication-review\/campus-media-packet["']/i);
   assert.match(readableText, /Evidence stays in the school’s controlled system\./i);
   assert.match(readableText, /Editorial CMS/i);
   assert.match(readableText, /Sanity delivery status/i);

@@ -46,6 +46,12 @@ command now prepares the matching create-only draft mutation locally; its write
 path remains blocked until both claims, explicit acknowledgement and a
 process-only Sanity credential all pass.
 
+The review page also downloads an authenticated four-shot campus capture
+packet. It is generated from the canonical manifest, responsive-media profile
+and current exact bindings, so the photographer handoff cannot silently drift
+from publication requirements. It requests exterior photography only and omits
+controlled source paths, evidence and approver identities.
+
 The same private editorial screen provides a first announcement intake packet.
 Because no authoritative announcement copy has been supplied, it contains no
 placeholder text or draft and reports `source-required`; real copy still needs

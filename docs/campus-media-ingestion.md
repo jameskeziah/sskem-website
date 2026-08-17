@@ -23,16 +23,19 @@ gate. They must not be enlarged to imitate missing detail.
 
 ## Workflow
 
-1. Inspect the master without writing derivatives:
+1. From the owner-only review page, download the campus capture packet and use
+   its four ordered exterior-shot records as the photographer/content-owner
+   handoff.
+2. Inspect the master without writing derivatives:
    `npm run media:inspect -- --record media-campus-main --input "CONTROLLED_PATH"`.
-2. After the inspection passes, prepare a non-public staging set:
+3. After the inspection passes, prepare a non-public staging set:
    `npm run media:prepare -- --record media-campus-main --input "CONTROLLED_PATH"`.
-3. Review the generated receipt and responsive variants under
+4. Review the generated receipt and responsive variants under
    `work/media-intake/RECORD_ID`. This directory is ignored by Git.
-4. Complete the record's accuracy, rights, privacy and management-approval
+5. Complete the record's accuracy, rights, privacy and management-approval
    checks, add opaque evidence references, and set the manifest decision to
    `approved`.
-5. Only then may the content owner run
+6. Only then may the content owner run
    `npm run media:publish -- --record RECORD_ID --input "CONTROLLED_PATH"`.
 
 The publish command prints a public-safe `bindingProposal` generated from the
