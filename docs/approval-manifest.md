@@ -112,6 +112,15 @@ the JSON manifest remains the release source of truth. It deliberately omits
 private evidence and approver identities. Store those in the school's
 controlled system and copy only opaque references into the manifest.
 
+Each review card also exposes an authenticated download at
+`/publication-review/approval-request/RECORD_ID`. It returns the exact unfilled
+request template for the current record digest with no preselected checks,
+evidence references, approving role or timestamp. The endpoint is read-only,
+uses private no-store caching, returns not found outside private review mode and
+requires ChatGPT sign-in. Sign-in identifies a viewer; the private Sites access
+policy remains the workspace authorization boundary. Never upload or store a
+completed request through the website.
+
 The authenticated `/publication-review/campus-media-packet` download is the
 canonical production handoff for the four campus exterior masters. It derives
 shot roles, technical limits, approval checks and activation status from the

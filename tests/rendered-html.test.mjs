@@ -146,6 +146,8 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /Approve the four campus photographs first\./i);
   assert.match(readableText, /Guarded update: after independent review, generate the unfilled request/i);
   assert.match(readableText, /Template generation does not approve the record\./i);
+  assert.match(readableText, /Download unfilled request/i);
+  assert.match(html, /href=["']\/publication-review\/approval-request\/media-campus-main["']/i);
   assert.match(readableText, /Approved masters become responsive, privacy-clean assets\./i);
   assert.match(readableText, /AVIF · WebP · JPEG/i);
   assert.match(readableText, /Hero transfer/i);
@@ -161,6 +163,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(html, /media-campus-courtyard/);
   assert.match(html, /href=["']\/publication-review\/export["']/i);
   assert.match(html, /href=["']\/publication-review\/campus-media-packet["']/i);
+  assert.match(readableText, /completed requests and approver identities outside the website/i);
   assert.match(readableText, /Evidence stays in the school’s controlled system\./i);
   assert.match(readableText, /Editorial CMS/i);
   assert.match(readableText, /Sanity delivery status/i);
@@ -172,6 +175,37 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /33 Mapped directly to final modern routes\./i);
   assert.match(html, /href=["']\/publication-review\/cutover-export["']/i);
   assert.doesNotMatch(html, /style=["'][^"']*(?:opacity\s*:\s*0|visibility\s*:\s*hidden)/i);
+});
+
+test("serves exact unfilled approval requests only to authenticated private reviewers", async () => {
+  const pathname = "/publication-review/approval-request/media-campus-main";
+  const anonymous = await render(pathname, { accept: "application/json" });
+  assert.equal(anonymous.status, 401);
+  assert.match(anonymous.headers.get("cache-control") ?? "", /private, no-store/i);
+
+  const authentication = {
+    accept: "application/json",
+    "oai-authenticated-user-id": "reviewer-test-id",
+    "oai-authenticated-user-email": "reviewer@example.test",
+  };
+  const response = await render(pathname, authentication);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^application\/json\b/i);
+  assert.match(response.headers.get("cache-control") ?? "", /private, no-store/i);
+  assert.match(response.headers.get("content-disposition") ?? "", /sskem-approval-request-media-campus-main-2026-08-10\.json/i);
+  assert.equal(response.headers.get("content-security-policy"), "default-src 'none'; sandbox");
+
+  const request = JSON.parse(await response.text());
+  assert.equal(request.recordId, "media-campus-main");
+  assert.ok(Object.values(request.checks).every((state) => state === null));
+  assert.deepEqual(request.evidenceReferences, []);
+  assert.equal(request.approvedByRole, null);
+  assert.equal(request.approvedAt, null);
+  assert.doesNotMatch(JSON.stringify(request), /reviewer@example\.test|sourcePointer|publicTargets/i);
+
+  const unknown = await render("/publication-review/approval-request/media-not-canonical", authentication);
+  assert.equal(unknown.status, 404);
+  assert.match(unknown.headers.get("cache-control") ?? "", /private, no-store/i);
 });
 
 test("exports the owner-only approval worksheet without private evidence", async () => {

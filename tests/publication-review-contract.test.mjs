@@ -9,7 +9,7 @@ async function source(path) {
 }
 
 test("builds the reviewer queue directly from the canonical approval manifest", async () => {
-  const [data, page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, campusPacketRoute, migrationConfig, announcementConfig, cutoverData, manifestText] = await Promise.all([
+  const [data, page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, campusPacketRoute, approvalRequestRoute, migrationConfig, announcementConfig, cutoverData, manifestText] = await Promise.all([
     source("app/data/publication-approval.ts"),
     source("app/publication-review/page.tsx"),
     source("app/publication-review/export/route.ts"),
@@ -19,6 +19,7 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
     source("app/publication-review/editorial-site-settings-packet/route.ts"),
     source("app/publication-review/editorial-announcement-packet/route.ts"),
     source("app/publication-review/campus-media-packet/route.ts"),
+    source("app/publication-review/approval-request/[recordId]/route.ts"),
     source("content/editorial-site-settings-migration.json"),
     source("content/editorial-announcement-intake.json"),
     source("app/data/legacy-cutover.ts"),
@@ -40,6 +41,8 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /Guarded update:/);
   assert.match(page, /npm run approvals:update -- --record/);
   assert.match(page, /Template generation does not approve the record\./);
+  assert.match(page, /Download unfilled request/);
+  assert.match(page, /\/publication-review\/approval-request\/\$\{record\.id\}/);
   assert.match(page, /Production media gate/);
   assert.match(page, /campusMediaPublicationSummary/);
   assert.match(page, /Exact activation/);
@@ -77,6 +80,8 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(editorialPage, /Download announcement intake packet/);
   assert.match(announcementPacketRoute, /createAnnouncementMigrationPacket/);
   assert.match(campusPacketRoute, /createCampusMediaCapturePacket/);
+  assert.match(approvalRequestRoute, /createApprovalRequestDownload\(recordId\)/);
+  assert.match(approvalRequestRoute, /content-disposition/);
   assert.match(migrationConfig, /claim-complete-address/);
   assert.match(migrationConfig, /claim-public-contact/);
   assert.match(announcementConfig, /awaiting-authoritative-source/);
@@ -86,7 +91,7 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
 });
 
 test("keeps the dashboard, worksheet and private evidence outside public delivery", async () => {
-  const [page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, campusPacketRoute, sitemap, guide] = await Promise.all([
+  const [page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, campusPacketRoute, approvalRequestRoute, sitemap, guide] = await Promise.all([
     source("app/publication-review/page.tsx"),
     source("app/publication-review/export/route.ts"),
     source("app/publication-review/cutover-export/route.ts"),
@@ -95,6 +100,7 @@ test("keeps the dashboard, worksheet and private evidence outside public deliver
     source("app/publication-review/editorial-site-settings-packet/route.ts"),
     source("app/publication-review/editorial-announcement-packet/route.ts"),
     source("app/publication-review/campus-media-packet/route.ts"),
+    source("app/publication-review/approval-request/[recordId]/route.ts"),
     source("app/sitemap.ts"),
     source("docs/approval-manifest.md"),
   ]);
@@ -119,6 +125,10 @@ test("keeps the dashboard, worksheet and private evidence outside public deliver
   assert.match(campusPacketRoute, /process\.env\.HOMEPAGE_REVIEW_MODE !== ["']private["'][\s\S]*?status:\s*404/);
   assert.match(campusPacketRoute, /getChatGPTUser\(\)[\s\S]*?status:\s*401/);
   assert.match(campusPacketRoute, /["']cache-control["']:\s*["']private, no-store["']/);
+  assert.match(approvalRequestRoute, /process\.env\.HOMEPAGE_REVIEW_MODE !== ["']private["'][\s\S]*?status:\s*404/);
+  assert.match(approvalRequestRoute, /getChatGPTUser\(\)[\s\S]*?status:\s*401/);
+  assert.match(approvalRequestRoute, /["']cache-control["']:\s*["']private, no-store["']/);
+  assert.match(approvalRequestRoute, /["']content-security-policy["']:\s*["']default-src 'none'; sandbox["']/);
   assert.doesNotMatch(sitemap, /publication-review/);
   assert.match(guide, /Owner-only reviewer dashboard[\s\S]*?\/publication-review/i);
   assert.match(guide, /worksheet[\s\S]*?working aid[\s\S]*?manifest remains the release source of truth/i);

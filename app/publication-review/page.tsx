@@ -103,6 +103,15 @@ function ReviewCard({ record, recommended = false }: { record: ApprovalRecord; r
           <p>{record.notes}</p>
           {pending.length ? <p className="review-card__next"><strong>Next:</strong> complete {pending.map(([check]) => check.replaceAll("-", " ")).join(", ")}.</p> : null}
           {recommended ? <p className="review-card__operator"><strong>Guarded update:</strong> after independent review, generate the unfilled request with <code>npm run approvals:update -- --record {record.id}</code>. Template generation does not approve the record.</p> : null}
+          <div className="review-card__actions">
+            <Link
+              aria-label={`Download unfilled approval request for ${record.title}`}
+              className="button button--quiet"
+              href={`/publication-review/approval-request/${record.id}`}
+            >
+              Download unfilled request
+            </Link>
+          </div>
         </div>
       </details>
     </article>
@@ -159,7 +168,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <p className="eyebrow">Privacy boundary</p>
               <h2 id="review-safety-title">Evidence stays in the school’s controlled system.</h2>
             </div>
-            <p>This dashboard shows status only. Store consent forms, certificates, pupil records and approver identities outside the website; record only their opaque reference IDs in the manifest.</p>
+            <p>This dashboard shows status and generates unfilled request templates only. Store consent forms, certificates, pupil records, completed requests and approver identities outside the website; record only opaque evidence reference IDs in the manifest.</p>
           </section>
 
           <section className="review-readiness" aria-labelledby="review-readiness-title">
