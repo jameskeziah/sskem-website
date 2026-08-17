@@ -270,10 +270,12 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <div><dt>Exact activation</dt><dd><strong>{mediaPublication.valid} of {mediaPublication.required} bound</strong><span>Only approved, receipt-matched derivative sets count.</span></dd></div>
               <div><dt>Hero transfer</dt><dd><strong>{heroPosterPerformance ? `${formatMediaBytes(heroPosterPerformance.observedBytes)} / ${formatMediaBytes(heroPosterPerformance.maximumBytes)}` : "Audit unavailable"}</strong><span>{heroPosterPerformance?.withinBudget ? "Within the public-release budget." : "Prototype is over the public-release budget."}</span></dd></div>
               <div><dt>Poster optimization</dt><dd><strong>Pixel-exact staging</strong><span>Lossless review never changes the public artwork or budget.</span></dd></div>
+              <div><dt>Delivery decision</dt><dd><strong>Not recorded</strong><span>Format and pixel authority remain unset.</span></dd></div>
               <div><dt>Media release</dt><dd><strong>{mediaPerformance.releaseReady ? "Ready" : "Blocked"}</strong><span>{mediaPerformance.blockers.length} media performance blocker(s) remain.</span></dd></div>
             </dl>
             <div className="review-media-intake__actions">
               <p>Run <code>npm run performance:audit</code> before public release. Use <code>npm run poster:inspect</code> to measure a pixel-identical lossless candidate without writing it. Because that candidate still exceeds the current budget, a format or pixel change requires a separate approved art-direction decision.</p>
+              <Link className="button button--quiet" href="/publication-review/poster-delivery-decision">Download poster decision packet</Link>
               <Link className="button button--quiet" href="/publication-review/campus-media-packet">Download campus capture packet</Link>
             </div>
           </section>

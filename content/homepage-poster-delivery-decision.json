@@ -1,0 +1,67 @@
+{
+  "$schema": "./homepage-poster-delivery-decision.schema.json",
+  "schemaVersion": 1,
+  "decisionId": "sskem-homepage-poster-delivery",
+  "asset": {
+    "id": "homepage-social-poster",
+    "approvalRecordId": "media-homepage-social-poster",
+    "sourceSha256": "eb92f08b9cb7ca5aa61a1f87992d01354fd4e0d7d7bb142551f5472d0fb55d21",
+    "sourceBytes": 1446077,
+    "format": "png",
+    "width": 1200,
+    "height": 630
+  },
+  "losslessBaseline": {
+    "candidateSha256": "6dc25aa49d81f3cf3a05460c62f842f715f2cfd0f8bd077bac4a0d2e07046233",
+    "candidateBytes": 1004872,
+    "pixelSha256": "db43c646ed27335b1beaffaaa91882472b5f54e82f34e72b5471a500faccbfba",
+    "pixelExact": true,
+    "privateMetadataRemoved": true,
+    "maximumBytes": 400000,
+    "overageBytes": 604872
+  },
+  "constraints": {
+    "sourceMayBeModified": false,
+    "compositionMayChange": false,
+    "cropMayChange": false,
+    "resizeMayChange": false,
+    "overlayMayChange": false,
+    "performanceBudgetMayChange": false,
+    "decisionPacketMayGenerateCandidates": false,
+    "publicActivationAllowed": false
+  },
+  "options": [
+    {
+      "id": "hold-current-png",
+      "label": "Hold the current PNG",
+      "scope": "Keep the current artwork unchanged and retain the public-release blocker.",
+      "formatChangeReviewAllowed": false,
+      "pixelChangeReviewAllowed": false,
+      "artworkRevisionBriefAllowed": false
+    },
+    {
+      "id": "authorize-lossless-format-review",
+      "label": "Review lossless formats",
+      "scope": "Allow review-only alternative-format candidates only when decoded pixels remain exact.",
+      "formatChangeReviewAllowed": true,
+      "pixelChangeReviewAllowed": false,
+      "artworkRevisionBriefAllowed": false
+    },
+    {
+      "id": "authorize-controlled-encoding-review",
+      "label": "Review controlled encoding",
+      "scope": "Allow review-only format and pixel-level encoding candidates while dimensions and composition remain fixed.",
+      "formatChangeReviewAllowed": true,
+      "pixelChangeReviewAllowed": true,
+      "artworkRevisionBriefAllowed": false
+    },
+    {
+      "id": "commission-artwork-revision-brief",
+      "label": "Commission an artwork revision brief",
+      "scope": "Start a separately governed artwork brief; this decision does not authorize an artwork replacement.",
+      "formatChangeReviewAllowed": false,
+      "pixelChangeReviewAllowed": false,
+      "artworkRevisionBriefAllowed": true
+    }
+  ]
+}

@@ -101,6 +101,11 @@ to place a pixel-identical candidate and privacy-safe receipt under the ignored
 or the release budget. See [the poster optimization guide](docs/homepage-poster-optimization.md)
 for the verified result and decision boundary.
 
+`npm run poster:decision-request` generates the unfilled, source-hash-bound
+delivery decision packet. Private reviewers can also download it from the
+publication dashboard after authentication. It preselects no option, creates no
+candidate and cannot approve or publish the poster.
+
 Appendix IX PDFs are prepared through the guarded document pipeline documented
 in `docs/document-ingestion.md`. It rejects encrypted or interactive PDFs,
 assesses the text layer, renders every page for review and binds publication to

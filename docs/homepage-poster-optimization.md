@@ -19,6 +19,7 @@ The release budget remains unchanged and the public build must remain blocked.
 ```powershell
 npm run poster:inspect
 npm run poster:prepare
+npm run poster:decision-request
 ```
 
 `poster:inspect` is read-only. `poster:prepare` writes only to the ignored
@@ -40,6 +41,17 @@ No command in this workflow writes to `public/og.png`, changes
 `content/homepage-media-performance-budget.json`, activates a candidate or marks
 it approved.
 
+`poster:decision-request` prints an unfilled JSON packet bound to the exact
+source hash, lossless result, performance ceiling and current poster approval
+record. The same packet is available to authenticated private reviewers from
+the publication dashboard. It offers four explicit scopes—hold the PNG, review
+lossless formats, review controlled encoding, or commission a separate artwork
+revision brief—but preselects none of them and generates no candidate.
+
+Keep the completed request and private evidence in the school-controlled
+system. The repository and download contain only the empty request template,
+public-safe hashes and opaque evidence-reference fields.
+
 ## Decision boundary
 
 Meeting the current byte ceiling now requires at least one new art-direction
@@ -49,6 +61,7 @@ therefore needs separate management approval before implementation. Do not
 silently raise the performance budget or substitute the staged file into public
 output.
 
-Once that decision is recorded, the next implementation should add a
+Once a decision packet is completed and retained in the controlled system, the
+next implementation should add only the selected
 format-specific, quality-reviewed derivative contract and bind it through the
 existing publication and performance gates.

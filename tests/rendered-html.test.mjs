@@ -153,6 +153,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /Hero transfer/i);
   assert.match(readableText, /1\.38 MiB \/ 390\.6 KiB/i);
   assert.match(readableText, /Poster optimization Pixel-exact staging/i);
+  assert.match(readableText, /Delivery decision Not recorded/i);
   assert.match(readableText, /npm run poster:inspect/i);
   assert.match(readableText, /pixel-identical lossless candidate/i);
   assert.match(readableText, /separate approved art-direction decision/i);
@@ -167,6 +168,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(html, /media-campus-courtyard/);
   assert.match(html, /href=["']\/publication-review\/export["']/i);
   assert.match(html, /href=["']\/publication-review\/campus-media-packet["']/i);
+  assert.match(html, /href=["']\/publication-review\/poster-delivery-decision["']/i);
   assert.match(readableText, /completed requests and approver identities outside the website/i);
   assert.match(readableText, /Evidence stays in the school’s controlled system\./i);
   assert.match(readableText, /Editorial CMS/i);
@@ -210,6 +212,25 @@ test("serves exact unfilled approval requests only to authenticated private revi
   const unknown = await render("/publication-review/approval-request/media-not-canonical", authentication);
   assert.equal(unknown.status, 404);
   assert.match(unknown.headers.get("cache-control") ?? "", /private, no-store/i);
+
+  const posterPath = "/publication-review/poster-delivery-decision";
+  const anonymousPoster = await render(posterPath, { accept: "application/json" });
+  assert.equal(anonymousPoster.status, 401);
+  assert.match(anonymousPoster.headers.get("cache-control") ?? "", /private, no-store/i);
+
+  const posterResponse = await render(posterPath, authentication);
+  assert.equal(posterResponse.status, 200);
+  assert.match(posterResponse.headers.get("content-type") ?? "", /^application\/json\b/i);
+  assert.match(posterResponse.headers.get("cache-control") ?? "", /private, no-store/i);
+  assert.match(posterResponse.headers.get("content-disposition") ?? "", /sskem-homepage-poster-delivery-decision-\d{4}-\d{2}-\d{2}\.json/i);
+  assert.equal(posterResponse.headers.get("content-security-policy"), "default-src 'none'; sandbox");
+
+  const posterPacket = JSON.parse(await posterResponse.text());
+  assert.equal(posterPacket.status, "decision-required");
+  assert.equal(posterPacket.requestTemplate.selectedOption, null);
+  assert.ok(Object.values(posterPacket.requestTemplate.acknowledgements).every((state) => state === null));
+  assert.equal(posterPacket.guardrails.approvalGrantedByPacket, false);
+  assert.doesNotMatch(JSON.stringify(posterPacket), /reviewer@example\.test|sourcePointer|publicTargets/i);
 });
 
 test("exports the owner-only approval worksheet without private evidence", async () => {

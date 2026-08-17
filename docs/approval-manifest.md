@@ -127,6 +127,13 @@ shot roles, technical limits, approval checks and activation status from the
 manifest and media pipeline. It does not grant approval or include evidence,
 approver identities, private source paths or pupil-photography requests.
 
+The authenticated `/publication-review/poster-delivery-decision` download is a
+separate, source-hash-bound request for the oversized homepage poster. It
+preselects no delivery option and authorizes no candidate, artwork change,
+budget change or publication. The completed request and supporting evidence
+remain in the school-controlled system; the existing poster approval record is
+still the publication source of truth.
+
 The linked `/publication-review/editorial` screen reviews exact published
 Sanity revisions without exposing raw CMS records. It produces a downloadable
 binding proposal only after the corresponding claim approval and display

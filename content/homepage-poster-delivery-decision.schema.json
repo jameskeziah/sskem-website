@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/homepage-poster-delivery-decision.schema.json",
+  "title": "SSKEMS homepage poster delivery decision contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "decisionId", "asset", "losslessBaseline", "constraints", "options"],
+  "properties": {
+    "$schema": { "const": "./homepage-poster-delivery-decision.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "decisionId": { "const": "sskem-homepage-poster-delivery" },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "approvalRecordId", "sourceSha256", "sourceBytes", "format", "width", "height"],
+      "properties": {
+        "id": { "const": "homepage-social-poster" },
+        "approvalRecordId": { "const": "media-homepage-social-poster" },
+        "sourceSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "sourceBytes": { "type": "integer", "minimum": 1 },
+        "format": { "const": "png" },
+        "width": { "const": 1200 },
+        "height": { "const": 630 }
+      }
+    },
+    "losslessBaseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidateSha256", "candidateBytes", "pixelSha256", "pixelExact", "privateMetadataRemoved", "maximumBytes", "overageBytes"],
+      "properties": {
+        "candidateSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "candidateBytes": { "type": "integer", "minimum": 1 },
+        "pixelSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "pixelExact": { "const": true },
+        "privateMetadataRemoved": { "const": true },
+        "maximumBytes": { "const": 400000 },
+        "overageBytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceMayBeModified", "compositionMayChange", "cropMayChange", "resizeMayChange", "overlayMayChange", "performanceBudgetMayChange", "decisionPacketMayGenerateCandidates", "publicActivationAllowed"],
+      "properties": {
+        "sourceMayBeModified": { "const": false },
+        "compositionMayChange": { "const": false },
+        "cropMayChange": { "const": false },
+        "resizeMayChange": { "const": false },
+        "overlayMayChange": { "const": false },
+        "performanceBudgetMayChange": { "const": false },
+        "decisionPacketMayGenerateCandidates": { "const": false },
+        "publicActivationAllowed": { "const": false }
+      }
+    },
+    "options": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "scope", "formatChangeReviewAllowed", "pixelChangeReviewAllowed", "artworkRevisionBriefAllowed"],
+        "properties": {
+          "id": { "enum": ["hold-current-png", "authorize-lossless-format-review", "authorize-controlled-encoding-review", "commission-artwork-revision-brief"] },
+          "label": { "type": "string", "minLength": 1 },
+          "scope": { "type": "string", "minLength": 1 },
+          "formatChangeReviewAllowed": { "type": "boolean" },
+          "pixelChangeReviewAllowed": { "type": "boolean" },
+          "artworkRevisionBriefAllowed": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}
