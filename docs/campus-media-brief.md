@@ -123,6 +123,10 @@ notes. Do not store consent evidence in the public web repository.
   byte baseline and public-release ceilings. `npm run performance:audit` is
   read-only: private review may keep a known overage, while the public build
   fails on overage, asset drift or fewer than four exact campus bindings.
+- The [homepage poster optimization workflow](homepage-poster-optimization.md)
+  can inspect or stage a pixel-identical, metadata-clean lossless candidate. It
+  never overwrites `/og.png`, changes the byte budget or grants publication
+  approval. Any format or pixel change remains a separate art-direction decision.
 - The byte audit is not a field Core Web Vitals measurement. Verify the LCP
   target on representative traffic after public launch and monitor it as media,
   devices and network conditions change.

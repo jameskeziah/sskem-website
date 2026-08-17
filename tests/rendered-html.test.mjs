@@ -152,6 +152,10 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /AVIF · WebP · JPEG/i);
   assert.match(readableText, /Hero transfer/i);
   assert.match(readableText, /1\.38 MiB \/ 390\.6 KiB/i);
+  assert.match(readableText, /Poster optimization Pixel-exact staging/i);
+  assert.match(readableText, /npm run poster:inspect/i);
+  assert.match(readableText, /pixel-identical lossless candidate/i);
+  assert.match(readableText, /separate approved art-direction decision/i);
   assert.match(readableText, /Media release Blocked/i);
   assert.match(readableText, /2 media performance blocker\(s\) remain\./i);
   assert.match(readableText, /Exact activation 0 of 12 bound/i);

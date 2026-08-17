@@ -1,0 +1,28 @@
+{
+  "$schema": "./homepage-poster-optimization.schema.json",
+  "schemaVersion": 1,
+  "workflowId": "sskem-homepage-poster-lossless",
+  "asset": {
+    "id": "homepage-social-poster",
+    "sourcePath": "public/og.png",
+    "approvalRecordId": "media-homepage-social-poster",
+    "format": "png",
+    "width": 1200,
+    "height": 630,
+    "maximumBytes": 400000
+  },
+  "staging": {
+    "root": "work/homepage-poster-optimization",
+    "candidateFilename": "og.lossless.png",
+    "receiptFilename": "optimization-receipt.json"
+  },
+  "profile": {
+    "compressionLevel": 9,
+    "adaptiveFiltering": true,
+    "palette": false,
+    "resize": "none",
+    "crop": "none",
+    "pixelChangesAllowed": false,
+    "publicWriteAllowed": false
+  }
+}

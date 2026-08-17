@@ -94,6 +94,13 @@ debts only in `build:review`. The audit never crops, recompresses or replaces
 artwork. Its byte limits are an acceptance gate, not a substitute for measuring
 the 75th-percentile LCP on representative traffic after launch.
 
+The homepage poster has a separate lossless review workflow. Run
+`npm run poster:inspect` for a write-free measurement or `npm run poster:prepare`
+to place a pixel-identical candidate and privacy-safe receipt under the ignored
+`work/` directory. Neither command changes `public/og.png`, its approval state,
+or the release budget. See [the poster optimization guide](docs/homepage-poster-optimization.md)
+for the verified result and decision boundary.
+
 Appendix IX PDFs are prepared through the guarded document pipeline documented
 in `docs/document-ingestion.md`. It rejects encrypted or interactive PDFs,
 assesses the text layer, renders every page for review and binds publication to

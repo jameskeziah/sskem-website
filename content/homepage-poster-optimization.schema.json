@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/homepage-poster-optimization.schema.json",
+  "title": "SSKEMS homepage poster lossless optimization workflow",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "workflowId", "asset", "staging", "profile"],
+  "properties": {
+    "$schema": { "const": "./homepage-poster-optimization.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "workflowId": { "const": "sskem-homepage-poster-lossless" },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sourcePath", "approvalRecordId", "format", "width", "height", "maximumBytes"],
+      "properties": {
+        "id": { "const": "homepage-social-poster" },
+        "sourcePath": { "const": "public/og.png" },
+        "approvalRecordId": { "const": "media-homepage-social-poster" },
+        "format": { "const": "png" },
+        "width": { "const": 1200 },
+        "height": { "const": 630 },
+        "maximumBytes": { "const": 400000 }
+      }
+    },
+    "staging": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root", "candidateFilename", "receiptFilename"],
+      "properties": {
+        "root": { "const": "work/homepage-poster-optimization" },
+        "candidateFilename": { "const": "og.lossless.png" },
+        "receiptFilename": { "const": "optimization-receipt.json" }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["compressionLevel", "adaptiveFiltering", "palette", "resize", "crop", "pixelChangesAllowed", "publicWriteAllowed"],
+      "properties": {
+        "compressionLevel": { "const": 9 },
+        "adaptiveFiltering": { "const": true },
+        "palette": { "const": false },
+        "resize": { "const": "none" },
+        "crop": { "const": "none" },
+        "pixelChangesAllowed": { "const": false },
+        "publicWriteAllowed": { "const": false }
+      }
+    }
+  }
+}
