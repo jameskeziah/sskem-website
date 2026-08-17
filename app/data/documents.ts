@@ -1,3 +1,9 @@
+import {
+  createPublicDocumentPublicationIndex,
+  publicDocumentUrl,
+  type PublicDocumentId,
+} from "../../lib/public-document-publication.ts";
+
 export type PublicDocumentStatus =
   | "current"
   | "expiring-soon"
@@ -99,7 +105,7 @@ function requiredDocument(input: {
   };
 }
 
-export const mandatoryDocuments: PublicDocument[] = [
+const mandatoryDocumentRequirements: PublicDocument[] = [
   requiredDocument({
     id: "mpd-b-1",
     title: "Affiliation/upgradation letter and latest extension",
@@ -181,7 +187,50 @@ const academicRequirements: PublicDocument[] = [
   requiredDocument({ id: "mpd-c-4", title: "Parent Teacher Association", slug: "parent-teacher-association-list", categorySlug: "parent-teacher-association", row: 4, authority: "SSKEMS authorised approver", note: "The current approved public list has not yet been supplied." }),
 ].map((document) => ({ ...document, appendixSection: "C" as const }));
 
-export const publicDocuments: PublicDocument[] = [...mandatoryDocuments, ...academicRequirements];
+const publicationIndex = createPublicDocumentPublicationIndex();
+
+function readableDate(value: string) {
+  const [year, month, day] = value.slice(0, 10).split("-").map(Number);
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  return `${day} ${months[month - 1]} ${year}`;
+}
+
+function readableFileSize(bytes: number) {
+  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MiB`;
+  return `${(bytes / 1024).toFixed(1)} KiB`;
+}
+
+function activateApprovedVersion(document: PublicDocument): PublicDocument {
+  const binding = publicationIndex.get(document.id as PublicDocumentId);
+  if (!binding) return document;
+  const version: PublicDocumentVersion = {
+    label: binding.metadata.label,
+    revisionDate: readableDate(binding.metadata.issueDate),
+    status: binding.metadata.status,
+    publicUrl: publicDocumentUrl(binding),
+    fileName: binding.publicFilename,
+    fileType: "PDF",
+    fileSize: readableFileSize(binding.bytes),
+    accessibilityStatus: binding.accessibilityStatus,
+  };
+  return {
+    ...document,
+    academicYear: binding.metadata.academicYear,
+    publicationYear: binding.metadata.publicationYear,
+    issuingAuthority: binding.metadata.issuingAuthority,
+    issueDate: readableDate(binding.metadata.issueDate),
+    expiryDate: binding.metadata.expiryDate ? readableDate(binding.metadata.expiryDate) : null,
+    status: binding.metadata.status,
+    language: binding.metadata.language,
+    lastReviewed: readableDate(binding.publishedOn),
+    publicNote: binding.metadata.publicNote,
+    currentVersion: version,
+    versions: [version],
+  };
+}
+
+export const mandatoryDocuments: PublicDocument[] = mandatoryDocumentRequirements.map(activateApprovedVersion);
+export const publicDocuments: PublicDocument[] = [...mandatoryDocuments, ...academicRequirements.map(activateApprovedVersion)];
 
 export const documentStatusLabels: Record<PublicDocumentStatus, string> = {
   current: "Current",

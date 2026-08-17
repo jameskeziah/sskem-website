@@ -46,6 +46,9 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /Appendix IX document gate/);
   assert.match(page, /Every PDF is rendered, checked and bound to its approval\./);
   assert.match(page, /External malware-scan evidence and manifest approval remain mandatory\./);
+  assert.match(page, /publicDocumentPublicationSummary/);
+  assert.match(page, /Only a receipt-matched, hash-verified PDF becomes downloadable\./);
+  assert.match(page, /npm run documents:activate/);
   assert.match(page, /Evidence stays in the school’s controlled system\./);
   assert.match(page, /Editorial CMS/);
   assert.match(page, /Sanity delivery status/);

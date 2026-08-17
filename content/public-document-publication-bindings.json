@@ -1,0 +1,15 @@
+{
+  "$schema": "./public-document-publication-bindings.schema.json",
+  "schemaVersion": 1,
+  "registryId": "sskem-public-document-publication-bindings",
+  "publicBasePath": "/documents/production",
+  "policy": {
+    "approvedManifestRequired": true,
+    "exactStagedReceiptHashRequired": true,
+    "exactPublicPdfHashRequired": true,
+    "externalMalwareEvidenceRequired": true,
+    "privateEvidenceStoredInRepository": false,
+    "notes": "A document becomes downloadable only through an exact approved binding. Source paths, private evidence and approver identities remain outside the repository."
+  },
+  "bindings": []
+}

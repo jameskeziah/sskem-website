@@ -82,6 +82,14 @@ assesses the text layer, renders every page for review and binds publication to
 the exact staged SHA-256 receipt. Malware scanning remains an external,
 controlled-system requirement and is never implied by the local pipeline.
 
+Published PDFs have a separate, guarded activation step. The default
+`documents:activate` mode verifies the exact staged receipt, approved public
+file, current manifest decision, external malware-scan check and public-safe
+metadata without writing. An explicit acknowledgement is required to add or
+replace a hash-bound registry entry. Document pages expose a download only when
+that registry validates; filenames or manifest approval alone never activate a
+file.
+
 Legacy WordPress route continuity is controlled by the schema-backed inventory
 documented in `docs/legacy-cutover.md`. It implements direct permanent redirects
 to safe rebuilt destinations without copying old claims, forms, uploads or pupil

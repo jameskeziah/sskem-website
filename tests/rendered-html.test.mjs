@@ -141,6 +141,8 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /1\.38 MiB \/ 390\.6 KiB/i);
   assert.match(readableText, /Media release Blocked/i);
   assert.match(readableText, /2 media performance blocker\(s\) remain\./i);
+  assert.match(readableText, /Exact activation 0 of 12 bound/i);
+  assert.match(readableText, /Only a receipt-matched, hash-verified PDF becomes downloadable\./i);
   assert.match(readableText, /Showing 5 of 33 records\./i);
   assert.match(html, /media-campus-main/);
   assert.match(html, /media-campus-grounds/);

@@ -336,6 +336,15 @@
   margin-top: var(--space-8);
 }
 
+.review-document-intake__note {
+  background: var(--surface-subtle);
+  border-left: var(--border-width-strong) solid var(--color-brand-600);
+  border-radius: var(--radius-medium);
+  line-height: 1.6;
+  margin: var(--space-24) 0 0;
+  padding: var(--space-16) var(--space-20);
+}
+
 .review-card-grid {
   display: grid;
   gap: var(--space-24);

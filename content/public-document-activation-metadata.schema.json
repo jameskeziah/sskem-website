@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/public-document-activation-metadata.schema.json",
+  "title": "SSKEMS public document activation metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "recordId", "publicFilename", "label", "status", "academicYear", "publicationYear", "issuingAuthority", "issueDate", "expiryDate", "language", "publicNote", "notes"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "recordId": { "enum": ["document-mpd-b-1", "document-mpd-b-2", "document-mpd-b-3", "document-mpd-b-4", "document-mpd-b-5", "document-mpd-b-6", "document-mpd-b-7", "document-mpd-b-8", "document-mpd-c-1", "document-mpd-c-2", "document-mpd-c-3", "document-mpd-c-4"] },
+    "publicFilename": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*\\.pdf$" },
+    "label": { "type": "string", "minLength": 3, "maxLength": 100 },
+    "status": { "enum": ["current", "expiring-soon"] },
+    "academicYear": { "type": ["string", "null"], "pattern": "^20[0-9]{2}(?:[-–]20[0-9]{2})?$" },
+    "publicationYear": { "type": ["string", "null"], "pattern": "^20[0-9]{2}$" },
+    "issuingAuthority": { "type": "string", "minLength": 3, "maxLength": 160 },
+    "issueDate": { "type": "string", "format": "date" },
+    "expiryDate": { "type": ["string", "null"], "format": "date" },
+    "language": { "enum": ["English", "Marathi", "English and Marathi"] },
+    "publicNote": { "type": "string", "minLength": 10, "maxLength": 500 },
+    "notes": { "type": "string", "minLength": 3, "maxLength": 500 }
+  }
+}

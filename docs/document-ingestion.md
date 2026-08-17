@@ -67,6 +67,36 @@ are correct. Use `SSKEM_POPPLER_BIN` when Poppler is installed outside the norma
 system location. The current configuration is in
 `content/document-ingestion-pipeline.json`.
 
+## Activate an approved public PDF
+
+Publishing the PDF does not make it downloadable. Prepare one controlled
+public-metadata JSON object that conforms to
+`content/public-document-activation-metadata.schema.json`. Keep that working
+file outside the repository. It contains only public values: the approval
+record ID, stable public filename, version label, current status, academic and
+publication years where applicable, issuing authority, issue and expiry dates,
+language, public note and non-sensitive notes.
+
+Review the read-only activation plan first:
+
+```powershell
+npm.cmd run documents:activate -- --record RECORD_ID --metadata "CONTROLLED_METADATA.json"
+```
+
+After the plan reports `ready-for-explicit-write`, activate the exact binding:
+
+```powershell
+npm.cmd run documents:activate -- --record RECORD_ID --metadata "CONTROLLED_METADATA.json" --apply --acknowledge-local-write=activate-approved-public-document
+```
+
+Use `--replace` only after reviewing a changed staged receipt, public PDF and
+public metadata. The write is atomic and refused if the registry or PDF changes
+after planning. The activator never grants approval and never stores controlled
+metadata paths, source paths, private evidence or approver identities. Run
+`npm.cmd run documents:bindings:audit` after activation. A public build requires
+all 12 Appendix IX records to have exact valid bindings; private review reports
+the remaining count without exposing any unbound file.
+
 ## Visual and accessibility review checklist
 
 - rendered page count matches the signed source and receipt;

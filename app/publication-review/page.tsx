@@ -29,6 +29,7 @@ import {
   formatMediaBytes,
   homepageMediaPerformanceSummary,
 } from "@/lib/homepage-media-performance";
+import { publicDocumentPublicationSummary } from "@/lib/public-document-publication";
 
 import "./review.css";
 
@@ -121,6 +122,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
   const mediaPublication = campusMediaPublicationSummary();
   const mediaPerformance = homepageMediaPerformanceSummary({ campusSummary: mediaPublication });
   const heroPosterPerformance = mediaPerformance.assets.find((asset) => asset.id === "homepage-social-poster");
+  const documentPublication = publicDocumentPublicationSummary();
   const cmsState = editorial.status.reason === "missing-config"
     ? "Ready for connection"
     : editorial.status.reason === "invalid-config"
@@ -250,7 +252,9 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <div><dt>Visual QA</dt><dd><strong>Every page rendered</strong><span>Numbered previews support legibility and completeness review.</span></dd></div>
               <div><dt>Accessibility</dt><dd><strong>Text layer assessed</strong><span>Sparse or scanned pages are flagged for OCR and remediation.</span></dd></div>
               <div><dt>Publication</dt><dd><strong>Exact hash required</strong><span>External malware-scan evidence and manifest approval remain mandatory.</span></dd></div>
+              <div><dt>Exact activation</dt><dd><strong>{documentPublication.valid} of {documentPublication.required} bound</strong><span>Only a receipt-matched, hash-verified PDF becomes downloadable.</span></dd></div>
             </dl>
+            <p className="review-document-intake__note">After publishing an approved PDF, review its public metadata and run <code>npm run documents:activate</code>. The default mode is read-only and never grants approval.</p>
           </section>
 
           <section className="review-queue" aria-labelledby="review-queue-title">
