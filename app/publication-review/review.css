@@ -63,6 +63,7 @@
 }
 
 .review-safety,
+.review-readiness,
 .review-cms,
 .review-cutover,
 .review-summary,
@@ -101,6 +102,81 @@
   color: var(--text-secondary);
   line-height: 1.65;
   margin: 0;
+}
+
+.review-readiness {
+  background: var(--surface-raised);
+  border: var(--border-width-default) solid var(--border-default);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-small);
+  padding: clamp(var(--space-24), 5vw, var(--space-48));
+}
+
+.review-readiness__grid {
+  display: grid;
+  gap: var(--space-16);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+}
+
+.review-readiness__grid > div {
+  background: var(--surface-subtle);
+  border: var(--border-width-default) solid var(--border-default);
+  border-left: var(--border-width-strong) solid var(--status-danger);
+  border-radius: var(--radius-medium);
+  padding: var(--space-20);
+}
+
+.review-readiness__grid > div[data-ready="true"] {
+  border-left-color: var(--status-success);
+}
+
+.review-readiness__grid dt {
+  color: var(--text-secondary);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.review-readiness__grid dd {
+  margin: var(--space-12) 0 0;
+}
+
+.review-readiness__grid dd strong,
+.review-readiness__grid dd span,
+.review-readiness__grid dd small {
+  display: block;
+}
+
+.review-readiness__grid dd strong {
+  color: var(--status-danger);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-400);
+}
+
+.review-readiness__grid > div[data-ready="true"] dd strong {
+  color: var(--status-success);
+}
+
+.review-readiness__grid dd span,
+.review-readiness__grid dd small,
+.review-readiness__note {
+  color: var(--text-secondary);
+}
+
+.review-readiness__grid dd span {
+  font-weight: var(--font-weight-bold);
+  margin-top: var(--space-4);
+}
+
+.review-readiness__grid dd small {
+  line-height: 1.5;
+  margin-top: var(--space-12);
+}
+
+.review-readiness__note {
+  margin: var(--space-24) 0 0;
 }
 
 .review-section-heading {
@@ -775,10 +851,15 @@
   .review-cms__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .review-readiness__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 44rem) {
   .review-cms__grid,
+  .review-readiness__grid,
   .review-cutover__grid,
   .review-summary__grid,
   .review-media-intake__grid,

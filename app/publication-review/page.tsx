@@ -19,6 +19,7 @@ import {
   legacyCutoverDashboard,
   legacyCutoverInventory,
 } from "@/app/data/legacy-cutover";
+import { publicReleaseReadinessDashboard } from "@/app/data/public-release-readiness";
 import { PageContainer } from "@/components/layout";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -117,6 +118,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
   const decision = validDecision(selectedDecision) ? selectedDecision : "";
   const records = filterApprovalRecords(kind, decision);
   const summary = approvalSummary();
+  const releaseReadiness = publicReleaseReadinessDashboard();
   const editorial = await getHomepageEditorialContent();
   const bindingSummary = editorialPublicationBindingSummary();
   const mediaPublication = campusMediaPublicationSummary();
@@ -144,8 +146,8 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
             </div>
             <aside className="review-hero__status" aria-label="Current public release status">
               <span>Public release</span>
-              <strong>{summary.releaseReady ? "Ready" : "Blocked"}</strong>
-              <p>{summary.releaseBlockers.length} governed records still require approval.</p>
+              <strong>{releaseReadiness.releaseReady ? "Ready" : "Blocked"}</strong>
+              <p>{releaseReadiness.blockedGates} of {releaseReadiness.totalGates} launch gates remain blocked.</p>
             </aside>
           </PageContainer>
         </header>
@@ -157,6 +159,29 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <h2 id="review-safety-title">Evidence stays in the school’s controlled system.</h2>
             </div>
             <p>This dashboard shows status only. Store consent forms, certificates, pupil records and approver identities outside the website; record only their opaque reference IDs in the manifest.</p>
+          </section>
+
+          <section className="review-readiness" aria-labelledby="review-readiness-title">
+            <div className="review-section-heading">
+              <div>
+                <p className="eyebrow">Composite launch gate</p>
+                <h2 id="review-readiness-title">One result across every release dependency.</h2>
+              </div>
+              <p>Public release becomes ready only when all six independent gates pass. A structurally valid manifest alone is not a launch decision.</p>
+            </div>
+            <dl className="review-readiness__grid">
+              {releaseReadiness.gates.map((gate) => (
+                <div data-ready={gate.ready} key={gate.id}>
+                  <dt>{gate.label}</dt>
+                  <dd>
+                    <strong>{gate.ready ? "Ready" : "Blocked"}</strong>
+                    <span>{gate.completed} of {gate.required}</span>
+                    {gate.blocker ? <small>{gate.blocker}</small> : null}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="review-readiness__note">Run <code>npm run release:audit</code> for the same fail-closed result in the build pipeline.</p>
           </section>
 
           <section className="review-cms" aria-labelledby="review-cms-title">

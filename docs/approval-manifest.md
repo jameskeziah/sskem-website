@@ -55,6 +55,8 @@ receipt. The local pipeline does not replace the controlled malware scan.
 - `npm run approvals:audit` validates structure and prints the current summary.
 - `npm run approvals:release` prints every blocking ID and fails unless the
   registry is ready for public release.
+- `npm run release:audit` combines the manifest with the five other independent
+  launch gates documented in `docs/public-release-readiness.md`.
 - `npm run documents:inspect -- --record ID --input PATH` performs static PDF,
   page-count and text-layer checks without publishing anything.
 - `npm run documents:prepare -- --record ID --input PATH` creates an ignored

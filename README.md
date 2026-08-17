@@ -31,6 +31,14 @@ Publication decisions are tracked in `content/approval-manifest.json`. Run
 Only opaque references belong in the manifest; private evidence remains in the
 school's controlled record system.
 
+Run `npm run release:audit` for the authoritative launch decision across
+approvals, exact campus-media bindings, exact Appendix IX document bindings,
+homepage transfer budgets, legacy-route implementation and removal of
+review-only source treatment. A public build requires all six gates; private
+review reports the same blockers without treating them as approval. The model
+and operating sequence are documented in
+[`docs/public-release-readiness.md`](docs/public-release-readiness.md).
+
 The owner-only review deployment also provides `/publication-review`, a
 manifest-driven approval queue with filters, check progress and a downloadable
 coordination worksheet, plus `/publication-review/editorial` for reviewing the
