@@ -1,0 +1,74 @@
+{
+  "$schema": "./homepage-media-performance-budget.schema.json",
+  "schemaVersion": 1,
+  "budgetId": "sskem-homepage-media-performance",
+  "policy": {
+    "auditMayModifyArtwork": false,
+    "privatePrototypeOverageAllowed": true,
+    "publicReleaseFailsOnOverage": true,
+    "exactCampusBindingsRequired": 4,
+    "notes": "The audit is read-only. Private review may retain an oversized prototype, but public release requires every tracked asset to meet its byte budget and all four campus roles to use exact approved bindings."
+  },
+  "assets": [
+    {
+      "id": "homepage-social-poster",
+      "path": "public/og.png",
+      "publicUrl": "/og.png",
+      "approvalRecordId": "media-homepage-social-poster",
+      "placement": "desktop-hero-and-social",
+      "format": "png",
+      "width": 1200,
+      "height": 630,
+      "observedBytes": 1446077,
+      "maximumBytes": 400000
+    },
+    {
+      "id": "campus-main-prototype",
+      "path": "public/media/home/campus-main.jpeg",
+      "publicUrl": "/media/home/campus-main.jpeg",
+      "approvalRecordId": "media-campus-main",
+      "placement": "mobile-hero-private-prototype",
+      "format": "jpeg",
+      "width": 1400,
+      "height": 500,
+      "observedBytes": 223969,
+      "maximumBytes": 250000
+    },
+    {
+      "id": "campus-grounds-prototype",
+      "path": "public/media/home/campus-grounds.jpeg",
+      "publicUrl": "/media/home/campus-grounds.jpeg",
+      "approvalRecordId": "media-campus-grounds",
+      "placement": "campus-chapter-private-prototype",
+      "format": "jpeg",
+      "width": 1400,
+      "height": 500,
+      "observedBytes": 178860,
+      "maximumBytes": 200000
+    },
+    {
+      "id": "campus-entrance-prototype",
+      "path": "public/media/home/campus-entrance.jpeg",
+      "publicUrl": "/media/home/campus-entrance.jpeg",
+      "approvalRecordId": "media-campus-entrance",
+      "placement": "campus-chapter-private-prototype",
+      "format": "jpeg",
+      "width": 1400,
+      "height": 500,
+      "observedBytes": 172471,
+      "maximumBytes": 200000
+    },
+    {
+      "id": "campus-courtyard-prototype",
+      "path": "public/media/home/campus-courtyard.jpeg",
+      "publicUrl": "/media/home/campus-courtyard.jpeg",
+      "approvalRecordId": "media-campus-courtyard",
+      "placement": "campus-chapter-private-prototype",
+      "format": "jpeg",
+      "width": 1400,
+      "height": 500,
+      "observedBytes": 134792,
+      "maximumBytes": 200000
+    }
+  ]
+}

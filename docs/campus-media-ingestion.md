@@ -82,6 +82,13 @@ fails closed to the private prototype source. The public release gate still
 blocks those prototype assets from becoming an accidental substitute for an
 approved production library.
 
+Run `npm run performance:audit` after activating all four records. The public
+build also runs this read-only audit automatically and remains blocked until the
+tracked homepage files meet their byte budgets and all four exact bindings are
+valid. In private review, known release blockers are reported without changing
+the supplied artwork. Asset drift, missing files, wrong dimensions or wrong
+formats fail in both modes.
+
 ## Receipt and privacy contract
 
 `intake-receipt.json` contains only the media record ID, source hash,

@@ -119,6 +119,13 @@ notes. Do not store consent evidence in the public web repository.
   launch if it remains above that budget.
 - Target LCP ≤ 2.5 seconds at the 75th percentile on representative mobile
   traffic. Lazy-load below-fold media and provide explicit dimensions.
+- `content/homepage-media-performance-budget.json` records the exact prototype
+  byte baseline and public-release ceilings. `npm run performance:audit` is
+  read-only: private review may keep a known overage, while the public build
+  fails on overage, asset drift or fewer than four exact campus bindings.
+- The byte audit is not a field Core Web Vitals measurement. Verify the LCP
+  target on representative traffic after public launch and monitor it as media,
+  devices and network conditions change.
 - Filenames use a stable subject/date/sequence convention; captions and alt text
   describe the actual scene rather than repeating promotional copy.
 - Use the controlled workflow in `docs/campus-media-ingestion.md` to inspect and

@@ -25,6 +25,10 @@ import { SiteHeader } from "@/components/site-header";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 import { editorialPublicationBindingSummary } from "@/lib/cms/editorial-publication-binding";
 import { campusMediaPublicationSummary } from "@/lib/campus-media-publication";
+import {
+  formatMediaBytes,
+  homepageMediaPerformanceSummary,
+} from "@/lib/homepage-media-performance";
 
 import "./review.css";
 
@@ -115,6 +119,8 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
   const editorial = await getHomepageEditorialContent();
   const bindingSummary = editorialPublicationBindingSummary();
   const mediaPublication = campusMediaPublicationSummary();
+  const mediaPerformance = homepageMediaPerformanceSummary({ campusSummary: mediaPublication });
+  const heroPosterPerformance = mediaPerformance.assets.find((asset) => asset.id === "homepage-social-poster");
   const cmsState = editorial.status.reason === "missing-config"
     ? "Ready for connection"
     : editorial.status.reason === "invalid-config"
@@ -218,16 +224,18 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
           <section className="review-media-intake" aria-labelledby="review-media-intake-title">
             <div className="review-section-heading">
               <div><p className="eyebrow">Production media gate</p><h2 id="review-media-intake-title">Approved masters become responsive, privacy-clean assets.</h2></div>
-              <p>The production pipeline preserves the photograph’s composition, strips embedded metadata and refuses public output until its exact manifest record is approved.</p>
+              <p>The production pipeline preserves the photograph’s composition, strips embedded metadata and audits transfer budgets without modifying the artwork.</p>
             </div>
             <dl className="review-media-intake__grid">
               <div><dt>Master size</dt><dd><strong>2400 × 1350 minimum</strong><span>Long edge × short edge; never enlarged.</span></dd></div>
               <div><dt>Responsive formats</dt><dd><strong>AVIF · WebP · JPEG</strong><span>Five widths from 480 to 2000 pixels.</span></dd></div>
               <div><dt>Privacy</dt><dd><strong>Metadata removed</strong><span>EXIF, XMP and IPTC are stripped and rechecked.</span></dd></div>
               <div><dt>Exact activation</dt><dd><strong>{mediaPublication.valid} of {mediaPublication.required} bound</strong><span>Only approved, receipt-matched derivative sets count.</span></dd></div>
+              <div><dt>Hero transfer</dt><dd><strong>{heroPosterPerformance ? `${formatMediaBytes(heroPosterPerformance.observedBytes)} / ${formatMediaBytes(heroPosterPerformance.maximumBytes)}` : "Audit unavailable"}</strong><span>{heroPosterPerformance?.withinBudget ? "Within the public-release budget." : "Prototype is over the public-release budget."}</span></dd></div>
+              <div><dt>Media release</dt><dd><strong>{mediaPerformance.releaseReady ? "Ready" : "Blocked"}</strong><span>{mediaPerformance.blockers.length} media performance blocker(s) remain.</span></dd></div>
             </dl>
             <div className="review-media-intake__actions">
-              <p>Give the content owner or photographer one canonical four-shot brief; it contains no evidence, approver identity or controlled source path.</p>
+              <p>Run <code>npm run performance:audit</code> before public release. Private review may retain the current poster; the audit never recompresses, crops or replaces it.</p>
               <Link className="button button--quiet" href="/publication-review/campus-media-packet">Download campus capture packet</Link>
             </div>
           </section>

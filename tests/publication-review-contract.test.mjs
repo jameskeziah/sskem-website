@@ -35,6 +35,11 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /Production media gate/);
   assert.match(page, /campusMediaPublicationSummary/);
   assert.match(page, /Exact activation/);
+  assert.match(page, /Hero transfer/);
+  assert.match(page, /Media release/);
+  assert.match(page, /homepageMediaPerformanceSummary/);
+  assert.match(page, /npm run performance:audit/);
+  assert.match(page, /never recompresses, crops or replaces it/);
   assert.match(page, /Download campus capture packet/);
   assert.match(page, /AVIF · WebP · JPEG/);
   assert.match(page, /EXIF, XMP and IPTC are stripped and rechecked\./);

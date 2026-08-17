@@ -68,6 +68,14 @@ replacement is refused. The homepage uses those responsive variants only when
 the registry, manifest, receipt and derivative files all agree; otherwise
 private review retains the prototype source and public release remains blocked.
 
+Homepage media also has a schema-backed, read-only transfer audit. Run
+`npm run performance:audit` before public release. It verifies the exact tracked
+files, dimensions, formats and byte counts, blocks an oversized hero poster or
+incomplete campus bindings on the public build, and allows those known release
+debts only in `build:review`. The audit never crops, recompresses or replaces
+artwork. Its byte limits are an acceptance gate, not a substitute for measuring
+the 75th-percentile LCP on representative traffic after launch.
+
 Appendix IX PDFs are prepared through the guarded document pipeline documented
 in `docs/document-ingestion.md`. It rejects encrypted or interactive PDFs,
 assesses the text layer, renders every page for review and binds publication to
