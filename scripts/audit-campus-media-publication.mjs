@@ -1,26 +1,18 @@
-import { createHash } from "node:crypto";
-import { readFile, stat } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 
-import sharp from "sharp";
-
+import { verifyCampusMediaBindingArtifacts } from "../lib/campus-media-activation.ts";
 import {
   campusMediaPublicationRegistry,
   createCampusMediaBindingProposal,
   validateCampusMediaPublicationRegistry,
 } from "../lib/campus-media-publication.ts";
 
-sharp.cache({ files: 0 });
-
 const projectRoot = fileURLToPath(new URL("../", import.meta.url));
 const publicRoot = path.resolve(projectRoot, "public", "media", "home", "production");
 const issues = validateCampusMediaPublicationRegistry();
-
-function sha256(buffer) {
-  return createHash("sha256").update(buffer).digest("hex");
-}
 
 function withinDirectory(candidate, parent) {
   const relative = path.relative(parent, candidate);
@@ -49,26 +41,7 @@ if (!issues.length && Array.isArray(campusMediaPublicationRegistry.bindings)) {
       continue;
     }
 
-    for (const variant of binding.variants) {
-      const variantPath = path.resolve(outputDirectory, variant.filename);
-      if (!withinDirectory(variantPath, outputDirectory)) {
-        issues.push(`${binding.recordId}/${variant.filename} resolves outside its derivative directory.`);
-        continue;
-      }
-      try {
-        const [buffer, details, metadata] = await Promise.all([
-          readFile(variantPath),
-          stat(variantPath),
-          sharp(variantPath).metadata(),
-        ]);
-        if (!details.isFile() || details.size !== variant.bytes) issues.push(`${binding.recordId}/${variant.filename} byte size does not match its binding.`);
-        if (sha256(buffer) !== variant.sha256) issues.push(`${binding.recordId}/${variant.filename} hash does not match its binding.`);
-        if (metadata.width !== variant.width || metadata.height !== variant.height) issues.push(`${binding.recordId}/${variant.filename} dimensions do not match its binding.`);
-        if (metadata.exif || metadata.xmp || metadata.iptc) issues.push(`${binding.recordId}/${variant.filename} contains forbidden embedded metadata.`);
-      } catch {
-        issues.push(`${binding.recordId}/${variant.filename} is missing or unreadable.`);
-      }
-    }
+    issues.push(...await verifyCampusMediaBindingArtifacts({ binding, publicRoot }));
   }
 }
 

@@ -4,8 +4,8 @@ import registryData from "../content/campus-media-publication-bindings.json" wit
 
 type UnknownRecord = Record<string, unknown>;
 type ApprovalRecordInput = { id?: unknown; kind?: unknown; decision?: unknown; expiresAt?: unknown };
-type ApprovalManifestInput = { records?: readonly ApprovalRecordInput[] };
-type PublicationRegistryInput = {
+export type CampusMediaApprovalManifestInput = { records?: readonly ApprovalRecordInput[] };
+export type CampusMediaPublicationRegistryInput = {
   $schema?: unknown;
   schemaVersion?: unknown;
   registryId?: unknown;
@@ -38,7 +38,7 @@ const allowedVariantKeys = new Set(["filename", "format", "width", "height", "by
 
 export type CampusRecordId = keyof typeof rolesByRecordId;
 type CampusRole = (typeof rolesByRecordId)[CampusRecordId];
-type ValidVariant = {
+export type CampusMediaPublicationVariant = {
   filename: string;
   format: "avif" | "webp" | "jpeg";
   width: number;
@@ -49,18 +49,18 @@ type ValidVariant = {
   embeddedMetadataRemoved: true;
   colourSpace: "srgb" | "rgb";
 };
-type ValidBinding = {
+export type CampusMediaPublicationBinding = {
   bindingId: string;
   recordId: CampusRecordId;
   role: CampusRole;
   profile: "campus-responsive";
   sourceSha256: string;
   publishedOn: string;
-  variants: ValidVariant[];
+  variants: CampusMediaPublicationVariant[];
   notes: string;
 };
 
-export const campusMediaPublicationRegistry = registryData as unknown as PublicationRegistryInput;
+export const campusMediaPublicationRegistry = registryData as unknown as CampusMediaPublicationRegistryInput;
 export const campusMediaPublicationRoles = rolesByRecordId;
 
 function isRecord(value: unknown): value is UnknownRecord {
@@ -87,7 +87,7 @@ function expectedVariantNames(recordId: CampusRecordId) {
   ]);
 }
 
-function validateVariant(value: unknown, recordId: CampusRecordId, issues: string[], path: string): value is ValidVariant {
+function validateVariant(value: unknown, recordId: CampusRecordId, issues: string[], path: string): value is CampusMediaPublicationVariant {
   if (!isRecord(value)) {
     issues.push(`${path} must be an object.`);
     return false;
@@ -108,7 +108,7 @@ function validateVariant(value: unknown, recordId: CampusRecordId, issues: strin
   return true;
 }
 
-function validRegistryPolicy(registry: PublicationRegistryInput) {
+function validRegistryPolicy(registry: CampusMediaPublicationRegistryInput) {
   return registry.$schema === "./campus-media-publication-bindings.schema.json"
     && registry.schemaVersion === 1
     && registry.registryId === "sskem-campus-media-publication-bindings"
@@ -124,12 +124,12 @@ function validRegistryPolicy(registry: PublicationRegistryInput) {
 }
 
 export function validateCampusMediaPublicationRegistry(options: {
-  registry?: PublicationRegistryInput;
-  manifest?: ApprovalManifestInput;
+  registry?: CampusMediaPublicationRegistryInput;
+  manifest?: CampusMediaApprovalManifestInput;
   now?: Date | string | number;
 } = {}) {
   const registry = options.registry ?? campusMediaPublicationRegistry;
-  const manifest = options.manifest ?? approvalManifestData as unknown as ApprovalManifestInput;
+  const manifest = options.manifest ?? approvalManifestData as unknown as CampusMediaApprovalManifestInput;
   const now = options.now instanceof Date
     ? options.now.getTime()
     : typeof options.now === "number"
@@ -191,20 +191,33 @@ export function validateCampusMediaPublicationRegistry(options: {
 }
 
 export function createCampusMediaPublicationIndex(options: {
-  registry?: PublicationRegistryInput;
-  manifest?: ApprovalManifestInput;
+  registry?: CampusMediaPublicationRegistryInput;
+  manifest?: CampusMediaApprovalManifestInput;
   now?: Date | string | number;
 } = {}) {
   const registry = options.registry ?? campusMediaPublicationRegistry;
-  if (validateCampusMediaPublicationRegistry({ ...options, registry }).length || !Array.isArray(registry.bindings)) return new Map<CampusRecordId, ValidBinding>();
-  return new Map((registry.bindings as ValidBinding[]).map((binding) => [binding.recordId, binding]));
+  if (validateCampusMediaPublicationRegistry({ ...options, registry }).length || !Array.isArray(registry.bindings)) return new Map<CampusRecordId, CampusMediaPublicationBinding>();
+  return new Map((registry.bindings as CampusMediaPublicationBinding[]).map((binding) => [binding.recordId, binding]));
+}
+
+export function campusMediaPublicationSummary(options: {
+  registry?: CampusMediaPublicationRegistryInput;
+  manifest?: CampusMediaApprovalManifestInput;
+  now?: Date | string | number;
+} = {}) {
+  const registry = options.registry ?? campusMediaPublicationRegistry;
+  const recorded = Array.isArray(registry.bindings) ? registry.bindings.length : 0;
+  const issues = validateCampusMediaPublicationRegistry({ ...options, registry });
+  const valid = issues.length ? 0 : createCampusMediaPublicationIndex({ ...options, registry }).size;
+  const required = Object.keys(rolesByRecordId).length;
+  return { recorded, valid, required, releaseReady: valid === required, issues } as const;
 }
 
 export function resolveCampusMedia(options: {
   recordId: CampusRecordId;
   fallbackSrc: string;
-  registry?: PublicationRegistryInput;
-  manifest?: ApprovalManifestInput;
+  registry?: CampusMediaPublicationRegistryInput;
+  manifest?: CampusMediaApprovalManifestInput;
   now?: Date | string | number;
 }) {
   const binding = createCampusMediaPublicationIndex(options).get(options.recordId);
@@ -212,12 +225,12 @@ export function resolveCampusMedia(options: {
   const publicBasePath = typeof options.registry?.publicBasePath === "string"
     ? options.registry.publicBasePath
     : campusMediaPublicationRegistry.publicBasePath as string;
-  const pathFor = (variant: ValidVariant) => `${publicBasePath}/${binding.recordId}/${variant.filename}`;
-  const byFormat = (format: ValidVariant["format"]) => binding.variants.filter((variant) => variant.format === format).sort((left, right) => left.width - right.width);
+  const pathFor = (variant: CampusMediaPublicationVariant) => `${publicBasePath}/${binding.recordId}/${variant.filename}`;
+  const byFormat = (format: CampusMediaPublicationVariant["format"]) => binding.variants.filter((variant) => variant.format === format).sort((left, right) => left.width - right.width);
   const avif = byFormat("avif");
   const webp = byFormat("webp");
   const jpeg = byFormat("jpeg");
-  const largestJpeg = jpeg.at(-1) as ValidVariant;
+  const largestJpeg = jpeg.at(-1) as CampusMediaPublicationVariant;
   return {
     mode: "production",
     recordId: binding.recordId,
@@ -269,5 +282,5 @@ export function createCampusMediaBindingProposal(receipt: CampusReceiptInput) {
   };
   const issues = validateCampusMediaPublicationRegistry({ registry: syntheticRegistry, manifest: syntheticManifest, now: receipt.generatedAt });
   if (issues.length) throw new Error(`The campus publication binding proposal is invalid: ${issues.join(" ")}`);
-  return candidate;
+  return candidate as CampusMediaPublicationBinding;
 }

@@ -55,10 +55,12 @@ Approved replacement photography is prepared through the guarded campus-media
 pipeline documented in `docs/campus-media-ingestion.md`. It validates production
 dimensions, preserves composition, strips embedded metadata, creates responsive
 AVIF/WebP/JPEG variants and refuses public output for unapproved records.
-Published receipts now produce exact hash-bound activation proposals. The
-homepage uses those responsive variants only when the registry, manifest,
-receipt and derivative files all agree; otherwise private review retains the
-prototype source and public release remains blocked.
+Published receipts now produce exact hash-bound activation proposals. A guarded
+activator verifies the receipt and all 15 files in read-only mode by default,
+then requires an explicit acknowledgement for an atomic registry write; silent
+replacement is refused. The homepage uses those responsive variants only when
+the registry, manifest, receipt and derivative files all agree; otherwise
+private review retains the prototype source and public release remains blocked.
 
 Appendix IX PDFs are prepared through the guarded document pipeline documented
 in `docs/document-ingestion.md`. It rejects encrypted or interactive PDFs,

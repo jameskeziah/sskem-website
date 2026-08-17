@@ -24,6 +24,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 import { editorialPublicationBindingSummary } from "@/lib/cms/editorial-publication-binding";
+import { campusMediaPublicationSummary } from "@/lib/campus-media-publication";
 
 import "./review.css";
 
@@ -113,6 +114,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
   const summary = approvalSummary();
   const editorial = await getHomepageEditorialContent();
   const bindingSummary = editorialPublicationBindingSummary();
+  const mediaPublication = campusMediaPublicationSummary();
   const cmsState = editorial.status.reason === "missing-config"
     ? "Ready for connection"
     : editorial.status.reason === "invalid-config"
@@ -222,7 +224,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <div><dt>Master size</dt><dd><strong>2400 × 1350 minimum</strong><span>Long edge × short edge; never enlarged.</span></dd></div>
               <div><dt>Responsive formats</dt><dd><strong>AVIF · WebP · JPEG</strong><span>Five widths from 480 to 2000 pixels.</span></dd></div>
               <div><dt>Privacy</dt><dd><strong>Metadata removed</strong><span>EXIF, XMP and IPTC are stripped and rechecked.</span></dd></div>
-              <div><dt>Publication</dt><dd><strong>Approval required</strong><span>Staging is separate from public output.</span></dd></div>
+              <div><dt>Exact activation</dt><dd><strong>{mediaPublication.valid} of {mediaPublication.required} bound</strong><span>Only approved, receipt-matched derivative sets count.</span></dd></div>
             </dl>
           </section>
 

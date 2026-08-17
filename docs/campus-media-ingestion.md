@@ -36,11 +36,22 @@ gate. They must not be enlarged to imitate missing detail.
    `npm run media:publish -- --record RECORD_ID --input "CONTROLLED_PATH"`.
 
 The publish command prints a public-safe `bindingProposal` generated from the
-exact public receipt. Add that object to
-`content/campus-media-publication-bindings.json` and run
-`npm run media:bindings:audit`. Do not hand-edit hashes, dimensions or filenames.
-The audit reopens the receipt and all 15 derivatives, verifies exact byte sizes,
-SHA-256 hashes and dimensions, and rejects embedded EXIF, XMP or IPTC metadata.
+exact public receipt. Do not copy that object into the registry by hand. Review
+the read-only activation plan first:
+
+`npm run media:activate -- --record RECORD_ID`
+
+When the plan reports `ready-for-explicit-write`, activate the exact set with:
+
+`npm run media:activate -- --record RECORD_ID --apply --acknowledge-local-write=activate-approved-campus-media`
+
+The write is atomic and refused if the registry changes after planning. An
+existing, different binding is preserved unless the content owner reviews the
+new receipt and explicitly adds `--replace`. The activator never grants manifest
+approval and never stores private evidence, approver identity or a source path.
+Run `npm run media:bindings:audit` after activation. The audit reopens the
+receipt and all 15 derivatives, verifies exact byte sizes, SHA-256 hashes and
+dimensions, and rejects embedded EXIF, XMP or IPTC metadata.
 
 Public generation is refused unless the canonical manifest record is approved.
 Staging output is restricted to `work/media-intake`; public output is restricted

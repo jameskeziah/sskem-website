@@ -125,9 +125,10 @@ notes. Do not store consent evidence in the public web repository.
   prepare new masters. It preserves the source composition, strips embedded
   metadata, produces responsive AVIF/WebP/JPEG variants and refuses public
   output while the matching manifest record is unapproved.
-- Activate those derivatives through the exact receipt/hash registry in
-  `content/campus-media-publication-bindings.json`. The homepage must not infer
-  production readiness from filenames or the presence of a directory alone.
+- Activate those derivatives through the guarded command in
+  `docs/campus-media-ingestion.md`; do not paste hashes into
+  `content/campus-media-publication-bindings.json` manually. The homepage must
+  not infer production readiness from filenames or a directory alone.
 
 ## 8. Approval register
 

@@ -5,6 +5,7 @@ import test from "node:test";
 
 import {
   campusMediaPublicationRegistry,
+  campusMediaPublicationSummary,
   createCampusMediaBindingProposal,
   createCampusMediaPublicationIndex,
   resolveCampusMedia,
@@ -55,6 +56,13 @@ function approvedManifest(recordId = "media-campus-main") {
 test("keeps the current homepage on its private prototype fallback with zero speculative bindings", () => {
   assert.deepEqual(validateCampusMediaPublicationRegistry({ now: NOW }), []);
   assert.equal(campusMediaPublicationRegistry.bindings.length, 0);
+  assert.deepEqual(campusMediaPublicationSummary({ now: NOW }), {
+    recorded: 0,
+    valid: 0,
+    required: 4,
+    releaseReady: false,
+    issues: [],
+  });
 
   const media = resolveCampusMedia({
     recordId: "media-campus-main",
@@ -133,6 +141,7 @@ test("publishes the registry schema and wires the exact binding audit into prebu
   assert.equal(schema.properties.registryId.const, "sskem-campus-media-publication-bindings");
   assert.equal(schema.properties.policy.properties.exactVariantHashesRequired.const, true);
   assert.match(packageJson.scripts.prebuild, /media:bindings:audit/);
+  assert.match(packageJson.scripts["media:activate"], /activate-campus-media/);
   assert.match(componentSource, /<source type="image\/avif"/);
   assert.match(componentSource, /<source type="image\/webp"/);
   assert.match(componentSource, /<source type="image\/jpeg"/);
