@@ -63,6 +63,10 @@ test("generates one privacy-safe production handoff for the four canonical exter
   assert.ok(packet.shots.every((shot) => shot.activation.nextStep === "capture-review-and-manifest-approval"));
   assert.ok(packet.shots.every((shot) => shot.operatorWorkflow.inspect.includes(shot.recordId)));
   assert.ok(packet.shots.every((shot) => shot.operatorWorkflow.inspect.includes("CONTROLLED_PATH")));
+  assert.equal(packet.packetVersion, 2);
+  assert.ok(packet.shots.every((shot) => shot.operatorWorkflow.approvalTemplate.includes(shot.recordId)));
+  assert.ok(packet.shots.every((shot) => shot.operatorWorkflow.approvalPlan.includes("CONTROLLED_REQUEST_PATH")));
+  assert.ok(packet.shots.every((shot) => shot.operatorWorkflow.approvalApply.includes("record-controlled-publication-approval")));
   assert.equal(packet.guardrails.pupilPhotographyRequested, false);
   assert.equal(packet.guardrails.externalWritePerformed, false);
   assert.doesNotMatch(JSON.stringify(packet), /"(?:sourcePointer|evidenceReferences|approvedByRole|approvedAt|consent|token)"\s*:/i);

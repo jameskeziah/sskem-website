@@ -33,8 +33,11 @@ gate. They must not be enlarged to imitate missing detail.
 4. Review the generated receipt and responsive variants under
    `work/media-intake/RECORD_ID`. This directory is ignored by Git.
 5. Complete the record's accuracy, rights, privacy and management-approval
-   checks, add opaque evidence references, and set the manifest decision to
-   `approved`.
+   checks in the controlled system. Generate a digest-bound request with
+   `npm run approvals:update -- --record RECORD_ID`, fill only the reviewed
+   outcomes and opaque references, then review and explicitly apply it through
+   the guarded commands in the capture packet. The updater records the supplied
+   decision but never grants approval.
 6. Only then may the content owner run
    `npm run media:publish -- --record RECORD_ID --input "CONTROLLED_PATH"`.
 

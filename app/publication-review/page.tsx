@@ -102,6 +102,7 @@ function ReviewCard({ record, recommended = false }: { record: ApprovalRecord; r
           </dl>
           <p>{record.notes}</p>
           {pending.length ? <p className="review-card__next"><strong>Next:</strong> complete {pending.map(([check]) => check.replaceAll("-", " ")).join(", ")}.</p> : null}
+          {recommended ? <p className="review-card__operator"><strong>Guarded update:</strong> after independent review, generate the unfilled request with <code>npm run approvals:update -- --record {record.id}</code>. Template generation does not approve the record.</p> : null}
         </div>
       </details>
     </article>

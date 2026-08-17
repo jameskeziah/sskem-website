@@ -37,6 +37,9 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /all six independent gates pass/);
   assert.match(page, /npm run release:audit/);
   assert.match(page, /Approve the four campus photographs first\./);
+  assert.match(page, /Guarded update:/);
+  assert.match(page, /npm run approvals:update -- --record/);
+  assert.match(page, /Template generation does not approve the record\./);
   assert.match(page, /Production media gate/);
   assert.match(page, /campusMediaPublicationSummary/);
   assert.match(page, /Exact activation/);

@@ -144,6 +144,8 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /Review-only treatment Blocked 0 of 1/i);
   assert.match(readableText, /33 governed records/i);
   assert.match(readableText, /Approve the four campus photographs first\./i);
+  assert.match(readableText, /Guarded update: after independent review, generate the unfilled request/i);
+  assert.match(readableText, /Template generation does not approve the record\./i);
   assert.match(readableText, /Approved masters become responsive, privacy-clean assets\./i);
   assert.match(readableText, /AVIF · WebP · JPEG/i);
   assert.match(readableText, /Hero transfer/i);

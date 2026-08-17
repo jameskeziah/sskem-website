@@ -602,6 +602,17 @@
   padding: var(--space-16);
 }
 
+.review-card__operator {
+  border-left: var(--border-width-strong) solid var(--color-brand-600);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  padding-left: var(--space-16);
+}
+
+.review-card__operator code {
+  color: var(--text-primary);
+}
+
 .review-filters {
   align-items: end;
   background: var(--surface-subtle);

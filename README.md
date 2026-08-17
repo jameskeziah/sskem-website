@@ -31,6 +31,12 @@ Publication decisions are tracked in `content/approval-manifest.json`. Run
 Only opaque references belong in the manifest; private evidence remains in the
 school's controlled record system.
 
+Approved decisions can be recorded through the guarded manifest updater. It
+generates an unfilled, digest-bound request for one existing record and remains
+read-only until a separately completed controlled request and exact local-write
+acknowledgement are supplied. It never preselects checks, creates evidence or
+stores an approver identity. See `docs/approval-manifest.md`.
+
 Run `npm run release:audit` for the authoritative launch decision across
 approvals, exact campus-media bindings, exact Appendix IX document bindings,
 homepage transfer budgets, legacy-route implementation and removal of

@@ -156,6 +156,9 @@ export function createCampusMediaCapturePacket(options: {
         operatorWorkflow: {
           inspect: `npm run media:inspect -- --record ${recordId} --input \"CONTROLLED_PATH\"`,
           prepare: `npm run media:prepare -- --record ${recordId} --input \"CONTROLLED_PATH\"`,
+          approvalTemplate: `npm run approvals:update -- --record ${recordId}`,
+          approvalPlan: `npm run approvals:update -- --request \"CONTROLLED_REQUEST_PATH\"`,
+          approvalApply: `npm run approvals:update -- --request \"CONTROLLED_REQUEST_PATH\" --apply --acknowledge-local-write=record-controlled-publication-approval`,
           publish: `npm run media:publish -- --record ${recordId} --input \"CONTROLLED_PATH\"`,
           activationPlan: `npm run media:activate -- --record ${recordId}`,
         },
@@ -170,7 +173,7 @@ export function createCampusMediaCapturePacket(options: {
       : "capture-and-approval-required";
 
   return {
-    packetVersion: 1,
+    packetVersion: 2,
     packetId: "sskem-campus-media-capture-handoff",
     generatedAt,
     status,

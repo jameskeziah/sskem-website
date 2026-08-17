@@ -41,6 +41,34 @@ audit. A withdrawn record cannot retain a public placement.
 7. When the manifest is release-ready, remove review-only page treatment and
    restore public indexing through a separate, intentional release change.
 
+## Guarded decision recording
+
+Do not hand-edit an approved decision into the manifest. Generate a request
+template bound to the exact current record:
+
+`npm run approvals:update -- --record media-campus-main`
+
+The template deliberately leaves every check, evidence reference, approving
+role and timestamp empty. Complete it only after the independent review in the
+school-controlled system, and keep the completed request there. The request may
+contain only check outcomes, opaque evidence IDs, a lowercase role identifier,
+the approval time and optional expiry; it must never contain evidence, a person
+name or a controlled path.
+
+Review the completed request without writing:
+
+`npm run approvals:update -- --request "CONTROLLED_REQUEST_PATH"`
+
+If the plan is `ready-for-explicit-write`, record that supplied decision with:
+
+`npm run approvals:update -- --request "CONTROLLED_REQUEST_PATH" --apply --acknowledge-local-write=record-controlled-publication-approval`
+
+The updater accepts approved decisions only, rejects stale record digests,
+requires the record's exact checks, validates the complete next manifest and
+rechecks the manifest hash before an atomic local write. It records the
+controlled decision; it does not grant approval, inspect evidence or prove the
+identity or authority of the reviewer.
+
 Document approval continues to require the established upload/approval
 separation of duties. The private evidence system—not this manifest—must record
 the actual uploader and approver identities.
@@ -55,6 +83,8 @@ receipt. The local pipeline does not replace the controlled malware scan.
 - `npm run approvals:audit` validates structure and prints the current summary.
 - `npm run approvals:release` prints every blocking ID and fails unless the
   registry is ready for public release.
+- `npm run approvals:update -- --record ID` generates an unfilled, digest-bound
+  approval request; `--request PATH` reviews a completed request without writing.
 - `npm run release:audit` combines the manifest with the five other independent
   launch gates documented in `docs/public-release-readiness.md`.
 - `npm run documents:inspect -- --record ID --input PATH` performs static PDF,
