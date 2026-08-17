@@ -15,6 +15,10 @@ const assetKeys = new Set(["id", "approvalRecordId", "sourceSha256", "sourceByte
 const baselineKeys = new Set(["candidateSha256", "candidateBytes", "pixelSha256", "pixelExact", "privateMetadataRemoved", "maximumBytes", "overageBytes"]);
 const constraintKeys = new Set(["sourceMayBeModified", "compositionMayChange", "cropMayChange", "resizeMayChange", "overlayMayChange", "performanceBudgetMayChange", "decisionPacketMayGenerateCandidates", "publicActivationAllowed"]);
 const optionKeys = new Set(["id", "label", "scope", "formatChangeReviewAllowed", "pixelChangeReviewAllowed", "artworkRevisionBriefAllowed"]);
+const requestKeys = new Set(["requestVersion", "decisionId", "expectedDecisionContractDigest", "expectedApprovalRecordDigest", "selectedOption", "acknowledgements", "evidenceReferences", "approvedByRole", "approvedAt"]);
+const acknowledgementKeys = new Set(["artworkAndSourceRemainUnchanged", "performanceBudgetRemainsFixed", "reviewCandidatesRemainPrivate", "publicationApprovalRemainsSeparate"]);
+const evidenceReferencePattern = /^[A-Z0-9][A-Z0-9._/-]{2,79}$/;
+const rolePattern = /^[a-z][a-z0-9-]{2,63}$/;
 const optionCapabilities = new Map([
   ["hold-current-png", [false, false, false]],
   ["authorize-lossless-format-review", [true, false, false]],
@@ -40,6 +44,12 @@ function isoDateTime(value: Date | string | number | undefined) {
   const date = value instanceof Date ? value : new Date(value ?? Date.now());
   if (Number.isNaN(date.getTime())) throw new Error("Poster delivery decision packet requires a valid generation time.");
   return date.toISOString();
+}
+
+function validDateTime(value: unknown): value is string {
+  return typeof value === "string"
+    && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value)
+    && !Number.isNaN(Date.parse(value));
 }
 
 export function homepagePosterDeliveryDecisionDigest(contract: DecisionContract = decisionData) {
@@ -160,6 +170,7 @@ export function createHomepagePosterDeliveryDecisionPacket(options: {
     losslessBaseline: contract.losslessBaseline,
     constraints: contract.constraints,
     options: contract.options,
+    completedRequestSchemaId: "https://www.sskemschool.com/schemas/homepage-poster-delivery-decision-request.schema.json",
     requestTemplate: {
       requestVersion: 1,
       decisionId: contract.decisionId,
@@ -190,6 +201,123 @@ export function createHomepagePosterDeliveryDecisionPacket(options: {
       privateEvidenceIncluded: false,
       approverIdentityIncluded: false,
       approvalGrantedByPacket: false,
+    },
+  } as const;
+}
+
+export function createHomepagePosterDeliveryDecisionPlan(options: {
+  request: unknown;
+  now?: Date | string | number;
+  contract?: DecisionContract;
+  manifest?: ApprovalManifest;
+}) {
+  const contract = options.contract ?? decisionData;
+  const contractIssues = validateHomepagePosterDeliveryDecisionContract(contract);
+  if (contractIssues.length) throw new Error(`Poster delivery decision contract is invalid: ${contractIssues.join(" ")}`);
+  assertPerformanceBudget();
+  const manifest = options.manifest ?? manifestData;
+  const record = canonicalPosterRecord(manifest);
+  const currentContractDigest = homepagePosterDeliveryDecisionDigest(contract);
+  const currentApprovalRecordDigest = approvalRecordDigest(record);
+  const now = new Date(isoDateTime(options.now));
+  const request = options.request;
+  const blockers: string[] = [];
+
+  if (!isRecord(request)) throw new Error("Poster delivery decision request must contain one JSON object.");
+  for (const key of unknownKeys(request, requestKeys)) blockers.push(`Poster delivery decision request contains unknown field ${key}.`);
+  if (request.requestVersion !== 1) blockers.push("Poster delivery decision request version must be 1.");
+  if (request.decisionId !== contract.decisionId) blockers.push("Poster delivery decision request has the wrong decisionId.");
+  if (typeof request.expectedDecisionContractDigest !== "string" || !digestPattern.test(request.expectedDecisionContractDigest)) {
+    blockers.push("Poster delivery decision contract digest is invalid.");
+  } else if (request.expectedDecisionContractDigest !== currentContractDigest) {
+    blockers.push("Poster delivery decision contract changed after the request was generated; complete a fresh request.");
+  }
+  if (typeof request.expectedApprovalRecordDigest !== "string" || !digestPattern.test(request.expectedApprovalRecordDigest)) {
+    blockers.push("Poster approval record digest is invalid.");
+  } else if (request.expectedApprovalRecordDigest !== currentApprovalRecordDigest) {
+    blockers.push("Poster approval record changed after the request was generated; complete a fresh request.");
+  }
+
+  const selectedOption = typeof request.selectedOption === "string"
+    ? contract.options.find((candidate) => candidate.id === request.selectedOption) ?? null
+    : null;
+  if (!selectedOption) blockers.push("Poster delivery decision requires one exact canonical option.");
+
+  if (!isRecord(request.acknowledgements) || unknownKeys(request.acknowledgements, acknowledgementKeys).length
+    || Object.keys(request.acknowledgements).length !== acknowledgementKeys.size) {
+    blockers.push("Poster delivery decision requires the exact four acknowledgements.");
+  } else {
+    for (const acknowledgement of acknowledgementKeys) {
+      if (request.acknowledgements[acknowledgement] !== true) blockers.push(`Poster delivery acknowledgement ${acknowledgement} must be explicitly true.`);
+    }
+  }
+
+  if (!Array.isArray(request.evidenceReferences) || request.evidenceReferences.length === 0) {
+    blockers.push("Poster delivery decision requires at least one opaque controlled evidence reference.");
+  } else {
+    if (new Set(request.evidenceReferences).size !== request.evidenceReferences.length) blockers.push("Poster delivery evidence references must be unique.");
+    if (request.evidenceReferences.some((reference) => typeof reference !== "string" || !evidenceReferencePattern.test(reference))) {
+      blockers.push("Poster delivery evidence must use opaque controlled-record references only.");
+    }
+  }
+  if (typeof request.approvedByRole !== "string" || !rolePattern.test(request.approvedByRole)) {
+    blockers.push("Poster delivery decision requires a lowercase role identifier, never an approver identity.");
+  }
+  if (!validDateTime(request.approvedAt)) {
+    blockers.push("Poster delivery decision approvedAt must be an ISO date-time.");
+  } else if (Date.parse(request.approvedAt) > now.getTime()) {
+    blockers.push("Poster delivery decision approvedAt cannot be in the future.");
+  }
+
+  const status = blockers.length ? "blocked" : "ready-for-controlled-recording";
+  const dispositionByOption: Record<string, string> = {
+    "hold-current-png": "no-implementation-authorized",
+    "authorize-lossless-format-review": "private-lossless-format-review-authorized",
+    "authorize-controlled-encoding-review": "private-controlled-encoding-review-authorized",
+    "commission-artwork-revision-brief": "separate-artwork-brief-authorized",
+  };
+
+  return {
+    planVersion: 1,
+    decisionId: contract.decisionId,
+    status,
+    blockers: [...new Set(blockers)],
+    current: {
+      decisionContractDigest: currentContractDigest,
+      approvalRecordDigest: currentApprovalRecordDigest,
+      approvalDecision: record.decision,
+    },
+    selection: selectedOption ? {
+      id: selectedOption.id,
+      label: selectedOption.label,
+      scope: selectedOption.scope,
+      disposition: dispositionByOption[selectedOption.id],
+      formatChangeReviewAllowed: selectedOption.formatChangeReviewAllowed,
+      pixelChangeReviewAllowed: selectedOption.pixelChangeReviewAllowed,
+      artworkRevisionBriefAllowed: selectedOption.artworkRevisionBriefAllowed,
+      publicActivationAllowed: false,
+    } : null,
+    controlledRecord: {
+      evidenceReferencesRecorded: Array.isArray(request.evidenceReferences) ? request.evidenceReferences.length : 0,
+      approvedByRole: typeof request.approvedByRole === "string" && rolePattern.test(request.approvedByRole) ? request.approvedByRole : null,
+      approvedAt: validDateTime(request.approvedAt) ? request.approvedAt : null,
+    },
+    nextStep: status === "blocked"
+      ? "Correct the completed request in the school-controlled system and generate a fresh plan."
+      : selectedOption?.id === "hold-current-png"
+        ? "Record the hold decision in the controlled system; the poster performance blocker remains."
+        : "Record the decision in the controlled system, then build only the selected private review workflow.",
+    guardrails: {
+      localWritePerformed: false,
+      decisionRecordedByTool: false,
+      candidateGenerated: false,
+      sourceModified: false,
+      publicWritePerformed: false,
+      budgetChanged: false,
+      approvalManifestModified: false,
+      privateEvidenceIncluded: false,
+      approverIdentityIncluded: false,
+      publicationApprovalGranted: false,
     },
   } as const;
 }

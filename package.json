@@ -20,6 +20,7 @@
     "poster:inspect": "node scripts/prepare-homepage-poster-optimization.mjs --inspect",
     "poster:prepare": "node scripts/prepare-homepage-poster-optimization.mjs",
     "poster:decision-request": "node --experimental-strip-types scripts/create-homepage-poster-delivery-decision.mjs",
+    "poster:decision-plan": "node --experimental-strip-types scripts/plan-homepage-poster-delivery-decision.mjs",
     "media:activate": "node --experimental-strip-types scripts/activate-campus-media.mjs",
     "cutover:audit": "node scripts/audit-legacy-cutover.mjs",
     "cutover:release": "node scripts/audit-legacy-cutover.mjs --release",

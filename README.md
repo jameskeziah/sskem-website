@@ -106,6 +106,12 @@ delivery decision packet. Private reviewers can also download it from the
 publication dashboard after authentication. It preselects no option, creates no
 candidate and cannot approve or publish the poster.
 
+After management completes that packet in the controlled system, run
+`npm run poster:decision-plan -- --request "CONTROLLED_REQUEST_PATH"`. The
+planner rejects stale digests, missing acknowledgements, private evidence paths,
+identity-bearing role values and future timestamps. It reports only the exact
+selected review authority and has no apply or image-generation mode.
+
 Appendix IX PDFs are prepared through the guarded document pipeline documented
 in `docs/document-ingestion.md`. It rejects encrypted or interactive PDFs,
 assesses the text layer, renders every page for review and binds publication to

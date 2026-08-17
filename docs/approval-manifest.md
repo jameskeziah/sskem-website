@@ -134,6 +134,12 @@ budget change or publication. The completed request and supporting evidence
 remain in the school-controlled system; the existing poster approval record is
 still the publication source of truth.
 
+Use `npm run poster:decision-plan -- --request "CONTROLLED_REQUEST_PATH"` to
+validate a completed poster packet. The planner is read-only and fail-closed: it
+checks exact contract and approval-record digests, all acknowledgements, opaque
+evidence references, the role identifier and timestamp. It never echoes the
+evidence references and has no apply, candidate-generation or publication mode.
+
 The linked `/publication-review/editorial` screen reviews exact published
 Sanity revisions without exposing raw CMS records. It produces a downloadable
 binding proposal only after the corresponding claim approval and display

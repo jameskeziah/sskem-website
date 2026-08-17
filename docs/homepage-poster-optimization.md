@@ -20,6 +20,7 @@ The release budget remains unchanged and the public build must remain blocked.
 npm run poster:inspect
 npm run poster:prepare
 npm run poster:decision-request
+npm run poster:decision-plan -- --request "CONTROLLED_REQUEST_PATH"
 ```
 
 `poster:inspect` is read-only. `poster:prepare` writes only to the ignored
@@ -51,6 +52,18 @@ revision brief—but preselects none of them and generates no candidate.
 Keep the completed request and private evidence in the school-controlled
 system. The repository and download contain only the empty request template,
 public-safe hashes and opaque evidence-reference fields.
+
+The completed-request schema is
+`content/homepage-poster-delivery-decision-request.schema.json`. The plan command
+checks both exact digests, one canonical option, all four explicit
+acknowledgements, unique opaque evidence references, a role identifier and a
+non-future approval timestamp. It returns a privacy-safe projection of the
+selected authority without echoing evidence references.
+
+The planner has no apply mode. It cannot record the decision, modify the
+manifest, generate a candidate, alter the source, raise the budget or publish.
+Its `ready-for-controlled-recording` status means only that the completed
+request is internally consistent and may be retained by the controlled system.
 
 ## Decision boundary
 

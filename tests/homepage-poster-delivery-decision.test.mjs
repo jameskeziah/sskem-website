@@ -7,6 +7,7 @@ import manifestData from "../content/approval-manifest.json" with { type: "json"
 import {
   createHomepagePosterDeliveryDecisionDownload,
   createHomepagePosterDeliveryDecisionPacket,
+  createHomepagePosterDeliveryDecisionPlan,
   homepagePosterDeliveryDecisionContract,
   homepagePosterDeliveryDecisionDigest,
   validateHomepagePosterDeliveryDecisionContract,
@@ -17,6 +18,16 @@ const NOW = "2026-08-17T14:00:00.000Z";
 
 function sha256(value) {
   return createHash("sha256").update(value).digest("hex");
+}
+
+function completedRequest(selectedOption = "authorize-lossless-format-review") {
+  const request = structuredClone(createHomepagePosterDeliveryDecisionPacket({ generatedAt: NOW }).requestTemplate);
+  request.selectedOption = selectedOption;
+  request.acknowledgements = Object.fromEntries(Object.keys(request.acknowledgements).map((key) => [key, true]));
+  request.evidenceReferences = ["POSTER-DECISION-2026-001"];
+  request.approvedByRole = "school-management";
+  request.approvedAt = NOW;
+  return request;
 }
 
 test("binds the decision contract to the current exact poster and lossless result", async () => {
@@ -71,6 +82,71 @@ test("keeps every decision option review-only and unselected", () => {
   assert.match(packet.approvalBoundary.instruction, /does not approve or publish/i);
 });
 
+test("turns an exact completed request into a privacy-safe read-only plan", async () => {
+  const posterUrl = new URL("../public/og.png", import.meta.url);
+  const manifestUrl = new URL("../content/approval-manifest.json", import.meta.url);
+  const [posterBefore, manifestBefore] = await Promise.all([readFile(posterUrl), readFile(manifestUrl)]);
+  const plan = createHomepagePosterDeliveryDecisionPlan({ request: completedRequest(), now: NOW });
+  const [posterAfter, manifestAfter] = await Promise.all([readFile(posterUrl), readFile(manifestUrl)]);
+
+  assert.equal(plan.status, "ready-for-controlled-recording");
+  assert.deepEqual(plan.blockers, []);
+  assert.equal(plan.selection.id, "authorize-lossless-format-review");
+  assert.equal(plan.selection.disposition, "private-lossless-format-review-authorized");
+  assert.equal(plan.selection.formatChangeReviewAllowed, true);
+  assert.equal(plan.selection.pixelChangeReviewAllowed, false);
+  assert.equal(plan.selection.publicActivationAllowed, false);
+  assert.equal(plan.controlledRecord.evidenceReferencesRecorded, 1);
+  assert.equal(plan.guardrails.localWritePerformed, false);
+  assert.equal(plan.guardrails.decisionRecordedByTool, false);
+  assert.equal(plan.guardrails.candidateGenerated, false);
+  assert.equal(plan.guardrails.publicationApprovalGranted, false);
+  assert.equal(sha256(posterAfter), sha256(posterBefore));
+  assert.equal(sha256(manifestAfter), sha256(manifestBefore));
+  assert.doesNotMatch(JSON.stringify(plan), /POSTER-DECISION-2026-001|sourcePointer|publicTargets/i);
+});
+
+test("projects only the authority of the exact selected option", () => {
+  const expectations = {
+    "hold-current-png": "no-implementation-authorized",
+    "authorize-lossless-format-review": "private-lossless-format-review-authorized",
+    "authorize-controlled-encoding-review": "private-controlled-encoding-review-authorized",
+    "commission-artwork-revision-brief": "separate-artwork-brief-authorized",
+  };
+
+  for (const [selectedOption, disposition] of Object.entries(expectations)) {
+    const plan = createHomepagePosterDeliveryDecisionPlan({ request: completedRequest(selectedOption), now: NOW });
+    assert.equal(plan.status, "ready-for-controlled-recording");
+    assert.equal(plan.selection.id, selectedOption);
+    assert.equal(plan.selection.disposition, disposition);
+    assert.equal(plan.selection.publicActivationAllowed, false);
+  }
+});
+
+test("blocks stale, incomplete, identity-bearing and future-dated requests", () => {
+  const request = completedRequest();
+  request.expectedDecisionContractDigest = "0".repeat(64);
+  request.expectedApprovalRecordDigest = "1".repeat(64);
+  request.acknowledgements.performanceBudgetRemainsFixed = false;
+  request.evidenceReferences = ["C:\\private\\evidence.pdf"];
+  request.approvedByRole = "reviewer@example.test";
+  request.approvedAt = "2026-08-18T14:00:00.000Z";
+  request.unreviewedAuthority = true;
+
+  const plan = createHomepagePosterDeliveryDecisionPlan({ request, now: NOW });
+  const blockers = plan.blockers.join("\n");
+  assert.equal(plan.status, "blocked");
+  assert.match(blockers, /unknown field unreviewedAuthority/i);
+  assert.match(blockers, /contract changed.*fresh request/i);
+  assert.match(blockers, /approval record changed.*fresh request/i);
+  assert.match(blockers, /performanceBudgetRemainsFixed.*explicitly true/i);
+  assert.match(blockers, /opaque controlled-record references only/i);
+  assert.match(blockers, /lowercase role identifier, never an approver identity/i);
+  assert.match(blockers, /cannot be in the future/i);
+  assert.equal(plan.guardrails.localWritePerformed, false);
+  assert.equal(plan.guardrails.candidateGenerated, false);
+});
+
 test("fails closed when the source baseline, option authority or manifest record drifts", () => {
   const changedSource = structuredClone(homepagePosterDeliveryDecisionContract);
   changedSource.asset.sourceSha256 = "0".repeat(64);
@@ -94,24 +170,34 @@ test("fails closed when the source baseline, option authority or manifest record
   );
 });
 
-test("publishes the schema, command, authenticated route and private-review action", async () => {
-  const [schemaText, packageText, route, page, guide] = await Promise.all([
+test("publishes both schemas, plan-only commands, authenticated route and private-review action", async () => {
+  const [schemaText, requestSchemaText, packageText, route, page, guide, planner] = await Promise.all([
     readFile(new URL("../content/homepage-poster-delivery-decision.schema.json", import.meta.url), "utf8"),
+    readFile(new URL("../content/homepage-poster-delivery-decision-request.schema.json", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
     readFile(new URL("../app/publication-review/poster-delivery-decision/route.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/publication-review/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../docs/homepage-poster-optimization.md", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/plan-homepage-poster-delivery-decision.mjs", import.meta.url), "utf8"),
   ]);
   const schema = JSON.parse(schemaText);
+  const requestSchema = JSON.parse(requestSchemaText);
   const scripts = JSON.parse(packageText).scripts;
 
   assert.equal(schema.additionalProperties, false);
   assert.equal(schema.properties.constraints.properties.publicActivationAllowed.const, false);
+  assert.equal(requestSchema.additionalProperties, false);
+  assert.equal(requestSchema.properties.acknowledgements.properties.publicationApprovalRemainsSeparate.const, true);
+  assert.equal(requestSchema.properties.evidenceReferences.minItems, 1);
   assert.match(scripts["poster:decision-request"], /create-homepage-poster-delivery-decision/);
+  assert.match(scripts["poster:decision-plan"], /plan-homepage-poster-delivery-decision/);
   assert.match(scripts["test:contract"], /homepage-poster-delivery-decision\.test\.mjs/);
   assert.match(route, /getChatGPTUser/);
   assert.match(route, /private, no-store/);
   assert.match(route, /default-src 'none'; sandbox/);
   assert.match(page, /Download poster decision packet/);
   assert.match(guide, /poster:decision-request/);
+  assert.match(guide, /poster:decision-plan/);
+  assert.match(planner, /has no apply mode/);
+  assert.doesNotMatch(planner, /writeFile|rename|--apply[^"].*true/i);
 });

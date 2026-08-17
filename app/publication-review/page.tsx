@@ -274,7 +274,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <div><dt>Media release</dt><dd><strong>{mediaPerformance.releaseReady ? "Ready" : "Blocked"}</strong><span>{mediaPerformance.blockers.length} media performance blocker(s) remain.</span></dd></div>
             </dl>
             <div className="review-media-intake__actions">
-              <p>Run <code>npm run performance:audit</code> before public release. Use <code>npm run poster:inspect</code> to measure a pixel-identical lossless candidate without writing it. Because that candidate still exceeds the current budget, a format or pixel change requires a separate approved art-direction decision.</p>
+              <p>Run <code>npm run performance:audit</code> before public release. Use <code>npm run poster:inspect</code> to measure a pixel-identical lossless candidate without writing it. Because that candidate still exceeds the current budget, a format or pixel change requires a separate approved art-direction decision. A completed packet can be checked with <code>npm run poster:decision-plan</code>; the planner has no apply mode.</p>
               <Link className="button button--quiet" href="/publication-review/poster-delivery-decision">Download poster decision packet</Link>
               <Link className="button button--quiet" href="/publication-review/campus-media-packet">Download campus capture packet</Link>
             </div>
