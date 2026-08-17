@@ -4,6 +4,7 @@ import {
   inspectCampusMedia,
   prepareCampusMedia,
 } from "../lib/campus-media-pipeline.mjs";
+import { createCampusMediaBindingProposal } from "../lib/campus-media-publication.ts";
 
 function parseArguments(argv) {
   const options = { inspect: false, publish: false, replace: false };
@@ -62,5 +63,6 @@ if (options.inspect) {
     outputDirectory: result.outputDirectory,
     variants: result.receipt.output.variants.length,
     sourceSha256: result.receipt.source.sha256,
+    ...(options.publish ? { bindingProposal: createCampusMediaBindingProposal(result.receipt) } : {}),
   }, null, 2)}\n`);
 }

@@ -49,6 +49,12 @@
   gap: var(--space-12);
 }
 
+.campus-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .home-button {
   display: inline-flex;
   min-height: 3rem;

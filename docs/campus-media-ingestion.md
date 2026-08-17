@@ -35,11 +35,38 @@ gate. They must not be enlarged to imitate missing detail.
 5. Only then may the content owner run
    `npm run media:publish -- --record RECORD_ID --input "CONTROLLED_PATH"`.
 
+The publish command prints a public-safe `bindingProposal` generated from the
+exact public receipt. Add that object to
+`content/campus-media-publication-bindings.json` and run
+`npm run media:bindings:audit`. Do not hand-edit hashes, dimensions or filenames.
+The audit reopens the receipt and all 15 derivatives, verifies exact byte sizes,
+SHA-256 hashes and dimensions, and rejects embedded EXIF, XMP or IPTC metadata.
+
 Public generation is refused unless the canonical manifest record is approved.
 Staging output is restricted to `work/media-intake`; public output is restricted
 to `public/media/home/production`. Existing derivative sets are preserved unless
 the operator explicitly supplies `--replace`, and replacement is prepared and
 verified before the existing set is swapped.
+
+## Homepage activation
+
+The homepage uses `components/campus-picture.tsx` for the four campus roles. It
+continues showing the supplied prototype JPEGs in private review while the
+binding registry is empty. A production AVIF/WebP/JPEG `<picture>` source set is
+activated only when all of these are true:
+
+- the exact campus media record is currently approved in the canonical manifest;
+- the record has one unique role-correct binding;
+- the binding contains the complete 480, 768, 1200, 1600 and 2000 pixel profile
+  in AVIF, WebP and JPEG;
+- the binding exactly matches the public intake receipt; and
+- every derivative exists and passes its recorded hash, dimensions, byte budget
+  and embedded-metadata check.
+
+Any missing, malformed, duplicated, expired, unapproved or mismatched binding
+fails closed to the private prototype source. The public release gate still
+blocks those prototype assets from becoming an accidental substitute for an
+approved production library.
 
 ## Receipt and privacy contract
 

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/campus-media-publication-bindings.schema.json",
+  "title": "SSKEMS campus media publication bindings",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "registryId", "publicBasePath", "policy", "bindings"],
+  "properties": {
+    "$schema": { "const": "./campus-media-publication-bindings.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "registryId": { "const": "sskem-campus-media-publication-bindings" },
+    "publicBasePath": { "const": "/media/home/production" },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approvedManifestRequired", "exactReceiptRequired", "exactVariantHashesRequired", "prototypeFallbackPrivateOnly", "notes"],
+      "properties": {
+        "approvedManifestRequired": { "const": true },
+        "exactReceiptRequired": { "const": true },
+        "exactVariantHashesRequired": { "const": true },
+        "prototypeFallbackPrivateOnly": { "const": true },
+        "notes": { "type": "string", "minLength": 3 }
+      }
+    },
+    "bindings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/binding" }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["filename", "format", "width", "height", "bytes", "quality", "sha256", "embeddedMetadataRemoved", "colourSpace"],
+      "properties": {
+        "filename": { "type": "string", "pattern": "^media-campus-[a-z0-9-]+-(480|768|1200|1600|2000)\\.(avif|webp|jpg)$" },
+        "format": { "enum": ["avif", "webp", "jpeg"] },
+        "width": { "enum": [480, 768, 1200, 1600, 2000] },
+        "height": { "type": "integer", "minimum": 1 },
+        "bytes": { "type": "integer", "minimum": 1, "maximum": 500000 },
+        "quality": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "embeddedMetadataRemoved": { "const": true },
+        "colourSpace": { "enum": ["srgb", "rgb"] }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bindingId", "recordId", "role", "profile", "sourceSha256", "publishedOn", "variants", "notes"],
+      "properties": {
+        "bindingId": { "type": "string", "pattern": "^campus-media-[a-z0-9-]+-[a-f0-9]{12}$" },
+        "recordId": { "enum": ["media-campus-main", "media-campus-grounds", "media-campus-entrance", "media-campus-courtyard"] },
+        "role": { "enum": ["home-hero", "campus-grounds", "campus-entrance", "campus-courtyard"] },
+        "profile": { "const": "campus-responsive" },
+        "sourceSha256": { "$ref": "#/$defs/sha256" },
+        "publishedOn": { "type": "string", "format": "date-time" },
+        "variants": {
+          "type": "array",
+          "minItems": 15,
+          "maxItems": 15,
+          "items": { "$ref": "#/$defs/variant" }
+        },
+        "notes": { "type": "string", "minLength": 3 }
+      }
+    }
+  }
+}

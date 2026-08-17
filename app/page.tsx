@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { CampusPicture } from "@/components/campus-picture";
 import { HomeAchievementsMotion } from "@/components/motion/home-achievements-motion";
 import { HomeCampusMotion } from "@/components/motion/home-campus-motion";
 import { HomeHeroMotion } from "@/components/motion/home-hero-motion";
@@ -136,14 +137,12 @@ export default async function Home() {
           </div>
 
           <div className="home-hero__mobile-media">
-            <Image
-              src="/media/home/campus-main.jpeg"
+            <CampusPicture
+              recordId="media-campus-main"
+              fallbackSrc="/media/home/campus-main.jpeg"
               alt="The pink and white SSKEMS school building in Veral."
-              width={1400}
-              height={500}
               sizes="(max-width: 63.999rem) 100vw, 1px"
               priority
-              unoptimized
             />
           </div>
 
@@ -203,35 +202,29 @@ export default async function Home() {
 
             <div className="home-campus__gallery">
               <figure className="home-campus__frame home-campus__frame--grounds" data-motion-home-campus-frame>
-                <Image
-                  src="/media/home/campus-grounds.jpeg"
+                <CampusPicture
+                  recordId="media-campus-grounds"
+                  fallbackSrc="/media/home/campus-grounds.jpeg"
                   alt="SSKEMS school building seen across the open grounds."
-                  width={1400}
-                  height={500}
                   sizes="(max-width: 768px) 100vw, 68vw"
-                  unoptimized
                 />
                 <figcaption>Across the grounds</figcaption>
               </figure>
               <figure className="home-campus__frame home-campus__frame--entrance" data-motion-home-campus-frame>
-                <Image
-                  src="/media/home/campus-entrance.jpeg"
+                <CampusPicture
+                  recordId="media-campus-entrance"
+                  fallbackSrc="/media/home/campus-entrance.jpeg"
                   alt="The front entrance of the SSKEMS school building."
-                  width={1400}
-                  height={500}
                   sizes="(max-width: 768px) 100vw, 35vw"
-                  unoptimized
                 />
                 <figcaption>At the entrance</figcaption>
               </figure>
               <figure className="home-campus__frame home-campus__frame--courtyard" data-motion-home-campus-frame>
-                <Image
-                  src="/media/home/campus-courtyard.jpeg"
+                <CampusPicture
+                  recordId="media-campus-courtyard"
+                  fallbackSrc="/media/home/campus-courtyard.jpeg"
                   alt="A shaded view of the SSKEMS campus from the grounds."
-                  width={1400}
-                  height={500}
                   sizes="(max-width: 768px) 100vw, 42vw"
-                  unoptimized
                 />
                 <figcaption>Campus perspective</figcaption>
               </figure>

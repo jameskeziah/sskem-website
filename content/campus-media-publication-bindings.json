@@ -1,0 +1,14 @@
+{
+  "$schema": "./campus-media-publication-bindings.schema.json",
+  "schemaVersion": 1,
+  "registryId": "sskem-campus-media-publication-bindings",
+  "publicBasePath": "/media/home/production",
+  "policy": {
+    "approvedManifestRequired": true,
+    "exactReceiptRequired": true,
+    "exactVariantHashesRequired": true,
+    "prototypeFallbackPrivateOnly": true,
+    "notes": "Bindings activate only exact approved derivative sets. Rights, consent evidence and approver identities remain outside the repository."
+  },
+  "bindings": []
+}
