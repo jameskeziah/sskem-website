@@ -26,19 +26,29 @@ gate. They must not be enlarged to imitate missing detail.
 1. From the owner-only review page, download the campus capture packet and use
    its four ordered exterior-shot records as the photographer/content-owner
    handoff.
-2. Inspect the master without writing derivatives:
+2. Open the authenticated campus master preflight at
+   `/publication-review/campus-master-preflight`, select one local file for each
+   of the four fixed campus roles and run the browser check. The file bytes stay
+   in the tab; nothing is uploaded, persisted, renamed, cropped or rewritten.
+   Download the hash-only report for the controlled handoff. A blocked report
+   is still useful evidence of what the photographer must replace.
+3. Inspect each master without writing derivatives:
    `npm run media:inspect -- --record media-campus-main --input "CONTROLLED_PATH"`.
-3. After the inspection passes, prepare a non-public staging set:
+   This is the authoritative step: it checks actual format, dimensions, colour
+   space, animation/multipage state and embedded-metadata indicators. Browser
+   preflight does not replace it, and TIFF files may require this step because
+   the browser may not decode their dimensions.
+4. After the inspection passes, prepare a non-public staging set:
    `npm run media:prepare -- --record media-campus-main --input "CONTROLLED_PATH"`.
-4. Review the generated receipt and responsive variants under
+5. Review the generated receipt and responsive variants under
    `work/media-intake/RECORD_ID`. This directory is ignored by Git.
-5. Complete the record's accuracy, rights, privacy and management-approval
+6. Complete the record's accuracy, rights, privacy and management-approval
    checks in the controlled system. Generate a digest-bound request with
    `npm run approvals:update -- --record RECORD_ID`, fill only the reviewed
    outcomes and opaque references, then review and explicitly apply it through
    the guarded commands in the capture packet. The updater records the supplied
    decision but never grants approval.
-6. Only then may the content owner run
+7. Only then may the content owner run
    `npm run media:publish -- --record RECORD_ID --input "CONTROLLED_PATH"`.
 
 The publish command prints a public-safe `bindingProposal` generated from the

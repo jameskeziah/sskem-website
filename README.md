@@ -73,6 +73,14 @@ and current exact bindings, so the photographer handoff cannot silently drift
 from publication requirements. It requests exterior photography only and omits
 controlled source paths, evidence and approver identities.
 
+The authenticated `/publication-review/campus-master-preflight` workspace is
+the next intake step when those four production masters arrive. It checks local
+file type, dimensions, SHA-256 and duplicate bytes entirely inside the browser,
+then downloads a filename-free technical report. It never uploads or modifies
+the files and does not persist anything. The report is advisory; authoritative
+colour-space, metadata and still-image inspection remains the local
+`media:inspect` step.
+
 The authenticated `/publication-review/campus-approval-batch` workspace turns
 the four campus approval templates into one browser-only bundle while keeping
 every record's checks, evidence references, role and confirmation independent.

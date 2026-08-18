@@ -139,6 +139,12 @@ notes. Do not store consent evidence in the public web repository.
   prepare new masters. It preserves the source composition, strips embedded
   metadata, produces responsive AVIF/WebP/JPEG variants and refuses public
   output while the matching manifest record is unapproved.
+- Before controlled intake, the authenticated campus master preflight at
+  `/publication-review/campus-master-preflight` can check four local selections
+  for type, dimensions, exact-byte duplicates and SHA-256 digests. It never
+  uploads or modifies a master. Its downloaded hash-only report is advisory:
+  the local inspector remains authoritative for colour space, metadata and
+  still-image checks.
 - Activate those derivatives through the guarded command in
   `docs/campus-media-ingestion.md`; do not paste hashes into
   `content/campus-media-publication-bindings.json` manually. The homepage must
@@ -158,6 +164,11 @@ JSON handoff after each photograph has been reviewed independently. The local
 batch planner is read-only by default and fails the complete batch if any one
 record is missing, duplicated, stale or incomplete. Batch completion does not
 replace master inspection or exact derivative activation.
+
+The campus master preflight comes before that approval workspace when new
+production files arrive. A ready preflight report means only that all four
+browser-readable selections meet the declared format and dimension floor and
+do not share exact bytes; it does not approve any record.
 
 | Asset group | Accuracy | Consent | Rights/source | Institutional claim | Management approval | Publish |
 | --- | --- | --- | --- | --- | --- | --- |

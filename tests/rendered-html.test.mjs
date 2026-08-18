@@ -264,6 +264,30 @@ test("server-renders the four-record campus batch without shared or preselected 
   assert.doesNotMatch(html, /reviewer@example\.test/i);
 });
 
+test("server-renders the four-file campus master preflight without upload or persistence", async () => {
+  const authentication = {
+    accept: "text/html",
+    "oai-authenticated-user-id": "reviewer-test-id",
+    "oai-authenticated-user-email": "reviewer@example.test",
+  };
+  const response = await render("/publication-review/campus-master-preflight", authentication);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+
+  const html = await response.text();
+  const readableText = textContent(html);
+  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
+  assert.match(readableText, /Campus master preflight/i);
+  assert.match(readableText, /No file bytes, filenames or decisions are sent to the server\./i);
+  assert.match(readableText, /never uploaded or saved by the website/i);
+  assert.match(readableText, /This page does not inspect colour space or metadata and cannot grant approval\./i);
+  assert.equal((html.match(/<input\b[^>]*type=["']file["']/gi) ?? []).length, 4);
+  assert.equal((html.match(/name=["']master:media-campus-/gi) ?? []).length, 4);
+  assert.match(html, /<form\b[^>]*class=["'][^"']*campus-preflight-form[^"']*["']/i);
+  assert.doesNotMatch(html, /<form\b[^>]*\baction=/i);
+  assert.doesNotMatch(html, /reviewer@example\.test/i);
+});
+
 test("serves exact unfilled approval requests only to authenticated private reviewers", async () => {
   const pathname = "/publication-review/approval-request/media-campus-main";
   const anonymous = await render(pathname, { accept: "application/json" });

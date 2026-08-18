@@ -265,8 +265,11 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <p>They unlock the strongest homepage imagery without waiting for pupil-result consent and verification.</p>
             </div>
             <div className="review-first-batch__actions">
-              <p>Complete all four decisions separately and download one bundle for a guarded, all-or-nothing local plan.</p>
-              <Link className="button button--primary" href="/publication-review/campus-approval-batch">Complete campus approval batch</Link>
+              <p>Preflight four distinct production masters locally, then complete each decision and prepare one guarded approval bundle.</p>
+              <div className="review-first-batch__links">
+                <Link className="button button--primary" href="/publication-review/campus-master-preflight">Preflight campus masters</Link>
+                <Link className="button button--quiet" href="/publication-review/campus-approval-batch">Complete campus approval batch</Link>
+              </div>
             </div>
             <div className="review-card-grid">
               {firstReviewBatch.map((record) => <ReviewCard record={record} recommended key={record.id} />)}
@@ -292,6 +295,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
             <div className="review-media-intake__actions">
               <p>Run <code>npm run performance:audit</code> before public release. Use <code>npm run achievements:activate -- --record RECORD_ID</code> to review an exact-byte achievement activation plan after both approvals pass. Use <code>npm run poster:inspect</code> to measure a pixel-identical lossless candidate without writing it. Because that candidate still exceeds the current budget, a format or pixel change requires a separate approved art-direction decision. A completed packet can be checked with <code>npm run poster:decision-plan</code>, then proposed for an explicit public-safe binding with <code>npm run poster:decision-record</code>. Every default mode is read-only.</p>
               <div className="review-media-intake__links">
+                <Link className="button button--primary" href="/publication-review/campus-master-preflight">Preflight campus masters</Link>
                 <Link className="button button--primary" href="/publication-review/poster-delivery-decision-workspace">Complete decision worksheet</Link>
                 <Link className="button button--quiet" href="/publication-review/poster-delivery-decision">Download blank poster packet</Link>
                 <Link className="button button--quiet" href="/publication-review/campus-media-packet">Download campus capture packet</Link>

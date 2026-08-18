@@ -452,6 +452,13 @@
   margin: 0;
 }
 
+.review-first-batch__links {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+}
+
 .review-card {
   background: var(--surface-raised);
   border: var(--border-width-default) solid var(--border-default);
