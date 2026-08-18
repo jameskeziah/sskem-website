@@ -142,6 +142,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /Homepage media budget Blocked 4 of 5/i);
   assert.match(readableText, /Legacy route cutover Ready 35 of 35/i);
   assert.match(readableText, /Review-only treatment Ready 1 of 1/i);
+  assert.match(readableText, /Achievement activation 0 of 4 bound 0 approval pair/i);
   assert.match(readableText, /33 governed records/i);
   assert.match(readableText, /Approve the four campus photographs first\./i);
   assert.match(readableText, /Guarded update: after independent review, generate the unfilled request/i);
@@ -157,7 +158,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /npm run poster:inspect/i);
   assert.match(readableText, /npm run poster:decision-plan/i);
   assert.match(readableText, /npm run poster:decision-record/i);
-  assert.match(readableText, /Neither default mode writes/i);
+  assert.match(readableText, /Every default mode is read-only/i);
   assert.match(readableText, /Complete decision worksheet/i);
   assert.match(readableText, /pixel-identical lossless candidate/i);
   assert.match(readableText, /separate approved art-direction decision/i);

@@ -72,8 +72,9 @@ campus detail. Replace them progressively with the capture plan below.
    remain immediately operable and outside reveal timelines.
 5. **Achievement artwork:** private review keeps all supplied creatives and the
    visible approval gate. Public HTML receives a card only after both its exact
-   media record and paired claim record are current and approved; otherwise the
-   card, and an empty section, are omitted.
+   media record and paired claim record are current and approved and the current
+   JPEG matches a hash-bound activation; otherwise the card, and an empty
+   section, are omitted.
 
 ## 5. Capture-day shot list
 

@@ -53,6 +53,9 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /Poster optimization/);
   assert.match(page, /Decision binding/);
   assert.match(page, /homepagePosterDeliveryDecisionBindingSummary/);
+  assert.match(page, /homepageAchievementPublicationSummary/);
+  assert.match(page, /Achievement activation/);
+  assert.match(page, /npm run achievements:activate/);
   assert.match(page, /Complete decision worksheet/);
   assert.match(page, /Download blank poster packet/);
   assert.match(page, /\/publication-review\/poster-delivery-decision/);
@@ -60,7 +63,7 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /npm run poster:inspect/);
   assert.match(page, /npm run poster:decision-plan/);
   assert.match(page, /npm run poster:decision-record/);
-  assert.match(page, /Neither default mode writes/);
+  assert.match(page, /Every default mode is read-only/);
   assert.match(page, /pixel-identical lossless candidate/);
   assert.match(page, /separate approved art-direction decision/);
   assert.match(page, /Media release/);

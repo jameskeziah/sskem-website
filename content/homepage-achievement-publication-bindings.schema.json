@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/homepage-achievement-publication-bindings.schema.json",
+  "title": "SSKEMS homepage achievement publication bindings",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "registryId", "policy", "bindings"],
+  "properties": {
+    "$schema": { "const": "./homepage-achievement-publication-bindings.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "registryId": { "const": "sskem-homepage-achievement-publication-bindings" },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approvedMediaAndClaimRequired", "exactSourceHashRequired", "sourceReplacementRequiresReapproval", "privateReviewBypassesBindings", "notes"],
+      "properties": {
+        "approvedMediaAndClaimRequired": { "const": true },
+        "exactSourceHashRequired": { "const": true },
+        "sourceReplacementRequiresReapproval": { "const": true },
+        "privateReviewBypassesBindings": { "const": true },
+        "notes": { "type": "string", "minLength": 20 }
+      }
+    },
+    "bindings": {
+      "type": "array",
+      "maxItems": 4,
+      "items": { "$ref": "#/$defs/binding" }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bindingId", "mediaRecordId", "claimRecordId", "publicPath", "sourceSha256", "bytes", "width", "height", "format", "activatedOn", "notes"],
+      "properties": {
+        "bindingId": { "type": "string", "pattern": "^achievement-media-[a-z0-9-]+-[a-f0-9]{12}$" },
+        "mediaRecordId": {
+          "enum": ["media-class-x-results-2025-26", "media-xii-science-2025-26", "media-rangotsav-2025-26", "media-result-admissions-2025-26"]
+        },
+        "claimRecordId": {
+          "enum": ["claim-class-x-results-2025-26", "claim-xii-science-results-2025-26", "claim-rangotsav-awards-2025-26", "claim-engineering-medical-guidance"]
+        },
+        "publicPath": {
+          "enum": ["/media/home/class-x-results-2025-26.jpeg", "/media/home/xii-science-2025-26.jpeg", "/media/home/rangotsav-2025-26.jpeg", "/media/home/result-and-admissions-2025-26.jpg"]
+        },
+        "sourceSha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 10000, "maximum": 2000000 },
+        "width": { "const": 1400 },
+        "height": { "const": 500 },
+        "format": { "const": "jpeg" },
+        "activatedOn": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string", "minLength": 20 }
+      }
+    }
+  }
+}

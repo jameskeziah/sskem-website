@@ -1,4 +1,5 @@
 import approvalManifestData from "../content/approval-manifest.json" with { type: "json" };
+import publicationRegistryData from "../content/homepage-achievement-publication-bindings.json" with { type: "json" };
 
 type UnknownRecord = Record<string, unknown>;
 type ApprovalRecordInput = {
@@ -19,6 +20,28 @@ export type HomepageAchievementApprovalManifestInput = {
   records?: readonly ApprovalRecordInput[];
 };
 
+export type HomepageAchievementPublicationBinding = {
+  bindingId: string;
+  mediaRecordId: HomepageAchievementMediaRecordId;
+  claimRecordId: HomepageAchievementClaimRecordId;
+  publicPath: string;
+  sourceSha256: string;
+  bytes: number;
+  width: 1400;
+  height: 500;
+  format: "jpeg";
+  activatedOn: string;
+  notes: string;
+};
+
+export type HomepageAchievementPublicationRegistryInput = {
+  $schema?: unknown;
+  schemaVersion?: unknown;
+  registryId?: unknown;
+  policy?: unknown;
+  bindings?: unknown;
+};
+
 const releaseCheckStates = new Set(["verified", "not-applicable"]);
 const requiredChecksByProfile = {
   "pupil-media": ["accuracy", "rights", "guardian-consent", "privacy", "institutional-status", "management-approval"],
@@ -28,6 +51,13 @@ const requiredChecksByProfile = {
 const evidenceReferencePattern = /^[A-Z0-9][A-Z0-9._/-]{2,79}$/;
 const rolePattern = /^[a-z][a-z0-9-]{2,63}$/;
 const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+const dateTimePattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/;
+const sha256Pattern = /^[a-f0-9]{64}$/;
+const bindingIdPattern = /^achievement-media-[a-z0-9-]+-[a-f0-9]{12}$/;
+const topLevelKeys = new Set(["$schema", "schemaVersion", "registryId", "policy", "bindings"]);
+const policyKeys = new Set(["approvedMediaAndClaimRequired", "exactSourceHashRequired", "sourceReplacementRequiresReapproval", "privateReviewBypassesBindings", "notes"]);
+const bindingKeys = new Set(["bindingId", "mediaRecordId", "claimRecordId", "publicPath", "sourceSha256", "bytes", "width", "height", "format", "activatedOn", "notes"]);
+export const HOMEPAGE_ACHIEVEMENT_BINDING_NOTES = "Activates only this exact reviewed artwork; approval evidence remains in the controlled system.";
 
 export const homepageAchievementArtwork = [
   {
@@ -73,10 +103,21 @@ export const homepageAchievementArtwork = [
 ] as const;
 
 export type HomepageAchievementArtwork = (typeof homepageAchievementArtwork)[number];
+export type HomepageAchievementMediaRecordId = HomepageAchievementArtwork["mediaRecordId"];
+export type HomepageAchievementClaimRecordId = HomepageAchievementArtwork["claimRecordId"];
 export type HomepageAchievementPublicationMode = "private-review" | "public";
+export const homepageAchievementPublicationRegistry = publicationRegistryData as unknown as HomepageAchievementPublicationRegistryInput;
+
+const artworkByMediaRecordId = new Map<HomepageAchievementMediaRecordId, HomepageAchievementArtwork>(
+  homepageAchievementArtwork.map((artwork) => [artwork.mediaRecordId, artwork]),
+);
 
 function isRecord(value: unknown): value is UnknownRecord {
   return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+function unknownKeys(value: unknown, allowed: Set<string>) {
+  return isRecord(value) ? Object.keys(value).filter((key) => !allowed.has(key)) : [];
 }
 
 function toTime(value: Date | string | number | undefined) {
@@ -119,15 +160,133 @@ function expectedRecordIssues(
   return issues;
 }
 
+function validRegistryPolicy(registry: HomepageAchievementPublicationRegistryInput) {
+  return registry.$schema === "./homepage-achievement-publication-bindings.schema.json"
+    && registry.schemaVersion === 1
+    && registry.registryId === "sskem-homepage-achievement-publication-bindings"
+    && isRecord(registry.policy)
+    && registry.policy.approvedMediaAndClaimRequired === true
+    && registry.policy.exactSourceHashRequired === true
+    && registry.policy.sourceReplacementRequiresReapproval === true
+    && registry.policy.privateReviewBypassesBindings === true
+    && typeof registry.policy.notes === "string"
+    && registry.policy.notes.trim().length >= 20
+    && unknownKeys(registry.policy, policyKeys).length === 0;
+}
+
+export function createHomepageAchievementBindingProposal(options: {
+  mediaRecordId: HomepageAchievementMediaRecordId;
+  sourceSha256: string;
+  bytes: number;
+  width: number;
+  height: number;
+  format: string;
+  activatedOn: string;
+}) {
+  const artwork = artworkByMediaRecordId.get(options.mediaRecordId);
+  if (!artwork) throw new Error(`Unknown homepage achievement media record: ${options.mediaRecordId}.`);
+  return {
+    bindingId: `achievement-${options.mediaRecordId}-${options.sourceSha256.slice(0, 12)}`,
+    mediaRecordId: artwork.mediaRecordId,
+    claimRecordId: artwork.claimRecordId,
+    publicPath: artwork.src,
+    sourceSha256: options.sourceSha256,
+    bytes: options.bytes,
+    width: options.width,
+    height: options.height,
+    format: options.format,
+    activatedOn: options.activatedOn,
+    notes: HOMEPAGE_ACHIEVEMENT_BINDING_NOTES,
+  } as HomepageAchievementPublicationBinding;
+}
+
+export function validateHomepageAchievementPublicationRegistry(options: {
+  registry?: HomepageAchievementPublicationRegistryInput;
+  manifest?: HomepageAchievementApprovalManifestInput;
+  now?: Date | string | number;
+} = {}) {
+  const registry = options.registry ?? homepageAchievementPublicationRegistry;
+  const manifest = options.manifest ?? approvalManifestData as HomepageAchievementApprovalManifestInput;
+  const now = toTime(options.now);
+  const issues: string[] = [];
+  if (!Number.isFinite(now)) return ["Homepage achievement binding validation requires a valid time."];
+  if (unknownKeys(registry, topLevelKeys).length) issues.push("The homepage achievement registry contains unknown top-level fields.");
+  if (!validRegistryPolicy(registry)) issues.push("The homepage achievement registry identity or policy is invalid.");
+  if (!Array.isArray(registry.bindings)) return [...issues, "The homepage achievement registry bindings must be an array."];
+  if (!Array.isArray(manifest.records)) return [...issues, "The approval manifest records must be an array."];
+
+  const manifestById = new Map(manifest.records.map((record) => [String(record.id), record]));
+  const seenBindingIds = new Set<string>();
+  const seenMediaRecords = new Set<string>();
+  const seenPublicPaths = new Set<string>();
+  for (const [index, value] of registry.bindings.entries()) {
+    const path = `bindings[${index}]`;
+    if (!isRecord(value)) {
+      issues.push(`${path} must be an object.`);
+      continue;
+    }
+    if (unknownKeys(value, bindingKeys).length) issues.push(`${path} contains unknown fields.`);
+    if (typeof value.mediaRecordId !== "string" || !artworkByMediaRecordId.has(value.mediaRecordId as HomepageAchievementMediaRecordId)) {
+      issues.push(`${path}.mediaRecordId is not a governed homepage achievement record.`);
+      continue;
+    }
+    const artwork = artworkByMediaRecordId.get(value.mediaRecordId as HomepageAchievementMediaRecordId)!;
+    if (seenMediaRecords.has(artwork.mediaRecordId)) issues.push(`${path}.mediaRecordId is duplicated.`);
+    else seenMediaRecords.add(artwork.mediaRecordId);
+    if (value.claimRecordId !== artwork.claimRecordId) issues.push(`${path}.claimRecordId does not match ${artwork.mediaRecordId}.`);
+    if (value.publicPath !== artwork.src) issues.push(`${path}.publicPath does not match ${artwork.mediaRecordId}.`);
+    else if (seenPublicPaths.has(artwork.src)) issues.push(`${path}.publicPath is duplicated.`);
+    else seenPublicPaths.add(artwork.src);
+    if (typeof value.sourceSha256 !== "string" || !sha256Pattern.test(value.sourceSha256)) issues.push(`${path}.sourceSha256 is invalid.`);
+    const expectedBindingId = typeof value.sourceSha256 === "string" ? `achievement-${artwork.mediaRecordId}-${value.sourceSha256.slice(0, 12)}` : null;
+    if (typeof value.bindingId !== "string" || !bindingIdPattern.test(value.bindingId) || value.bindingId !== expectedBindingId) issues.push(`${path}.bindingId does not match its media record and source hash.`);
+    else if (seenBindingIds.has(value.bindingId)) issues.push(`${path}.bindingId is duplicated.`);
+    else seenBindingIds.add(value.bindingId);
+    if (!Number.isInteger(value.bytes) || (value.bytes as number) < 10_000 || (value.bytes as number) > 2_000_000) issues.push(`${path}.bytes is outside the reviewed artwork bounds.`);
+    if (value.width !== 1400 || value.height !== 500 || value.format !== "jpeg") issues.push(`${path} does not preserve the canonical 1400 by 500 JPEG format.`);
+    const activatedOn = typeof value.activatedOn === "string" ? Date.parse(value.activatedOn) : Number.NaN;
+    if (typeof value.activatedOn !== "string" || !dateTimePattern.test(value.activatedOn) || Number.isNaN(activatedOn) || activatedOn > now) issues.push(`${path}.activatedOn is invalid.`);
+    if (typeof value.notes !== "string" || value.notes !== HOMEPAGE_ACHIEVEMENT_BINDING_NOTES) issues.push(`${path}.notes do not preserve the activation boundary.`);
+    const mediaRecord = manifestById.get(artwork.mediaRecordId);
+    const claimRecord = manifestById.get(artwork.claimRecordId);
+    const mediaApprovalValid = validCurrentApproval(mediaRecord, now);
+    const claimApprovalValid = validCurrentApproval(claimRecord, now);
+    if (!mediaApprovalValid) issues.push(`${path} requires a current approved media record.`);
+    if (!claimApprovalValid) issues.push(`${path} requires a current approved paired claim record.`);
+    if (
+      Number.isFinite(activatedOn)
+      && mediaApprovalValid
+      && claimApprovalValid
+      && [mediaRecord, claimRecord].some((record) => typeof record?.approvedAt !== "string" || Date.parse(record.approvedAt) > activatedOn)
+    ) issues.push(`${path}.activatedOn must not predate either approval.`);
+  }
+  return issues;
+}
+
+export function createHomepageAchievementPublicationIndex(options: {
+  registry?: HomepageAchievementPublicationRegistryInput;
+  manifest?: HomepageAchievementApprovalManifestInput;
+  now?: Date | string | number;
+} = {}) {
+  const registry = options.registry ?? homepageAchievementPublicationRegistry;
+  if (validateHomepageAchievementPublicationRegistry({ ...options, registry }).length || !Array.isArray(registry.bindings)) {
+    return new Map<HomepageAchievementMediaRecordId, HomepageAchievementPublicationBinding>();
+  }
+  return new Map(
+    (registry.bindings as HomepageAchievementPublicationBinding[]).map((binding) => [binding.mediaRecordId, binding]),
+  );
+}
+
 function publicationState(options: {
   manifest?: HomepageAchievementApprovalManifestInput;
+  registry?: HomepageAchievementPublicationRegistryInput;
   now?: Date | string | number;
 } = {}) {
   const manifest = options.manifest ?? approvalManifestData as HomepageAchievementApprovalManifestInput;
   const now = toTime(options.now);
   const issues: string[] = [];
-  if (!Number.isFinite(now)) return { eligible: new Set<string>(), issues: ["Homepage achievement publication requires a valid time."] };
-  if (!Array.isArray(manifest.records)) return { eligible: new Set<string>(), issues: ["The approval manifest records must be an array."] };
+  if (!Number.isFinite(now)) return { eligible: new Set<string>(), approvedPairs: 0, issues: ["Homepage achievement publication requires a valid time."] };
+  if (!Array.isArray(manifest.records)) return { eligible: new Set<string>(), approvedPairs: 0, issues: ["The approval manifest records must be an array."] };
 
   const relevantIds = new Set(homepageAchievementArtwork.flatMap((artwork) => [artwork.mediaRecordId, artwork.claimRecordId]));
   const relevantRecords = manifest.records.filter((record) => typeof record.id === "string" && relevantIds.has(record.id));
@@ -136,6 +295,7 @@ function publicationState(options: {
   for (const [id, count] of counts) if (count > 1) issues.push(`${id} is duplicated in the approval manifest.`);
   const byId = new Map(relevantRecords.map((record) => [String(record.id), record]));
   const eligible = new Set<string>();
+  let approvedPairs = 0;
 
   for (const artwork of homepageAchievementArtwork) {
     const media = byId.get(artwork.mediaRecordId);
@@ -148,16 +308,31 @@ function publicationState(options: {
       && validCurrentApproval(media, now)
       && validCurrentApproval(claim, now)
     ) {
-      eligible.add(artwork.src);
+      approvedPairs += 1;
     }
   }
 
-  return { eligible, issues: [...new Set(issues)] };
+  const registry = options.registry ?? homepageAchievementPublicationRegistry;
+  const registryIssues = validateHomepageAchievementPublicationRegistry({ registry, manifest, now });
+  issues.push(...registryIssues);
+  if (!registryIssues.length) {
+    const bindings = createHomepageAchievementPublicationIndex({ registry, manifest, now });
+    for (const artwork of homepageAchievementArtwork) {
+      const media = byId.get(artwork.mediaRecordId);
+      const claim = byId.get(artwork.claimRecordId);
+      if (validCurrentApproval(media, now) && validCurrentApproval(claim, now) && bindings.has(artwork.mediaRecordId)) {
+        eligible.add(artwork.src);
+      }
+    }
+  }
+
+  return { eligible, approvedPairs, issues: [...new Set(issues)] };
 }
 
 export function selectHomepageAchievementArtwork(options: {
   mode: HomepageAchievementPublicationMode;
   manifest?: HomepageAchievementApprovalManifestInput;
+  registry?: HomepageAchievementPublicationRegistryInput;
   now?: Date | string | number;
 }) {
   if (options.mode === "private-review") return [...homepageAchievementArtwork];
@@ -168,16 +343,19 @@ export function selectHomepageAchievementArtwork(options: {
 
 export function homepageAchievementPublicationSummary(options: {
   manifest?: HomepageAchievementApprovalManifestInput;
+  registry?: HomepageAchievementPublicationRegistryInput;
   now?: Date | string | number;
 } = {}) {
   const state = publicationState(options);
   const required = homepageAchievementArtwork.length;
-  const approved = state.eligible.size;
+  const approved = state.approvedPairs;
+  const active = state.eligible.size;
   return {
     approved,
+    active,
     required,
     publicProjectionSafe: state.issues.length === 0,
-    releaseReady: state.issues.length === 0 && approved === required,
+    releaseReady: state.issues.length === 0 && active === required,
     issues: state.issues,
   } as const;
 }

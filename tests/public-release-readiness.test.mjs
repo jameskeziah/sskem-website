@@ -9,6 +9,7 @@ import { createPublicReleaseReadiness } from "../lib/public-release-readiness.ts
 const projectRoot = new URL("../", import.meta.url);
 const controlledInputs = [
   "content/approval-manifest.json",
+  "content/homepage-achievement-publication-bindings.json",
   "content/campus-media-publication-bindings.json",
   "content/public-document-publication-bindings.json",
   "content/homepage-media-performance-budget.json",

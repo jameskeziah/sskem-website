@@ -1,0 +1,13 @@
+{
+  "$schema": "./homepage-achievement-publication-bindings.schema.json",
+  "schemaVersion": 1,
+  "registryId": "sskem-homepage-achievement-publication-bindings",
+  "policy": {
+    "approvedMediaAndClaimRequired": true,
+    "exactSourceHashRequired": true,
+    "sourceReplacementRequiresReapproval": true,
+    "privateReviewBypassesBindings": true,
+    "notes": "Bindings activate only exact reviewed achievement artwork. Consent evidence, approval evidence and approver identities remain outside the repository."
+  },
+  "bindings": []
+}

@@ -12,7 +12,8 @@ validation or evidence requirements:
 6. Review-only treatment: the homepage uses separate projections—private review
    may show all supplied achievement artwork, while public HTML receives only an
    exact artwork whose media record and paired claim record are both current and
-   approved. An empty public projection is omitted.
+   approved and whose bytes match an active hash binding. An empty public
+   projection is omitted.
 
 The result is fail closed. Public release is ready only when all six gates pass
 and every gate's underlying registry, receipt, artifact and configuration checks

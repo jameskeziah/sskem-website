@@ -19,8 +19,8 @@ npm test
 ```
 
 `npm test` intentionally exercises the complete private-review prototype. A
-normal `npm run build` is the public-release path and is blocked while pupil
-artwork still carries the publication-review requirement. Use
+normal `npm run build` is the public-release path and remains blocked until all
+six release gates pass. Use
 `npm run build:review` only for an access-controlled private review; it also
 emits `noindex, nofollow` metadata. Search-engine directives are not access
 control.
@@ -84,11 +84,15 @@ activator verifies the receipt and all 15 files in read-only mode by default,
 then requires an explicit acknowledgement for an atomic registry write; silent
 replacement is refused. The homepage uses those responsive variants only when
 the registry, manifest, receipt and derivative files all agree; otherwise
-private review retains the prototype source. Achievement artwork now has an
+private review retains the prototype source. Achievement artwork has an
 independent fail-closed public projection: each card requires the exact media
-record and its paired claim record to be current and approved, otherwise it is
-omitted from public HTML. This separation does not grant approval, so public
-release remains blocked until the manifest and the other release gates pass.
+record, its paired claim record and a hash-bound activation for the unchanged
+JPEG. Otherwise it is omitted from public HTML. Run
+`npm run achievements:activate -- --record RECORD_ID` for a read-only plan only
+after both approvals pass, and `npm run achievements:bindings:audit` to verify
+the active bytes. This separation does not grant approval, so public release
+remains blocked until the manifest and the other release gates pass. See
+[`docs/homepage-achievement-publication.md`](docs/homepage-achievement-publication.md).
 
 Homepage media also has a schema-backed, read-only transfer audit. Run
 `npm run performance:audit` before public release. It verifies the exact tracked
@@ -175,13 +179,14 @@ archive-filter and visual tests.
   prototypes. Real applicant information must not be entered until D1, private
   R2 storage, parent OTP, staff roles, notifications and security controls are
   configured.
-- The homepage art-direction prototype uses the supplied campus photography and
-  keeps all pupil/result artwork behind a visible publication-review gate. The
-  capture plan, consent requirements, delivery specification and approval
+- The homepage art-direction prototype uses the supplied campus photography.
+  Private review keeps all pupil/result artwork behind a visible gate; public
+  HTML requires the exact approved media/claim pair and hash-bound artwork.
+  The capture plan, consent requirements, delivery specification and approval
   register are in `docs/campus-media-brief.md`.
-- `scripts/assert-publication-safety.mjs` prevents the normal production build
-  from packaging review material until the structured approval manifest is
-  release-ready and the review-only source treatment is intentionally resolved.
+- `scripts/assert-publication-safety.mjs` and the composite release audit prevent
+  a normal production build until the approval, binding, performance and
+  cutover gates are release-ready.
 - `db/admissions-schema.ts` and its generated migration scaffold the audited
   workflow without activating persistence.
 - The compliance schema and guarded intake pipeline are ready; the twelve real

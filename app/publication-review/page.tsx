@@ -31,6 +31,7 @@ import {
   homepageMediaPerformanceSummary,
 } from "@/lib/homepage-media-performance";
 import { homepagePosterDeliveryDecisionBindingSummary } from "@/lib/homepage-poster-delivery-decision-binding";
+import { homepageAchievementPublicationSummary } from "@/lib/homepage-achievement-publication";
 import { publicDocumentPublicationSummary } from "@/lib/public-document-publication";
 
 import "./review.css";
@@ -136,6 +137,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
   const mediaPerformance = homepageMediaPerformanceSummary({ campusSummary: mediaPublication });
   const heroPosterPerformance = mediaPerformance.assets.find((asset) => asset.id === "homepage-social-poster");
   const posterDecisionBinding = homepagePosterDeliveryDecisionBindingSummary();
+  const achievementPublication = homepageAchievementPublicationSummary();
   const documentPublication = publicDocumentPublicationSummary();
   const cmsState = editorial.status.reason === "missing-config"
     ? "Ready for connection"
@@ -273,10 +275,11 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <div><dt>Hero transfer</dt><dd><strong>{heroPosterPerformance ? `${formatMediaBytes(heroPosterPerformance.observedBytes)} / ${formatMediaBytes(heroPosterPerformance.maximumBytes)}` : "Audit unavailable"}</strong><span>{heroPosterPerformance?.withinBudget ? "Within the public-release budget." : "Prototype is over the public-release budget."}</span></dd></div>
               <div><dt>Poster optimization</dt><dd><strong>Pixel-exact staging</strong><span>Lossless review never changes the public artwork or budget.</span></dd></div>
               <div><dt>Decision binding</dt><dd><strong>{posterDecisionBinding.valid} of {posterDecisionBinding.required} bound</strong><span>{posterDecisionBinding.ready ? "Only the exact selected private review scope is authorized." : "No poster delivery review scope is authorized."}</span></dd></div>
+              <div><dt>Achievement activation</dt><dd><strong>{achievementPublication.active} of {achievementPublication.required} bound</strong><span>{achievementPublication.approved} approval pair(s) complete; exact artwork hashes remain separately controlled.</span></dd></div>
               <div><dt>Media release</dt><dd><strong>{mediaPerformance.releaseReady ? "Ready" : "Blocked"}</strong><span>{mediaPerformance.blockers.length} media performance blocker(s) remain.</span></dd></div>
             </dl>
             <div className="review-media-intake__actions">
-              <p>Run <code>npm run performance:audit</code> before public release. Use <code>npm run poster:inspect</code> to measure a pixel-identical lossless candidate without writing it. Because that candidate still exceeds the current budget, a format or pixel change requires a separate approved art-direction decision. A completed packet can be checked with <code>npm run poster:decision-plan</code>, then proposed for an explicit public-safe binding with <code>npm run poster:decision-record</code>. Neither default mode writes.</p>
+              <p>Run <code>npm run performance:audit</code> before public release. Use <code>npm run achievements:activate -- --record RECORD_ID</code> to review an exact-byte achievement activation plan after both approvals pass. Use <code>npm run poster:inspect</code> to measure a pixel-identical lossless candidate without writing it. Because that candidate still exceeds the current budget, a format or pixel change requires a separate approved art-direction decision. A completed packet can be checked with <code>npm run poster:decision-plan</code>, then proposed for an explicit public-safe binding with <code>npm run poster:decision-record</code>. Every default mode is read-only.</p>
               <div className="review-media-intake__links">
                 <Link className="button button--primary" href="/publication-review/poster-delivery-decision-workspace">Complete decision worksheet</Link>
                 <Link className="button button--quiet" href="/publication-review/poster-delivery-decision">Download blank poster packet</Link>
@@ -326,7 +329,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <li>Verify each required check independently.</li>
               <li>Record an opaque evidence reference—never the private evidence itself.</li>
               <li>Add the approving role and timestamp only after every check passes.</li>
-              <li>Run the release audit and remove review-only treatment in a separate public-release change.</li>
+              <li>Activate the exact approved media and documents, then run the composite release audit.</li>
             </ol>
           </section>
         </PageContainer>
