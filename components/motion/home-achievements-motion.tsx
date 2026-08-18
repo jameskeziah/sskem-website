@@ -13,6 +13,7 @@ import {
   motionScrollTrigger,
   motionStaggerSeconds,
 } from "@/lib/motion";
+import type { HomepageAchievementPublicationMode } from "@/lib/homepage-achievement-publication";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -25,7 +26,13 @@ type MotionConditions = {
   desktop?: boolean;
 };
 
-export function HomeAchievementsMotion({ children }: { children: ReactNode }) {
+export function HomeAchievementsMotion({
+  children,
+  publicationMode,
+}: {
+  children: ReactNode;
+  publicationMode: HomepageAchievementPublicationMode;
+}) {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -87,7 +94,7 @@ export function HomeAchievementsMotion({ children }: { children: ReactNode }) {
       aria-labelledby="achievements-title"
       data-motion-component="home-achievements"
       data-motion-level="4"
-      data-publication-review="required"
+      data-publication-review={publicationMode === "private-review" ? "required" : "approved"}
     >
       {children}
     </section>

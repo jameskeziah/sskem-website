@@ -10,6 +10,7 @@ import { HomeCampusMotion } from "@/components/motion/home-campus-motion";
 import { HomeHeroMotion } from "@/components/motion/home-hero-motion";
 import { siteFacts } from "@/app/data/site";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
+import { selectHomepageAchievementArtwork } from "@/lib/homepage-achievement-publication";
 
 import "./homepage.css";
 
@@ -64,33 +65,6 @@ const serviceLinks = [
   },
 ] as const;
 
-const achievementArtwork = [
-  {
-    src: "/media/home/class-x-results-2025-26.jpeg",
-    title: "Class X results",
-    meta: "School-supplied creative · 2025–26",
-    alt: "SSKEMS Class X results artwork showing six student achievers and their published percentages.",
-  },
-  {
-    src: "/media/home/xii-science-2025-26.jpeg",
-    title: "XII Science batch",
-    meta: "School-supplied creative · 2025–26",
-    alt: "SSKEMS XII Science batch results artwork showing seven student achievers and their published percentages.",
-  },
-  {
-    src: "/media/home/rangotsav-2025-26.jpeg",
-    title: "Rangotsav recognition",
-    meta: "School-supplied creative · 2025–26",
-    alt: "SSKEMS Rangotsav celebration artwork showing five pupils named as Art Maestro award recipients.",
-  },
-  {
-    src: "/media/home/result-and-admissions-2025-26.jpg",
-    title: "Results and admissions update",
-    meta: "School-supplied creative · 2025–26",
-    alt: "Combined SSKEMS Class X first-rank and engineering and medical admissions guidance artwork.",
-  },
-] as const;
-
 const eventDateFormatter = new Intl.DateTimeFormat("en-IN", {
   day: "numeric",
   month: "short",
@@ -100,6 +74,14 @@ const eventDateFormatter = new Intl.DateTimeFormat("en-IN", {
 
 export default async function Home() {
   const editorial = await getHomepageEditorialContent();
+  const privateAchievementReview = process.env.HOMEPAGE_REVIEW_MODE === "private";
+  const achievementArtwork = selectHomepageAchievementArtwork({
+    mode: privateAchievementReview ? "private-review" : "public",
+  });
+  const eventsChapter = achievementArtwork.length ? "06" : "05";
+  const invitationChapter = String(
+    5 + Number(achievementArtwork.length > 0) + Number(editorial.events.length > 0),
+  ).padStart(2, "0");
 
   return (
     <>
@@ -283,51 +265,55 @@ export default async function Home() {
           </div>
         </section>
 
-        <HomeAchievementsMotion>
-          <div className="home-shell">
-            <div className="home-section-heading home-section-heading--split">
-              <div>
-                <p className="home-chapter-label"><span>05</span> Publication review</p>
-                <h2 id="achievements-title">Effort deserves a thoughtful stage.</h2>
+        {achievementArtwork.length ? (
+          <HomeAchievementsMotion publicationMode={privateAchievementReview ? "private-review" : "public"}>
+            <div className="home-shell">
+              <div className="home-section-heading home-section-heading--split">
+                <div>
+                  <p className="home-chapter-label"><span>05</span> {privateAchievementReview ? "Publication review" : "Verified achievements"}</p>
+                  <h2 id="achievements-title">Effort deserves a thoughtful stage.</h2>
+                </div>
+                <div className={`home-achievements__review${privateAchievementReview ? "" : " home-achievements__review--approved"}`} id="achievement-review-note">
+                  <strong>{privateAchievementReview ? "Approval gate" : "Publication status"}</strong>
+                  <p>{privateAchievementReview
+                    ? "Supplied creatives remain visible only in private review. Names, photographs, marks, award wording and institutional status require approval before public publication."
+                    : "Each displayed creative has current approval for both its media and its published claims."}</p>
+                </div>
               </div>
-              <div className="home-achievements__review" id="achievement-review-note">
-                <strong>Approval gate</strong>
-                <p>These supplied creatives are staged for private review. Names, photographs, marks, award wording and institutional status require approval before public publication.</p>
-              </div>
-            </div>
 
-            <div className="home-achievements__grid" aria-describedby="achievement-review-note">
-              {achievementArtwork.map((artwork, index) => (
-                <article className="home-achievement-card" data-motion-home-achievement key={artwork.src}>
-                  <a href={artwork.src} target="_blank" rel="noreferrer" aria-label={`Open full-size ${artwork.title} artwork in a new tab`}>
-                    <span className="home-achievement-card__media">
-                      <Image
-                        src={artwork.src}
-                        alt={artwork.alt}
-                        width={1400}
-                        height={500}
-                        sizes="(max-width: 768px) 100vw, 48vw"
-                        unoptimized
-                      />
-                    </span>
-                    <span className="home-achievement-card__body">
-                      <span><i>{String(index + 1).padStart(2, "0")}</i>{artwork.meta}</span>
-                      <strong>{artwork.title}</strong>
-                      <small>Open full artwork <span aria-hidden="true">→</span></small>
-                    </span>
-                  </a>
-                </article>
-              ))}
+              <div className="home-achievements__grid" aria-describedby="achievement-review-note">
+                {achievementArtwork.map((artwork, index) => (
+                  <article className="home-achievement-card" data-motion-home-achievement key={artwork.src}>
+                    <a href={artwork.src} target="_blank" rel="noreferrer" aria-label={`Open full-size ${artwork.title} artwork in a new tab`}>
+                      <span className="home-achievement-card__media">
+                        <Image
+                          src={artwork.src}
+                          alt={artwork.alt}
+                          width={1400}
+                          height={500}
+                          sizes="(max-width: 768px) 100vw, 48vw"
+                          unoptimized
+                        />
+                      </span>
+                      <span className="home-achievement-card__body">
+                        <span><i>{String(index + 1).padStart(2, "0")}</i>{artwork.meta}</span>
+                        <strong>{artwork.title}</strong>
+                        <small>Open full artwork <span aria-hidden="true">→</span></small>
+                      </span>
+                    </a>
+                  </article>
+                ))}
+              </div>
             </div>
-          </div>
-        </HomeAchievementsMotion>
+          </HomeAchievementsMotion>
+        ) : null}
 
         {editorial.events.length ? (
           <section className="home-events" aria-labelledby="events-title">
             <div className="home-shell">
               <div className="home-section-heading home-section-heading--split">
                 <div>
-                  <p className="home-chapter-label"><span>06</span> Coming up</p>
+                  <p className="home-chapter-label"><span>{eventsChapter}</span> Coming up</p>
                   <h2 id="events-title">Dates worth keeping close.</h2>
                 </div>
                 <p>Only current, approved public events appear here.</p>
@@ -350,7 +336,7 @@ export default async function Home() {
         <section className="home-invitation" aria-labelledby="invitation-title">
           <div className="home-shell home-invitation__grid">
             <div>
-              <p className="home-chapter-label"><span>{editorial.events.length ? "07" : "06"}</span> Begin a conversation</p>
+              <p className="home-chapter-label"><span>{invitationChapter}</span> Begin a conversation</p>
               <h2 id="invitation-title">Your next chapter starts with one clear step.</h2>
             </div>
             <div className="home-invitation__action">

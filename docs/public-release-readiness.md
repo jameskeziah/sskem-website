@@ -9,14 +9,16 @@ validation or evidence requirements:
 3. Appendix IX documents: all twelve required PDFs have exact approved bindings.
 4. Homepage media budget: all five tracked assets meet their transfer limits.
 5. Legacy route cutover: every inventoried WordPress route has an implementation.
-6. Review-only treatment: private-review labels and presentation have been
-   intentionally removed from the public source.
+6. Review-only treatment: the homepage uses separate projections—private review
+   may show all supplied achievement artwork, while public HTML receives only an
+   exact artwork whose media record and paired claim record are both current and
+   approved. An empty public projection is omitted.
 
 The result is fail closed. Public release is ready only when all six gates pass
 and every gate's underlying registry, receipt, artifact and configuration checks
 are structurally valid. A valid approval manifest does not override missing
-media, missing documents, a performance overage, an unfinished redirect or
-review-only source treatment.
+media, missing documents, a performance overage, an unfinished redirect or an
+unsafe private/public artwork projection.
 
 ## Operating modes
 
@@ -30,10 +32,12 @@ review-only source treatment.
   access control or deployment authorization.
 
 The audit is read-only. It does not approve records, create bindings, modify
-artwork, publish documents, remove review treatment, write to Sanity or deploy
-the website. Consent forms, scan reports, certificates, pupil records and
-approver identities remain in the school's controlled evidence system. The
-repository stores only the existing opaque references and public-safe receipts.
+artwork, publish documents, write to Sanity or deploy the website. Passing the
+review-treatment gate means only that unapproved achievement artwork is absent
+from public HTML; it does not make any artwork approved. Consent forms, scan
+reports, certificates, pupil records and approver identities remain in the
+school's controlled evidence system. The repository stores only the existing
+opaque references and public-safe receipts.
 
 ## Release sequence
 

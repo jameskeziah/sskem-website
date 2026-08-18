@@ -350,10 +350,11 @@ test("catalogues homepage media and keeps pupil artwork behind publication gates
     assert.ok(details.size <= 2_000_000, `${file} exceeds the prototype media ceiling`);
   }
 
-  const [homepage, layout, achievements, brief, publicationGuide, publicationGate, packageText] = await Promise.all([
+  const [homepage, layout, achievements, achievementPublication, brief, publicationGuide, publicationGate, packageText] = await Promise.all([
     source("app/page.tsx"),
     source("app/layout.tsx"),
     source("components/motion/home-achievements-motion.tsx"),
+    source("lib/homepage-achievement-publication.ts"),
     source("docs/campus-media-brief.md"),
     source("docs/approval-manifest.md"),
     source("scripts/assert-publication-safety.mjs"),
@@ -361,10 +362,14 @@ test("catalogues homepage media and keeps pupil artwork behind publication gates
   ]);
   const packageJson = JSON.parse(packageText);
 
-  for (const file of mediaFiles.slice(0, -1)) {
+  for (const file of mediaFiles.slice(0, 4)) {
     assert.match(homepage, new RegExp(file.replace("public", "").replaceAll(".", "\\.")));
   }
-  assert.match(achievements, /data-publication-review=["']required["']/);
+  for (const file of mediaFiles.slice(4, -1)) {
+    assert.match(achievementPublication, new RegExp(file.replace("public", "").replaceAll(".", "\\.")));
+  }
+  assert.match(achievements, /data-publication-review=/);
+  assert.match(achievements, /publicationMode === ["']private-review["'] \? ["']required["'] : ["']approved["']/);
   assert.match(homepage, /Approval gate/);
   assert.match(homepage, /names, photographs, marks, award wording and institutional status require approval/i);
   assert.match(layout, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false\s*\}/);

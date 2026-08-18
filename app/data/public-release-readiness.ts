@@ -2,10 +2,9 @@ import { approvalManifest, approvalSummary } from "./publication-approval";
 import { legacyCutoverDashboard } from "./legacy-cutover";
 import { campusMediaPublicationSummary } from "../../lib/campus-media-publication.ts";
 import { homepageMediaPerformanceSummary } from "../../lib/homepage-media-performance.ts";
+import { homepageAchievementPublicationSummary } from "../../lib/homepage-achievement-publication.ts";
 import { publicDocumentPublicationSummary } from "../../lib/public-document-publication.ts";
 import { createPublicReleaseReadiness } from "../../lib/public-release-readiness.ts";
-
-export const reviewOnlySourceTreatmentActive = true;
 
 export function publicReleaseReadinessDashboard() {
   const approvals = approvalSummary();
@@ -13,6 +12,7 @@ export function publicReleaseReadinessDashboard() {
   const approvedRecords = governedRecords.filter((record) => record.decision === "approved").length;
   const campus = campusMediaPublicationSummary();
   const documents = publicDocumentPublicationSummary();
+  const achievements = homepageAchievementPublicationSummary();
   const performance = homepageMediaPerformanceSummary({ campusSummary: campus });
   const performanceReady = performance.assets.filter((asset) => asset.withinBudget).length;
 
@@ -51,10 +51,11 @@ export function publicReleaseReadinessDashboard() {
       blocker: `${legacyCutoverDashboard.pendingImplementation} legacy route implementation(s) remain.`,
     },
     reviewTreatment: {
-      completed: reviewOnlySourceTreatmentActive ? 0 : 1,
+      completed: achievements.publicProjectionSafe ? 1 : 0,
       required: 1,
-      ready: !reviewOnlySourceTreatmentActive,
-      blocker: "The homepage still contains intentional private-review treatment.",
+      ready: achievements.publicProjectionSafe,
+      issues: achievements.issues,
+      blocker: "The homepage achievement projection is not safely separated from private review.",
     },
   });
 }

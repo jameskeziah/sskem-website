@@ -133,7 +133,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
   assert.match(readableText, /Owner-only publication control/i);
   assert.match(readableText, /Approval queue/i);
-  assert.match(readableText, /Public release Blocked 5 of 6 launch gates remain blocked\./i);
+  assert.match(readableText, /Public release Blocked 4 of 6 launch gates remain blocked\./i);
   assert.match(readableText, /Composite launch gate/i);
   assert.match(readableText, /One result across every release dependency\./i);
   assert.match(readableText, /Publication approvals Blocked 0 of 33/i);
@@ -141,7 +141,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /Appendix IX documents Blocked 0 of 12/i);
   assert.match(readableText, /Homepage media budget Blocked 4 of 5/i);
   assert.match(readableText, /Legacy route cutover Ready 35 of 35/i);
-  assert.match(readableText, /Review-only treatment Blocked 0 of 1/i);
+  assert.match(readableText, /Review-only treatment Ready 1 of 1/i);
   assert.match(readableText, /33 governed records/i);
   assert.match(readableText, /Approve the four campus photographs first\./i);
   assert.match(readableText, /Guarded update: after independent review, generate the unfilled request/i);

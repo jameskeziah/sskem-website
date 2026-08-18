@@ -84,7 +84,11 @@ activator verifies the receipt and all 15 files in read-only mode by default,
 then requires an explicit acknowledgement for an atomic registry write; silent
 replacement is refused. The homepage uses those responsive variants only when
 the registry, manifest, receipt and derivative files all agree; otherwise
-private review retains the prototype source and public release remains blocked.
+private review retains the prototype source. Achievement artwork now has an
+independent fail-closed public projection: each card requires the exact media
+record and its paired claim record to be current and approved, otherwise it is
+omitted from public HTML. This separation does not grant approval, so public
+release remains blocked until the manifest and the other release gates pass.
 
 Homepage media also has a schema-backed, read-only transfer audit. Run
 `npm run performance:audit` before public release. It verifies the exact tracked

@@ -148,7 +148,7 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.doesNotMatch(homepage, /data-motion-home-hero-(?:accent|media|support)/);
   assert.match(homepageStyles, /background-image:\s*url\(["']\/og\.png["']\)/);
   assert.match(homepage, /<HomeCampusMotion>/);
-  assert.match(homepage, /<HomeAchievementsMotion>/);
+  assert.match(homepage, /<HomeAchievementsMotion\b/);
 });
 
 test("rejects prohibited, unbounded and layout-changing motion patterns", async () => {

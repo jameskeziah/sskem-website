@@ -86,10 +86,10 @@ test("audits the current repository as one read-only launch decision", async () 
   const after = await Promise.all(controlledInputs.map(digest));
 
   assert.deepEqual(after, before, "The composite audit must not mutate controlled release inputs");
-  assert.equal(report.readyGates, 1);
-  assert.equal(report.blockedGates, 5);
+  assert.equal(report.readyGates, 2);
+  assert.equal(report.blockedGates, 4);
   assert.equal(report.totalGates, 6);
-  assert.equal(report.blockingItems, 51);
+  assert.equal(report.blockingItems, 50);
   assert.deepEqual(report.issues, []);
   assert.equal(report.privateReviewAllowed, true);
   assert.equal(report.releaseReady, false);
@@ -101,7 +101,7 @@ test("audits the current repository as one read-only launch decision", async () 
       { id: "public-document-bindings", completed: 0, required: 12, ready: false },
       { id: "homepage-media-performance", completed: 4, required: 5, ready: false },
       { id: "legacy-route-cutover", completed: 35, required: 35, ready: true },
-      { id: "review-only-treatment", completed: 0, required: 1, ready: false },
+      { id: "review-only-treatment", completed: 1, required: 1, ready: true },
     ],
   );
 });

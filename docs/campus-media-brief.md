@@ -70,8 +70,10 @@ campus detail. Replace them progressively with the capture plan below.
    authored frames once but may not pin, scrub or obscure the captions.
 4. **Essential access:** Admissions, Mandatory Public Disclosure and Documents
    remain immediately operable and outside reveal timelines.
-5. **Achievement artwork:** private review only until approval. The visible gate
-   is part of the prototype, not wording to remove before evidence is collected.
+5. **Achievement artwork:** private review keeps all supplied creatives and the
+   visible approval gate. Public HTML receives a card only after both its exact
+   media record and paired claim record are current and approved; otherwise the
+   card, and an empty section, are omitted.
 
 ## 5. Capture-day shot list
 

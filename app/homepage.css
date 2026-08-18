@@ -747,6 +747,15 @@
   line-height: 1.55;
 }
 
+.home-achievements__review--approved {
+  border-color: color-mix(in srgb, var(--status-success) 42%, var(--border-default));
+  background: color-mix(in srgb, var(--status-success) 8%, var(--surface-raised));
+}
+
+.home-achievements__review--approved strong {
+  color: var(--status-success);
+}
+
 .home-achievements__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

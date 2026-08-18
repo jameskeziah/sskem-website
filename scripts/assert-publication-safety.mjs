@@ -1,10 +1,11 @@
-import { access, readFile } from "node:fs/promises";
+import { access } from "node:fs/promises";
 
 import {
   approvalSummary,
   loadApprovalManifest,
   validateApprovalManifest,
 } from "../lib/approval-manifest.mjs";
+import { homepageAchievementPublicationSummary } from "../lib/homepage-achievement-publication.ts";
 
 const projectRoot = new URL("../", import.meta.url);
 const privateReviewMode = process.env.HOMEPAGE_REVIEW_MODE === "private";
@@ -19,11 +20,7 @@ async function exists(path) {
   }
 }
 
-const [manifest, achievementMotion, homepage] = await Promise.all([
-  loadApprovalManifest(),
-  readFile(new URL("components/motion/home-achievements-motion.tsx", projectRoot), "utf8"),
-  readFile(new URL("app/page.tsx", projectRoot), "utf8"),
-]);
+const manifest = await loadApprovalManifest();
 const issues = validateApprovalManifest(manifest);
 if (issues.length) {
   throw new Error(
@@ -43,14 +40,10 @@ if (missingAssets.length) {
   throw new Error(`Approval manifest references missing media:\n- ${missingAssets.join("\n- ")}`);
 }
 
-const protectedMedia = mediaRecords.filter((record) => record.checkProfile === "pupil-media");
-const sourceStillRequiresReview =
-  achievementMotion.includes('data-publication-review="required"') ||
-  homepage.includes("These supplied creatives are staged for private review");
-const protectedMediaReady = protectedMedia.every((record) => record.decision === "approved");
-if (sourceStillRequiresReview && protectedMediaReady) {
+const achievementPublication = homepageAchievementPublicationSummary({ manifest });
+if (achievementPublication.issues.length) {
   throw new Error(
-    "Approval manifest marks pupil media approved, but the homepage still declares publication review required. Resolve the source and manifest together.",
+    `Homepage achievement publication validation failed:\n- ${achievementPublication.issues.join("\n- ")}`,
   );
 }
 
@@ -69,10 +62,6 @@ if (privateReviewMode) {
       "Use `npm run build:review` only for an access-controlled private review.",
       "Private evidence stays outside the repository; add only opaque controlled-record references to the manifest.",
     ].join("\n"),
-  );
-} else if (sourceStillRequiresReview) {
-  throw new Error(
-    "Approval manifest is release-ready, but the homepage still declares publication review required. Remove the review-only presentation through an intentional code change.",
   );
 } else {
   process.stdout.write("Publication approvals: manifest valid and public release ready.\n");
