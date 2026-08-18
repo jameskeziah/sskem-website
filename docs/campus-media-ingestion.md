@@ -46,10 +46,26 @@ gate. They must not be enlarged to imitate missing detail.
    because the browser may not decode their dimensions. The single-record
    `npm run media:inspect -- --record RECORD_ID --input "CONTROLLED_PATH"`
    remains available for isolated diagnosis.
-4. After the inspection passes, prepare a non-public staging set:
-   `npm run media:prepare -- --record media-campus-main --input "CONTROLLED_PATH"`.
-5. Review the generated receipt and responsive variants under
-   `work/media-intake/RECORD_ID`. This directory is ignored by Git.
+4. After the inspection passes, plan the complete non-public staging batch with
+   the same `--report` and four `--input` arguments, replacing the command name
+   with `npm run media:stage-batch`. The default mode reinspects exact bytes and
+   writes nothing. When it reports `ready-for-explicit-write`, repeat it with:
+
+   ```text
+   --apply --acknowledge-local-write=stage-four-verified-campus-masters
+   ```
+
+   All 60 derivatives and five receipts are prepared under a temporary ignored
+   directory first. Only a complete verified set is renamed into
+   `work/media-intake/campus-batch`; one failure removes the whole temporary
+   batch. An existing staging batch is preserved unless `--replace` is
+   explicitly reviewed and supplied. This is private staging only: no manifest,
+   public asset or binding changes.
+5. Review `work/media-intake/campus-batch/batch-intake-receipt.json`, each of the
+   four nested `intake-receipt.json` files and all responsive variants. The
+   complete directory is ignored by Git. The single-record
+   `npm run media:prepare -- --record RECORD_ID --input "CONTROLLED_PATH"`
+   remains available for isolated diagnosis, not the normal four-master handoff.
 6. Complete the record's accuracy, rights, privacy and management-approval
    checks in the controlled system. Generate a digest-bound request with
    `npm run approvals:update -- --record RECORD_ID`, fill only the reviewed

@@ -86,6 +86,12 @@ masters to the downloaded preflight hashes before performing the authoritative
 pipeline inspection. The batch is read-only, fails as one unit and returns a
 privacy-safe result without filenames, paths, derivatives or approval changes.
 
+`npm run media:stage-batch` is the guarded atomic staging batch that follows a
+successful inspection. It plans without writing by default, requires an exact
+local-write acknowledgement, prepares all 60 responsive derivatives in a
+temporary ignored directory and exposes none of them unless the complete
+four-record batch succeeds. It cannot grant approval or write public media.
+
 The authenticated `/publication-review/campus-approval-batch` workspace turns
 the four campus approval templates into one browser-only bundle while keeping
 every record's checks, evidence references, role and confirmation independent.

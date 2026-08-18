@@ -149,6 +149,10 @@ notes. Do not store consent evidence in the public web repository.
   It requires the exact four preflight hashes and controlled local masters,
   fails the entire batch on any byte mismatch or ineligible image, and emits no
   filename, path, derivative, approval or publication change.
+- After inspection, use the guarded atomic four-master staging workflow. Its
+  default mode is read-only; the acknowledged write prepares every responsive
+  derivative in one temporary batch and exposes it for private review only when
+  all four records succeed. It never grants approval or writes public media.
 - Activate those derivatives through the guarded command in
   `docs/campus-media-ingestion.md`; do not paste hashes into
   `content/campus-media-publication-bindings.json` manually. The homepage must
