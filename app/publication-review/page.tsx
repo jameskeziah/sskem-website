@@ -264,6 +264,10 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <div><p className="eyebrow">Recommended first batch</p><h2 id="review-first-batch-title">Approve the four campus photographs first.</h2></div>
               <p>They unlock the strongest homepage imagery without waiting for pupil-result consent and verification.</p>
             </div>
+            <div className="review-first-batch__actions">
+              <p>Complete all four decisions separately and download one bundle for a guarded, all-or-nothing local plan.</p>
+              <Link className="button button--primary" href="/publication-review/campus-approval-batch">Complete campus approval batch</Link>
+            </div>
             <div className="review-card-grid">
               {firstReviewBatch.map((record) => <ReviewCard record={record} recommended key={record.id} />)}
             </div>

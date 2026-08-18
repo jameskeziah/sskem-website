@@ -239,6 +239,31 @@ test("server-renders a digest-bound approval workspace without preselected decis
   assert.doesNotMatch(html, /reviewer@example\.test/i);
 });
 
+test("server-renders the four-record campus batch without shared or preselected decisions", async () => {
+  const authentication = {
+    accept: "text/html",
+    "oai-authenticated-user-id": "reviewer-test-id",
+    "oai-authenticated-user-email": "reviewer@example.test",
+  };
+  const response = await render("/publication-review/campus-approval-batch", authentication);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+
+  const html = await response.text();
+  const readableText = textContent(html);
+  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
+  assert.match(readableText, /Campus approval batch/i);
+  assert.match(readableText, /Four independent decisions; one guarded handoff\./i);
+  assert.match(readableText, /Capture → inspect → verify → approve → prepare → activate\./i);
+  assert.equal((html.match(/<section\b[^>]*class=["'][^"']*campus-batch-record[^"']*["']/gi) ?? []).length, 4);
+  assert.equal((html.match(/<img\b[^>]*current uncropped prototype reference/gi) ?? []).length, 4);
+  assert.equal((html.match(/<select\b[^>]*name=["']media-campus-[^"']+:check:/gi) ?? []).length, 16);
+  assert.doesNotMatch(html, /<option\b[^>]*value=["'](?:verified|not-applicable)["'][^>]*\bselected/i);
+  assert.doesNotMatch(html, /<input\b[^>]*type=["'](?:radio|checkbox)["'][^>]*\bchecked(?:=|\s|>)/i);
+  assert.match(html, /name=["']batchConfirmation["']/i);
+  assert.doesNotMatch(html, /reviewer@example\.test/i);
+});
+
 test("serves exact unfilled approval requests only to authenticated private reviewers", async () => {
   const pathname = "/publication-review/approval-request/media-campus-main";
   const anonymous = await render(pathname, { accept: "application/json" });

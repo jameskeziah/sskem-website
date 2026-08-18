@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/campus-approval-batch-request.schema.json",
+  "title": "SSKEMS controlled campus approval batch request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batchVersion", "batchId", "generatedAt", "requests"],
+  "properties": {
+    "batchVersion": { "const": 1 },
+    "batchId": { "const": "sskem-campus-media-approval-batch" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "requests": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "$ref": "./approval-update-request.schema.json" },
+      "allOf": [
+        { "contains": { "properties": { "recordId": { "const": "media-campus-main" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "media-campus-grounds" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "media-campus-entrance" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "media-campus-courtyard" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 }
+      ]
+    }
+  }
+}

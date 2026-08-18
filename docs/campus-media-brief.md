@@ -152,6 +152,13 @@ attach actual evidence only in the school's controlled approval system and put
 its opaque record reference in the manifest. The table below remains a human
 capture checklist, not the release source of truth.
 
+For the four campus exterior records, the private
+`/publication-review/campus-approval-batch` workspace can prepare one controlled
+JSON handoff after each photograph has been reviewed independently. The local
+batch planner is read-only by default and fails the complete batch if any one
+record is missing, duplicated, stale or incomplete. Batch completion does not
+replace master inspection or exact derivative activation.
+
 | Asset group | Accuracy | Consent | Rights/source | Institutional claim | Management approval | Publish |
 | --- | --- | --- | --- | --- | --- | --- |
 | Campus exteriors | ☐ | N/A unless people identifiable | ☐ | ☐ | ☐ | Blocked |

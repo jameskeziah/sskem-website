@@ -73,6 +73,14 @@ and current exact bindings, so the photographer handoff cannot silently drift
 from publication requirements. It requests exterior photography only and omits
 controlled source paths, evidence and approver identities.
 
+The authenticated `/publication-review/campus-approval-batch` workspace turns
+the four campus approval templates into one browser-only bundle while keeping
+every record's checks, evidence references, role and confirmation independent.
+Nothing is preselected or sent to the server. The bundle is reviewed with
+`npm run approvals:campus-batch -- --request "CONTROLLED_BATCH_PATH"`; only a
+separate exact acknowledgement makes an atomic all-or-nothing manifest write
+available, and that write records rather than grants the supplied approvals.
+
 The same private editorial screen provides a first announcement intake packet.
 Because no authoritative announcement copy has been supplied, it contains no
 placeholder text or draft and reports `source-required`; real copy still needs

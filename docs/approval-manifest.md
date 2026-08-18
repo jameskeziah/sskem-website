@@ -149,6 +149,26 @@ sends no decision fields to the server: validation and the JSON download happen
 locally in the browser. Retain the downloaded request in the controlled system,
 then use the local planner below for the authoritative digest check.
 
+## Campus approval batch
+
+The authenticated `/publication-review/campus-approval-batch` workspace covers
+only the canonical four `campus-media` records. It keeps every check, evidence
+reference, role, expiry and record confirmation separate, requires a final batch
+confirmation, and downloads one bundle entirely in the browser. No field is
+preselected, no decision reaches the server and no approval or activation is
+performed.
+
+Review the completed bundle without writing:
+
+`npm run approvals:campus-batch -- --request "CONTROLLED_BATCH_PATH"`
+
+If every record is current and independently complete, the plan reports
+`ready-for-explicit-atomic-write`. Recording the supplied decisions later
+requires the exact acknowledgement printed by the command. A missing, duplicate,
+stale or invalid record blocks the whole operation and leaves the manifest
+unchanged. The batch cannot activate derivatives, approve a production master,
+or replace the separate capture, inspection, publication and activation gates.
+
 Use `npm run poster:decision-plan -- --request "CONTROLLED_REQUEST_PATH"` to
 validate a completed poster packet. The planner is read-only and fail-closed: it
 checks exact contract and approval-record digests, all acknowledgements, opaque

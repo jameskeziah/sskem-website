@@ -1,0 +1,240 @@
+.campus-batch-toolbar {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+  justify-content: space-between;
+  margin-top: var(--space-24);
+}
+
+.campus-batch-toolbar a {
+  font-weight: var(--font-weight-bold);
+}
+
+.campus-batch-sequence {
+  background: var(--color-brand-950);
+  border-radius: var(--radius-large);
+  color: var(--text-on-brand);
+  display: grid;
+  gap: var(--space-32);
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
+  margin-top: clamp(var(--space-48), 7vw, var(--space-96));
+  padding: clamp(var(--space-24), 5vw, var(--space-48));
+}
+
+.campus-batch-sequence .eyebrow,
+.campus-batch-sequence p {
+  color: inherit;
+}
+
+.campus-batch-sequence h2,
+.campus-batch-submit h2 {
+  font-family: var(--font-family-heading);
+  font-size: clamp(var(--font-size-500), 4vw, var(--font-size-700));
+  letter-spacing: -0.035em;
+  line-height: 1;
+  margin: var(--space-8) 0 0;
+}
+
+.campus-batch-sequence p {
+  line-height: 1.6;
+  margin: 0;
+}
+
+.campus-batch-form {
+  display: grid;
+  gap: var(--space-48);
+  margin-top: clamp(var(--space-48), 7vw, var(--space-96));
+}
+
+.campus-batch-record,
+.campus-batch-submit {
+  background: var(--surface-raised);
+  border: var(--border-width-default) solid var(--border-default);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-small);
+  overflow: hidden;
+}
+
+.campus-batch-record__header {
+  display: grid;
+  gap: var(--space-24);
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.8fr);
+  padding: clamp(var(--space-24), 4vw, var(--space-40));
+}
+
+.campus-batch-record__header span {
+  color: var(--text-secondary);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.campus-batch-record__header h2 {
+  font-family: var(--font-family-heading);
+  font-size: clamp(var(--font-size-500), 3vw, var(--font-size-700));
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: var(--space-12) 0 var(--space-8);
+}
+
+.campus-batch-record__header p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.campus-batch-reference {
+  background: var(--surface-subtle);
+  border-block: var(--border-width-default) solid var(--border-default);
+  margin: 0;
+  padding: var(--space-24);
+}
+
+.campus-batch-reference img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.campus-batch-reference figcaption {
+  color: var(--text-secondary);
+  font-size: var(--font-size-200);
+  line-height: 1.5;
+  margin-top: var(--space-12);
+}
+
+.campus-batch-record fieldset {
+  border: 0;
+  border-bottom: var(--border-width-default) solid var(--border-default);
+  margin: 0;
+  padding: clamp(var(--space-24), 4vw, var(--space-40));
+}
+
+.campus-batch-record legend {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-500);
+  font-weight: var(--font-weight-bold);
+  padding: 0;
+}
+
+.campus-batch-check-grid,
+.campus-batch-field-grid {
+  display: grid;
+  gap: var(--space-16);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: var(--space-24);
+}
+
+.campus-batch-check-grid > label,
+.campus-batch-field-grid > label {
+  display: grid;
+  font-weight: var(--font-weight-bold);
+  gap: var(--space-8);
+}
+
+.campus-batch-check-grid > label > span {
+  text-transform: capitalize;
+}
+
+.campus-batch-check-grid select,
+.campus-batch-field-grid input,
+.campus-batch-field-grid textarea,
+.campus-batch-date input {
+  background: var(--surface-page);
+  border: var(--border-width-default) solid var(--border-strong);
+  border-radius: var(--radius-medium);
+  color: var(--text-primary);
+  min-height: 3rem;
+  padding: var(--space-12);
+}
+
+.campus-batch-field-grid textarea {
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.campus-batch-evidence {
+  grid-row: span 2;
+}
+
+.campus-batch-fields > p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: var(--space-12) 0 0;
+}
+
+.campus-batch-expiry {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.campus-batch-expiry > span,
+.campus-batch-date {
+  font-weight: var(--font-weight-bold);
+}
+
+.campus-batch-expiry > label:not(.campus-batch-date),
+.campus-batch-record-confirmation,
+.campus-batch-final-confirmation {
+  align-items: start;
+  cursor: pointer;
+  display: flex;
+  gap: var(--space-12);
+}
+
+.campus-batch-date {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.campus-batch-record-confirmation {
+  background: var(--color-brand-50);
+  padding: var(--space-24) clamp(var(--space-24), 4vw, var(--space-40));
+}
+
+.campus-batch-expiry input[type="radio"],
+.campus-batch-record-confirmation input,
+.campus-batch-final-confirmation input {
+  block-size: 1.25rem;
+  flex: 0 0 auto;
+  inline-size: 1.25rem;
+  margin-top: 0.1rem;
+}
+
+.campus-batch-submit {
+  border-color: var(--status-warning);
+  display: grid;
+  gap: var(--space-24);
+  padding: clamp(var(--space-24), 4vw, var(--space-40));
+}
+
+.campus-batch-submit p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.campus-batch-submit .button {
+  justify-self: start;
+}
+
+.campus-batch-message:empty {
+  display: none;
+}
+
+@media (max-width: 48rem) {
+  .campus-batch-sequence,
+  .campus-batch-record__header,
+  .campus-batch-check-grid,
+  .campus-batch-field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .campus-batch-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
