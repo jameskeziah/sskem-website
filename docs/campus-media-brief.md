@@ -145,6 +145,10 @@ notes. Do not store consent evidence in the public web repository.
   uploads or modifies a master. Its downloaded hash-only report is advisory:
   the local inspector remains authoritative for colour space, metadata and
   still-image checks.
+- Use the read-only authoritative batch inspector after that browser handoff.
+  It requires the exact four preflight hashes and controlled local masters,
+  fails the entire batch on any byte mismatch or ineligible image, and emits no
+  filename, path, derivative, approval or publication change.
 - Activate those derivatives through the guarded command in
   `docs/campus-media-ingestion.md`; do not paste hashes into
   `content/campus-media-publication-bindings.json` manually. The homepage must

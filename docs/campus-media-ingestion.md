@@ -32,12 +32,20 @@ gate. They must not be enlarged to imitate missing detail.
    in the tab; nothing is uploaded, persisted, renamed, cropped or rewritten.
    Download the hash-only report for the controlled handoff. A blocked report
    is still useful evidence of what the photographer must replace.
-3. Inspect each master without writing derivatives:
-   `npm run media:inspect -- --record media-campus-main --input "CONTROLLED_PATH"`.
-   This is the authoritative step: it checks actual format, dimensions, colour
-   space, animation/multipage state and embedded-metadata indicators. Browser
-   preflight does not replace it, and TIFF files may require this step because
-   the browser may not decode their dimensions.
+3. Run the authoritative four-master inspection without writing derivatives:
+
+   ```text
+   npm run media:inspect-batch -- --report "CONTROLLED_PREFLIGHT_PATH" --input "media-campus-main=CONTROLLED_MASTER_PATH" --input "media-campus-grounds=CONTROLLED_MASTER_PATH" --input "media-campus-entrance=CONTROLLED_MASTER_PATH" --input "media-campus-courtyard=CONTROLLED_MASTER_PATH"
+   ```
+
+   The command first requires every local file's SHA-256 and byte count to match
+   the browser report, then inspects all four actual formats, dimensions, colour
+   spaces, animation/multipage state and embedded-metadata indicators. One
+   mismatch fails the entire batch. Its JSON output stores no filename or path,
+   writes nothing and grants no approval. TIFF files may require this step
+   because the browser may not decode their dimensions. The single-record
+   `npm run media:inspect -- --record RECORD_ID --input "CONTROLLED_PATH"`
+   remains available for isolated diagnosis.
 4. After the inspection passes, prepare a non-public staging set:
    `npm run media:prepare -- --record media-campus-main --input "CONTROLLED_PATH"`.
 5. Review the generated receipt and responsive variants under

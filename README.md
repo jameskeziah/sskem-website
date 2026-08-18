@@ -81,6 +81,11 @@ the files and does not persist anything. The report is advisory; authoritative
 colour-space, metadata and still-image inspection remains the local
 `media:inspect` step.
 
+`npm run media:inspect-batch` closes that handoff by matching all four local
+masters to the downloaded preflight hashes before performing the authoritative
+pipeline inspection. The batch is read-only, fails as one unit and returns a
+privacy-safe result without filenames, paths, derivatives or approval changes.
+
 The authenticated `/publication-review/campus-approval-batch` workspace turns
 the four campus approval templates into one browser-only bundle while keeping
 every record's checks, evidence references, role and confirmation independent.

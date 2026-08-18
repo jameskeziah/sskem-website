@@ -87,7 +87,7 @@ export default async function CampusMasterPreflightPage() {
               <p className="eyebrow">Required next gate</p>
               <h2 id="campus-preflight-next-title">Run the authoritative local inspection.</h2>
             </div>
-            <p>A ready browser report is advisory, not an intake receipt. For each controlled master, run <code>npm run media:inspect -- --record RECORD_ID --input &quot;CONTROLLED_PATH&quot;</code>. That local step verifies the actual format, dimensions, colour space, still-image state and metadata indicators.</p>
+            <p>A ready browser report is advisory, not an intake receipt. Run <code>npm run media:inspect-batch -- --report &quot;PREFLIGHT.json&quot; --input &quot;RECORD_ID=CONTROLLED_PATH&quot;</code>, repeating <code>--input</code> for all four records. The read-only local batch verifies every exact digest before it checks actual format, dimensions, colour space, still-image state and metadata indicators.</p>
           </section>
         </PageContainer>
       </main>
