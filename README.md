@@ -106,6 +106,14 @@ delivery decision packet. Private reviewers can also download it from the
 publication dashboard after authentication. It preselects no option, creates no
 candidate and cannot approve or publish the poster.
 
+The authenticated `/publication-review/poster-delivery-decision-workspace`
+turns that packet into a no-persistence management worksheet. It preselects
+nothing, requires all four boundaries plus an opaque controlled-record
+reference and role, validates the exact current template in the browser, and
+downloads only the completed JSON request. Decision fields never leave the
+browser; the worksheet does not persist data, record a binding, generate a
+candidate or grant publication approval.
+
 After management completes that packet in the controlled system, run
 `npm run poster:decision-plan -- --request "CONTROLLED_REQUEST_PATH"`. The
 planner rejects stale digests, missing acknowledgements, private evidence paths,

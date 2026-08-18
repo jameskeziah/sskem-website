@@ -195,7 +195,8 @@ test("publishes both schemas, plan-only commands, authenticated route and privat
   assert.match(route, /getChatGPTUser/);
   assert.match(route, /private, no-store/);
   assert.match(route, /default-src 'none'; sandbox/);
-  assert.match(page, /Download poster decision packet/);
+  assert.match(page, /Complete decision worksheet/);
+  assert.match(page, /Download blank poster packet/);
   assert.match(guide, /poster:decision-request/);
   assert.match(guide, /poster:decision-plan/);
   assert.match(planner, /has no apply mode/);

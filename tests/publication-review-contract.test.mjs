@@ -9,7 +9,7 @@ async function source(path) {
 }
 
 test("builds the reviewer queue directly from the canonical approval manifest", async () => {
-  const [data, page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, campusPacketRoute, posterDecisionRoute, approvalRequestRoute, migrationConfig, announcementConfig, cutoverData, manifestText] = await Promise.all([
+  const [data, page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, campusPacketRoute, posterDecisionRoute, posterDecisionWorkspace, posterDecisionWorkspaceClient, approvalRequestRoute, migrationConfig, announcementConfig, cutoverData, manifestText] = await Promise.all([
     source("app/data/publication-approval.ts"),
     source("app/publication-review/page.tsx"),
     source("app/publication-review/export/route.ts"),
@@ -20,6 +20,8 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
     source("app/publication-review/editorial-announcement-packet/route.ts"),
     source("app/publication-review/campus-media-packet/route.ts"),
     source("app/publication-review/poster-delivery-decision/route.ts"),
+    source("app/publication-review/poster-delivery-decision-workspace/page.tsx"),
+    source("app/publication-review/poster-delivery-decision-workspace/decision-workspace-form.tsx"),
     source("app/publication-review/approval-request/[recordId]/route.ts"),
     source("content/editorial-site-settings-migration.json"),
     source("content/editorial-announcement-intake.json"),
@@ -51,8 +53,10 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /Poster optimization/);
   assert.match(page, /Decision binding/);
   assert.match(page, /homepagePosterDeliveryDecisionBindingSummary/);
-  assert.match(page, /Download poster decision packet/);
+  assert.match(page, /Complete decision worksheet/);
+  assert.match(page, /Download blank poster packet/);
   assert.match(page, /\/publication-review\/poster-delivery-decision/);
+  assert.match(page, /\/publication-review\/poster-delivery-decision-workspace/);
   assert.match(page, /npm run poster:inspect/);
   assert.match(page, /npm run poster:decision-plan/);
   assert.match(page, /npm run poster:decision-record/);
@@ -92,6 +96,10 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(announcementPacketRoute, /createAnnouncementMigrationPacket/);
   assert.match(campusPacketRoute, /createCampusMediaCapturePacket/);
   assert.match(posterDecisionRoute, /createHomepagePosterDeliveryDecisionDownload/);
+  assert.match(posterDecisionWorkspace, /No option is preselected/);
+  assert.match(posterDecisionWorkspace, /requireChatGPTUser\("\/publication-review\/poster-delivery-decision-workspace"\)/);
+  assert.match(posterDecisionWorkspaceClient, /createHomepagePosterDeliveryDecisionCompletion/);
+  assert.match(posterDecisionWorkspaceClient, /URL\.createObjectURL/);
   assert.match(approvalRequestRoute, /createApprovalRequestDownload\(recordId\)/);
   assert.match(approvalRequestRoute, /content-disposition/);
   assert.match(migrationConfig, /claim-complete-address/);
@@ -103,7 +111,7 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
 });
 
 test("keeps the dashboard, worksheet and private evidence outside public delivery", async () => {
-  const [page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, campusPacketRoute, posterDecisionRoute, approvalRequestRoute, sitemap, guide] = await Promise.all([
+  const [page, route, cutoverRoute, editorialPage, editorialRoute, packetRoute, announcementPacketRoute, campusPacketRoute, posterDecisionRoute, posterDecisionWorkspace, posterDecisionWorkspaceClient, approvalRequestRoute, sitemap, guide] = await Promise.all([
     source("app/publication-review/page.tsx"),
     source("app/publication-review/export/route.ts"),
     source("app/publication-review/cutover-export/route.ts"),
@@ -113,6 +121,8 @@ test("keeps the dashboard, worksheet and private evidence outside public deliver
     source("app/publication-review/editorial-announcement-packet/route.ts"),
     source("app/publication-review/campus-media-packet/route.ts"),
     source("app/publication-review/poster-delivery-decision/route.ts"),
+    source("app/publication-review/poster-delivery-decision-workspace/page.tsx"),
+    source("app/publication-review/poster-delivery-decision-workspace/decision-workspace-form.tsx"),
     source("app/publication-review/approval-request/[recordId]/route.ts"),
     source("app/sitemap.ts"),
     source("docs/approval-manifest.md"),
@@ -142,6 +152,10 @@ test("keeps the dashboard, worksheet and private evidence outside public deliver
   assert.match(posterDecisionRoute, /getChatGPTUser\(\)[\s\S]*?status:\s*401/);
   assert.match(posterDecisionRoute, /["']cache-control["']:\s*["']private, no-store["']/);
   assert.match(posterDecisionRoute, /["']content-security-policy["']:\s*["']default-src 'none'; sandbox["']/);
+  assert.match(posterDecisionWorkspace, /process\.env\.HOMEPAGE_REVIEW_MODE !== ["']private["'][\s\S]*?notFound\(\)/);
+  assert.match(posterDecisionWorkspace, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false,\s*nocache:\s*true\s*\}/);
+  assert.match(posterDecisionWorkspaceClient, /event\.preventDefault\(\)/);
+  assert.doesNotMatch(posterDecisionWorkspaceClient, /fetch\(|method=["']post/i);
   assert.match(approvalRequestRoute, /process\.env\.HOMEPAGE_REVIEW_MODE !== ["']private["'][\s\S]*?status:\s*404/);
   assert.match(approvalRequestRoute, /getChatGPTUser\(\)[\s\S]*?status:\s*401/);
   assert.match(approvalRequestRoute, /["']cache-control["']:\s*["']private, no-store["']/);

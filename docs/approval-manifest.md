@@ -134,6 +134,12 @@ budget change or publication. The completed request and supporting evidence
 remain in the school-controlled system; the existing poster approval record is
 still the publication source of truth.
 
+The companion `/publication-review/poster-delivery-decision-workspace` provides
+an authenticated browser-only completion form. It preselects no option and
+sends no decision fields to the server: validation and the JSON download happen
+locally in the browser. Retain the downloaded request in the controlled system,
+then use the local planner below for the authoritative digest check.
+
 Use `npm run poster:decision-plan -- --request "CONTROLLED_REQUEST_PATH"` to
 validate a completed poster packet. The planner is read-only and fail-closed: it
 checks exact contract and approval-record digests, all acknowledgements, opaque

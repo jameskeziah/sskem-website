@@ -158,6 +158,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /npm run poster:decision-plan/i);
   assert.match(readableText, /npm run poster:decision-record/i);
   assert.match(readableText, /Neither default mode writes/i);
+  assert.match(readableText, /Complete decision worksheet/i);
   assert.match(readableText, /pixel-identical lossless candidate/i);
   assert.match(readableText, /separate approved art-direction decision/i);
   assert.match(readableText, /Media release Blocked/i);
@@ -172,6 +173,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(html, /href=["']\/publication-review\/export["']/i);
   assert.match(html, /href=["']\/publication-review\/campus-media-packet["']/i);
   assert.match(html, /href=["']\/publication-review\/poster-delivery-decision["']/i);
+  assert.match(html, /href=["']\/publication-review\/poster-delivery-decision-workspace["']/i);
   assert.match(readableText, /completed requests and approver identities outside the website/i);
   assert.match(readableText, /Evidence stays in the school’s controlled system\./i);
   assert.match(readableText, /Editorial CMS/i);
@@ -184,6 +186,30 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /33 Mapped directly to final modern routes\./i);
   assert.match(html, /href=["']\/publication-review\/cutover-export["']/i);
   assert.doesNotMatch(html, /style=["'][^"']*(?:opacity\s*:\s*0|visibility\s*:\s*hidden)/i);
+});
+
+test("server-renders the authenticated poster decision worksheet without a preselected scope", async () => {
+  const authentication = {
+    accept: "text/html",
+    "oai-authenticated-user-id": "reviewer-test-id",
+    "oai-authenticated-user-email": "reviewer@example.test",
+  };
+  const response = await render("/publication-review/poster-delivery-decision-workspace", authentication);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+
+  const html = await response.text();
+  const readableText = textContent(html);
+  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
+  assert.match(readableText, /Poster delivery decision/i);
+  assert.match(readableText, /No option is preselected/i);
+  assert.match(readableText, /The worksheet downloads a file; it stores nothing\./i);
+  assert.match(html, /<form\b[^>]*class=["'][^"']*poster-decision-form[^"']*["']/i);
+  assert.doesNotMatch(html, /<form\b[^>]*\baction=/i);
+  assert.equal((html.match(/<input\b[^>]*type=["']radio["'][^>]*name=["']selectedOption["']/gi) ?? []).length, 4);
+  assert.doesNotMatch(html, /<input\b[^>]*type=["']radio["'][^>]*\bchecked(?:=|\s|>)/i);
+  assert.match(html, /name=["']decisionConfirmation["']/i);
+  assert.doesNotMatch(html, /reviewer@example\.test/i);
 });
 
 test("serves exact unfilled approval requests only to authenticated private reviewers", async () => {

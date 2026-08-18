@@ -50,6 +50,15 @@ the publication dashboard. It offers four explicit scopes—hold the PNG, review
 lossless formats, review controlled encoding, or commission a separate artwork
 revision brief—but preselects none of them and generates no candidate.
 
+Authenticated management reviewers can instead use
+`/publication-review/poster-delivery-decision-workspace`. The HTML form
+preselects no scope, requires the four canonical acknowledgements, accepts only
+opaque controlled-record references and a lowercase role identifier, and uses
+the browser completion time as `approvedAt`. The browser validates the current
+template and downloads the completed request without submitting the decision
+fields to a server. The guarded local planner remains the authoritative digest
+check before recording; the worksheet performs no persistence or repository write.
+
 Keep the completed request and private evidence in the school-controlled
 system. The repository and download contain only the empty request template,
 public-safe hashes and opaque evidence-reference fields.

@@ -265,6 +265,14 @@
   color: var(--text-secondary);
 }
 
+.review-media-intake__links {
+  align-items: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
 .review-cutover {
   background: var(--color-brand-950);
   border-radius: var(--radius-large);
@@ -900,6 +908,10 @@
   .editorial-review-toolbar .button,
   .editorial-review-card__status {
     align-self: flex-start;
+  }
+
+  .review-media-intake__links {
+    width: 100%;
   }
 
   .editorial-review-card__meta {

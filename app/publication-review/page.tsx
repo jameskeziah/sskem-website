@@ -277,8 +277,11 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
             </dl>
             <div className="review-media-intake__actions">
               <p>Run <code>npm run performance:audit</code> before public release. Use <code>npm run poster:inspect</code> to measure a pixel-identical lossless candidate without writing it. Because that candidate still exceeds the current budget, a format or pixel change requires a separate approved art-direction decision. A completed packet can be checked with <code>npm run poster:decision-plan</code>, then proposed for an explicit public-safe binding with <code>npm run poster:decision-record</code>. Neither default mode writes.</p>
-              <Link className="button button--quiet" href="/publication-review/poster-delivery-decision">Download poster decision packet</Link>
-              <Link className="button button--quiet" href="/publication-review/campus-media-packet">Download campus capture packet</Link>
+              <div className="review-media-intake__links">
+                <Link className="button button--primary" href="/publication-review/poster-delivery-decision-workspace">Complete decision worksheet</Link>
+                <Link className="button button--quiet" href="/publication-review/poster-delivery-decision">Download blank poster packet</Link>
+                <Link className="button button--quiet" href="/publication-review/campus-media-packet">Download campus capture packet</Link>
+              </div>
             </div>
           </section>
 
