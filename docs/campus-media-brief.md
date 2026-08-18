@@ -153,6 +153,11 @@ notes. Do not store consent evidence in the public web repository.
   default mode is read-only; the acknowledged write prepares every responsive
   derivative in one temporary batch and exposes it for private review only when
   all four records succeed. It never grants approval or writes public media.
+- The first-publication planner follows private review and all four approvals.
+  It verifies every staged derivative again, requires empty public targets and
+  an empty campus binding registry, and produces the exact four-binding
+  projection. It is permanently read-only and refuses replacement, approval,
+  activation and deployment operations.
 - Activate those derivatives through the guarded command in
   `docs/campus-media-ingestion.md`; do not paste hashes into
   `content/campus-media-publication-bindings.json` manually. The homepage must

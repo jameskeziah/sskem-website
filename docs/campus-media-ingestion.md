@@ -72,10 +72,21 @@ gate. They must not be enlarged to imitate missing detail.
    outcomes and opaque references, then review and explicitly apply it through
    the guarded commands in the capture packet. The updater records the supplied
    decision but never grants approval.
-7. Only then may the content owner run
-   `npm run media:publish -- --record RECORD_ID --input "CONTROLLED_PATH"`.
+7. Only after all four media records are currently approved, run
+   `npm run media:publish-batch-plan`. The permanently read-only first-publication
+   planner reopens all 60 staged derivatives, checks their hashes, dimensions,
+   formats, colour spaces and metadata state, requires all four public targets
+   and bindings to be absent, and calculates the exact proposed four-binding
+   registry. It accepts neither `--apply` nor `--replace`.
+8. A `ready-for-explicit-first-publication` plan is evidence that the initial
+   four-record switch can be implemented safely; it is not permission and does
+   not write public files. Do not perform the first homepage campus switch as
+   four independent commands. The existing single-record
+   `npm run media:publish -- --record RECORD_ID --input "CONTROLLED_PATH"`
+   remains available for isolated pipeline diagnosis while the atomic batch
+   executor is a separate guarded build.
 
-The publish command prints a public-safe `bindingProposal` generated from the
+The single-record publish command prints a public-safe `bindingProposal` generated from the
 exact public receipt. Do not copy that object into the registry by hand. Review
 the read-only activation plan first:
 

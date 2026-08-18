@@ -92,6 +92,12 @@ local-write acknowledgement, prepares all 60 responsive derivatives in a
 temporary ignored directory and exposes none of them unless the complete
 four-record batch succeeds. It cannot grant approval or write public media.
 
+`npm run media:publish-batch-plan` is the permanently read-only
+first-publication planner. After private review and all four approvals, it
+reopens every staged derivative, requires all four live targets and bindings to
+be absent, and calculates one exact four-binding registry projection. It accepts
+no apply or replacement flag and performs no public write or deployment.
+
 The authenticated `/publication-review/campus-approval-batch` workspace turns
 the four campus approval templates into one browser-only bundle while keeping
 every record's checks, evidence references, role and confirmation independent.
