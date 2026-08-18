@@ -1,0 +1,14 @@
+{
+  "$schema": "./homepage-poster-delivery-decision-bindings.schema.json",
+  "schemaVersion": 1,
+  "registryId": "sskem-homepage-poster-delivery-decision-bindings",
+  "policy": {
+    "exactDecisionContractDigestRequired": true,
+    "exactApprovalRecordDigestRequired": true,
+    "completedRequestDigestRequired": true,
+    "controlledEvidenceRetainedExternally": true,
+    "publicActivationAllowed": false,
+    "notes": "A binding records only the exact selected private review authority. Completed requests, evidence and approver identities remain in the school-controlled system; publication approval stays separate."
+  },
+  "bindings": []
+}

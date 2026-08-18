@@ -21,6 +21,7 @@ npm run poster:inspect
 npm run poster:prepare
 npm run poster:decision-request
 npm run poster:decision-plan -- --request "CONTROLLED_REQUEST_PATH"
+npm run poster:decision-record -- --request "CONTROLLED_REQUEST_PATH"
 ```
 
 `poster:inspect` is read-only. `poster:prepare` writes only to the ignored
@@ -64,6 +65,21 @@ The planner has no apply mode. It cannot record the decision, modify the
 manifest, generate a candidate, alter the source, raise the budget or publish.
 Its `ready-for-controlled-recording` status means only that the completed
 request is internally consistent and may be retained by the controlled system.
+
+The decision-binding registry at
+`content/homepage-poster-delivery-decision-bindings.json` starts empty. The
+`poster:decision-record` command is also plan-only by default. It proposes one
+binding containing the exact contract, approval-record and completed-request
+hashes; the selected scope; one opaque decision reference; the approving role;
+and timestamps. It never copies the completed request or supporting evidence.
+
+An explicit apply flag and the command's exact local-write acknowledgement are
+required to record a first binding. A different binding is refused unless the
+operator also supplies `--replace` after reviewing the new completed request.
+Recording a binding authorizes only that private review scope: it does not
+generate a candidate, change the source or budget, update the publication
+manifest, or grant publication approval. The current canonical registry remains
+empty until such an independently approved request exists.
 
 ## Decision boundary
 

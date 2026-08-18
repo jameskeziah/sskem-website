@@ -4,8 +4,6 @@ import manifestData from "../content/approval-manifest.json" with { type: "json"
 import decisionData from "../content/homepage-poster-delivery-decision.json" with { type: "json" };
 import performanceBudgetData from "../content/homepage-media-performance-budget.json" with { type: "json" };
 
-import { approvalRecordDigest } from "./approval-manifest-update.mjs";
-
 type DecisionContract = typeof decisionData;
 type ApprovalManifest = typeof manifestData;
 
@@ -40,6 +38,11 @@ function sha256(value: string) {
   return createHash("sha256").update(value).digest("hex");
 }
 
+function approvalRecordDigest(record: unknown) {
+  if (!isRecord(record)) throw new Error("Poster approval record digest requires one record.");
+  return sha256(JSON.stringify(record));
+}
+
 function isoDateTime(value: Date | string | number | undefined) {
   const date = value instanceof Date ? value : new Date(value ?? Date.now());
   if (Number.isNaN(date.getTime())) throw new Error("Poster delivery decision packet requires a valid generation time.");
@@ -54,6 +57,11 @@ function validDateTime(value: unknown): value is string {
 
 export function homepagePosterDeliveryDecisionDigest(contract: DecisionContract = decisionData) {
   return sha256(JSON.stringify(contract));
+}
+
+export function homepagePosterDeliveryDecisionRequestDigest(request: unknown) {
+  if (!isRecord(request)) throw new Error("Poster delivery decision request digest requires one JSON object.");
+  return sha256(JSON.stringify(request));
 }
 
 export function validateHomepagePosterDeliveryDecisionContract(contract: unknown = decisionData) {
@@ -298,6 +306,7 @@ export function createHomepagePosterDeliveryDecisionPlan(options: {
       publicActivationAllowed: false,
     } : null,
     controlledRecord: {
+      completedRequestDigest: status === "ready-for-controlled-recording" ? homepagePosterDeliveryDecisionRequestDigest(request) : null,
       evidenceReferencesRecorded: Array.isArray(request.evidenceReferences) ? request.evidenceReferences.length : 0,
       approvedByRole: typeof request.approvedByRole === "string" && rolePattern.test(request.approvedByRole) ? request.approvedByRole : null,
       approvedAt: validDateTime(request.approvedAt) ? request.approvedAt : null,

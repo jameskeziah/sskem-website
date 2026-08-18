@@ -49,12 +49,14 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /Exact activation/);
   assert.match(page, /Hero transfer/);
   assert.match(page, /Poster optimization/);
-  assert.match(page, /Delivery decision/);
+  assert.match(page, /Decision binding/);
+  assert.match(page, /homepagePosterDeliveryDecisionBindingSummary/);
   assert.match(page, /Download poster decision packet/);
   assert.match(page, /\/publication-review\/poster-delivery-decision/);
   assert.match(page, /npm run poster:inspect/);
   assert.match(page, /npm run poster:decision-plan/);
-  assert.match(page, /planner has no apply mode/);
+  assert.match(page, /npm run poster:decision-record/);
+  assert.match(page, /Neither default mode writes/);
   assert.match(page, /pixel-identical lossless candidate/);
   assert.match(page, /separate approved art-direction decision/);
   assert.match(page, /Media release/);

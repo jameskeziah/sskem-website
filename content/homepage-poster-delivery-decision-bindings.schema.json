@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/homepage-poster-delivery-decision-bindings.schema.json",
+  "title": "SSKEMS homepage poster delivery decision bindings",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "registryId", "policy", "bindings"],
+  "properties": {
+    "$schema": { "const": "./homepage-poster-delivery-decision-bindings.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "registryId": { "const": "sskem-homepage-poster-delivery-decision-bindings" },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exactDecisionContractDigestRequired", "exactApprovalRecordDigestRequired", "completedRequestDigestRequired", "controlledEvidenceRetainedExternally", "publicActivationAllowed", "notes"],
+      "properties": {
+        "exactDecisionContractDigestRequired": { "const": true },
+        "exactApprovalRecordDigestRequired": { "const": true },
+        "completedRequestDigestRequired": { "const": true },
+        "controlledEvidenceRetainedExternally": { "const": true },
+        "publicActivationAllowed": { "const": false },
+        "notes": { "type": "string", "minLength": 3 }
+      }
+    },
+    "bindings": {
+      "type": "array",
+      "maxItems": 1,
+      "items": { "$ref": "#/$defs/binding" }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["formatChangeReviewAllowed", "pixelChangeReviewAllowed", "artworkRevisionBriefAllowed", "publicActivationAllowed"],
+      "properties": {
+        "formatChangeReviewAllowed": { "type": "boolean" },
+        "pixelChangeReviewAllowed": { "type": "boolean" },
+        "artworkRevisionBriefAllowed": { "type": "boolean" },
+        "publicActivationAllowed": { "const": false }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bindingId", "decisionId", "decisionContractDigest", "approvalRecordDigest", "completedRequestDigest", "selectedOption", "authority", "decisionReference", "approvedByRole", "approvedAt", "recordedAt", "notes"],
+      "properties": {
+        "bindingId": { "type": "string", "pattern": "^poster-decision-[a-f0-9]{12}$" },
+        "decisionId": { "const": "sskem-homepage-poster-delivery" },
+        "decisionContractDigest": { "$ref": "#/$defs/sha256" },
+        "approvalRecordDigest": { "$ref": "#/$defs/sha256" },
+        "completedRequestDigest": { "$ref": "#/$defs/sha256" },
+        "selectedOption": { "enum": ["hold-current-png", "authorize-lossless-format-review", "authorize-controlled-encoding-review", "commission-artwork-revision-brief"] },
+        "authority": { "$ref": "#/$defs/authority" },
+        "decisionReference": { "type": "string", "pattern": "^[A-Z0-9][A-Z0-9._/-]{2,79}$" },
+        "approvedByRole": { "type": "string", "pattern": "^[a-z][a-z0-9-]{2,63}$" },
+        "approvedAt": { "type": "string", "format": "date-time" },
+        "recordedAt": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string", "minLength": 3 }
+      }
+    }
+  }
+}

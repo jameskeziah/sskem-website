@@ -153,10 +153,11 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /Hero transfer/i);
   assert.match(readableText, /1\.38 MiB \/ 390\.6 KiB/i);
   assert.match(readableText, /Poster optimization Pixel-exact staging/i);
-  assert.match(readableText, /Delivery decision Not recorded/i);
+  assert.match(readableText, /Decision binding 0 of 1 bound/i);
   assert.match(readableText, /npm run poster:inspect/i);
   assert.match(readableText, /npm run poster:decision-plan/i);
-  assert.match(readableText, /planner has no apply mode/i);
+  assert.match(readableText, /npm run poster:decision-record/i);
+  assert.match(readableText, /Neither default mode writes/i);
   assert.match(readableText, /pixel-identical lossless candidate/i);
   assert.match(readableText, /separate approved art-direction decision/i);
   assert.match(readableText, /Media release Blocked/i);

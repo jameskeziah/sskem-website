@@ -140,6 +140,14 @@ checks exact contract and approval-record digests, all acknowledgements, opaque
 evidence references, the role identifier and timestamp. It never echoes the
 evidence references and has no apply, candidate-generation or publication mode.
 
+The companion `poster:decision-record` command proposes a single public-safe
+binding in read-only mode. A later write requires its exact acknowledgement;
+replacing a different binding also requires `--replace`. The empty canonical
+registry stores no decision today. When used, it retains only exact hashes, one
+opaque controlled reference, the selected scope, role and timestamps—never the
+completed request, evidence, identity or source path. A binding is review
+authority only and cannot satisfy the separate poster publication approval.
+
 The linked `/publication-review/editorial` screen reviews exact published
 Sanity revisions without exposing raw CMS records. It produces a downloadable
 binding proposal only after the corresponding claim approval and display

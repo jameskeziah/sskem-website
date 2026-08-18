@@ -112,6 +112,13 @@ planner rejects stale digests, missing acknowledgements, private evidence paths,
 identity-bearing role values and future timestamps. It reports only the exact
 selected review authority and has no apply or image-generation mode.
 
+The canonical poster decision-binding registry starts empty. A completed,
+validated request can be proposed with `npm run poster:decision-record --
+--request "CONTROLLED_REQUEST_PATH"`; default mode is read-only. Recording a
+single public-safe scope later requires the exact acknowledgement shown by the
+command, while replacement additionally requires `--replace`. The registry
+stores only hashes, one opaque decision reference and a role identifier.
+
 Appendix IX PDFs are prepared through the guarded document pipeline documented
 in `docs/document-ingestion.md`. It rejects encrypted or interactive PDFs,
 assesses the text layer, renders every page for review and binds publication to
