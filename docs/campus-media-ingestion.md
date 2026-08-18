@@ -75,16 +75,27 @@ gate. They must not be enlarged to imitate missing detail.
 7. Only after all four media records are currently approved, run
    `npm run media:publish-batch-plan`. The permanently read-only first-publication
    planner reopens all 60 staged derivatives, checks their hashes, dimensions,
-   formats, colour spaces and metadata state, requires all four public targets
-   and bindings to be absent, and calculates the exact proposed four-binding
-   registry. It accepts neither `--apply` nor `--replace`.
+   formats, colour spaces and metadata state, requires the complete production
+   root and all bindings to be absent, and calculates the exact proposed
+   four-binding registry. It accepts neither `--apply` nor `--replace`.
 8. A `ready-for-explicit-first-publication` plan is evidence that the initial
-   four-record switch can be implemented safely; it is not permission and does
-   not write public files. Do not perform the first homepage campus switch as
-   four independent commands. The existing single-record
-   `npm run media:publish -- --record RECORD_ID --input "CONTROLLED_PATH"`
-   remains available for isolated pipeline diagnosis while the atomic batch
-   executor is a separate guarded build.
+   four-record switch is technically ready; it is not permission and does not
+   write public files. Review its `publicationBatchId`, then rerun the guarded
+   executor with that exact ID:
+
+   ```text
+   npm run media:publish-batch -- --publication-batch-id=PLAN_ID --apply --acknowledge-local-write=publish-four-approved-campus-media-records
+   ```
+
+   The command replans first, so stale IDs cannot authorize changed bytes. It
+   copies only the 60 reviewed derivatives and four public-safe receipts into a
+   temporary sibling root, reopens every derivative, rechecks staging and the
+   registry, then exposes the complete root before one exact registry switch.
+   A failure before that registry switch rolls the new root back. Staging is
+   preserved, and the executor cannot replace media, grant approval or deploy.
+   Do not perform the first homepage campus switch as four independent commands.
+   The existing single-record `npm run media:publish -- --record RECORD_ID
+   --input "CONTROLLED_PATH"` remains available for isolated pipeline diagnosis.
 
 The single-record publish command prints a public-safe `bindingProposal` generated from the
 exact public receipt. Do not copy that object into the registry by hand. Review

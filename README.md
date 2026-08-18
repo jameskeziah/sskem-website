@@ -94,9 +94,16 @@ four-record batch succeeds. It cannot grant approval or write public media.
 
 `npm run media:publish-batch-plan` is the permanently read-only
 first-publication planner. After private review and all four approvals, it
-reopens every staged derivative, requires all four live targets and bindings to
-be absent, and calculates one exact four-binding registry projection. It accepts
-no apply or replacement flag and performs no public write or deployment.
+reopens every staged derivative, requires the production root and all bindings
+to be absent, and calculates one exact four-binding registry projection. It
+accepts no apply or replacement flag and performs no public write or deployment.
+
+`npm run media:publish-batch` is the guarded atomic first-publication executor.
+Its default mode replans without writing. An acknowledged write also requires
+the exact reviewed publication-batch ID, prepares and verifies all four public
+sets off-path, rejects staging or registry drift, and rolls back the new public
+root if the one registry activation cannot complete. It supports no replacement,
+approval or deployment operation.
 
 The authenticated `/publication-review/campus-approval-batch` workspace turns
 the four campus approval templates into one browser-only bundle while keeping

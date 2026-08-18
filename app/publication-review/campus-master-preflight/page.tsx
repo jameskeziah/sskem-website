@@ -87,7 +87,7 @@ export default async function CampusMasterPreflightPage() {
               <p className="eyebrow">Required next gate</p>
               <h2 id="campus-preflight-next-title">Run the authoritative local inspection.</h2>
             </div>
-            <p>A ready browser report is advisory, not an intake receipt. Run <code>npm run media:inspect-batch</code>, then <code>npm run media:stage-batch</code> with the same report and four inputs. After private review and all four approvals, <code>npm run media:publish-batch-plan</code> verifies the complete staged bytes, empty public targets and exact four-binding projection without accepting any write flag.</p>
+            <p>A ready browser report is advisory, not an intake receipt. Run <code>npm run media:inspect-batch</code>, then <code>npm run media:stage-batch</code> with the same report and four inputs. After private review and all four approvals, <code>npm run media:publish-batch-plan</code> verifies the complete staged bytes, absent production root and exact four-binding projection. Only its exact reviewed batch ID can unlock the separate guarded <code>npm run media:publish-batch</code> first-publication write.</p>
           </section>
         </PageContainer>
       </main>
