@@ -94,6 +94,13 @@ test("blocks stale, incomplete and identity-bearing requests", async () => {
   assert.match(blockers, /role identifier, never an approver identity/i);
   assert.match(blockers, /cannot be in the future/i);
   assert.doesNotMatch(JSON.stringify(unsafe), /James Smith/);
+
+  const privateLocation = createApprovalUpdatePlan({
+    manifest,
+    request: { ...request, evidenceReferences: ["C:/PRIVATE/CONSENT.PDF"] },
+    now: NOW,
+  });
+  assert.match(privateLocation.blockers.join("\n"), /opaque controlled-record references only/i);
 });
 
 test("keeps template generation and request planning read-only", async () => {

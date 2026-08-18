@@ -29,7 +29,11 @@
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
-      "items": { "type": "string", "pattern": "^[A-Z0-9][A-Z0-9._/-]{2,79}$" }
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z0-9][A-Z0-9._/-]{2,79}$",
+        "not": { "pattern": "^(?:[A-Za-z]:[\\\\/]|file:|https?://|\\\\\\\\)|(?:^|/)\\.\\.?($|/)" }
+      }
     },
     "approvedByRole": { "type": "string", "pattern": "^[a-z][a-z0-9-]{2,63}$" },
     "approvedAt": { "type": "string", "format": "date-time" },

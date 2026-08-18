@@ -68,7 +68,11 @@
         "evidenceReferences": {
           "type": "array",
           "uniqueItems": true,
-          "items": { "type": "string", "pattern": "^[A-Z0-9][A-Z0-9._/-]{2,79}$" }
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z0-9][A-Z0-9._/-]{2,79}$",
+            "not": { "pattern": "^(?:[A-Za-z]:[\\\\/]|file:|https?://|\\\\\\\\)|(?:^|/)\\.\\.?($|/)" }
+          }
         },
         "approvedByRole": { "type": ["string", "null"] },
         "approvedAt": { "type": ["string", "null"], "format": "date-time" },

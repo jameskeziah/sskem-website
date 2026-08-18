@@ -73,6 +73,10 @@ test("stores only opaque evidence references and no private evidence locations",
       assert.doesNotMatch(reference, /@|https?:|\\/i);
     }
   }
+
+  const unsafe = structuredClone(manifest);
+  unsafe.records[0].evidenceReferences = ["C:/PRIVATE/CONSENT.PDF"];
+  assert.ok(validateApprovalManifest(unsafe).some((issue) => issue.code === "unsafe-evidence-reference"));
 });
 
 test("rejects approval without completed checks, evidence, role, and timestamp", async () => {

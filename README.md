@@ -49,10 +49,13 @@ The owner-only review deployment also provides `/publication-review`, a
 manifest-driven approval queue with filters, check progress and a downloadable
 coordination worksheet, plus `/publication-review/editorial` for reviewing the
 exact sanitized Sanity projection and downloading its revision-bound receipt.
-Every approval card also links to an authenticated, unfilled request generated
-from that record's current digest. Downloads are read-only and contain no
-evidence, decision, approver identity or private path; completed requests stay
-in the controlled system and return through the guarded local updater.
+Every approval card also links to an authenticated completion workspace and an
+unfilled request generated from that record's current digest. The workspace
+preselects nothing and downloads a completed JSON request entirely in the
+browser; it sends no decision data to the server and performs no manifest write.
+Downloads contain only decisions, opaque reference IDs and a role identifier;
+completed requests stay in the controlled system and return through the guarded
+local planner and updater.
 These routes are unavailable outside private review mode. The editorial screen
 and receipt endpoint also enforce dispatch-owned ChatGPT sign-in, while the
 private Sites access policy remains the authorization boundary; review mode or

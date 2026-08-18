@@ -121,6 +121,15 @@ requires ChatGPT sign-in. Sign-in identifies a viewer; the private Sites access
 policy remains the workspace authorization boundary. Never upload or store a
 completed request through the website.
 
+Each card also links to
+`/publication-review/approval-request-workspace/RECORD_ID`, an authenticated,
+browser-only completion form for that exact template. It preselects no check,
+expiry or final confirmation, accepts opaque controlled-record references and a
+role identifier only, and downloads the completed JSON locally. It sends no
+decision fields to the server, stores nothing and performs no manifest write.
+Retain the file in the controlled system, then run the read-only `--request`
+plan above before any separately acknowledged local write.
+
 The authenticated `/publication-review/campus-media-packet` download is the
 canonical production handoff for the four campus exterior masters. It derives
 shot roles, technical limits, approval checks and activation status from the

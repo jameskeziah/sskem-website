@@ -213,6 +213,32 @@ test("server-renders the authenticated poster decision worksheet without a prese
   assert.doesNotMatch(html, /reviewer@example\.test/i);
 });
 
+test("server-renders a digest-bound approval workspace without preselected decisions", async () => {
+  const authentication = {
+    accept: "text/html",
+    "oai-authenticated-user-id": "reviewer-test-id",
+    "oai-authenticated-user-email": "reviewer@example.test",
+  };
+  const response = await render("/publication-review/approval-request-workspace/media-campus-main", authentication);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+
+  const html = await response.text();
+  const readableText = textContent(html);
+  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
+  assert.match(readableText, /Complete approval request/i);
+  assert.match(readableText, /Main campus exterior/i);
+  assert.match(readableText, /The worksheet downloads a file; it stores nothing\./i);
+  assert.match(readableText, /Nothing is preselected/i);
+  assert.match(html, /<form\b[^>]*class=["'][^"']*approval-workspace-form[^"']*["']/i);
+  assert.doesNotMatch(html, /<form\b[^>]*\baction=/i);
+  assert.equal((html.match(/<select\b[^>]*name=["']check:/gi) ?? []).length, 4);
+  assert.doesNotMatch(html, /<option\b[^>]*value=["'](?:verified|not-applicable)["'][^>]*\bselected/i);
+  assert.doesNotMatch(html, /<input\b[^>]*type=["']radio["'][^>]*\bchecked(?:=|\s|>)/i);
+  assert.match(html, /name=["']approvalConfirmation["']/i);
+  assert.doesNotMatch(html, /reviewer@example\.test/i);
+});
+
 test("serves exact unfilled approval requests only to authenticated private reviewers", async () => {
   const pathname = "/publication-review/approval-request/media-campus-main";
   const anonymous = await render(pathname, { accept: "application/json" });

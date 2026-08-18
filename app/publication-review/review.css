@@ -622,6 +622,9 @@
 }
 
 .review-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
   border-top: var(--border-width-default) solid var(--border-default);
   margin-top: var(--space-20);
   padding-top: var(--space-16);

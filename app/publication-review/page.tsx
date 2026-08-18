@@ -107,6 +107,13 @@ function ReviewCard({ record, recommended = false }: { record: ApprovalRecord; r
           {recommended ? <p className="review-card__operator"><strong>Guarded update:</strong> after independent review, generate the unfilled request with <code>npm run approvals:update -- --record {record.id}</code>. Template generation does not approve the record.</p> : null}
           <div className="review-card__actions">
             <Link
+              aria-label={`Complete approval request for ${record.title}`}
+              className="button button--primary"
+              href={`/publication-review/approval-request-workspace/${record.id}`}
+            >
+              Complete request
+            </Link>
+            <Link
               aria-label={`Download unfilled approval request for ${record.title}`}
               className="button button--quiet"
               href={`/publication-review/approval-request/${record.id}`}
