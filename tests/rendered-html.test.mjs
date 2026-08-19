@@ -288,6 +288,35 @@ test("server-renders the four-file campus master preflight without upload or per
   assert.doesNotMatch(html, /reviewer@example\.test/i);
 });
 
+test("server-renders the blank twelve-record Appendix IX metadata workspace", async () => {
+  const authentication = {
+    accept: "text/html",
+    "oai-authenticated-user-id": "reviewer-test-id",
+    "oai-authenticated-user-email": "reviewer@example.test",
+  };
+  const response = await render("/publication-review/document-metadata-batch", authentication);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+
+  const html = await response.text();
+  const readableText = textContent(html);
+  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
+  assert.match(readableText, /Document metadata batch/i);
+  assert.match(readableText, /Verify in the controlled system; enter only public metadata here\./i);
+  assert.match(readableText, /Every field starts blank\./i);
+  assert.match(readableText, /Inspect â†’ verify â†’ approve â†’ publish PDF â†’ complete metadata â†’ plan â†’ activate\./i);
+  assert.equal((html.match(/<section\b[^>]*class=["'][^"']*document-metadata-record[^"']*["']/gi) ?? []).length, 12);
+  assert.equal((html.match(/name=["']document-mpd-[bc]-\d:publicFilename["']/gi) ?? []).length, 12);
+  assert.equal((html.match(/<select\b[^>]*name=["']document-mpd-[bc]-\d:(?:status|language)["']/gi) ?? []).length, 24);
+  assert.equal((html.match(/<input\b[^>]*type=["']radio["']/gi) ?? []).length, 72);
+  assert.equal((html.match(/name=["']document-mpd-[bc]-\d:recordConfirmation["']/gi) ?? []).length, 12);
+  assert.match(html, /name=["']batchConfirmation["']/i);
+  assert.doesNotMatch(html, /<form\b[^>]*\baction=/i);
+  assert.doesNotMatch(html, /<option\b[^>]*value=["'](?:current|expiring-soon|English|Marathi|English and Marathi)["'][^>]*\bselected/i);
+  assert.doesNotMatch(html, /<input\b[^>]*type=["'](?:radio|checkbox)["'][^>]*\bchecked(?:=|\s|>)/i);
+  assert.doesNotMatch(html, /reviewer@example\.test/i);
+});
+
 test("serves exact unfilled approval requests only to authenticated private reviewers", async () => {
   const pathname = "/publication-review/approval-request/media-campus-main";
   const anonymous = await render(pathname, { accept: "application/json" });

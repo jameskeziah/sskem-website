@@ -429,6 +429,17 @@
   padding: var(--space-16) var(--space-20);
 }
 
+.review-document-intake__actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+}
+
+.review-document-intake__actions .review-document-intake__note {
+  flex: 1 1 32rem;
+}
+
 .review-card-grid {
   display: grid;
   gap: var(--space-24);

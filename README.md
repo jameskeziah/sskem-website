@@ -205,6 +205,13 @@ verification of every receipt, approval, PDF and registry digest. It switches
 only the complete local binding registry; it does not replace records, alter
 PDFs or staging, grant approval, run a malware scan or deploy.
 
+The authenticated browser-only Appendix IX metadata workspace at
+`/publication-review/document-metadata-batch` produces the planner input without
+posting or persisting form data. All twelve records start blank, must be
+confirmed independently and download as one controlled JSON bundle. The
+workspace does not read PDFs, infer metadata, approve records, scan files or
+activate publication.
+
 Legacy WordPress route continuity is controlled by the schema-backed inventory
 documented in `docs/legacy-cutover.md`. It implements direct permanent redirects
 to safe rebuilt destinations without copying old claims, forms, uploads or pupil

@@ -106,6 +106,15 @@ canonical document record exactly once, use twelve unique stable filenames and
 retain the explicit complete-batch confirmation. Keep this working file in the
 controlled system.
 
+The authenticated private-review route
+`/publication-review/document-metadata-batch` provides a browser-only worksheet
+for this bundle. Every field starts blank. It validates each record, nullable
+date/year choices, unique filenames and the final twelve-record confirmation,
+then downloads JSON without a network request or server persistence. It reads
+no PDF, stores no evidence and grants no approval. Verify every value against
+the controlled reviewed source and retain the download in that controlled
+system.
+
 Run the permanently read-only planner:
 
 ```powershell

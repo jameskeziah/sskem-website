@@ -315,7 +315,10 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <div><dt>Publication</dt><dd><strong>Exact hash required</strong><span>External malware-scan evidence and manifest approval remain mandatory.</span></dd></div>
               <div><dt>Exact activation</dt><dd><strong>{documentPublication.valid} of {documentPublication.required} bound</strong><span>Only a receipt-matched, hash-verified PDF becomes downloadable.</span></dd></div>
             </dl>
-            <p className="review-document-intake__note">After publishing each approved PDF, review its public metadata. Use <code>npm run documents:activate</code> for isolated diagnosis, then run <code>npm run documents:activate-batch-plan</code> with the confirmed twelve-record metadata bundle. Use <code>npm run documents:activate-batch</code> to recheck that exact plan and, only with its current batch ID plus explicit acknowledgement, switch the complete registry atomically. Every default mode is read-only; none grants approval, scans files or deploys.</p>
+            <div className="review-document-intake__actions">
+              <p className="review-document-intake__note">After publishing each approved PDF, complete the twelve-record public metadata bundle. Use <code>npm run documents:activate</code> for isolated diagnosis, then run <code>npm run documents:activate-batch-plan</code> with the confirmed bundle. Use <code>npm run documents:activate-batch</code> to recheck that exact plan and, only with its current batch ID plus explicit acknowledgement, switch the complete registry atomically. Every default mode is read-only; none grants approval, scans files or deploys.</p>
+              <Link className="button button--quiet" href="/publication-review/document-metadata-batch">Complete 12-record metadata batch</Link>
+            </div>
           </section>
 
           <section className="review-queue" aria-labelledby="review-queue-title">
