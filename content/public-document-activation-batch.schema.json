@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/public-document-activation-batch.schema.json",
+  "title": "SSKEMS Appendix IX document activation batch",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batchVersion", "batchId", "generatedAt", "documents", "batchConfirmation"],
+  "properties": {
+    "batchVersion": { "const": 1 },
+    "batchId": { "const": "sskem-appendix-ix-document-activation-batch" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "documents": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": { "$ref": "./public-document-activation-metadata.schema.json" }
+    },
+    "batchConfirmation": { "const": "confirm-complete-appendix-ix-public-metadata" }
+  }
+}

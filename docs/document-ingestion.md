@@ -97,6 +97,30 @@ metadata paths, source paths, private evidence or approver identities. Run
 all 12 Appendix IX records to have exact valid bindings; private review reports
 the remaining count without exposing any unbound file.
 
+## Plan the complete Appendix IX activation
+
+Before the first twelve-document activation, combine the twelve public metadata
+objects into one controlled batch that conforms to
+`content/public-document-activation-batch.schema.json`. It must contain every
+canonical document record exactly once, use twelve unique stable filenames and
+retain the explicit complete-batch confirmation. Keep this working file in the
+controlled system.
+
+Run the permanently read-only planner:
+
+```powershell
+npm.cmd run documents:activate-batch-plan -- --metadata-batch "CONTROLLED_METADATA_BATCH.json"
+```
+
+The planner fails the whole set if any metadata record, current approval,
+external malware-scan check, staged receipt or public PDF is missing, stale or
+hash-invalid. It proposes one exact twelve-binding registry and a stable batch
+ID only when every record passes. It accepts neither `--apply` nor `--replace`,
+performs no write, grants no approval and does not run a malware scan. The
+single-record activator remains available for isolated diagnosis; do not use
+twelve independent writes for the first complete Appendix IX switch. A guarded
+atomic batch executor is a separate later build.
+
 ## Visual and accessibility review checklist
 
 - rendered page count matches the signed source and receipt;

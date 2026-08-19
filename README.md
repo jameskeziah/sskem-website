@@ -192,6 +192,12 @@ replace a hash-bound registry entry. Document pages expose a download only when
 that registry validates; filenames or manifest approval alone never activate a
 file.
 
+`documents:activate-batch-plan` is the permanently read-only twelve-document
+activation planner for the first complete Appendix IX switch. It validates one
+confirmed public-metadata bundle, all twelve staged receipts, exact public PDFs,
+current approvals and external-scan checks before proposing one registry. It
+cannot write, approve, replace, scan or deploy anything.
+
 Legacy WordPress route continuity is controlled by the schema-backed inventory
 documented in `docs/legacy-cutover.md`. It implements direct permanent redirects
 to safe rebuilt destinations without copying old claims, forms, uploads or pupil
