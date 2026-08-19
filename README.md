@@ -198,6 +198,13 @@ confirmed public-metadata bundle, all twelve staged receipts, exact public PDFs,
 current approvals and external-scan checks before proposing one registry. It
 cannot write, approve, replace, scan or deploy anything.
 
+`documents:activate-batch` is the guarded atomic twelve-document registry
+executor. Its default mode returns the same plan. Applying it requires the exact
+current batch ID and explicit local-write acknowledgement, followed by a fresh
+verification of every receipt, approval, PDF and registry digest. It switches
+only the complete local binding registry; it does not replace records, alter
+PDFs or staging, grant approval, run a malware scan or deploy.
+
 Legacy WordPress route continuity is controlled by the schema-backed inventory
 documented in `docs/legacy-cutover.md`. It implements direct permanent redirects
 to safe rebuilt destinations without copying old claims, forms, uploads or pupil

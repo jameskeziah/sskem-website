@@ -118,8 +118,25 @@ hash-invalid. It proposes one exact twelve-binding registry and a stable batch
 ID only when every record passes. It accepts neither `--apply` nor `--replace`,
 performs no write, grants no approval and does not run a malware scan. The
 single-record activator remains available for isolated diagnosis; do not use
-twelve independent writes for the first complete Appendix IX switch. A guarded
-atomic batch executor is a separate later build.
+twelve independent writes for the first complete Appendix IX switch.
+
+The guarded executor is also read-only by default:
+
+```powershell
+npm.cmd run documents:activate-batch -- --metadata-batch "CONTROLLED_METADATA_BATCH.json"
+```
+
+After reviewing a ready plan, apply only that exact batch ID:
+
+```powershell
+npm.cmd run documents:activate-batch -- --metadata-batch "CONTROLLED_METADATA_BATCH.json" --activation-batch-id=PLAN_ID --apply --acknowledge-local-write=activate-complete-appendix-ix-document-batch
+```
+
+The ID binds the complete metadata batch, all staged-receipt and PDF hashes, and
+the registry baseline. The executor replans and rechecks all twelve records
+immediately before one atomic local registry switch. It refuses replacement and
+changes neither the public PDFs nor private staging. It grants no approval,
+performs no malware scan and does not deploy.
 
 ## Visual and accessibility review checklist
 
