@@ -78,6 +78,23 @@ Candidate Appendix IX PDFs use the guarded intake procedure in
 layer, rejects interactive content and binds publication to the staged SHA-256
 receipt. The local pipeline does not replace the controlled malware scan.
 
+## Appendix IX document approval batch
+
+The authenticated private route `/publication-review/document-approval-batch`
+turns the twelve current digest-bound document templates into one browser-only
+bundle. Every check, evidence reference set, role, expiry choice and confirmation
+remains independent and unselected. Nothing is posted or persisted. Review the
+download without writing by running:
+
+```powershell
+npm.cmd run approvals:document-batch -- --request "CONTROLLED_BATCH_PATH"
+```
+
+Only after that exact plan is ready, record all twelve supplied decisions in one
+atomic manifest write with the explicit acknowledgement printed by the command.
+The workspace and updater record decisions; they do not grant approval, inspect
+PDFs, run the external malware scan or activate publication.
+
 ## Commands
 
 - `npm run approvals:audit` validates structure and prints the current summary.
@@ -85,6 +102,9 @@ receipt. The local pipeline does not replace the controlled malware scan.
   registry is ready for public release.
 - `npm run approvals:update -- --record ID` generates an unfilled, digest-bound
   approval request; `--request PATH` reviews a completed request without writing.
+- `npm run approvals:document-batch -- --request PATH` reviews the complete
+  twelve-document approval bundle and is read-only unless its exact atomic-write
+  acknowledgement is supplied.
 - `npm run release:audit` combines the manifest with the five other independent
   launch gates documented in `docs/public-release-readiness.md`.
 - `npm run documents:inspect -- --record ID --input PATH` performs static PDF,

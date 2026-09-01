@@ -212,6 +212,23 @@ confirmed independently and download as one controlled JSON bundle. The
 workspace does not read PDFs, infer metadata, approve records, scan files or
 activate publication.
 
+The companion twelve-document approval batch at
+`/publication-review/document-approval-batch` keeps all checks and confirmations
+independent while downloading one digest-bound controlled bundle. The guarded
+`approvals:document-batch` command plans read-only by default and can record all
+twelve supplied decisions in one acknowledged atomic manifest write. Neither
+surface grants approval, reads PDFs, performs malware scanning or activates
+publication.
+
+The authenticated `/publication-review/programmes-content-package` workspace
+captures one management-approved factual handoff for CBSE Senior Secondary,
+Junior College and JEE/NEET/CET. It records the institutional model, programme
+facts, exact public claims, requested media, navigation placement and opaque
+controlled evidence references, then downloads a schema-backed JSON package in
+the browser. It does not persist form data, grant approval, update the manifest,
+publish a page or activate navigation. The operating procedure is documented in
+`docs/programmes-content-package.md`.
+
 Legacy WordPress route continuity is controlled by the schema-backed inventory
 documented in `docs/legacy-cutover.md`. It implements direct permanent redirects
 to safe rebuilt destinations without copying old claims, forms, uploads or pupil

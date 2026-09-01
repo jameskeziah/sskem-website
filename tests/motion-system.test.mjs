@@ -103,6 +103,8 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
     "home-achievements-motion.tsx",
     "home-campus-motion.tsx",
     "home-hero-motion.tsx",
+    "programmes-grid-motion.tsx",
+    "programmes-hero-motion.tsx",
   ]);
 
   for (const file of files) {
@@ -116,13 +118,16 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
     assert.doesNotMatch(code, /duration:\s*[\d.]|stagger:\s*[\d.]|delay:\s*[\d.]/);
   }
 
-  const [hero, timeline, admissions, homeHero, homeCampus, homeAchievements, homepage, homepageStyles] = await Promise.all([
+  const [hero, timeline, admissions, homeHero, homeCampus, homeAchievements, programmesHero, programmesGrid, programmesPreview, homepage, homepageStyles] = await Promise.all([
     source("components/motion/admissions-hero-motion.tsx"),
     source("components/motion/admissions-timeline-motion.tsx"),
     source("components/admissions.tsx"),
     source("components/motion/home-hero-motion.tsx"),
     source("components/motion/home-campus-motion.tsx"),
     source("components/motion/home-achievements-motion.tsx"),
+    source("components/motion/programmes-hero-motion.tsx"),
+    source("components/motion/programmes-grid-motion.tsx"),
+    source("app/publication-review/programmes-preview/page.tsx"),
     source("app/page.tsx"),
     source("app/homepage.css"),
   ]);
@@ -143,6 +148,14 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(homeCampus, /ScrollTrigger/);
   assert.match(homeAchievements, /data-motion-component="home-achievements"/);
   assert.match(homeAchievements, /motionStaggerSeconds\.cards/);
+  assert.match(programmesHero, /data-motion-component="programmes-hero"/);
+  assert.match(programmesHero, /motionDurationSeconds\.micro \/ 2/);
+  assert.match(programmesGrid, /data-motion-component="programmes-grid"/);
+  assert.match(programmesGrid, /cards\.slice\(index, index \+ 4\)/);
+  assert.match(programmesGrid, /motionScrollTrigger/);
+  assert.match(programmesPreview, /<ProgrammesHeroMotion>/);
+  assert.match(programmesPreview, /<ProgrammesGridMotion>/);
+  assert.match(programmesPreview, /data-motion-programme-card/);
   assert.match(homepage, /<HomeHeroMotion>/);
   assert.match(homepage, /data-home-hero-art/);
   assert.doesNotMatch(homepage, /data-motion-home-hero-(?:accent|media|support)/);
@@ -152,7 +165,7 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
 });
 
 test("rejects prohibited, unbounded and layout-changing motion patterns", async () => {
-  const [globals, admissions, compliance, homepage, hero, timeline, homeHero, homeCampus, homeAchievements] = await Promise.all([
+  const [globals, admissions, compliance, homepage, hero, timeline, homeHero, homeCampus, homeAchievements, programmesHero, programmesGrid] = await Promise.all([
     source("app/globals.css"),
     source("app/admissions.css"),
     source("app/compliance.css"),
@@ -162,9 +175,11 @@ test("rejects prohibited, unbounded and layout-changing motion patterns", async 
     source("components/motion/home-hero-motion.tsx"),
     source("components/motion/home-campus-motion.tsx"),
     source("components/motion/home-achievements-motion.tsx"),
+    source("components/motion/programmes-hero-motion.tsx"),
+    source("components/motion/programmes-grid-motion.tsx"),
   ]);
   const cssFiles = { globals, admissions, compliance, homepage };
-  const combined = `${globals}\n${admissions}\n${compliance}\n${homepage}\n${hero}\n${timeline}\n${homeHero}\n${homeCampus}\n${homeAchievements}`;
+  const combined = `${globals}\n${admissions}\n${compliance}\n${homepage}\n${hero}\n${timeline}\n${homeHero}\n${homeCampus}\n${homeAchievements}\n${programmesHero}\n${programmesGrid}`;
 
   assert.doesNotMatch(combined, /motion-duration-normal|motion-easing-standard/);
   assert.doesNotMatch(combined, /animation\s*:[^;]*(?:infinite|linear\s+infinite)/i);

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/document-approval-batch-request.schema.json",
+  "title": "SSKEMS controlled Appendix IX document approval batch request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batchVersion", "batchId", "generatedAt", "requests"],
+  "properties": {
+    "batchVersion": { "const": 1 },
+    "batchId": { "const": "sskem-appendix-ix-document-approval-batch" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "requests": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": { "$ref": "./approval-update-request.schema.json" },
+      "allOf": [
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-b-1" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-b-2" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-b-3" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-b-4" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-b-5" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-b-6" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-b-7" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-b-8" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-c-1" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-c-2" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-c-3" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "recordId": { "const": "document-mpd-c-4" } }, "required": ["recordId"] }, "minContains": 1, "maxContains": 1 }
+      ]
+    }
+  }
+}

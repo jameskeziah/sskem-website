@@ -69,6 +69,8 @@ test("server-renders the current SSKEMS website foundation", async () => {
 
   assert.match(html, /<nav\b[^>]*\baria-label=["']Utility navigation["']/i);
   assert.match(html, /<nav\b[^>]*\baria-label=["']Primary navigation["']/i);
+  assert.match(html, /class=["']header-main-slot["']/i);
+  assert.match(html, /class=["'][^"']*header-main[^"']*["'][^>]*data-floating=["']false["'][^>]*data-visible=["']true["']/i);
   assert.doesNotMatch(html, /<nav\b[^>]*\baria-label=["']Breadcrumb["']/i);
   assert.match(html, /<footer\b/i);
 
@@ -314,6 +316,90 @@ test("server-renders the blank twelve-record Appendix IX metadata workspace", as
   assert.doesNotMatch(html, /<form\b[^>]*\baction=/i);
   assert.doesNotMatch(html, /<option\b[^>]*value=["'](?:current|expiring-soon|English|Marathi|English and Marathi)["'][^>]*\bselected/i);
   assert.doesNotMatch(html, /<input\b[^>]*type=["'](?:radio|checkbox)["'][^>]*\bchecked(?:=|\s|>)/i);
+  assert.doesNotMatch(html, /reviewer@example\.test/i);
+});
+
+test("server-renders twelve independent Appendix IX document approval decisions", async () => {
+  const authentication = {
+    accept: "text/html",
+    "oai-authenticated-user-id": "reviewer-test-id",
+    "oai-authenticated-user-email": "reviewer@example.test",
+  };
+  const response = await render("/publication-review/document-approval-batch", authentication);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+
+  const html = await response.text();
+  const readableText = textContent(html);
+  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
+  assert.match(readableText, /Document approval batch/i);
+  assert.match(readableText, /Twelve independent decisions; one guarded handoff\./i);
+  assert.match(readableText, /Inspect â†’ scan externally â†’ verify â†’ decide â†’ record â†’ publish â†’ activate\./i);
+  assert.match(readableText, /the local website never runs the required malware scan/i);
+  assert.equal((html.match(/<section\b[^>]*class=["'][^"']*document-approval-record[^"']*["']/gi) ?? []).length, 12);
+  assert.equal((html.match(/<select\b[^>]*name=["']document-mpd-[bc]-\d:check:/gi) ?? []).length, 72);
+  assert.equal((html.match(/name=["']document-mpd-[bc]-\d:evidenceReferences["']/gi) ?? []).length, 12);
+  assert.equal((html.match(/name=["']document-mpd-[bc]-\d:approvalConfirmation["']/gi) ?? []).length, 12);
+  assert.match(html, /name=["']batchConfirmation["']/i);
+  assert.doesNotMatch(html, /<form\b[^>]*\baction=/i);
+  assert.doesNotMatch(html, /<option\b[^>]*value=["'](?:verified|not-applicable)["'][^>]*\bselected/i);
+  assert.doesNotMatch(html, /<input\b[^>]*type=["'](?:radio|checkbox)["'][^>]*\bchecked(?:=|\s|>)/i);
+  assert.doesNotMatch(html, /reviewer@example\.test/i);
+});
+
+test("server-renders the private Programmes content package blank and approval-safe", async () => {
+  const authentication = {
+    accept: "text/html",
+    "oai-authenticated-user-id": "reviewer-test-id",
+    "oai-authenticated-user-email": "reviewer@example.test",
+  };
+  const response = await render("/publication-review/programmes-content-package", authentication);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+
+  const html = await response.text();
+  const readableText = textContent(html);
+  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
+  assert.match(readableText, /Programmes content package/i);
+  assert.match(readableText, /Approved facts in; no automatic publication out\./i);
+  assert.match(readableText, /Verify structure, approve wording, then plan implementation\./i);
+  assert.match(readableText, /The package does not replace these decisions\./i);
+  assert.equal((html.match(/<section\b[^>]*class=["'][^"']*programmes-package-card[^"']*["']/gi) ?? []).length, 4);
+  assert.match(html, /name=["']institutionalModel["']/i);
+  assert.match(html, /name=["']examOperator["']/i);
+  assert.match(html, /name=["']approvedPublicClaims["']/i);
+  assert.match(html, /name=["']controlledEvidenceReferences["']/i);
+  assert.match(html, /name=["']managementConfirmation["']/i);
+  assert.doesNotMatch(html, /<form\b[^>]*\baction=/i);
+  assert.doesNotMatch(html, /<option\b[^>]*value=["'](?:both|cbse-senior-secondary-only|junior-college|verified-results-approved)["'][^>]*\bselected/i);
+  assert.doesNotMatch(html, /<input\b[^>]*type=["']checkbox["'][^>]*\bchecked(?:=|\s|>)/i);
+  assert.doesNotMatch(html, /reviewer@example\.test/i);
+});
+
+test("server-renders the private Programmes motion preview in a readable, approval-safe state", async () => {
+  const authentication = {
+    accept: "text/html",
+    "oai-authenticated-user-id": "reviewer-test-id",
+    "oai-authenticated-user-email": "reviewer@example.test",
+  };
+  const response = await render("/publication-review/programmes-preview", authentication);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+
+  const html = await response.text();
+  const readableText = textContent(html);
+  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
+  assert.match(readableText, /Private editorial prototype Not approved for public use/i);
+  assert.match(readableText, /Every academic stage, one clear journey\./i);
+  assert.match(readableText, /Source labels describe where the draft came from\. They are not publication approvals\./i);
+  assert.match(readableText, /What must be approved before this can become a public page\./i);
+  assert.match(html, /data-motion-component=["']programmes-hero["']/i);
+  assert.match(html, /data-motion-component=["']programmes-grid["']/i);
+  assert.equal((html.match(/<article\b[^>]*class=["'][^"']*programmes-preview-card[^"']*["']/gi) ?? []).length, 9);
+  assert.equal((html.match(/<article\b[^>]*data-motion-programme-card/gi) ?? []).length, 9);
+  assert.match(html, /data-campus-media-mode=["']prototype-review["']/i);
+  assert.doesNotMatch(html, /style=["'][^"']*(?:opacity\s*:\s*0|visibility\s*:\s*hidden)/i);
+  assert.doesNotMatch(html, /<form\b|VERIFIED\s*[—-]\s*PUBLIC/i);
   assert.doesNotMatch(html, /reviewer@example\.test/i);
 });
 

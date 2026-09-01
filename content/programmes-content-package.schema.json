@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/programmes-content-package.schema.json",
+  "title": "SSKEMS management-approved Programmes content package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "packageVersion",
+    "packageId",
+    "generatedAt",
+    "academicYear",
+    "institutionalModel",
+    "programmes",
+    "publication",
+    "approval",
+    "guardrails"
+  ],
+  "properties": {
+    "packageVersion": { "const": 1 },
+    "packageId": { "const": "sskem-programmes-content-package" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "academicYear": { "type": "string", "pattern": "^20[0-9]{2}-20[0-9]{2}$" },
+    "institutionalModel": {
+      "enum": [
+        "cbse-senior-secondary-only",
+        "separate-junior-college-only",
+        "both",
+        "neither-current"
+      ]
+    },
+    "programmes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cbseSeniorSecondary", "juniorCollege", "examPreparation"],
+      "properties": {
+        "cbseSeniorSecondary": { "oneOf": [{ "$ref": "#/$defs/programmeDetails" }, { "type": "null" }] },
+        "juniorCollege": { "oneOf": [{ "$ref": "#/$defs/programmeDetails" }, { "type": "null" }] },
+        "examPreparation": { "$ref": "#/$defs/examPreparation" }
+      }
+    },
+    "publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["routes", "navigation", "requestedMediaRecordIds", "approvedPublicClaims", "relatedClaimRecordIds"],
+      "properties": {
+        "routes": {
+          "const": {
+            "cbseSeniorSecondary": "/school/academics",
+            "juniorCollege": "/junior-college",
+            "examPreparation": "/programmes/jee-neet"
+          }
+        },
+        "navigation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["juniorCollege", "examPreparation"],
+          "properties": {
+            "juniorCollege": { "enum": ["hidden", "primary", "secondary"] },
+            "examPreparation": { "enum": ["hidden", "primary", "secondary", "under-junior-college", "under-institute"] }
+          }
+        },
+        "requestedMediaRecordIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "media-campus-main",
+              "media-campus-grounds",
+              "media-xii-science-2025-26",
+              "media-result-admissions-2025-26"
+            ]
+          }
+        },
+        "approvedPublicClaims": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 2, "maxLength": 180 }
+        },
+        "relatedClaimRecordIds": {
+          "const": [
+            "claim-junior-college-status",
+            "claim-xii-science-results-2025-26",
+            "claim-engineering-medical-guidance"
+          ]
+        }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["controlledEvidenceReferences", "approvedByRole", "approvedOn", "expiresOn", "confirmation"],
+      "properties": {
+        "controlledEvidenceReferences": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 30,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z0-9][A-Z0-9._/-]{2,79}$",
+            "not": { "pattern": "^(?:[A-Za-z]:[\\\\/]|file:|https?://|\\\\\\\\)|(?:^|/)\\.\\.?($|/)" }
+          }
+        },
+        "approvedByRole": { "type": "string", "pattern": "^[a-z][a-z0-9-]{2,63}$" },
+        "approvedOn": { "type": "string", "format": "date" },
+        "expiresOn": { "type": ["string", "null"], "format": "date" },
+        "confirmation": { "const": "confirm-management-approved-programmes-content-package" }
+      }
+    },
+    "guardrails": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "networkRequestPerformed",
+        "serverPersistencePerformed",
+        "repositoryWritePerformed",
+        "approvalManifestUpdated",
+        "publicContentPublished",
+        "navigationActivated",
+        "mediaApprovalGrantedByPackage",
+        "documentApprovalGrantedByPackage",
+        "privateEvidenceIncluded",
+        "approverIdentityIncluded"
+      ],
+      "properties": {
+        "networkRequestPerformed": { "const": false },
+        "serverPersistencePerformed": { "const": false },
+        "repositoryWritePerformed": { "const": false },
+        "approvalManifestUpdated": { "const": false },
+        "publicContentPublished": { "const": false },
+        "navigationActivated": { "const": false },
+        "mediaApprovalGrantedByPackage": { "const": false },
+        "documentApprovalGrantedByPackage": { "const": false },
+        "privateEvidenceIncluded": { "const": false },
+        "approverIdentityIncluded": { "const": false }
+      }
+    }
+  },
+  "$defs": {
+    "textList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 180 }
+    },
+    "programmeDetails": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "officialName",
+        "board",
+        "affiliationOrRecognition",
+        "classes",
+        "streams",
+        "subjects",
+        "eligibility",
+        "feeSummary",
+        "admissionProcedure",
+        "publicSummary"
+      ],
+      "properties": {
+        "officialName": { "type": "string", "minLength": 2, "maxLength": 180 },
+        "board": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "affiliationOrRecognition": { "type": "string", "minLength": 2, "maxLength": 240 },
+        "classes": { "$ref": "#/$defs/textList" },
+        "streams": { "$ref": "#/$defs/textList" },
+        "subjects": { "$ref": "#/$defs/textList" },
+        "eligibility": { "type": "string", "minLength": 2, "maxLength": 2400 },
+        "feeSummary": { "type": "string", "minLength": 2, "maxLength": 2400 },
+        "admissionProcedure": { "type": "string", "minLength": 2, "maxLength": 2400 },
+        "publicSummary": { "type": "string", "minLength": 2, "maxLength": 2400 }
+      }
+    },
+    "examPreparation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operator",
+        "operatorName",
+        "programmes",
+        "studentGroups",
+        "curriculum",
+        "timetable",
+        "facultySummary",
+        "feeSummary",
+        "facilitiesSummary",
+        "resultsPublication",
+        "verifiedResultsSummary",
+        "publicSummary"
+      ],
+      "properties": {
+        "operator": { "enum": ["not-offered", "cbse-school", "junior-college", "separate-institute", "external-partner"] },
+        "operatorName": { "type": "string", "maxLength": 180 },
+        "programmes": { "type": "array", "uniqueItems": true, "items": { "type": "string", "maxLength": 180 } },
+        "studentGroups": { "type": "array", "uniqueItems": true, "items": { "type": "string", "maxLength": 180 } },
+        "curriculum": { "type": "string", "maxLength": 2400 },
+        "timetable": { "type": "string", "maxLength": 2400 },
+        "facultySummary": { "type": "string", "maxLength": 2400 },
+        "feeSummary": { "type": "string", "maxLength": 2400 },
+        "facilitiesSummary": { "type": "string", "maxLength": 2400 },
+        "resultsPublication": { "enum": ["no-results-published", "verified-results-approved"] },
+        "verifiedResultsSummary": { "type": "string", "maxLength": 2400 },
+        "publicSummary": { "type": "string", "minLength": 2, "maxLength": 2400 }
+      }
+    }
+  }
+}

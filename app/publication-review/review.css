@@ -67,6 +67,7 @@
 .review-cms,
 .review-cutover,
 .review-summary,
+.review-programmes-package,
 .review-first-batch,
 .review-media-intake,
 .review-document-intake,
@@ -368,6 +369,40 @@
   background: var(--color-brand-50);
   border-radius: var(--radius-large);
   padding: clamp(var(--space-24), 5vw, var(--space-64));
+}
+
+.review-programmes-package {
+  background: var(--surface-raised);
+  border: var(--border-width-default) solid var(--border-default);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-small);
+  padding: clamp(var(--space-24), 5vw, var(--space-48));
+}
+
+.review-programmes-package__actions {
+  align-items: center;
+  background: var(--surface-subtle);
+  border-radius: var(--radius-large);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-20);
+  justify-content: space-between;
+  margin-top: var(--space-24);
+  padding: var(--space-20) var(--space-24);
+}
+
+.review-programmes-package__actions p {
+  color: var(--text-secondary);
+  flex: 1 1 30rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.review-programmes-package__links {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
 }
 
 .review-media-intake__grid,
@@ -935,10 +970,17 @@
 
   .review-cms__actions,
   .review-media-intake__actions,
+  .review-programmes-package__actions,
   .editorial-review-toolbar,
   .editorial-review-card__heading {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .review-programmes-package__links {
+    align-items: stretch;
+    flex-direction: column;
+    width: 100%;
   }
 
   .review-cms__actions .button,

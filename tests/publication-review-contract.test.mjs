@@ -87,6 +87,8 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /Legacy cutover/);
   assert.match(page, /Old WordPress links now have a controlled destination\./);
   assert.match(page, /Download cutover worksheet/);
+  assert.match(page, /Preview Programmes art direction/);
+  assert.match(page, /\/publication-review\/programmes-preview/);
   assert.match(page, /Download review worksheet/);
   assert.match(route, /approvalQueueCsv\(\)/);
   assert.match(editorialPage, /Exact sanitized public output/);

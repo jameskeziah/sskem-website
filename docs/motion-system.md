@@ -21,10 +21,18 @@ timings.
 | Homepage approved desktop artwork | 4 | Initial render at `64rem` and above | Exact authored `/og.png` composition | Static, uncropped and unoverlaid artwork | None | None | Never | Replaced by live copy and a static campus photograph | Static final state | Responsive CSS |
 | Homepage campus chapter | 4 | Section at `top 82%` | Copy reveal plus three bounded image masks | Fully visible at authored position | `deliberate` through `slow` | Card token; three frames maximum | Once | Copy reveal only | Static final state | GSAP + ScrollTrigger |
 | Homepage publication review | 4 | Section at `top 82%` | Four supplied artwork cards share one reveal | Fully visible at authored position | `deliberate`, `enter` | `60ms` desktop/tablet, `40ms` mobile | Once | Bounded `y: 10px` | Static final state | GSAP + ScrollTrigger |
+| Floating primary navigation | 3 | Original navigation leaves viewport; scroll direction changes | Full-width authored header, then a dark institutional floating bar | Down-scroll hides; up-scroll, menu activity and keyboard focus reveal | `standard`, `move` | Direction threshold prevents jitter | Repeats only on intentional direction changes | Same interaction with compact spacing | Floating bar remains visible with no tween | React + GSAP |
+| Private Programmes hero | 4 | Initial page entry | Four bounded text reveals plus one bottom-to-top campus-media mask | Fully visible at authored position | `deliberate` through `slow`, `enter` and `emphasised` | `60ms` text offsets | Once | Combined copy and media reveal, `y: 10px` | Static final state | GSAP |
+| Private Programmes grid | 4 | Each group at `top 82%` | Up to four cards share one bounded vertical reveal | Fully visible at authored position | `deliberate`, `enter` | `60ms` desktop/tablet, `40ms` mobile; four cards maximum per group | Once | Bounded `y: 10px` | Static final state | GSAP + ScrollTrigger |
 
 Homepage essential-service links, the publication approval note, hero facts,
 admissions actions, forms, notices, disclosure records, document lists, tables,
 dates, and legal content remain outside all reveal timelines.
+
+The Programmes recipes run only at the authenticated
+`/publication-review/programmes-preview` route. Their supplied programme copy,
+campus reference and proposed navigation remain draft material; the motion
+prototype does not grant approval or activate any public route.
 
 ## CSS-owned feedback and orientation
 
@@ -50,6 +58,12 @@ media context during unmount.
 The static navigation fallback remains available until the interactive header
 has actually hydrated. It therefore covers disabled JavaScript and failed or
 slow client bundles without introducing layout shift.
+
+The floating treatment begins only after the original primary navigation has
+left the viewport. The notice and utility bars keep their authored position;
+open desktop menus, the mobile drawer, search and keyboard focus force the
+primary navigation visible. Reduced-motion users retain the floating access
+bar without automatic hide/reveal movement.
 
 ## Deliberate exclusions
 

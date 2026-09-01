@@ -259,6 +259,20 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
             </dl>
           </section>
 
+          <section className="review-programmes-package" aria-labelledby="review-programmes-package-title">
+            <div className="review-section-heading">
+              <div><p className="eyebrow">Programmes content gate</p><h2 id="review-programmes-package-title">Confirm Senior Secondary, Junior College and JEE/NEET as one package.</h2></div>
+              <p>Capture the institutional model, programme facts, exact public claims, requested media and navigation placement before implementation.</p>
+            </div>
+            <div className="review-programmes-package__actions">
+              <p>The authenticated worksheet downloads a controlled JSON handoff. It does not store evidence, alter approvals, publish content or activate routes.</p>
+              <div className="review-programmes-package__links">
+                <Link className="button button--primary" href="/publication-review/programmes-content-package">Complete Programmes content package</Link>
+                <Link className="button button--quiet" href="/publication-review/programmes-preview">Preview Programmes art direction</Link>
+              </div>
+            </div>
+          </section>
+
           <section className="review-first-batch" aria-labelledby="review-first-batch-title">
             <div className="review-section-heading">
               <div><p className="eyebrow">Recommended first batch</p><h2 id="review-first-batch-title">Approve the four campus photographs first.</h2></div>
@@ -317,6 +331,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
             </dl>
             <div className="review-document-intake__actions">
               <p className="review-document-intake__note">After publishing each approved PDF, complete the twelve-record public metadata bundle. Use <code>npm run documents:activate</code> for isolated diagnosis, then run <code>npm run documents:activate-batch-plan</code> with the confirmed bundle. Use <code>npm run documents:activate-batch</code> to recheck that exact plan and, only with its current batch ID plus explicit acknowledgement, switch the complete registry atomically. Every default mode is read-only; none grants approval, scans files or deploys.</p>
+              <Link className="button button--primary" href="/publication-review/document-approval-batch">Complete 12-document approval batch</Link>
               <Link className="button button--quiet" href="/publication-review/document-metadata-batch">Complete 12-record metadata batch</Link>
             </div>
           </section>

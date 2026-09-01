@@ -8,6 +8,7 @@ import { NoticeBar, Breadcrumbs } from "./content";
 import { IconButton, SearchInput } from "./controls";
 import { primaryNavigation, searchableLinks, utilityNavigation } from "@/app/data/navigation";
 import { siteFacts } from "@/app/data/site";
+import { useFloatingNavigationMotion } from "@/components/motion/use-floating-navigation-motion";
 
 export type SiteHeaderEditorial = {
   notice: {
@@ -134,6 +135,8 @@ export function SiteHeader({
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const headerRef = useRef<HTMLElement>(null);
+  const headerMainSlotRef = useRef<HTMLDivElement>(null);
+  const headerMainRef = useRef<HTMLDivElement>(null);
   const headerNavRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
@@ -141,6 +144,11 @@ export function SiteHeader({
   const searchPanelRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const submenuButtons = useRef<Record<string, HTMLButtonElement | null>>({});
+  const floatingNavigation = useFloatingNavigationMotion({
+    navigationRef: headerMainRef,
+    slotRef: headerMainSlotRef,
+    interactionLocked: Boolean(openDesktop || mobileOpen || searchOpen),
+  });
 
   const results = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
@@ -280,7 +288,13 @@ export function SiteHeader({
           </div>
         </div>
 
-        <div className="header-main page-container">
+        <div ref={headerMainSlotRef} className="header-main-slot">
+          <div
+            ref={headerMainRef}
+            className="header-main page-container"
+            data-floating={floatingNavigation.isFloating}
+            data-visible={floatingNavigation.isVisible}
+          >
           <BrandIdentity />
           <nav ref={headerNavRef} className="desktop-navigation" aria-label="Primary navigation" data-primary-nav>
             <ul>
@@ -334,6 +348,7 @@ export function SiteHeader({
           <IconButton ref={menuButtonRef} className="mobile-menu-button" label="Open navigation" onClick={() => setMobileOpen(true)}>
             <span aria-hidden="true">☰</span>
           </IconButton>
+          </div>
         </div>
 
         {showBreadcrumb ? (
