@@ -1,5 +1,6 @@
 import { institutionPathways } from "@/app/data/navigation";
 import { siteFacts } from "@/app/data/site";
+import { isProgrammesPublicationRoute } from "@/lib/programmes-publication-routes";
 import Link from "next/link";
 
 const footerGroups = [
@@ -10,7 +11,7 @@ const footerGroups = [
       { label: "Academics", href: "/school/academics" },
       { label: "Faculty", href: "/school/faculty" },
       { label: "Facilities", href: "/school/facilities" },
-    ],
+    ].filter((link) => !isProgrammesPublicationRoute(link.href)),
   },
   {
     title: "Admissions",
@@ -74,7 +75,7 @@ export function SiteFooter({ contact = defaultContact }: { contact?: SiteFooterC
       </div>
       <div className="page-container site-footer__pathways" aria-label="Institutional pathway status">
         <span>Institutional pathways</span>
-        {institutionPathways.map((pathway) => pathway.status === "active" ? (
+        {institutionPathways.filter((pathway) => !isProgrammesPublicationRoute(pathway.href)).map((pathway) => pathway.status === "active" ? (
           <Link href={pathway.href} key={pathway.href}>{pathway.label} · confirmed</Link>
         ) : (
           <span className="site-footer__pathway-pending" key={pathway.href}>{pathway.label} · confirmation pending</span>

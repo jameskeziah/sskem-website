@@ -5,6 +5,7 @@ type UnknownRecord = Record<string, unknown>;
 type ApprovalRecordInput = {
   id?: unknown;
   kind?: unknown;
+  publicTargets?: unknown;
   checkProfile?: unknown;
   decision?: unknown;
   checks?: unknown;
@@ -295,8 +296,8 @@ export function createPublicDocumentBindingProposal(options: {
     publicFilename: typedMetadata.publicFilename as string,
     sourceSha256: receipt.source.sha256,
     stagedReceiptSha256: options.stagedReceiptSha256,
-    bytes: receipt.source.bytes,
-    pages: receipt.source.pages,
+    bytes: receipt.source.bytes as number,
+    pages: receipt.source.pages as number,
     accessibilityStatus: receipt.source.tagged === true ? "Tagged and accessible" : "Text-readable",
     publishedOn,
     metadata: Object.fromEntries([...metadataKeys].map((key) => [key, typedMetadata[key as keyof PublicDocumentMetadata]])) as unknown as PublicDocumentMetadata,

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SiteImage } from "@/components/media/SiteImage";
 
 import { resolveCampusMedia, type CampusRecordId } from "@/lib/campus-media-publication";
 
@@ -19,7 +19,7 @@ export function CampusPicture({
   if (media.mode === "prototype-review") {
     return (
       <picture className="campus-picture" data-campus-media-mode={media.mode} data-campus-media-record={recordId}>
-        <Image src={media.fallbackSrc} alt={alt} width={1400} height={500} sizes={sizes} priority={priority} unoptimized />
+        <SiteImage  src={media.fallbackSrc} alt={alt} width={1400} height={500} sizes={sizes} priority={priority} unoptimized />
       </picture>
     );
   }
@@ -29,7 +29,7 @@ export function CampusPicture({
       <source type="image/avif" srcSet={media.sources.avif} sizes={sizes} />
       <source type="image/webp" srcSet={media.sources.webp} sizes={sizes} />
       <source type="image/jpeg" srcSet={media.sources.jpeg} sizes={sizes} />
-      <Image
+      <SiteImage 
         src={media.fallback.src}
         alt={alt}
         width={media.fallback.width}

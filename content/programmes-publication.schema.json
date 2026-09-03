@@ -1,0 +1,335 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/programmes-publication.schema.json",
+  "title": "SSKEMS Programmes publication package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageType",
+    "packageId",
+    "academicYear",
+    "generatedAt",
+    "approval",
+    "evidenceRegistry",
+    "organisations",
+    "faculty",
+    "facilities",
+    "results",
+    "fees",
+    "scholarships",
+    "media",
+    "claims",
+    "programmes",
+    "navigation",
+    "seo"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "packageType": { "const": "programmes-publication" },
+    "packageId": { "type": "string", "pattern": "^programmes-20[0-9]{2}-20[0-9]{2}-v[1-9][0-9]*$" },
+    "academicYear": { "$ref": "#/$defs/academicYear" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "approval": { "$ref": "#/$defs/approval" },
+    "evidenceRegistry": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+    "organisations": { "type": "array", "items": { "$ref": "#/$defs/organisation" } },
+    "faculty": { "type": "array", "items": { "$ref": "#/$defs/faculty" } },
+    "facilities": { "type": "array", "items": { "$ref": "#/$defs/facility" } },
+    "results": { "type": "array", "items": { "$ref": "#/$defs/result" } },
+    "fees": { "type": "array", "items": { "$ref": "#/$defs/fee" } },
+    "scholarships": { "type": "array", "items": { "$ref": "#/$defs/scholarship" } },
+    "media": { "type": "array", "items": { "$ref": "#/$defs/media" } },
+    "claims": { "type": "array", "items": { "$ref": "#/$defs/claim" } },
+    "programmes": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/programme" }
+    },
+    "navigation": { "type": "array", "items": { "$ref": "#/$defs/navigation" } },
+    "seo": { "type": "array", "items": { "$ref": "#/$defs/seo" } }
+  },
+  "$defs": {
+    "academicYear": {
+      "type": "string",
+      "pattern": "^20[0-9]{2}-20[0-9]{2}$"
+    },
+    "idList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9-]{2,79}$" }
+    },
+    "textList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 180 }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "approvalId", "approvedByRole", "approvedAt", "validFrom", "validUntil"],
+      "properties": {
+        "status": { "enum": ["draft", "approved", "withdrawn"] },
+        "approvalId": { "type": "string", "pattern": "^APR-[A-Z0-9-]{3,79}$" },
+        "approvedByRole": { "type": "string", "pattern": "^[a-z][a-z0-9-]{2,63}$" },
+        "approvedAt": { "type": "string", "format": "date-time" },
+        "validFrom": { "type": "string", "format": "date" },
+        "validUntil": { "type": "string", "format": "date" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "status", "controlledReference", "validFrom", "validUntil", "programmeIds"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^EVD-[A-Z0-9-]{2,79}$" },
+        "type": { "enum": ["affiliation", "recognition", "programme-approval", "fee-circular", "schedule", "scholarship", "aggregate-result", "faculty-qualification", "facility", "award", "partnership", "media-rights", "media-consent"] },
+        "status": { "enum": ["pending", "verified", "expired", "withdrawn"] },
+        "controlledReference": { "type": "string", "pattern": "^[A-Z0-9][A-Z0-9._/-]{2,79}$" },
+        "validFrom": { "type": ["string", "null"], "format": "date" },
+        "validUntil": { "type": ["string", "null"], "format": "date" },
+        "programmeIds": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "organisation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "officialName", "type", "status", "evidenceIds", "claimIds"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^ORG-[A-Z0-9-]{2,79}$" },
+        "officialName": { "type": "string", "minLength": 2, "maxLength": 180 },
+        "type": { "enum": ["cbse-school", "junior-college", "institute", "external-partner"] },
+        "status": { "enum": ["draft", "approved", "withdrawn"] },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "claimIds": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "faculty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "publicDisplayName", "publicRole", "publicQualificationSummary", "subjectsOrFunctions", "programmeIds", "evidenceIds", "claimIds", "publicationStatus", "consentStatus"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^FAC-[A-Z0-9-]{2,79}$" },
+        "publicDisplayName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "publicRole": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "publicQualificationSummary": { "type": "string", "minLength": 2, "maxLength": 300 },
+        "subjectsOrFunctions": { "$ref": "#/$defs/textList" },
+        "programmeIds": { "$ref": "#/$defs/idList" },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "claimIds": { "$ref": "#/$defs/idList" },
+        "publicationStatus": { "enum": ["draft", "approved", "withdrawn"] },
+        "consentStatus": { "enum": ["pending", "approved", "withdrawn"] }
+      }
+    },
+    "facility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "publicName", "publicSummary", "programmeIds", "evidenceIds", "mediaIds", "status"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^FACILITY-[A-Z0-9-]{2,79}$" },
+        "publicName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "publicSummary": { "type": "string", "minLength": 2, "maxLength": 600 },
+        "programmeIds": { "$ref": "#/$defs/idList" },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "mediaIds": { "$ref": "#/$defs/idList" },
+        "status": { "enum": ["draft", "approved", "withdrawn"] }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "programmeId", "exam", "year", "cohortDefinition", "aggregateMetric", "aggregateValue", "claimId", "verification", "publicationStatus"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^RESULT-[A-Z0-9-]{2,79}$" },
+        "programmeId": { "type": "string" },
+        "exam": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "year": { "type": "integer", "minimum": 2000, "maximum": 2100 },
+        "cohortDefinition": { "type": "string", "minLength": 2, "maxLength": 240 },
+        "aggregateMetric": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "aggregateValue": { "type": ["number", "string"] },
+        "claimId": { "type": "string" },
+        "verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "evidenceIds"],
+          "properties": {
+            "status": { "enum": ["pending", "verified", "failed"] },
+            "evidenceIds": { "$ref": "#/$defs/idList" }
+          }
+        },
+        "publicationStatus": { "enum": ["draft", "approved", "withdrawn"] }
+      }
+    },
+    "fee": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "programmeId", "academicYear", "category", "approvedPublicWording", "currency", "amount", "evidenceIds", "claimIds", "status"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^FEE-[A-Z0-9-]{2,79}$" },
+        "programmeId": { "type": "string" },
+        "academicYear": { "$ref": "#/$defs/academicYear" },
+        "category": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "approvedPublicWording": { "type": "string", "minLength": 2, "maxLength": 600 },
+        "currency": { "const": "INR" },
+        "amount": { "type": ["number", "null"], "minimum": 0 },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "claimIds": { "$ref": "#/$defs/idList" },
+        "status": { "enum": ["draft", "approved", "withdrawn"] }
+      }
+    },
+    "scholarship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "programmeId", "academicYear", "publicName", "eligibilitySummary", "benefitSummary", "evidenceIds", "claimIds", "status"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^SCH-[A-Z0-9-]{2,79}$" },
+        "programmeId": { "type": "string" },
+        "academicYear": { "$ref": "#/$defs/academicYear" },
+        "publicName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "eligibilitySummary": { "type": "string", "minLength": 2, "maxLength": 600 },
+        "benefitSummary": { "type": "string", "minLength": 2, "maxLength": 600 },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "claimIds": { "$ref": "#/$defs/idList" },
+        "status": { "enum": ["draft", "approved", "withdrawn"] }
+      }
+    },
+    "media": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "role", "status", "manifestRecordId", "programmeIds", "alt", "containsPeople", "rights", "consent"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^MEDIA-[A-Z0-9-]{2,79}$" },
+        "type": { "enum": ["image", "video"] },
+        "role": { "enum": ["hero", "overview", "faculty", "facility", "result", "gallery", "open-graph"] },
+        "status": { "enum": ["draft", "approved", "withdrawn"] },
+        "manifestRecordId": { "type": "string", "pattern": "^media-[a-z0-9-]+$" },
+        "programmeIds": { "$ref": "#/$defs/idList" },
+        "alt": { "type": "string", "minLength": 2, "maxLength": 300 },
+        "containsPeople": { "type": "boolean" },
+        "rights": { "$ref": "#/$defs/mediaDecision" },
+        "consent": { "$ref": "#/$defs/mediaDecision" }
+      }
+    },
+    "mediaDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidenceIds"],
+      "properties": {
+        "status": { "enum": ["not-applicable", "pending", "verified", "failed"] },
+        "evidenceIds": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "text", "status", "manifestRecordId", "programmeIds", "organisationIds", "evidenceIds", "validFrom", "validUntil"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^CLAIM-[A-Z0-9-]{2,79}$" },
+        "type": { "enum": ["informational", "academic", "performance", "comparative", "regulatory", "financial"] },
+        "text": { "type": "string", "minLength": 2, "maxLength": 180 },
+        "status": { "enum": ["draft", "approved", "withdrawn"] },
+        "manifestRecordId": { "type": "string", "pattern": "^claim-[a-z0-9-]+$" },
+        "programmeIds": { "$ref": "#/$defs/idList" },
+        "organisationIds": { "$ref": "#/$defs/idList" },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "validFrom": { "type": ["string", "null"], "format": "date" },
+        "validUntil": { "type": ["string", "null"], "format": "date" }
+      }
+    },
+    "programme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "route", "status", "approvalStatus", "academicYear", "organisationId", "identity", "academic", "eligibility", "schedule", "admission", "resultsPublication", "feeIds", "facultyIds", "facilityIds", "resultIds", "scholarshipIds", "mediaIds", "evidenceIds", "claimIds", "relatedProgrammeIds", "navigationId", "seoId"],
+      "properties": {
+        "id": { "enum": ["school-academics", "junior-college", "jee-neet"] },
+        "route": { "enum": ["/school/academics", "/junior-college", "/programmes/jee-neet"] },
+        "status": { "enum": ["draft", "approved", "withdrawn"] },
+        "approvalStatus": { "enum": ["draft", "approved", "withdrawn"] },
+        "academicYear": { "$ref": "#/$defs/academicYear" },
+        "organisationId": { "type": "string", "pattern": "^ORG-[A-Z0-9-]{2,79}$" },
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["eyebrow", "title", "summary"],
+          "properties": {
+            "eyebrow": { "type": "string", "minLength": 2, "maxLength": 80 },
+            "title": { "type": "string", "minLength": 2, "maxLength": 120 },
+            "summary": { "type": "string", "minLength": 2, "maxLength": 600 }
+          }
+        },
+        "academic": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["levels", "streams", "subjects", "exams", "curriculumSummary", "teachingMethodology", "testingAndAssessment", "studentSupport", "deliveryModel", "operatorSummary", "studyMaterial"],
+          "properties": {
+            "levels": { "$ref": "#/$defs/textList" },
+            "streams": { "$ref": "#/$defs/textList" },
+            "subjects": { "$ref": "#/$defs/textList" },
+            "exams": { "$ref": "#/$defs/textList" },
+            "curriculumSummary": { "type": "string", "minLength": 2, "maxLength": 1200 },
+            "teachingMethodology": { "type": "string", "minLength": 2, "maxLength": 1200 },
+            "testingAndAssessment": { "type": "string", "minLength": 2, "maxLength": 1200 },
+            "studentSupport": { "type": "string", "minLength": 2, "maxLength": 1200 },
+            "deliveryModel": { "type": "string", "maxLength": 1200 },
+            "operatorSummary": { "type": "string", "maxLength": 1200 },
+            "studyMaterial": { "type": "string", "maxLength": 1200 }
+          }
+        },
+        "eligibility": { "$ref": "#/$defs/currentSummary" },
+        "schedule": { "$ref": "#/$defs/currentSummary" },
+        "admission": { "$ref": "#/$defs/currentSummary" },
+        "resultsPublication": { "enum": ["no-results-published", "verified-results-approved"] },
+        "feeIds": { "$ref": "#/$defs/idList" },
+        "facultyIds": { "$ref": "#/$defs/idList" },
+        "facilityIds": { "$ref": "#/$defs/idList" },
+        "resultIds": { "$ref": "#/$defs/idList" },
+        "scholarshipIds": { "$ref": "#/$defs/idList" },
+        "mediaIds": { "$ref": "#/$defs/idList" },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "claimIds": { "$ref": "#/$defs/idList" },
+        "relatedProgrammeIds": { "type": "array", "uniqueItems": true, "items": { "enum": ["school-academics", "junior-college", "jee-neet"] } },
+        "navigationId": { "type": "string", "pattern": "^NAV-[A-Z0-9-]{2,79}$" },
+        "seoId": { "type": "string", "pattern": "^SEO-[A-Z0-9-]{2,79}$" }
+      }
+    },
+    "currentSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["academicYear", "summary", "evidenceIds"],
+      "properties": {
+        "academicYear": { "$ref": "#/$defs/academicYear" },
+        "summary": { "type": "string", "minLength": 2, "maxLength": 1200 },
+        "evidenceIds": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "navigation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "programmeId", "label", "parent", "order", "status"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^NAV-[A-Z0-9-]{2,79}$" },
+        "programmeId": { "enum": ["school-academics", "junior-college", "jee-neet"] },
+        "label": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "parent": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "order": { "type": "integer", "minimum": 0, "maximum": 999 },
+        "status": { "enum": ["draft", "approved", "withdrawn"] }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "programmeId", "title", "description", "canonicalPath", "index", "follow", "ogMediaId", "status"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^SEO-[A-Z0-9-]{2,79}$" },
+        "programmeId": { "enum": ["school-academics", "junior-college", "jee-neet"] },
+        "title": { "type": "string", "minLength": 10, "maxLength": 70 },
+        "description": { "type": "string", "minLength": 50, "maxLength": 170 },
+        "canonicalPath": { "enum": ["/school/academics", "/junior-college", "/programmes/jee-neet"] },
+        "index": { "type": "boolean" },
+        "follow": { "type": "boolean" },
+        "ogMediaId": { "type": "string", "pattern": "^MEDIA-[A-Z0-9-]{2,79}$" },
+        "status": { "enum": ["draft", "approved", "withdrawn"] }
+      }
+    }
+  }
+}

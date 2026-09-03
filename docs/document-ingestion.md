@@ -4,6 +4,13 @@ The guarded document pipeline prepares candidate PDFs for controlled review and
 publishes only the exact file that completed the approval process. It applies to
 the twelve `document-*` records in `content/approval-manifest.json`.
 
+Programme pages consume this same pipeline through
+`lib/programmes-document-integration.ts`. An active disclosure binding is not
+automatically authorised for a Programme page: the approval record must also
+name that exact Programme route in `publicTargets`. Brochures require a new
+canonical document record before use; an existing Appendix IX record must not
+be repurposed or relabelled.
+
 Candidate PDFs and rendered pages contain school records, so the staging root
 `work/document-intake` is ignored by Git. Never copy staging content into the
 repository, a ticket, email or chat. The intake receipt is deliberately

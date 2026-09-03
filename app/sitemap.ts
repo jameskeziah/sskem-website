@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { documentCategories, publicDocuments } from "./data/documents";
+import { isProgrammesPublicationRoute } from "@/lib/programmes-publication-routes";
 
 const origin = "https://www.sskemschool.com";
 
@@ -34,5 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...documentCategories.map((category) => `/documents/${category.slug}`),
     ...publicDocuments.flatMap((document) => [`/documents/${document.slug}`, `/documents/${document.slug}/versions`]),
   ];
-  return paths.map((path) => ({ url: `${origin}${path}`, changeFrequency: "monthly", priority: path === "/mandatory-public-disclosure" || path === "/admissions" ? 1 : 0.7 }));
+  return paths
+    .filter((path) => !isProgrammesPublicationRoute(path))
+    .map((path) => ({ url: `${origin}${path}`, changeFrequency: "monthly", priority: path === "/mandatory-public-disclosure" || path === "/admissions" ? 1 : 0.7 }));
 }

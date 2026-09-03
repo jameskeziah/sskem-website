@@ -39,6 +39,7 @@ import {
   legacyCatchAllRedirectTarget,
 } from "@/app/data/legacy-cutover";
 import { siteFacts } from "@/app/data/site";
+import { isProgrammesPublicationRoute } from "@/lib/programmes-publication-routes";
 
 type PageSection = {
   title: string;
@@ -483,7 +484,7 @@ const allKnownPaths = new Set([
   ...utilityNavigation.filter((item) => item.href === "/contact").map((item) => item.href),
   "/privacy",
   "/accessibility",
-]);
+].filter((path) => !isProgrammesPublicationRoute(path)));
 
 function childLinksFor(path: string) {
   return primaryNavigation.find((item) => item.href === path)?.children ?? [];
@@ -709,6 +710,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: RouteProps): Promise<Metadata> {
   const { slug } = await params;
   const path = `/${slug.join("/")}`;
+  if (isProgrammesPublicationRoute(path)) return { title: "Page not found", robots: { index: false, follow: false } };
   const spec = pageSpecs[path];
 
   if (!spec) {
@@ -724,6 +726,7 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
 export default async function CatchAllPage({ params }: RouteProps) {
   const { slug } = await params;
   const path = `/${slug.join("/")}`;
+  if (isProgrammesPublicationRoute(path)) notFound();
   const legacyTarget = legacyCatchAllRedirectTarget(path);
   if (legacyTarget) permanentRedirect(legacyTarget);
   const spec = pageSpecs[path];

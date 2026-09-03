@@ -269,6 +269,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <div className="review-programmes-package__links">
                 <Link className="button button--primary" href="/publication-review/programmes-content-package">Complete Programmes content package</Link>
                 <Link className="button button--quiet" href="/publication-review/programmes-preview">Preview Programmes art direction</Link>
+                <Link className="button button--quiet" href="/school/academics">Review private route shells</Link>
               </div>
             </div>
           </section>

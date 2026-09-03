@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "intakeId": "sskem-programmes-intake-system",
+  "purpose": "Collect and track management-reviewed programme information before it enters the guarded Programmes content package.",
+  "authoritativeBoundaries": {
+    "approvalManifest": "content/approval-manifest.json",
+    "programmesPackageSchema": "content/programmes-content-package.schema.json",
+    "programmesReviewWorkspace": "/publication-review/programmes-content-package",
+    "completedWorkbookLocation": "controlled-google-drive-only",
+    "repositoryContent": "public-safe-specification-and-opaque-references-only",
+    "sanityContent": "approved-public-display-content-only"
+  },
+  "identifiers": {
+    "programmes": [
+      { "id": "PRG-CBSE-SS", "label": "CBSE Senior Secondary" },
+      { "id": "PRG-JUNIOR-COLLEGE", "label": "Separate Junior College" },
+      { "id": "PRG-EXAM-PREP", "label": "JEE, NEET and CET preparation" }
+    ],
+    "campusIdPattern": "^CMP-[A-Z0-9-]{2,40}$",
+    "facultyIdPattern": "^FAC-[A-Z0-9-]{2,40}$",
+    "feeIdPattern": "^FEE-20[0-9]{2}-20[0-9]{2}-[A-Z0-9-]{2,40}$",
+    "resultIdPattern": "^RES-20[0-9]{2}-20[0-9]{2}-[A-Z0-9-]{2,40}$",
+    "scholarshipIdPattern": "^SCH-20[0-9]{2}-20[0-9]{2}-[A-Z0-9-]{2,40}$",
+    "evidenceIdPattern": "^EVD-20[0-9]{2}-[0-9]{4}$",
+    "publicationItemIdPattern": "^PUB-[A-Z0-9-]{3,60}$"
+  },
+  "googleForm": {
+    "title": "SSKEMS Programmes management intake",
+    "responsePolicy": "One response per academic-year decision package. Restricted to authorised school roles.",
+    "sections": [
+      {
+        "id": "FORM-CONTROL",
+        "title": "Control record",
+        "fields": [
+          { "id": "academicYear", "label": "Academic year", "type": "short-text", "required": true, "validation": "consecutive YYYY-YYYY" },
+          { "id": "submissionRole", "label": "Submitting role", "type": "dropdown", "required": true, "validation": "role only; no name or email in exported package" },
+          { "id": "institutionalModel", "label": "Current institutional model", "type": "multiple-choice", "required": true, "options": ["cbse-senior-secondary-only", "separate-junior-college-only", "both", "neither-current"] }
+        ]
+      },
+      {
+        "id": "CBSE-SENIOR-SECONDARY",
+        "title": "CBSE Senior Secondary",
+        "showWhen": "institutionalModel is cbse-senior-secondary-only or both",
+        "fields": [
+          { "id": "cbseSeniorSecondary.officialName", "label": "Official name", "type": "short-text", "required": true },
+          { "id": "cbseSeniorSecondary.board", "label": "Board", "type": "short-text", "required": true },
+          { "id": "cbseSeniorSecondary.affiliationOrRecognition", "label": "Affiliation or recognition wording", "type": "paragraph", "required": true },
+          { "id": "cbseSeniorSecondary.classes", "label": "Classes", "type": "paragraph-list", "required": true },
+          { "id": "cbseSeniorSecondary.streams", "label": "Streams", "type": "paragraph-list", "required": true },
+          { "id": "cbseSeniorSecondary.subjects", "label": "Subjects", "type": "paragraph-list", "required": true },
+          { "id": "cbseSeniorSecondary.eligibility", "label": "Eligibility", "type": "paragraph", "required": true },
+          { "id": "cbseSeniorSecondary.feeSummary", "label": "Approved public fee summary", "type": "paragraph", "required": true },
+          { "id": "cbseSeniorSecondary.admissionProcedure", "label": "Admission procedure", "type": "paragraph", "required": true },
+          { "id": "cbseSeniorSecondary.publicSummary", "label": "Approved public summary", "type": "paragraph", "required": true }
+        ]
+      },
+      {
+        "id": "JUNIOR-COLLEGE",
+        "title": "Separate Junior College",
+        "showWhen": "institutionalModel is separate-junior-college-only or both",
+        "fields": [
+          { "id": "juniorCollege.officialName", "label": "Official name", "type": "short-text", "required": true },
+          { "id": "juniorCollege.board", "label": "Board", "type": "short-text", "required": true },
+          { "id": "juniorCollege.affiliationOrRecognition", "label": "Affiliation or recognition wording", "type": "paragraph", "required": true },
+          { "id": "juniorCollege.classes", "label": "Classes", "type": "paragraph-list", "required": true },
+          { "id": "juniorCollege.streams", "label": "Streams", "type": "paragraph-list", "required": true },
+          { "id": "juniorCollege.subjects", "label": "Subjects", "type": "paragraph-list", "required": true },
+          { "id": "juniorCollege.eligibility", "label": "Eligibility", "type": "paragraph", "required": true },
+          { "id": "juniorCollege.feeSummary", "label": "Approved public fee summary", "type": "paragraph", "required": true },
+          { "id": "juniorCollege.admissionProcedure", "label": "Admission procedure", "type": "paragraph", "required": true },
+          { "id": "juniorCollege.publicSummary", "label": "Approved public summary", "type": "paragraph", "required": true }
+        ]
+      },
+      {
+        "id": "EXAM-PREPARATION",
+        "title": "JEE, NEET and CET preparation",
+        "fields": [
+          { "id": "examPreparation.operator", "label": "Operator", "type": "multiple-choice", "required": true, "options": ["not-offered", "cbse-school", "junior-college", "separate-institute", "external-partner"] },
+          { "id": "examPreparation.operatorName", "label": "Official operator name", "type": "short-text", "requiredWhen": "operator is separate-institute or external-partner or junior-college" },
+          { "id": "examPreparation.programmes", "label": "Examinations or programmes", "type": "paragraph-list", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.studentGroups", "label": "Student groups", "type": "paragraph-list", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.curriculum", "label": "Curriculum summary", "type": "paragraph", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.timetable", "label": "Timetable summary", "type": "paragraph", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.facultySummary", "label": "Approved public faculty summary", "type": "paragraph", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.feeSummary", "label": "Approved public fee summary", "type": "paragraph", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.facilitiesSummary", "label": "Facilities summary", "type": "paragraph", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.resultsPublication", "label": "Results-publication decision", "type": "multiple-choice", "requiredWhen": "operator is not not-offered", "options": ["no-results-published", "verified-results-approved"] },
+          { "id": "examPreparation.verifiedResultsSummary", "label": "Verified aggregate results summary", "type": "paragraph", "requiredWhen": "resultsPublication is verified-results-approved" },
+          { "id": "examPreparation.publicSummary", "label": "Approved public summary", "type": "paragraph", "required": true }
+        ]
+      },
+      {
+        "id": "PUBLICATION-DIRECTION",
+        "title": "Claims, media and navigation",
+        "fields": [
+          { "id": "publication.juniorCollegeNavigation", "label": "Junior College navigation placement", "type": "dropdown", "required": true, "options": ["hidden", "primary", "secondary"] },
+          { "id": "publication.examPreparationNavigation", "label": "JEE/NEET navigation placement", "type": "dropdown", "required": true, "options": ["hidden", "primary", "secondary", "under-junior-college", "under-institute"] },
+          { "id": "publication.requestedMediaRecordIds", "label": "Requested approved media record IDs", "type": "checkboxes", "required": false },
+          { "id": "publication.approvedPublicClaims", "label": "Exact approved public claims", "type": "paragraph-list", "required": true }
+        ]
+      },
+      {
+        "id": "APPROVAL",
+        "title": "Evidence and management decision",
+        "fields": [
+          { "id": "approval.controlledEvidenceReferences", "label": "Opaque controlled evidence references", "type": "paragraph-list", "required": true, "validation": "at least two IDs; never URLs, paths, filenames or evidence text" },
+          { "id": "approval.approvedByRole", "label": "Approving role", "type": "short-text", "required": true, "validation": "lowercase role slug; never a name or email" },
+          { "id": "approval.approvedOn", "label": "Approval date", "type": "date", "required": true },
+          { "id": "approval.expiresOn", "label": "Expiry date", "type": "date", "required": false },
+          { "id": "approval.confirmation", "label": "Final management confirmation", "type": "checkbox", "required": true, "value": "confirm-management-approved-programmes-content-package" }
+        ]
+      }
+    ]
+  },
+  "googleSheet": {
+    "title": "SSKEMS Programmes publication register",
+    "tabs": [
+      {
+        "name": "Programmes",
+        "keyColumn": "programmeId",
+        "columns": ["programmeId", "academicYear", "programmeLabel", "institutionalPathway", "ownerRole", "publicSummary", "admissionSummary", "scheduleSummary", "facilitiesSummary", "claimRecordIds", "evidenceIds", "reviewStatus", "lastReviewedOn"]
+      },
+      {
+        "name": "Faculty",
+        "keyColumn": "facultyId",
+        "columns": ["facultyId", "programmeId", "campusId", "publicDisplayName", "publicRole", "publicQualificationSummary", "subjectsOrFunctions", "consentEvidenceId", "claimRecordIds", "publicationDecision", "validFrom", "validUntil"]
+      },
+      {
+        "name": "Fees",
+        "keyColumn": "feeId",
+        "columns": ["feeId", "programmeId", "academicYear", "category", "approvedPublicWording", "currency", "amountIfApproved", "paymentScheduleSummary", "feeCircularEvidenceId", "claimRecordIds", "publicationDecision", "validFrom", "validUntil"]
+      },
+      {
+        "name": "Results",
+        "keyColumn": "resultId",
+        "columns": ["resultId", "programmeId", "academicYear", "examName", "cohortDefinition", "aggregateMetric", "aggregateValue", "publicClaimText", "resultProofEvidenceId", "claimRecordIds", "publicationDecision", "validFrom", "validUntil"]
+      },
+      {
+        "name": "Scholarships",
+        "keyColumn": "scholarshipId",
+        "columns": ["scholarshipId", "programmeId", "academicYear", "publicName", "eligibilitySummary", "benefitSummary", "applicationSummary", "deadlineIfApproved", "evidenceId", "claimRecordIds", "publicationDecision", "validFrom", "validUntil"]
+      },
+      {
+        "name": "Campus",
+        "keyColumn": "campusId",
+        "columns": ["campusId", "publicName", "publicLocationSummary", "programmeIds", "facilitySummary", "approvedMediaRecordIds", "claimRecordIds", "publicationDecision", "lastReviewedOn"]
+      },
+      {
+        "name": "Evidence Register",
+        "keyColumn": "evidenceId",
+        "columns": ["evidenceId", "evidenceType", "academicYear", "controlledDriveLink", "ownerRole", "verificationStatus", "verifiedOn", "validUntil", "approvedPublicUse", "notes"]
+      },
+      {
+        "name": "Publication Tracker",
+        "keyColumn": "publicationItemId",
+        "columns": ["publicationItemId", "contentType", "programmeId", "sourceRecordId", "sanityState", "missingFieldsStatus", "evidenceStatus", "claimApprovalStatus", "managementDecision", "url", "seoTitleStatus", "seoDescriptionStatus", "navigationPlacement", "scheduledPublishDate", "actualPublishDate", "bindingOrReceiptId", "overallStatus", "blocker"]
+      },
+      {
+        "name": "Lists",
+        "keyColumn": "listName",
+        "columns": ["listName", "allowedValue", "sortOrder", "active"]
+      }
+    ]
+  },
+  "controlledDrive": {
+    "rootFolderName": "SSKEMS-Controlled-Publication",
+    "defaultAccess": "authorised-school-roles-only",
+    "folders": [
+      { "order": 0, "path": "00-Governance", "contents": "access register, retention rules and approval workflow" },
+      { "order": 1, "path": "01-Programmes/{academicYear}/Affiliation-Recognition", "contents": "current affiliation and recognition records" },
+      { "order": 2, "path": "01-Programmes/{academicYear}/Fees", "contents": "approved fee circulars and schedules" },
+      { "order": 3, "path": "01-Programmes/{academicYear}/Timetables", "contents": "approved timetable evidence" },
+      { "order": 4, "path": "01-Programmes/{academicYear}/Brochures", "contents": "approved programme brochures" },
+      { "order": 5, "path": "01-Programmes/{academicYear}/Results", "contents": "aggregate result proofs; no pupil-level exports in the publication workspace" },
+      { "order": 6, "path": "01-Programmes/{academicYear}/Faculty", "contents": "approved public bios and consent references; no contact details" },
+      { "order": 7, "path": "02-Media/{academicYear}/Photos", "contents": "original approved photographs and rights records" },
+      { "order": 8, "path": "02-Media/{academicYear}/Video", "contents": "original approved video and rights records" },
+      { "order": 9, "path": "03-Consent/{academicYear}", "contents": "private consent evidence; never copied to the repository, Sheet public tabs or Sanity" },
+      { "order": 10, "path": "04-Approvals/{academicYear}", "contents": "management decisions and review receipts" },
+      { "order": 11, "path": "05-Publication-Exports/{academicYear}", "contents": "approved public-safe packages and exact publication receipts" }
+    ],
+    "fileNamingPattern": "{evidenceId}__{documentType}__{YYYY-MM-DD}__v{NN}.{extension}"
+  },
+  "publicationTracker": {
+    "states": ["draft", "in-review", "blocked", "ready-for-implementation", "published", "retired"],
+    "requiredGates": [
+      "all required public fields are complete",
+      "all cited evidence IDs are verified and current",
+      "every exact public claim has a current approved manifest record",
+      "management decision is approved and current",
+      "SEO title and description are reviewed",
+      "navigation placement is explicitly approved",
+      "public URL is assigned",
+      "media and document records pass their independent approval pipelines",
+      "the exact public output has a revision or digest receipt before publication"
+    ],
+    "readyRule": "Ready only when every required gate passes; otherwise Blocked with one explicit blocker.",
+    "sanityRule": "A Sanity state is editorial workflow state, not approval evidence and not publication authority."
+  },
+  "privacy": {
+    "allowedInRepository": ["blank field definitions", "public-safe labels", "opaque evidence IDs", "role slugs", "approved public content", "exact public publication receipts"],
+    "forbiddenInRepositoryOrSanity": ["pupil or applicant records", "guardian details", "private consent evidence", "approver identities", "staff contact details", "private evidence files", "private Drive links", "source file paths", "passwords or tokens"],
+    "completedWorkbookRule": "The populated workbook remains in controlled Drive. Only approved public projections and opaque references may be exported for implementation."
+  },
+  "guardrails": {
+    "googleAssetsProvisioned": false,
+    "realProgrammeDataCollected": false,
+    "privateEvidenceIncluded": false,
+    "managementApprovalGranted": false,
+    "approvalManifestUpdated": false,
+    "sanityWritePerformed": false,
+    "publicContentPublished": false,
+    "navigationActivated": false,
+    "deploymentPerformed": false
+  }
+}

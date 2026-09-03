@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { SiteImage } from "@/components/media/SiteImage";
 import Link from "next/link";
 
 import { SiteFooter } from "@/components/site-footer";
@@ -286,7 +286,7 @@ export default async function Home() {
                   <article className="home-achievement-card" data-motion-home-achievement key={artwork.src}>
                     <a href={artwork.src} target="_blank" rel="noreferrer" aria-label={`Open full-size ${artwork.title} artwork in a new tab`}>
                       <span className="home-achievement-card__media">
-                        <Image
+                        <SiteImage
                           src={artwork.src}
                           alt={artwork.alt}
                           width={1400}

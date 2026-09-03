@@ -239,6 +239,14 @@ export default async function ProgrammesPreviewPage() {
               <p><strong>Current result:</strong> art direction and motion can be reviewed now; no draft claim, image, route or navigation item is activated by this prototype.</p>
               <Link className="button button--primary" href="/publication-review/programmes-content-package">Open the Programmes content package</Link>
             </div>
+            <nav className="programmes-preview-route-shells" aria-label="Private Programme route shells">
+              <span>Review the prepared route shells</span>
+              <ul>
+                <li><Link href="/school/academics">School academics</Link></li>
+                <li><Link href="/junior-college">Junior College</Link></li>
+                <li><Link href="/programmes/jee-neet">JEE and NEET</Link></li>
+              </ul>
+            </nav>
           </PageContainer>
         </section>
       </main>

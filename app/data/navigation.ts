@@ -42,7 +42,7 @@ export const primaryNavigation: NavigationItem[] = [
       { label: "Academics", href: "/school/academics", description: "Curriculum, calendar and learning" },
       { label: "Faculty", href: "/school/faculty", description: "Verified faculty directory" },
       { label: "Facilities", href: "/school/facilities", description: "Campus facilities and resources" },
-    ],
+    ].filter((item) => !isProgrammesPublicationRoute(item.href)),
   },
   {
     label: "Admissions",
@@ -98,3 +98,4 @@ export const searchableLinks = [
   { label: "Class IX and XI transfers", href: "/admissions/class-9-and-11-transfers" },
   { label: "Senior-secondary admissions", href: "/admissions/senior-secondary" },
 ];
+import { isProgrammesPublicationRoute } from "@/lib/programmes-publication-routes";

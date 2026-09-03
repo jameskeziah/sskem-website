@@ -9,7 +9,7 @@ test("desktop submenu is keyboard operated and restores focus", async ({ page })
   await expect(toggle).toBeFocused();
   await toggle.press("Enter");
   await expect(toggle).toHaveAttribute("aria-expanded", "true");
-  await expect(page.getByRole("link", { name: /Academics/ }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /Academics/ })).toHaveCount(0);
 
   await page.keyboard.press("Escape");
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
@@ -56,4 +56,16 @@ test("search dialog moves and restores focus", async ({ page }) => {
   await expect(page.getByRole("dialog", { name: "What are you looking for?" }).getByRole("link", { name: "Faculty", exact: true })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(trigger).toBeFocused();
+});
+
+test("governed Programme routes remain absent from public navigation and sitemap", async ({ page, request }) => {
+  await page.goto("/");
+  const sitemap = await request.get("/sitemap.xml");
+  const sitemapText = await sitemap.text();
+
+  for (const route of ["/school/academics", "/junior-college", "/programmes/jee-neet"]) {
+    await expect(page.locator(`header a[href="${route}"]`), route).toHaveCount(0);
+    await expect(page.locator(`footer a[href="${route}"]`), route).toHaveCount(0);
+    expect(sitemapText, route).not.toContain(route);
+  }
 });

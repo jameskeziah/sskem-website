@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./compliance.css";
 @import "./admissions.css";
+@import "./programmes.css";
 
 *,
 *::before,

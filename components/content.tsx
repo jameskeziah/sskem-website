@@ -1,4 +1,7 @@
-import Image, { type ImageProps } from "next/image";
+import {
+  SiteImage,
+  type SiteImageProps,
+} from "@/components/media/SiteImage";
 import { Children, type ReactNode } from "react";
 import { Heading, TextLink } from "./typography";
 
@@ -220,8 +223,24 @@ export function DataTable({
   );
 }
 
-export function ResponsiveImage({ alt, ...props }: ImageProps) {
-  return <Image className="responsive-image" alt={alt} unoptimized={props.unoptimized ?? true} {...props} />;
+export function ResponsiveImage({
+  alt,
+  className,
+  unoptimized = true,
+  ...props
+}: SiteImageProps) {
+  return (
+    <SiteImage
+      {...props}
+      alt={alt}
+      className={
+        className
+          ? `responsive-image ${className}`
+          : "responsive-image"
+      }
+      unoptimized={unoptimized}
+    />
+  );
 }
 
 export function VideoEmbed({ title, src }: { title: string; src?: string }) {

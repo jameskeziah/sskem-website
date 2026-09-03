@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
+import { SiteImage } from "@/components/media/SiteImage";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NoticeBar, Breadcrumbs } from "./content";
@@ -54,7 +54,7 @@ function BrandIdentity() {
   return (
     <Link className="brand-identity" href="/" aria-label={`${siteFacts.shortName} home`}>
       <span className="brand-identity__mark" aria-hidden="true">
-        <Image src="/sskem-logo.png" alt="" width={1498} height={586} sizes="48px" priority unoptimized />
+        <SiteImage src="/sskem-logo.png" alt="" width={1498} height={586} sizes="48px" priority unoptimized />
       </span>
       <span className="brand-identity__copy">
         <strong>{siteFacts.shortName}</strong>
