@@ -12,6 +12,7 @@ export type PublicReleaseReadinessInput = {
   publicDocuments: ReleaseGateInput;
   mediaPerformance: ReleaseGateInput;
   legacyRoutes: ReleaseGateInput;
+  contentMigration: ReleaseGateInput;
   reviewTreatment: ReleaseGateInput;
 };
 
@@ -21,6 +22,7 @@ const gateDefinitions = [
   { key: "publicDocuments", id: "public-document-bindings", label: "Appendix IX documents" },
   { key: "mediaPerformance", id: "homepage-media-performance", label: "Homepage media budget" },
   { key: "legacyRoutes", id: "legacy-route-cutover", label: "Legacy route cutover" },
+  { key: "contentMigration", id: "legacy-content-migration", label: "Legacy content migration" },
   { key: "reviewTreatment", id: "review-only-treatment", label: "Review-only treatment" },
 ] as const;
 

@@ -27,6 +27,13 @@ The inventory currently covers 35 routes: 33 permanent redirects and two
 retained routes. Route implementation is complete, but that does not clear any
 of the publication manifest's media, claim or document blockers.
 
+The later migration archive discovered 115 content records, including 108
+public URLs. `content/legacy-content-migration-matrix.json` now reconciles that
+complete source set. It preserves these 35 route treatments while leaving the
+remaining 73 public routes, seven private records and every content-migration
+decision fail closed. See `docs/legacy-content-migration.md` for the complete
+decision and verification contract.
+
 ## Commands
 
 - `npm run cutover:audit` validates the inventory and reports route, risk and

@@ -30,7 +30,6 @@ import {
   TextLink,
 } from "@/components/typography";
 import {
-  institutionPathways,
   primaryNavigation,
   utilityNavigation,
 } from "@/app/data/navigation";
@@ -441,42 +440,9 @@ const pageSpecs: Record<string, PageSpec> = {
       },
     ],
   },
-  "/junior-college": {
-    eyebrow: "Pathway awaiting confirmation",
-    title: "Junior College",
-    summary:
-      "This institutional pathway is named in public material, but its current scope and dedicated website content have not yet been confirmed.",
-    notice:
-      "Junior College is intentionally excluded from primary navigation until management confirms that it is active and supplies approved content.",
-    sections: [
-      {
-        title: "Need current information?",
-        paragraphs: [
-          "Contact the school office rather than relying on legacy descriptions, dates or programme details.",
-        ],
-      },
-    ],
-  },
-  "/institute": {
-    eyebrow: "Pathway awaiting confirmation",
-    title: "Institute",
-    summary:
-      "Legacy institute material requires management review before this pathway can be presented as a current offering.",
-    notice:
-      "Institute is intentionally excluded from primary navigation until its status, ownership and programme information are confirmed.",
-    sections: [
-      {
-        title: "Need current information?",
-        paragraphs: [
-          "Please contact the school office. No course, examination-preparation or admission claim from an older page is repeated here as current fact.",
-        ],
-      },
-    ],
-  },
 };
 
 const allKnownPaths = new Set([
-  ...institutionPathways.map((item) => item.href),
   ...primaryNavigation.flatMap((item) => [
     item.href,
     ...item.children.map((child) => child.href),
@@ -710,7 +676,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: RouteProps): Promise<Metadata> {
   const { slug } = await params;
   const path = `/${slug.join("/")}`;
-  if (isProgrammesPublicationRoute(path)) return { title: "Page not found", robots: { index: false, follow: false } };
+  if (isProgrammesPublicationRoute(path) || !allKnownPaths.has(path)) return { title: "Page not found", robots: { index: false, follow: false } };
   const spec = pageSpecs[path];
 
   if (!spec) {

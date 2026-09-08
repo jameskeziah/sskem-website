@@ -281,6 +281,70 @@ test("keeps unconfirmed institutional pathways out of primary navigation", async
   assert.match(navigation, /href:\s*["']\/admissions\/enquire["']/);
 });
 
+test("ships complete site states and a consistent accessible shell without exposing Programme details", async () => {
+  const [notFound, loading, errorPage, globalError, header, footer, navigation, css, catchAll, schoolRoute, collegeRoute, preparationRoute] = await Promise.all([
+    source("app/not-found.tsx"),
+    source("app/loading.tsx"),
+    source("app/error.tsx"),
+    source("app/global-error.tsx"),
+    source("components/site-header.tsx"),
+    source("components/site-footer.tsx"),
+    source("app/data/navigation.ts"),
+    source("app/globals.css"),
+    source("app/[...slug]/page.tsx"),
+    source("app/school/academics/page.tsx"),
+    source("app/junior-college/page.tsx"),
+    source("app/programmes/jee-neet/page.tsx"),
+  ]);
+
+  for (const state of [notFound, loading, errorPage]) {
+    assert.match(state, /<SiteHeader/);
+    assert.match(state, /<main\s+id="main-content"\s+tabIndex=\{-1\}/);
+    assert.match(state, /<SiteFooter/);
+    assert.doesNotMatch(state, /JEE|NEET|Junior College|affiliation|faculty name|fee amount|result statistic/i);
+  }
+  assert.match(notFound, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false\s*\}/);
+  assert.match(notFound, /Return home/);
+  assert.match(loading, /aria-busy="true"/);
+  assert.match(loading, /role="status"\s+aria-live="polite"/);
+  assert.match(errorPage, /^"use client";/);
+  assert.match(errorPage, /role="alert"/);
+  assert.match(errorPage, /onClick=\{reset\}/);
+  assert.doesNotMatch(errorPage, /error\.message|error\.stack|error\.digest/);
+  assert.match(globalError, /<html lang="en">/);
+  assert.match(globalError, /onClick=\{reset\}/);
+
+  assert.match(header, /<nav className="skip-links" aria-label="Skip links">/);
+  assert.match(header, /href="#main-content"/);
+  assert.match(header, /href="#site-footer"/);
+  assert.match(header, /aria-labelledby="mobile-navigation-title"/);
+  assert.match(header, /aria-describedby="mobile-navigation-description"/);
+  assert.match(header, /\$\{expanded \? "Hide" : "Show"\}/);
+  assert.match(header, /onClick=\{closeMobileNavigation\}/);
+  assert.match(footer, /id="site-footer"\s+tabIndex=\{-1\}/);
+  assert.match(footer, /footerNavigationGroups/);
+  assert.doesNotMatch(footer, /institutionPathways|confirmation pending|· confirmed/);
+  assert.match(navigation, /footerNavigationGroups/);
+  assert.match(navigation, /links:\s*group\.links\.filter\(\(link\) => !isProgrammesPublicationRoute\(link\.href\)\)/);
+  assert.doesNotMatch(catchAll, /"\/junior-college"\s*:\s*\{|"\/institute"\s*:\s*\{/);
+  assert.doesNotMatch(catchAll, /\.\.\.institutionPathways/);
+  assert.match(catchAll, /isProgrammesPublicationRoute\(path\) \|\| !allKnownPaths\.has\(path\)/);
+
+  assert.match(css, /\.skip-links:focus-within/);
+  assert.match(css, /height:\s*100dvh/);
+  assert.match(css, /@media\s*\(forced-colors:\s*active\)/);
+  assert.match(css, /@media\s+print[\s\S]*?@page/);
+  assert.match(css, /\.mobile-drawer-layer,[\s\S]*?\.search-layer,[\s\S]*?display:\s*none\s*!important/);
+  assert.match(css, /h1,[\s\S]*?break-after:\s*avoid/);
+
+  for (const route of [schoolRoute, collegeRoute, preparationRoute]) {
+    const publicMetadata = route.slice(route.indexOf("export function generateMetadata"), route.indexOf("export default"));
+    assert.match(publicMetadata, /HOMEPAGE_REVIEW_MODE !== "private"/);
+    assert.match(publicMetadata, /title:\s*"Page not found"/);
+    assert.match(publicMetadata, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false,\s*nocache:\s*true\s*\}/);
+  }
+});
+
 test("encodes accessible navigation, disclosure, controls, and content semantics", async () => {
   const [header, controls, content, footer] = await Promise.all([
     source("components/site-header.tsx"),
@@ -312,7 +376,9 @@ test("encodes accessible navigation, disclosure, controls, and content semantics
   assert.match(content, /aria-label=\{`View \$\{title\}, \$\{fileType\}, \$\{fileSize\}`\}/);
   assert.match(content, /<th scope=["']col["']/);
   assert.match(content, /aria-label=\{`\$\{caption\}, scrollable table`\}/);
-  assert.match(footer, /aria-label=["']Institutional pathway status["']/);
+  assert.match(footer, /id=["']site-footer["']/);
+  assert.match(footer, /aria-label=["']Legal links["']/);
+  assert.doesNotMatch(footer, /Institutional pathway status|confirmation pending/);
 });
 
 test("component sources do not contain arbitrary raw hex colours", async () => {

@@ -66,6 +66,7 @@
 .review-readiness,
 .review-cms,
 .review-cutover,
+.review-migration,
 .review-summary,
 .review-programmes-package,
 .review-first-batch,
@@ -344,6 +345,75 @@
   background: var(--surface-raised);
   color: var(--text-primary);
   flex: 0 0 auto;
+}
+
+.review-migration {
+  background: color-mix(in srgb, var(--color-brand-50) 58%, var(--surface-raised));
+  border: var(--border-width-default) solid var(--border-default);
+  border-radius: var(--radius-large);
+  padding: clamp(var(--space-24), 5vw, var(--space-48));
+}
+
+.review-migration__grid {
+  display: grid;
+  gap: var(--space-16);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+
+.review-migration__grid > div {
+  background: var(--surface-raised);
+  border: var(--border-width-default) solid var(--border-default);
+  border-radius: var(--radius-medium);
+  padding: var(--space-20);
+}
+
+.review-migration__grid dt {
+  color: var(--text-secondary);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.review-migration__grid dd {
+  margin: var(--space-12) 0 0;
+}
+
+.review-migration__grid dd strong,
+.review-migration__grid dd span {
+  display: block;
+}
+
+.review-migration__grid dd strong {
+  color: var(--color-brand-800);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-500);
+}
+
+.review-migration__grid dd span {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: var(--space-8);
+}
+
+.review-migration__actions,
+.review-migration__actions > div {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+}
+
+.review-migration__actions {
+  justify-content: space-between;
+  margin-top: var(--space-24);
+}
+
+.review-migration__actions p {
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 48rem;
 }
 
 .review-summary__grid > div {
@@ -959,6 +1029,7 @@
   .review-cms__grid,
   .review-readiness__grid,
   .review-cutover__grid,
+  .review-migration__grid,
   .review-summary__grid,
   .review-media-intake__grid,
   .review-document-intake__grid,
@@ -1008,6 +1079,12 @@
   }
 
   .review-cutover__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .review-migration__actions,
+  .review-migration__actions > div {
     align-items: stretch;
     flex-direction: column;
   }

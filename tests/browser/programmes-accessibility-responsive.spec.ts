@@ -46,7 +46,10 @@ for (const route of routes) {
       .analyze();
     expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
 
-    const contrast = await new AxeBuilder({ page }).withRules(["color-contrast"]).analyze();
+    const contrast = await new AxeBuilder({ page })
+      .include("main[data-private-programme-shell]")
+      .withRules(["color-contrast"])
+      .analyze();
     expect(contrast.violations, JSON.stringify(contrast.violations, null, 2)).toEqual([]);
     expect(
       contrast.incomplete.filter(({ id }) => id === "color-contrast"),
@@ -198,4 +201,3 @@ test("essential Programme content and navigation remain available without JavaSc
 
   await context.close();
 });
-

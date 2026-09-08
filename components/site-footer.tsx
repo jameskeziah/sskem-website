@@ -1,39 +1,6 @@
-import { institutionPathways } from "@/app/data/navigation";
+import { footerNavigationGroups } from "@/app/data/navigation";
 import { siteFacts } from "@/app/data/site";
-import { isProgrammesPublicationRoute } from "@/lib/programmes-publication-routes";
 import Link from "next/link";
-
-const footerGroups = [
-  {
-    title: "School",
-    links: [
-      { label: "Overview", href: "/school" },
-      { label: "Academics", href: "/school/academics" },
-      { label: "Faculty", href: "/school/faculty" },
-      { label: "Facilities", href: "/school/facilities" },
-    ].filter((link) => !isProgrammesPublicationRoute(link.href)),
-  },
-  {
-    title: "Admissions",
-    links: [
-      { label: "Admissions overview", href: "/admissions" },
-      { label: "Admission process", href: "/admissions/process" },
-      { label: "Age criteria", href: "/admissions/age-criteria" },
-      { label: "Documents required", href: "/admissions/documents-required" },
-      { label: "Enquire now", href: "/admissions/enquire" },
-      { label: "Application status", href: "/admissions/application-status" },
-    ],
-  },
-  {
-    title: "Compliance and Documents",
-    links: [
-      { label: "Mandatory Public Disclosure", href: "/mandatory-public-disclosure" },
-      { label: "Document archive", href: "/documents" },
-      { label: "Historical versions", href: "/documents/archive" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
-];
 
 export type SiteFooterContact = {
   phone: string;
@@ -53,7 +20,7 @@ const defaultContact: SiteFooterContact = {
 
 export function SiteFooter({ contact = defaultContact }: { contact?: SiteFooterContact } = {}) {
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" id="site-footer" tabIndex={-1}>
       <div className="page-container site-footer__grid">
         <div className="site-footer__identity">
           <p className="eyebrow">Established in Veral</p>
@@ -62,7 +29,7 @@ export function SiteFooter({ contact = defaultContact }: { contact?: SiteFooterC
           <p><a href={`tel:${contact.phone.replace(/\s/g, "")}`}>{contact.phone}</a><br /><a href={`mailto:${contact.email}`}>{contact.email}</a></p>
           <p className="caption">{contact.weekdays}<br />{contact.saturday}</p>
         </div>
-        {footerGroups.map((group) => (
+        {footerNavigationGroups.map((group) => (
           <nav key={group.title} aria-label={`${group.title} footer links`}>
             <h3>{group.title}</h3>
             <ul>{group.links.map((link) => <li key={link.href}><Link href={link.href}>{link.label}</Link></li>)}</ul>
@@ -72,14 +39,6 @@ export function SiteFooter({ contact = defaultContact }: { contact?: SiteFooterC
           <h3 id="official-profiles-title">Official profiles</h3>
           <p>Social links will appear only after account ownership is verified.</p>
         </section>
-      </div>
-      <div className="page-container site-footer__pathways" aria-label="Institutional pathway status">
-        <span>Institutional pathways</span>
-        {institutionPathways.filter((pathway) => !isProgrammesPublicationRoute(pathway.href)).map((pathway) => pathway.status === "active" ? (
-          <Link href={pathway.href} key={pathway.href}>{pathway.label} · confirmed</Link>
-        ) : (
-          <span className="site-footer__pathway-pending" key={pathway.href}>{pathway.label} · confirmation pending</span>
-        ))}
       </div>
       <div className="site-footer__legal">
         <div className="page-container">

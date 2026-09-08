@@ -1,0 +1,126 @@
+{
+  "$schema": "./programmes-workbook-intake-receipt.schema.json",
+  "schemaVersion": 1,
+  "receiptId": "sskem-programmes-workbook-intake-receipt",
+  "generatedOn": "2026-09-07",
+  "sourceFingerprint": {
+    "algorithm": "sha256",
+    "value": "fcd33d68e4b67d577817a3d101d5b46b8f0cb5125a36edb57ee809802f99dac0",
+    "byteLength": 136669
+  },
+  "status": "blocked",
+  "structure": {
+    "worksheetCount": 14,
+    "requiredWorksheetCount": 14,
+    "matchedRequiredWorksheetCount": 14,
+    "formulaCellCount": 4,
+    "externalLinkPartCount": 0,
+    "macroPartCount": 0,
+    "embeddedObjectPartCount": 0
+  },
+  "contractBinding": {
+    "intakeId": "sskem-programmes-intake-system",
+    "schemaVersion": 1,
+    "sourceMarkerPresent": false,
+    "expectedWorksheetCount": 9,
+    "matchedWorksheetCount": 5,
+    "exactStructureMatch": false
+  },
+  "totals": {
+    "programmeForms": 3,
+    "responseFields": 423,
+    "notConfirmedResponses": 263,
+    "criticalFields": 210,
+    "unresolvedCriticalResponses": 119,
+    "managementConfirmedForms": 0,
+    "approvedForPublicationForms": 0,
+    "trackerApprovedRows": 0,
+    "trackerPublicationReadyRows": 0,
+    "approvedEvidenceRows": 0
+  },
+  "records": [
+    {
+      "recordId": "programme-record-01",
+      "responseFields": 141,
+      "notConfirmedResponses": 86,
+      "criticalFields": 70,
+      "unresolvedCriticalResponses": 40,
+      "managementConfirmed": false,
+      "approvedForPublication": false
+    },
+    {
+      "recordId": "programme-record-02",
+      "responseFields": 141,
+      "notConfirmedResponses": 91,
+      "criticalFields": 70,
+      "unresolvedCriticalResponses": 42,
+      "managementConfirmed": false,
+      "approvedForPublication": false
+    },
+    {
+      "recordId": "programme-record-03",
+      "responseFields": 141,
+      "notConfirmedResponses": 86,
+      "criticalFields": 70,
+      "unresolvedCriticalResponses": 37,
+      "managementConfirmed": false,
+      "approvedForPublication": false
+    }
+  ],
+  "repeatingRows": {
+    "campus": 12,
+    "faculty": 2,
+    "fees": 6,
+    "results": 0,
+    "scholarships": 1,
+    "mediaAndEvidence": 6,
+    "publicationTracker": 3
+  },
+  "compatibility": {
+    "canonicalProgrammePathwaysRequired": 3,
+    "canonicalProgrammePathwaysDirectlyMapped": 1,
+    "automaticContentPackageCreationSupported": false,
+    "manualInstitutionalModelDecisionRequired": true
+  },
+  "issueCodes": [
+    "contract-marker-missing",
+    "canonical-contract-structure-mismatch",
+    "unresolved-responses",
+    "unresolved-critical-responses",
+    "management-confirmation-missing",
+    "publication-decision-missing",
+    "tracker-approval-missing",
+    "tracker-publication-readiness-missing",
+    "approved-evidence-missing",
+    "result-claims-suppressed",
+    "canonical-model-reconciliation-required",
+    "potential-private-data-detected"
+  ],
+  "outcomes": {
+    "auditReceiptReady": true,
+    "sanitizedProjectionReady": false,
+    "publicationAuthorized": false
+  },
+  "privacy": {
+    "potentialPersonRecordsPresent": true,
+    "potentialContactFieldsPresent": true,
+    "internalFeeRowsPresent": true,
+    "evidenceRegisterRowsPresent": true,
+    "rawWorkbookContentReturned": false,
+    "sourceFilenameReturned": false,
+    "sourcePathReturned": false
+  },
+  "guardrails": {
+    "networkRequestPerformed": false,
+    "serverPersistencePerformed": false,
+    "repositoryWritePerformed": false,
+    "managementApprovalGranted": false,
+    "contentPackageCreated": false,
+    "approvalManifestUpdated": false,
+    "cmsWritePerformed": false,
+    "publicContentPublished": false,
+    "navigationActivated": false,
+    "deploymentPerformed": false,
+    "malwareScanPerformed": false
+  }
+}

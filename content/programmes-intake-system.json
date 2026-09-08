@@ -6,6 +6,8 @@
     "approvalManifest": "content/approval-manifest.json",
     "programmesPackageSchema": "content/programmes-content-package.schema.json",
     "programmesReviewWorkspace": "/publication-review/programmes-content-package",
+    "programmesWorkbookIntakeWorkspace": "/publication-review/programmes-workbook-intake",
+    "programmesWorkbookIntakeReceipt": "content/programmes-workbook-intake-receipt.json",
     "completedWorkbookLocation": "controlled-google-drive-only",
     "repositoryContent": "public-safe-specification-and-opaque-references-only",
     "sanityContent": "approved-public-display-content-only"

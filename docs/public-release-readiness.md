@@ -1,7 +1,7 @@
 # Public release readiness
 
 `npm run release:audit` is the single launch decision for the rebuilt public
-site. It combines six independent gates without weakening any gate's own
+site. It combines seven independent gates without weakening any gate's own
 validation or evidence requirements:
 
 1. Publication approvals: every governed public target has a current approval.
@@ -9,17 +9,19 @@ validation or evidence requirements:
 3. Appendix IX documents: all twelve required PDFs have exact approved bindings.
 4. Homepage media budget: all five tracked assets meet their transfer limits.
 5. Legacy route cutover: every inventoried WordPress route has an implementation.
-6. Review-only treatment: the homepage uses separate projections—private review
+6. Legacy content migration: all 115 archived content records have an explicit
+   route and content decision whose implementation has been independently verified.
+7. Review-only treatment: the homepage uses separate projections—private review
    may show all supplied achievement artwork, while public HTML receives only an
    exact artwork whose media record and paired claim record are both current and
    approved and whose bytes match an active hash binding. An empty public
    projection is omitted.
 
-The result is fail closed. Public release is ready only when all six gates pass
+The result is fail closed. Public release is ready only when all seven gates pass
 and every gate's underlying registry, receipt, artifact and configuration checks
 are structurally valid. A valid approval manifest does not override missing
-media, missing documents, a performance overage, an unfinished redirect or an
-unsafe private/public artwork projection.
+media, missing documents, a performance overage, an unfinished redirect,
+unaccounted archived content or an unsafe private/public artwork projection.
 
 ## Operating modes
 
@@ -44,7 +46,7 @@ opaque references and public-safe receipts.
 
 1. Resolve each gate through its guarded workflow and independent approval.
 2. Run `npm run release:audit` after every material approval or activation.
-3. When the report reaches `6 of 6 gates ready`, run the full public build and
+3. When the report reaches `7 of 7 gates ready`, run the full public build and
    contract tests.
 4. Measure field LCP after launch; the transfer-budget gate is not field evidence.
 5. Publish only with separate, explicit deployment authorization.

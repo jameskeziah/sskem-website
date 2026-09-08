@@ -1,3 +1,5 @@
+import { isProgrammesPublicationRoute } from "@/lib/programmes-publication-routes";
+
 export type NavigationChild = {
   label: string;
   href: string;
@@ -98,4 +100,34 @@ export const searchableLinks = [
   { label: "Class IX and XI transfers", href: "/admissions/class-9-and-11-transfers" },
   { label: "Senior-secondary admissions", href: "/admissions/senior-secondary" },
 ];
-import { isProgrammesPublicationRoute } from "@/lib/programmes-publication-routes";
+
+export const footerNavigationGroups = [
+  {
+    title: "School",
+    links: [
+      { label: "School overview", href: "/school" },
+      { label: "Facilities", href: "/school/facilities" },
+      { label: "Student life", href: "/student-life" },
+      { label: "About SSKEMS", href: "/about" },
+    ],
+  },
+  {
+    title: "Admissions",
+    links: [
+      { label: "Admissions overview", href: "/admissions" },
+      { label: "Admission process", href: "/admissions/process" },
+      { label: "Documents required", href: "/admissions/documents-required" },
+      { label: "Enquire now", href: "/admissions/enquire" },
+    ],
+  },
+  {
+    title: "Public information",
+    links: [
+      ...utilityNavigation,
+      { label: "Historical documents", href: "/documents/archive" },
+    ],
+  },
+].map((group) => ({
+  ...group,
+  links: group.links.filter((link) => !isProgrammesPublicationRoute(link.href)),
+}));

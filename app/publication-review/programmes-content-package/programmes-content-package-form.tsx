@@ -2,6 +2,7 @@
 
 import { type FormEvent, useState } from "react";
 
+import { programmesPrivateReviewCandidates } from "@/app/data/programmes-private-review-candidates";
 import {
   PROGRAMMES_CONTENT_PACKAGE_CONFIRMATION,
   createProgrammesContentPackage,
@@ -40,13 +41,27 @@ function programmeInput(form: FormData, prefix: ProgrammePrefix) {
   };
 }
 
-function ProgrammeDetailsFields({ prefix, title, active }: { prefix: ProgrammePrefix; title: string; active: boolean }) {
+function ProgrammeDetailsFields({
+  prefix,
+  title,
+  active,
+  officialNameCandidate,
+}: {
+  prefix: ProgrammePrefix;
+  title: string;
+  active: boolean;
+  officialNameCandidate?: string;
+}) {
   return (
     <fieldset className="programmes-package-fieldset" disabled={!active} hidden={!active}>
       <legend>{title}</legend>
       <p>Use the exact current institutional wording approved for public use. List items one per line.</p>
       <div className="programmes-package-grid programmes-package-grid--two">
-        <label><span>Official name</span><input name={`${prefix}:officialName`} type="text" autoComplete="off" required={active} /></label>
+        <label>
+          <span>Official name</span>
+          <input name={`${prefix}:officialName`} type="text" autoComplete="off" defaultValue={officialNameCandidate} required={active} />
+          {officialNameCandidate ? <small>Private-review candidate only; documentary and management approval remain required.</small> : null}
+        </label>
         <label><span>Board</span><input name={`${prefix}:board`} type="text" autoComplete="off" required={active} /></label>
         <label className="programmes-package-wide"><span>Affiliation or recognition</span><textarea name={`${prefix}:affiliationOrRecognition`} rows={2} required={active} /></label>
         <label><span>Classes</span><textarea name={`${prefix}:classes`} rows={3} placeholder={"Class XI\nClass XII"} required={active} /></label>
@@ -132,7 +147,12 @@ export function ProgrammesContentPackageForm() {
             <label><span>Institutional model</span><select name="institutionalModel" value={institutionalModel} onChange={(event) => setInstitutionalModel(event.target.value)} required><option value="" disabled>Choose only after verification</option><option value="cbse-senior-secondary-only">CBSE Senior Secondary only</option><option value="separate-junior-college-only">Separate Junior College only</option><option value="both">Both pathways are current</option><option value="neither-current">Neither pathway is current</option></select></label>
           </div>
         </fieldset>
-        <ProgrammeDetailsFields prefix="cbseSeniorSecondary" title="CBSE Senior Secondary details" active={cbseActive} />
+        <ProgrammeDetailsFields
+          prefix="cbseSeniorSecondary"
+          title="CBSE Senior Secondary details"
+          active={cbseActive}
+          officialNameCandidate={programmesPrivateReviewCandidates.cbseSeniorSecondary.officialName}
+        />
         <ProgrammeDetailsFields prefix="juniorCollege" title="Separate Junior College details" active={juniorCollegeActive} />
       </section>
 

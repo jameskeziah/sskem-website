@@ -16,7 +16,7 @@ import {
 } from "./programmes-render-gate.ts";
 import type { ApprovedProgrammeDocument } from "./programmes-document-integration.ts";
 
-const ADAPTER_VERSION = "1.0.0";
+const ADAPTER_VERSION = "1.1.0";
 const issuedProgrammePageData = new WeakSet<object>();
 
 type JsonRecord = Record<string, unknown>;
@@ -72,6 +72,7 @@ export type ProgrammePageData = Readonly<{
     schedule: Readonly<{
       summary: string;
       entries: readonly Readonly<{ label: string; value: string }>[];
+      validUntil: string;
     }>;
     feeSummary: Readonly<{
       academicYear: string;
@@ -81,6 +82,7 @@ export type ProgrammePageData = Readonly<{
         approvedPublicWording: string;
         amount: string | null;
       }>[];
+      validUntil: string;
     }> | null;
     facultyProfiles: Readonly<{
       profiles: readonly Readonly<{
@@ -106,6 +108,7 @@ export type ProgrammePageData = Readonly<{
         cohortDefinition: string;
         aggregateMetric: string;
         aggregateValue: string;
+        validUntil: string;
       }>[];
     }>;
     documents: Readonly<{
@@ -116,6 +119,7 @@ export type ProgrammePageData = Readonly<{
       summary: string;
       primaryAction: Readonly<{ label: string; href: string }>;
       secondaryAction: Readonly<{ label: string; href: string }>;
+      validUntil: string;
     }>;
   }>;
   academic: Readonly<{
@@ -239,6 +243,44 @@ function select(index: Map<string, JsonRecord>, ids: unknown): JsonRecord[] {
   return strings(ids).map((id) => requiredRecord(index, id, "record"));
 }
 
+function validDate(value: unknown): value is string {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const parsed = new Date(`${value}T00:00:00.000Z`);
+  return !Number.isNaN(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
+}
+
+function earliestSectionExpiry(options: {
+  packageData: JsonRecord;
+  evidence: Map<string, JsonRecord>;
+  claims: Map<string, JsonRecord>;
+  manifest?: ApprovalManifestLike;
+  evidenceIds?: unknown;
+  claimIds?: unknown;
+}) {
+  const approval = requiredObject(options.packageData, "approval");
+  const packageExpiry = approval.validUntil;
+  if (!validDate(packageExpiry)) throw new Error("Approved package expiry is unavailable.");
+  const dates = new Set<string>([packageExpiry]);
+  const manifest = new Map((options.manifest?.records ?? []).map((record) => [String(record.id), record]));
+  const includeEvidence = (ids: unknown) => {
+    for (const id of strings(ids)) {
+      const expiry = options.evidence.get(id)?.validUntil;
+      if (validDate(expiry)) dates.add(expiry);
+    }
+  };
+
+  includeEvidence(options.evidenceIds);
+  for (const id of strings(options.claimIds)) {
+    const claim = options.claims.get(id);
+    if (!claim) continue;
+    if (validDate(claim.validUntil)) dates.add(claim.validUntil);
+    includeEvidence(claim.evidenceIds);
+    const manifestExpiry = manifest.get(String(claim.manifestRecordId))?.expiresAt;
+    if (validDate(manifestExpiry)) dates.add(manifestExpiry);
+  }
+  return [...dates].sort()[0];
+}
+
 function deepFreeze<T>(value: T): T {
   if (value === null || typeof value !== "object" || Object.isFrozen(value)) return value;
   Object.freeze(value);
@@ -308,9 +350,11 @@ function mapPage(
   plan: ReturnType<typeof createProgrammesImplementationPlan>,
   route: ProgrammesPublicationRoute,
   gate: ApprovedProgrammeRenderGate,
+  manifest?: ApprovalManifestLike,
 ): ProgrammePageData {
   const programmes = recordIndex(packageData.programmes);
   const organisations = recordIndex(packageData.organisations);
+  const evidence = recordIndex(packageData.evidenceRegistry);
   const faculty = recordIndex(packageData.faculty);
   const facilities = recordIndex(packageData.facilities);
   const fees = recordIndex(packageData.fees);
@@ -332,6 +376,7 @@ function mapPage(
   const routeMedia = (routePlan.referencedRecords?.mediaIds ?? []).map((id) => publicMedia(requiredRecord(media, id, "media")));
   const heroMedia = routeMedia.find((item) => item.role === "hero") ?? routeMedia[0] ?? null;
   const routeFees = select(fees, programme.feeIds);
+  const routeResults = select(results, programme.resultIds);
   const seoRecord = requiredRecord(seo, programme.seoId, "SEO record");
   const navigationRecord = requiredRecord(navigation, programme.navigationId, "navigation record");
   const relatedRouteById = new Map(Object.entries(PROGRAMME_ID_BY_ROUTE).map(([path, id]) => [id, path as ProgrammesPublicationRoute]));
@@ -367,6 +412,13 @@ function mapPage(
       schedule: {
         summary: requiredString(schedule, "summary"),
         entries: [{ label: "Academic year", value: requiredString(schedule, "academicYear") }],
+        validUntil: earliestSectionExpiry({
+          packageData,
+          evidence,
+          claims,
+          manifest,
+          evidenceIds: schedule.evidenceIds,
+        }),
       },
       feeSummary: routeFees.length ? {
         academicYear: requiredString(packageData, "academicYear"),
@@ -376,6 +428,14 @@ function mapPage(
           approvedPublicWording: requiredString(fee, "approvedPublicWording"),
           amount: formatAmount(fee.amount, fee.currency),
         })),
+        validUntil: earliestSectionExpiry({
+          packageData,
+          evidence,
+          claims,
+          manifest,
+          evidenceIds: routeFees.flatMap((fee) => strings(fee.evidenceIds)),
+          claimIds: routeFees.flatMap((fee) => strings(fee.claimIds)),
+        }),
       } : null,
       facultyProfiles: {
         profiles: select(faculty, programme.facultyIds).map((profile) => ({
@@ -394,13 +454,21 @@ function mapPage(
         })),
       },
       results: {
-        results: select(results, programme.resultIds).map((result) => ({
+        results: routeResults.map((result) => ({
           id: requiredString(result, "id"),
           exam: requiredString(result, "exam"),
           year: Number(result.year),
           cohortDefinition: requiredString(result, "cohortDefinition"),
           aggregateMetric: requiredString(result, "aggregateMetric"),
           aggregateValue: requiredString(result, "aggregateValue"),
+          validUntil: earliestSectionExpiry({
+            packageData,
+            evidence,
+            claims,
+            manifest,
+            evidenceIds: requiredObject(result, "verification").evidenceIds,
+            claimIds: [requiredString(result, "claimId")],
+          }),
         })),
       },
       documents: { documents: [] },
@@ -409,6 +477,13 @@ function mapPage(
         summary: requiredString(admission, "summary"),
         primaryAction: { label: "Start an admission enquiry", href: "/admissions/enquire" },
         secondaryAction: { label: "View admissions", href: "/admissions" },
+        validUntil: earliestSectionExpiry({
+          packageData,
+          evidence,
+          claims,
+          manifest,
+          evidenceIds: admission.evidenceIds,
+        }),
       },
     },
     academic: {
@@ -507,7 +582,7 @@ export function adaptProgrammesPublicationPackage(options: ProgrammeDataAdapterO
   try {
     const pages = Object.fromEntries(PROGRAMMES_PUBLICATION_ROUTES.map((route) => [
       route,
-      mapPage(packageData, plan, route, gates.get(route)!),
+      mapPage(packageData, plan, route, gates.get(route)!, options.manifest),
     ])) as Record<ProgrammesPublicationRoute, ProgrammePageData>;
     for (const route of PROGRAMMES_PUBLICATION_ROUTES) issuedProgrammePageData.add(pages[route]);
     const digest = plan.package.packageDigest;

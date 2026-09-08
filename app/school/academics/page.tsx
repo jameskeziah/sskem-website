@@ -8,11 +8,12 @@ const route = "/school/academics" as const;
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "School Academics Route Shell",
-  description: "Private SSKEMS review shell for the future School academics route.",
-  robots: { index: false, follow: false, nocache: true },
-};
+export function generateMetadata(): Metadata {
+  if (process.env.HOMEPAGE_REVIEW_MODE !== "private") {
+    return { title: "Page not found", description: "The requested SSKEMS page is not publicly available.", robots: { index: false, follow: false, nocache: true } };
+  }
+  return { title: "School Academics Route Shell", description: "Private SSKEMS review shell for the future School academics route.", robots: { index: false, follow: false, nocache: true } };
+}
 
 export default async function SchoolAcademicsRouteShellPage() {
   if (process.env.HOMEPAGE_REVIEW_MODE !== "private") notFound();

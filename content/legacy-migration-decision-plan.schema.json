@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/legacy-migration-decision-plan.schema.json",
+  "title": "SSKEMS legacy migration decision plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "planId", "generatedOn", "status", "binding", "summary", "issues", "records", "guardrails"],
+  "properties": {
+    "$schema": { "const": "./legacy-migration-decision-plan.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "planId": { "anyOf": [{ "type": "string", "pattern": "^legacy-migration-decisions-[a-f0-9]{24}$" }, { "type": "null" }] },
+    "generatedOn": { "type": "string", "format": "date-time" },
+    "status": { "enum": ["blocked", "ready-for-explicit-atomic-write"] },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractVersion", "matrixId", "matrixBuiltOn", "matrixDigest", "archiveId", "archiveChecksumSha256", "worksheetDigest"],
+      "properties": {
+        "contractVersion": { "const": 2 },
+        "matrixId": { "const": "sskem-legacy-content-migration" },
+        "matrixBuiltOn": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "matrixDigest": { "$ref": "#/$defs/sha256" },
+        "archiveId": { "const": "SSKEMS-BACKUP-2026-08-29" },
+        "archiveChecksumSha256": { "$ref": "#/$defs/sha256" },
+        "worksheetDigest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expectedRecords", "worksheetRows", "acceptedRecords", "changedRecords", "routeChanges", "contentChanges", "issueCount"],
+      "properties": {
+        "expectedRecords": { "const": 115 },
+        "worksheetRows": { "type": "integer", "minimum": 0 },
+        "acceptedRecords": { "type": "integer", "minimum": 0, "maximum": 115 },
+        "changedRecords": { "type": "integer", "minimum": 0, "maximum": 115 },
+        "routeChanges": { "type": "integer", "minimum": 0, "maximum": 115 },
+        "contentChanges": { "type": "integer", "minimum": 0, "maximum": 115 },
+        "issueCount": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "row", "column", "message"],
+        "properties": {
+          "code": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "row": { "anyOf": [{ "type": "integer", "minimum": 1 }, { "type": "null" }] },
+          "column": { "anyOf": [{ "type": "string", "pattern": "^[a-z0-9_]+$" }, { "type": "null" }] },
+          "message": { "type": "string", "minLength": 10, "maxLength": 240 }
+        }
+      }
+    },
+    "records": {
+      "type": "array",
+      "maxItems": 115,
+      "items": { "$ref": "#/$defs/record" }
+    },
+    "guardrails": { "$ref": "#/$defs/guardrails" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "pathOrNull": { "anyOf": [{ "type": "string", "pattern": "^(?:/|/(?:[a-z0-9_-]+/)*[a-z0-9_-]+)$" }, { "type": "null" }] },
+    "publicTargetPathOrNull": {
+      "anyOf": [
+        { "type": "string", "anyOf": [
+          { "enum": ["/", "/appendix-ix", "/contact", "/guideline-procedure", "/institute", "/junior-college", "/mandatory-public-disclosure", "/registration-form", "/saras", "/section-strength", "/student-enrolment"] },
+          { "pattern": "^/(?:about|admissions|documents|programmes|school|student-life)(?:/[a-z0-9_-]+)*$" }
+        ] },
+        { "type": "null" }
+      ]
+    },
+    "nonReservedTargetPathOrNull": { "anyOf": [
+      { "type": "string", "pattern": "^(?!(?:/_next|/api|/publication-review|/studio|/wp-admin|/wp-content|/wp-includes|/wp-json|/wp-login)(?:/|$))(?:/|/(?:[a-z0-9_-]+/)*[a-z0-9_-]+)$" },
+      { "type": "null" }
+    ] },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "action", "targetPath", "cutoverRecordId"],
+      "properties": {
+        "status": { "enum": ["implemented", "decision-required", "planned"] },
+        "action": { "enum": ["unselected", "retain", "redirect", "archive", "retire", "private-only"] },
+        "targetPath": { "$ref": "#/$defs/nonReservedTargetPathOrNull" },
+        "cutoverRecordId": { "anyOf": [{ "type": "string", "pattern": "^legacy-[a-z0-9-]+$" }, { "type": "null" }] }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "targetPath", "mergeIntoRecordId", "rationale", "ownerRole", "reviewedOn"],
+      "properties": {
+        "decision": { "enum": ["unselected", "migrate", "rewrite", "merge", "archive", "redirect-only", "retire"] },
+        "targetPath": { "$ref": "#/$defs/publicTargetPathOrNull" },
+        "mergeIntoRecordId": { "anyOf": [{ "type": "string", "pattern": "^migration-[a-f0-9]{16}$" }, { "type": "null" }] },
+        "rationale": { "anyOf": [{ "enum": ["preserve-existing-public-information", "replace-with-current-information", "consolidate-overlapping-information", "retain-as-controlled-history", "preserve-route-continuity-only", "remove-obsolete-or-out-of-scope-information", "protect-identity-or-private-information", "hold-for-rights-or-evidence-review"] }, { "type": "null" }] },
+        "ownerRole": { "anyOf": [{ "enum": ["academic-office", "admissions-office", "compliance-owner", "content-editor", "media-owner", "school-management", "school-office", "student-life-owner", "website-owner"] }, { "type": "null" }] },
+        "reviewedOn": { "anyOf": [{ "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }, { "type": "null" }] }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recordId", "sourceReference", "sourceDigest", "expectedRecordDigest", "expected", "proposed", "changes"],
+      "properties": {
+        "recordId": { "type": "string", "pattern": "^migration-[a-f0-9]{16}$" },
+        "sourceReference": { "type": "string", "pattern": "^archive-content-[a-f0-9]{16}$" },
+        "sourceDigest": { "$ref": "#/$defs/sha256" },
+        "expectedRecordDigest": { "$ref": "#/$defs/sha256" },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["routeContinuity", "contentDecision", "implementationStatus"],
+          "properties": {
+            "routeContinuity": { "$ref": "#/$defs/route" },
+            "contentDecision": { "$ref": "#/$defs/decision" },
+            "implementationStatus": { "enum": ["not-started", "in-progress", "implemented", "verified"] }
+          }
+        },
+        "proposed": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["routeContinuity", "contentDecision"],
+          "properties": {
+            "routeContinuity": { "$ref": "#/$defs/route" },
+            "contentDecision": { "$ref": "#/$defs/decision" }
+          }
+        },
+        "changes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["route", "content"],
+          "properties": { "route": { "type": "boolean" }, "content": { "type": "boolean" } }
+        }
+      }
+    },
+    "guardrails": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceContentIncluded", "privateSourcePathsIncluded", "implementationStatusChanged", "approvalGranted", "publicationAuthorized", "repositoryWritePerformed", "networkRequestPerformed", "serverPersistencePerformed", "cmsWritePerformed", "navigationActivated", "deploymentPerformed", "malwareScanPerformed"],
+      "properties": {
+        "sourceContentIncluded": { "const": false },
+        "privateSourcePathsIncluded": { "const": false },
+        "implementationStatusChanged": { "const": false },
+        "approvalGranted": { "const": false },
+        "publicationAuthorized": { "const": false },
+        "repositoryWritePerformed": { "const": false },
+        "networkRequestPerformed": { "const": false },
+        "serverPersistencePerformed": { "const": false },
+        "cmsWritePerformed": { "const": false },
+        "navigationActivated": { "const": false },
+        "deploymentPerformed": { "const": false },
+        "malwareScanPerformed": { "const": false }
+      }
+    }
+  }
+}

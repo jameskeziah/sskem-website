@@ -44,6 +44,33 @@ test("mobile drawer traps focus, closes with Escape and preserves scroll", async
   expect(await page.evaluate(() => window.scrollY)).toBe(before);
 });
 
+test("mobile navigation opens the current section and closes after navigation", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 740 });
+  await page.goto("/admissions/enquire");
+  await page.getByRole("button", { name: "Open navigation" }).click();
+
+  const drawer = page.getByRole("dialog", { name: "Site navigation" });
+  await expect(drawer.getByRole("button", { name: "Hide Admissions links" })).toHaveAttribute("aria-expanded", "true");
+  await drawer.getByRole("link", { name: "Process", exact: true }).click();
+  await expect(page).toHaveURL(/\/admissions\/process$/);
+  await expect(drawer).toBeHidden();
+});
+
+test("skip links move keyboard focus to main content and the footer", async ({ page }) => {
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("link", { name: "Skip to main content" })).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#main-content")).toBeFocused();
+
+  await page.reload();
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("link", { name: "Skip to footer" })).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#site-footer")).toBeFocused();
+});
+
 test("search dialog moves and restores focus", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");

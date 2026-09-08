@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/programmes-expiry-receipt.schema.json",
+  "title": "SSKEMS Programme expiry projection receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "receiptType",
+    "generatedAt",
+    "route",
+    "packageDigest",
+    "routeDigest",
+    "sourceProjectionDigest",
+    "projectionDigest",
+    "sections",
+    "rollbackTarget",
+    "controls",
+    "receiptDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "receiptType": { "const": "programme-expiry-projection" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "route": { "$ref": "#/$defs/route" },
+    "packageDigest": { "$ref": "#/$defs/digest" },
+    "routeDigest": { "$ref": "#/$defs/digest" },
+    "sourceProjectionDigest": { "$ref": "#/$defs/digest" },
+    "projectionDigest": { "$ref": "#/$defs/digest" },
+    "sections": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fees", "schedule", "results", "admissions"],
+      "properties": {
+        "fees": { "$ref": "#/$defs/sectionDecision" },
+        "schedule": { "$ref": "#/$defs/sectionDecision" },
+        "results": { "$ref": "#/$defs/sectionDecision" },
+        "admissions": { "$ref": "#/$defs/sectionDecision" }
+      }
+    },
+    "rollbackTarget": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["receiptDigest", "projectionDigest", "packageDigest", "routeDigest"],
+          "properties": {
+            "receiptDigest": { "$ref": "#/$defs/digest" },
+            "projectionDigest": { "$ref": "#/$defs/digest" },
+            "packageDigest": { "$ref": "#/$defs/digest" },
+            "routeDigest": { "$ref": "#/$defs/digest" }
+          }
+        }
+      ]
+    },
+    "controls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expiryEndOfDayUtc",
+        "expiredContentIncluded",
+        "expiredContentRestorationAllowed",
+        "freshValidityRequiredForRollback",
+        "approvedProjectionBundleRequired",
+        "repositoryWritePerformed",
+        "deploymentPerformed"
+      ],
+      "properties": {
+        "expiryEndOfDayUtc": { "const": true },
+        "expiredContentIncluded": { "const": false },
+        "expiredContentRestorationAllowed": { "const": false },
+        "freshValidityRequiredForRollback": { "const": true },
+        "approvedProjectionBundleRequired": { "const": true },
+        "repositoryWritePerformed": { "const": false },
+        "deploymentPerformed": { "const": false }
+      }
+    },
+    "receiptDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "route": {
+      "enum": ["/school/academics", "/junior-college", "/programmes/jee-neet"]
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "sectionDecision": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "reason", "validUntil", "fallbackId"],
+          "properties": {
+            "state": { "const": "current" },
+            "reason": { "type": "null" },
+            "validUntil": { "$ref": "#/$defs/date" },
+            "fallbackId": { "type": "null" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "reason", "validUntil", "fallbackId"],
+          "properties": {
+            "state": { "const": "fallback" },
+            "reason": { "enum": ["expired", "invalid-window"] },
+            "validUntil": { "oneOf": [{ "$ref": "#/$defs/date" }, { "type": "null" }] },
+            "fallbackId": {
+              "enum": [
+                "programme-fees-updating",
+                "programme-schedule-updating",
+                "programme-results-updating",
+                "programme-admissions-updating"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "reason", "validUntil", "fallbackId"],
+          "properties": {
+            "state": { "const": "not-applicable" },
+            "reason": { "const": "not-applicable" },
+            "validUntil": { "type": "null" },
+            "fallbackId": { "type": "null" }
+          }
+        }
+      ]
+    }
+  }
+}

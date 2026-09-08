@@ -25,7 +25,10 @@ test("print mode preserves disclosure content and removes site controls", async 
 
   await expect(page.getByRole("heading", { name: "Mandatory Public Disclosure", level: 1 })).toBeVisible();
   await expect(page.locator("#section-a")).toBeVisible();
-  await expect(page.locator(".site-header")).toBeHidden();
+  await expect(page.locator(".site-header")).toBeVisible();
+  await expect(page.locator(".desktop-navigation")).toBeHidden();
+  await expect(page.locator(".site-footer__identity")).toBeVisible();
+  await expect(page.locator(".site-footer nav")).toBeHidden();
   await expect(page.locator(".print-action")).toBeHidden();
 });
 

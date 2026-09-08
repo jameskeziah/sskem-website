@@ -2,7 +2,7 @@ import {
   PROGRAMMES_PUBLICATION_ROUTES,
   type ProgrammesPublicationRoute,
 } from "../../lib/programmes-publication-routes.ts";
-import type { ProgrammePrototypeImage } from "../../lib/programmes-media.ts";
+import type { ProgrammePrototypeMedia } from "../../lib/programmes-media.ts";
 
 export const PROGRAMME_SHELL_COMPONENTS = [
   "Programme hero",
@@ -33,7 +33,7 @@ export type PrivateProgrammeRouteShellSpec = Readonly<{
   reviewQuestion: string;
   blockers: readonly string[];
   slots: readonly ProgrammeShellSlot[];
-  media: ProgrammePrototypeImage;
+  media: ProgrammePrototypeMedia;
 }>;
 
 const sharedSlots = {

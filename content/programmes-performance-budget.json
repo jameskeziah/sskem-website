@@ -1,0 +1,41 @@
+{
+  "$schema": "./programmes-performance-budget.schema.json",
+  "schemaVersion": 1,
+  "budgetId": "sskem-programmes-performance-v1",
+  "scope": {
+    "routes": [
+      "/school/academics",
+      "/junior-college",
+      "/programmes/jee-neet"
+    ],
+    "privateReviewOnly": true,
+    "auditMayModifyMedia": false
+  },
+  "heroMedia": {
+    "maximumImageBytes": 250000,
+    "maximumPosterBytes": 250000,
+    "maximumVideoBytes": 3000000,
+    "maximumInitialVideoTransferBytes": 0
+  },
+  "pageWeight": {
+    "maximumInitialTransferBytes": 1500000,
+    "maximumRequests": 32
+  },
+  "fonts": {
+    "maximumFamilies": 2,
+    "maximumFiles": 0,
+    "maximumTransferBytes": 0,
+    "systemFontsOnly": true
+  },
+  "animations": {
+    "maximumMotionComponents": 2,
+    "maximumAutoplayMedia": 0,
+    "maximumInfiniteAnimations": 0,
+    "maximumSingleDurationMs": 700,
+    "reducedMotionRequired": true
+  },
+  "webVitals": {
+    "maximumLcpMs": 2500,
+    "maximumCls": 0.1
+  }
+}

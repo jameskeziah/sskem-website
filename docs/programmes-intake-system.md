@@ -156,6 +156,7 @@ Important boundaries:
 Built in the repository:
 
 - the private Programmes management workspace;
+- the private, browser-only XLSX intake preflight and sanitized digest receipt;
 - the schema-backed JSON package and validator;
 - the programme, evidence, navigation and approval guardrails;
 - the machine-readable Form/Sheet/Drive/tracker specification; and
@@ -166,6 +167,7 @@ Still external and deliberately not claimed as complete:
 - Google Drive connection and restricted folder provisioning;
 - native Google Sheet and Form creation;
 - real current school, Junior College and JEE/NEET/CET source collection;
+- resolution of the blockers recorded by the current workbook intake receipt;
 - management decisions, evidence verification and claim approvals;
 - completion of the first approved Programmes JSON package;
 - public route population, navigation activation, Sanity records/bindings; and

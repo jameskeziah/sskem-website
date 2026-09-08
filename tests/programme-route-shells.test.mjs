@@ -78,6 +78,7 @@ test("links the shells only from private review while public navigation and site
   }
   assert.match(dashboard, /Review private route shells/);
   assert.match(navigation, /filter\(\(item\) => !isProgrammesPublicationRoute\(item\.href\)\)/);
-  assert.match(footer, /filter\(\(link\) => !isProgrammesPublicationRoute\(link\.href\)\)/);
+  assert.match(footer, /footerNavigationGroups/);
+  assert.doesNotMatch(footer, /\/junior-college|\/programmes\/jee-neet|\/school\/academics/);
   assert.match(sitemap, /filter\(\(path\) => !isProgrammesPublicationRoute\(path\)\)/);
 });

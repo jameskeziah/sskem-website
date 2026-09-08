@@ -1,0 +1,4407 @@
+{
+  "$schema": "./legacy-content-migration-matrix.schema.json",
+  "schemaVersion": 1,
+  "matrixId": "sskem-legacy-content-migration",
+  "builtOn": "2026-09-07",
+  "archive": {
+    "id": "SSKEMS-BACKUP-2026-08-29",
+    "capturedOn": "2026-08-29",
+    "sitemapSha256": "f6b52dbcd9ef2cfc3138e64b79244c4dee25b02140b12683e5facbe363cc90a4",
+    "checksumManifestSha256": "68e0024228f2edb28f99b34fe30ad83a32369931eb1624cf811a0e3e5cc30b48",
+    "expectedRecords": 115,
+    "expectedPublicRecords": 108,
+    "expectedPrivateRecords": 7
+  },
+  "policy": {
+    "legacyContentIsApprovalEvidence": false,
+    "privateSourceDetailsStored": false,
+    "decisionsPreselected": false,
+    "downloadPersistsChanges": false,
+    "publicPublicationAllowed": false,
+    "notes": "This matrix accounts for archived records without copying content or evidence. Every route, content, approval and implementation decision remains explicit and fail closed."
+  },
+  "records": [
+    {
+      "id": "migration-732d9eec031f3e31",
+      "label": "Activities 2016",
+      "sourceRef": "archive-content-732d9eec031f3e31",
+      "sourceDigest": "c35fa7f64b1e39673de3f976aba9d544edb7d8816e33753da59526e9594e0399",
+      "sourceKind": "category",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": null,
+      "area": "taxonomy",
+      "identityProtected": false,
+      "legacyPath": "/category/activities-2016",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-32c060053d25e1b5",
+      "label": "Lunch",
+      "sourceRef": "archive-content-32c060053d25e1b5",
+      "sourceDigest": "54f8cbf99a9e66f5298aa5681c0fa6b47356cbdb56a2746c4f981a204fece29d",
+      "sourceKind": "category",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": null,
+      "area": "taxonomy",
+      "identityProtected": false,
+      "legacyPath": "/category/lunch",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-ad5ee72ea935364d",
+      "label": "School life",
+      "sourceRef": "archive-content-ad5ee72ea935364d",
+      "sourceDigest": "b0cdc0e79b2d77fe0f2bb4f83d327c043c1e2d95878d49e074c0f77a8b6e127f",
+      "sourceKind": "category",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": null,
+      "area": "taxonomy",
+      "identityProtected": false,
+      "legacyPath": "/category/school-life",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-4806caba914dfeaa",
+      "label": "Uncategorized",
+      "sourceRef": "archive-content-4806caba914dfeaa",
+      "sourceDigest": "1b0165235c29550d4a8eafffbe80a56fe7b868fc491c7f1d3aa5dad2db871b70",
+      "sourceKind": "category",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": null,
+      "area": "taxonomy",
+      "identityProtected": false,
+      "legacyPath": "/category/uncategorized",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-8a8cfc64190a0285",
+      "label": "Home",
+      "sourceRef": "archive-content-8a8cfc64190a0285",
+      "sourceDigest": "6b0d8cb3e8948ac74a1752973986add7f35ccc547c32a04859d1bf7687fc09b4",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2026-06-18T09:17:18",
+      "area": "home",
+      "identityProtected": false,
+      "legacyPath": "/",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "retain",
+        "targetPath": "/",
+        "cutoverRecordId": "legacy-home"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-5bd82d2a895ec993",
+      "label": "About Us",
+      "sourceRef": "archive-content-5bd82d2a895ec993",
+      "sourceDigest": "30a73497ca1a9b2d9fb2fa7ae832f868d9a062cb2300f8127ea638ab1fca5605",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2018-12-24T07:35:05",
+      "area": "about",
+      "identityProtected": false,
+      "legacyPath": "/about-us",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-d48577eec84a1738",
+      "label": "Chairman Message",
+      "sourceRef": "archive-content-d48577eec84a1738",
+      "sourceDigest": "505378d243397e9b6cb3644276a797d5f19ffb8590a1eea45023fb245cf741a2",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-04-19T08:57:48",
+      "area": "about",
+      "identityProtected": false,
+      "legacyPath": "/about-us/chairman-message",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/about/leadership",
+        "cutoverRecordId": "legacy-chairman-message"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-beb7efe0fa999ead",
+      "label": "President Message",
+      "sourceRef": "archive-content-beb7efe0fa999ead",
+      "sourceDigest": "d38321681efaba0fff81d77636fbc9221d0d5ae0a5ec771b27439e3de4872965",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-04-19T08:59:11",
+      "area": "about",
+      "identityProtected": false,
+      "legacyPath": "/about-us/president-message-2",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/about/leadership",
+        "cutoverRecordId": "legacy-president-message"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-ee7347abe582effd",
+      "label": "Principal Message",
+      "sourceRef": "archive-content-ee7347abe582effd",
+      "sourceDigest": "bf9c29b97bd46598d54edb08d81b8a79a9aa0e2dfc581e9dedd0a10ea5867ab8",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-04-19T09:00:08",
+      "area": "about",
+      "identityProtected": false,
+      "legacyPath": "/about-us/principal-message",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/about/leadership",
+        "cutoverRecordId": "legacy-principal-message"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-31d7cfe9b2187420",
+      "label": "Academic Calendar",
+      "sourceRef": "archive-content-31d7cfe9b2187420",
+      "sourceDigest": "a1e0e46b90829739b7050f97486f68e556c03bc9e86dbb38539abc0ecbaab4d0",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2026-06-23T14:02:56",
+      "area": "academics",
+      "identityProtected": false,
+      "legacyPath": "/academic-calendar",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/documents/annual-academic-calendar",
+        "cutoverRecordId": "legacy-academic-calendar"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-a1e6df122be75213",
+      "label": "Achievements",
+      "sourceRef": "archive-content-a1e6df122be75213",
+      "sourceDigest": "3829f04b1b6b0a38c6e30c5c0f60820baa1434ceec4be63be24a3a796372846b",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2025-04-02T08:25:40",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/achievements",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/about/achievements",
+        "cutoverRecordId": "legacy-achievements"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-a6854dddb8e5e119",
+      "label": "Gallery 2016",
+      "sourceRef": "archive-content-a6854dddb8e5e119",
+      "sourceDigest": "d225e509a5e7a3d70809404767bcb9815cda60a56788d471190d164fd17971c5",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2020-12-19T10:27:22",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/activities2016",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-aab602585bce5529",
+      "label": "Gallery 2017",
+      "sourceRef": "archive-content-aab602585bce5529",
+      "sourceDigest": "7b6e38efb134fac8e8481298cf91eec81d72d081026fd907074455cd3f95a7cf",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2020-12-19T10:21:32",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/activities2017",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-0962f7a5e13423a8",
+      "label": "Gallery 2018",
+      "sourceRef": "archive-content-0962f7a5e13423a8",
+      "sourceDigest": "f0526dfd87a13d080078d3672f068ef7b21fe6b9cb10aa8b61118f30ec63cf45",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-03-13T06:08:30",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/activities2018",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-3b5cee90ab0dea7c",
+      "label": "Admission Form",
+      "sourceRef": "archive-content-3b5cee90ab0dea7c",
+      "sourceDigest": "22c7cbabd17acc6d083892df672062c6df6d90d2648f55ace13e966b04277019",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-04-22T06:14:30",
+      "area": "admissions",
+      "identityProtected": false,
+      "legacyPath": "/admission-form",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/admissions/apply",
+        "cutoverRecordId": "legacy-admission-form"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "data-protection"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-7bdf9d1295a69aaa",
+      "label": "OASIS",
+      "sourceRef": "archive-content-7bdf9d1295a69aaa",
+      "sourceDigest": "ed2e0e5bc1b4e2db55a7378f1a30b462912a10725738b752fc601bb38c44b3c8",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2026-06-08T11:26:11",
+      "area": "disclosure",
+      "identityProtected": false,
+      "legacyPath": "/appendix-ix",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/mandatory-public-disclosure",
+        "cutoverRecordId": "legacy-appendix-ix"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "evidence",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-e8a256da646a4053",
+      "label": "Brief of School",
+      "sourceRef": "archive-content-e8a256da646a4053",
+      "sourceDigest": "ab92950f39dbeacaa4627961fb01afab7a05b5f50005c9a364d12841b66c816c",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-09-18T11:51:45",
+      "area": "about",
+      "identityProtected": false,
+      "legacyPath": "/brief-of-school",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/about/school-overview",
+        "cutoverRecordId": "legacy-brief-of-school"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-1838310754bcadae",
+      "label": "Clubs",
+      "sourceRef": "archive-content-1838310754bcadae",
+      "sourceDigest": "c0a4deeb1a7ee04fbd820033c6f3c98f3f22ba3fe6ac0c2032638dd17175cd1d",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2018-12-24T06:31:54",
+      "area": "academics",
+      "identityProtected": false,
+      "legacyPath": "/clubs",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/student-life/clubs",
+        "cutoverRecordId": "legacy-clubs"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-285838132ad09bae",
+      "label": "Competitive Exams",
+      "sourceRef": "archive-content-285838132ad09bae",
+      "sourceDigest": "bd2bcd9e48384480b3bff426328601c806c45eca496fa5a7c573b694ba4bb3a0",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2018-12-24T06:32:58",
+      "area": "academics",
+      "identityProtected": false,
+      "legacyPath": "/competitive-exams",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/school/academics",
+        "cutoverRecordId": "legacy-competitive-exams"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-bf6e1be8e9a1aecf",
+      "label": "Contact",
+      "sourceRef": "archive-content-bf6e1be8e9a1aecf",
+      "sourceDigest": "6cab80a14a6a89e9b9ad9a2378687f8bfcad50d4ec154e846d982c4a102f8e12",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-10-08T09:02:17",
+      "area": "contact",
+      "identityProtected": false,
+      "legacyPath": "/contact",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "retain",
+        "targetPath": "/contact",
+        "cutoverRecordId": "legacy-contact"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-7fa25739598a6571",
+      "label": "Electronic Media",
+      "sourceRef": "archive-content-7fa25739598a6571",
+      "sourceDigest": "ffb85c9744aa3f109c6c83c0110101eb114b7ce7902860b7abb561c477546075",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2019-01-29T06:37:41",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/electronic-media",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-f37eb1853ca4885c",
+      "label": "Examination Schedule",
+      "sourceRef": "archive-content-f37eb1853ca4885c",
+      "sourceDigest": "1427f63c0e5607bdf4e3554d448fad571e73052a5abb23a8c45974cd566eaeab",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2018-10-05T10:07:30",
+      "area": "academics",
+      "identityProtected": false,
+      "legacyPath": "/examination-schedule",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-ea844261827415c3",
+      "label": "Facilities",
+      "sourceRef": "archive-content-ea844261827415c3",
+      "sourceDigest": "c182deba355146bc97e630b612cfb205a35414957284e251bbcd518722c54454",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-04-19T09:06:28",
+      "area": "other",
+      "identityProtected": false,
+      "legacyPath": "/facilities",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/school/facilities",
+        "cutoverRecordId": "legacy-facilities"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-f3dfcc0f172a767c",
+      "label": "Faculty",
+      "sourceRef": "archive-content-f3dfcc0f172a767c",
+      "sourceDigest": "8c0f895085cf8939a39c293fb753a076616d3c84c51cdfc279b72f2f93b1fee4",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2026-07-14T06:34:46",
+      "area": "academics",
+      "identityProtected": false,
+      "legacyPath": "/faculty",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/school/faculty",
+        "cutoverRecordId": "legacy-faculty"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-9bb6e10a106c1ba0",
+      "label": "Gallery 2019",
+      "sourceRef": "archive-content-9bb6e10a106c1ba0",
+      "sourceDigest": "3e3f4c193d319c5847cdba5f800820b82b21e67668b2c1524f17ed140b368d99",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-04-22T07:49:39",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/gallery-2019",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-e03d63929f41f8d5",
+      "label": "Gallery 2020",
+      "sourceRef": "archive-content-e03d63929f41f8d5",
+      "sourceDigest": "4ec608f66f8c646b382ee62a09d1a20d44158573c46bc283277eb199fda180c0",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-06-16T09:00:19",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/gallery-2020",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/student-life/gallery",
+        "cutoverRecordId": "legacy-gallery-2020"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-b4d793ad2989b588",
+      "label": "Gallery 2021",
+      "sourceRef": "archive-content-b4d793ad2989b588",
+      "sourceDigest": "ef9b321678fc2965a2b8e0c323fc35c0a07bf7ebddebb7d58f1301322ea8fa93",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2022-01-05T05:14:22",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/gallery-2021",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/student-life/gallery",
+        "cutoverRecordId": "legacy-gallery-2021"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-8bad5d06e8da4be2",
+      "label": "Gallery 2022",
+      "sourceRef": "archive-content-8bad5d06e8da4be2",
+      "sourceDigest": "d04b54840e4c6ef11cbc85382caf4b42d590394ef4c21d53a5edc631307caefd",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2022-03-10T05:14:36",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/gallery-2022",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/student-life/gallery",
+        "cutoverRecordId": "legacy-gallery-2022"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-8eb86dc3ec04ad61",
+      "label": "Gallery 2023",
+      "sourceRef": "archive-content-8eb86dc3ec04ad61",
+      "sourceDigest": "7b89713ddb23a4fa8bda0cb6e7201497820d30676c502d5b6afba01baf426eb3",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2024-10-24T12:22:03",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/gallery-2023",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/student-life/gallery",
+        "cutoverRecordId": "legacy-gallery-2023"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-8375600ceb777a8a",
+      "label": "Gallery 2024",
+      "sourceRef": "archive-content-8375600ceb777a8a",
+      "sourceDigest": "666cecc4b72a4b8c2c95b167a7bebec8eae22c9936205ecfe5b42069c2617703",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2024-11-19T05:56:06",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/gallery-2024",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/student-life/gallery",
+        "cutoverRecordId": "legacy-gallery-2024"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-6c35e494ef66e80b",
+      "label": "Gallery 2025",
+      "sourceRef": "archive-content-6c35e494ef66e80b",
+      "sourceDigest": "972bdac084b285d28ab71cc716cd0b447de696cd97613e0cfd923bc622456f8c",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2025-06-17T17:57:10",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/gallery-2025",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/student-life/gallery",
+        "cutoverRecordId": "legacy-gallery-2025"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-5314ee0461284f1e",
+      "label": "Gallery 2026",
+      "sourceRef": "archive-content-5314ee0461284f1e",
+      "sourceDigest": "8a4e87f06db87c4a1ceabde8d09b038f36e99872b4e4981cf0a62af6ff0d22e2",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2026-06-23T09:12:50",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/gallery-2026",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/student-life/gallery",
+        "cutoverRecordId": "legacy-gallery-2026"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-f04a657513398549",
+      "label": "Guideline & Procedure",
+      "sourceRef": "archive-content-f04a657513398549",
+      "sourceDigest": "bc8d155bb86b769b40521ab4f5af8297595a78d1a6dad2205d87cdcfa5fce4eb",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-04-19T09:04:16",
+      "area": "admissions",
+      "identityProtected": false,
+      "legacyPath": "/guideline-procedure",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/admissions/process",
+        "cutoverRecordId": "legacy-guideline-procedure"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "data-protection"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-98c986abba003fb5",
+      "label": "Foundation Class",
+      "sourceRef": "archive-content-98c986abba003fb5",
+      "sourceDigest": "9b9ff088a71843c78862bdf1c5e1192856102e26915d4bf615f47711e2a90c7f",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2019-07-06T08:23:19",
+      "area": "academics",
+      "identityProtected": false,
+      "legacyPath": "/iit-foundation-time-table",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-73807ac2bdb04b8b",
+      "label": "Infrastructure Details",
+      "sourceRef": "archive-content-73807ac2bdb04b8b",
+      "sourceDigest": "d2b9edb8a1ec83fe43df5c078b30c1442050bc19823b4c7cee03f34fbb006e7c",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2018-12-24T06:41:16",
+      "area": "disclosure",
+      "identityProtected": false,
+      "legacyPath": "/infrastructure-details",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "evidence",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-512e47a753f6800f",
+      "label": "Institute",
+      "sourceRef": "archive-content-512e47a753f6800f",
+      "sourceDigest": "87572bcb903469f6bd859fd600474d95e63340b9fb7b1bb8aa8b6783babc38bb",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-10-22T08:51:53",
+      "area": "facilities",
+      "identityProtected": false,
+      "legacyPath": "/institute",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-4cacdb25890096ea",
+      "label": "Leaving Certificate / Transfer Certificate",
+      "sourceRef": "archive-content-4cacdb25890096ea",
+      "sourceDigest": "5c9812032da358b58ffae907049d67a7f69891c6a47550740c7181c33197d628",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2023-04-26T09:50:25",
+      "area": "admissions",
+      "identityProtected": false,
+      "legacyPath": "/leaving-certificate",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/contact",
+        "cutoverRecordId": "legacy-leaving-certificate"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "data-protection"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-548562883ea96ae3",
+      "label": "Board of Management",
+      "sourceRef": "archive-content-548562883ea96ae3",
+      "sourceDigest": "05a7a9099a0eaa8970d5f096597a93e6f647853a1c51de1ec4b27339f73a0548",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2025-06-17T06:21:21",
+      "area": "about",
+      "identityProtected": false,
+      "legacyPath": "/management",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/about/governance",
+        "cutoverRecordId": "legacy-management"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-68a35bb8f30dd722",
+      "label": "Media",
+      "sourceRef": "archive-content-68a35bb8f30dd722",
+      "sourceDigest": "fa2930e7657f5d333b22b204150e333f8f90793db775d5952bbf0bd887249118",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2024-08-31T08:07:28",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/media",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/about/news",
+        "cutoverRecordId": "legacy-media"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-d7aee3c336bdc9b2",
+      "label": "Registration Form",
+      "sourceRef": "archive-content-d7aee3c336bdc9b2",
+      "sourceDigest": "d8951b2bebf3bb4ecb3497952837df877ad5879a71f7057b5bad261e1f4268e3",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2019-07-06T08:13:34",
+      "area": "admissions",
+      "identityProtected": false,
+      "legacyPath": "/registration-form",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/admissions/enquire",
+        "cutoverRecordId": "legacy-registration-form"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "data-protection"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-401b36ded2742646",
+      "label": "SARAS",
+      "sourceRef": "archive-content-401b36ded2742646",
+      "sourceDigest": "227e90150de992883de0fe6b10170654b7624c95df61d7be0e9e33c8e8af74b6",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2026-08-03T06:28:24",
+      "area": "disclosure",
+      "identityProtected": false,
+      "legacyPath": "/saras",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/mandatory-public-disclosure",
+        "cutoverRecordId": "legacy-saras"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "evidence",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-c6806a6f67019b84",
+      "label": "School Information",
+      "sourceRef": "archive-content-c6806a6f67019b84",
+      "sourceDigest": "cebd93889d67ca95b444e2c75beae22bdc5dc3bc7ad30d47339d483a4c127f21",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2025-06-25T06:08:11",
+      "area": "disclosure",
+      "identityProtected": false,
+      "legacyPath": "/school-information",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/mandatory-public-disclosure",
+        "cutoverRecordId": "legacy-school-information"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "evidence",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-3f491a7dece252d2",
+      "label": "School Management Committee",
+      "sourceRef": "archive-content-3f491a7dece252d2",
+      "sourceDigest": "839a07fdd0b682d79625e6bf58ac485dcb376cb90f6597e8229c277524e93b3d",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2025-06-17T07:25:06",
+      "area": "about",
+      "identityProtected": false,
+      "legacyPath": "/school-management-committee",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/about/governance",
+        "cutoverRecordId": "legacy-school-management-committee"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-2ced57ca7af57656",
+      "label": "School Uniforms",
+      "sourceRef": "archive-content-2ced57ca7af57656",
+      "sourceDigest": "7a86de3e582b8e1e39ff738dbb32f4737f7a5e8370a14981b42d78ea4a79daba",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2018-12-24T06:46:50",
+      "area": "academics",
+      "identityProtected": false,
+      "legacyPath": "/school-uniforms",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/student-life/uniform",
+        "cutoverRecordId": "legacy-school-uniforms"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-593e5c80a327f34f",
+      "label": "Age Rule",
+      "sourceRef": "archive-content-593e5c80a327f34f",
+      "sourceDigest": "4f3e967f6ff541a26869d405d8756147f9df657ceae7c59445692480224dbdf9",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-04-19T09:49:29",
+      "area": "admissions",
+      "identityProtected": false,
+      "legacyPath": "/section-strength",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/admissions/age-criteria",
+        "cutoverRecordId": "legacy-section-strength"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "data-protection"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-2f36e1af10a13844",
+      "label": "Staff",
+      "sourceRef": "archive-content-2f36e1af10a13844",
+      "sourceDigest": "ab0b8dc79384e0fa08b6251c94944611eea0f42261028efd45a8902ae6753a5d",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-01-30T11:25:57",
+      "area": "academics",
+      "identityProtected": false,
+      "legacyPath": "/staff",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-1c86da4771879da4",
+      "label": "Student Enrollment",
+      "sourceRef": "archive-content-1c86da4771879da4",
+      "sourceDigest": "23653fdff7260bf34a4bb25dbddbbe7db97b5f99ae47cc6f530a27812a13e106",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-04-19T09:48:05",
+      "area": "admissions",
+      "identityProtected": false,
+      "legacyPath": "/student-enrolment",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/admissions",
+        "cutoverRecordId": "legacy-student-enrolment"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "data-protection"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-ad39aa3124e82a9e",
+      "label": "Tentative Time Table",
+      "sourceRef": "archive-content-ad39aa3124e82a9e",
+      "sourceDigest": "35746ebbbce32b59b314e398ede2d87f2524217e64f05fdf2f81075131e99d25",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-04-22T07:00:24",
+      "area": "academics",
+      "identityProtected": false,
+      "legacyPath": "/tentative-time-table",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/documents",
+        "cutoverRecordId": "legacy-tentative-time-table"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-8d40923c2b35ca38",
+      "label": "Fit India Movement 2020",
+      "sourceRef": "archive-content-8d40923c2b35ca38",
+      "sourceDigest": "cd287c6e0e5e6b7585bc507a55cf396e16feffe6f54a1a85c9cadd05b3146e79",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-01-01T11:59:50",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/video",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/student-life/gallery",
+        "cutoverRecordId": "legacy-video"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-08d1d6599f0af1c0",
+      "label": "Vision and mission",
+      "sourceRef": "archive-content-08d1d6599f0af1c0",
+      "sourceDigest": "4065c959a5910b74ae019511126910c6be413d2b3da03b0dd897cbc6121da9b9",
+      "sourceKind": "page",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2025-06-17T06:25:38",
+      "area": "about",
+      "identityProtected": false,
+      "legacyPath": "/vision-and-mission",
+      "routeContinuity": {
+        "status": "implemented",
+        "action": "redirect",
+        "targetPath": "/about/school-overview",
+        "cutoverRecordId": "legacy-vision-and-mission"
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-e07c1358d270df2c",
+      "label": "Open School’s Institut",
+      "sourceRef": "archive-content-e07c1358d270df2c",
+      "sourceDigest": "ff0d667950e91a37c83ef727a650642e430b4470eb2d961534fa832f17385544",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-01-30T10:16:30",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/01/30/open-schools-institut",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-131ee7463215b712",
+      "label": "ED has winter sports",
+      "sourceRef": "archive-content-131ee7463215b712",
+      "sourceDigest": "b34059022210944a4373931a121c920f10021bb4c57ff145621218a3412281d0",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-03T12:21:13",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/03/ed-has-winter-sports",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-39e3fe47a02b54af",
+      "label": "Notice of Educational",
+      "sourceRef": "archive-content-39e3fe47a02b54af",
+      "sourceDigest": "f381cbd2f8c09c14a86257e20e198c0a6c1fc665be3a7a57ba7e00622bb3995d",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-03T12:21:57",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/03/notice-of-educational",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-5f2a3dbde4f6e2f3",
+      "label": "2nd Grade Reading",
+      "sourceRef": "archive-content-5f2a3dbde4f6e2f3",
+      "sourceDigest": "6e8a926955a2857774baa51ce4bdc159e667ba6bb34ed7e28bd32d44dbc3d256",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-13T12:04:18",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/13/2nd-grade-reading",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-51300a7dc1f814ef",
+      "label": "Family group",
+      "sourceRef": "archive-content-51300a7dc1f814ef",
+      "sourceDigest": "4ed8d125d6a73064c6badd531f2c5dc3e2a50313c68751ecf40c6dd0f5afdc3b",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-13T12:05:40",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/13/family-group",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-f2b9df77c5278347",
+      "label": "First Day of School",
+      "sourceRef": "archive-content-f2b9df77c5278347",
+      "sourceDigest": "ecfd2fcdc8f33b1aec82530502f59b5523398f3e94695e2aefd2d388eec21e57",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-13T12:04:47",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/13/first-day-of-school",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-8b9e4e801e429942",
+      "label": "Lower School Lowdown",
+      "sourceRef": "archive-content-8b9e4e801e429942",
+      "sourceDigest": "42436dcb209df4e1f2fa62a56706a8e67fb5e2cb9c40a85523188936aa10a4cb",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-13T12:03:15",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/13/lower-school-lowdown",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-d32039990f276ea5",
+      "label": "The Five Virtues",
+      "sourceRef": "archive-content-d32039990f276ea5",
+      "sourceDigest": "94a453872d7e8d05469e7bce7a94582ff373780f004e24a10f68f489e25a2639",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-13T12:03:43",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/13/the-five-virtues",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-97cb4e6df2166bc6",
+      "label": "Why choose a private school",
+      "sourceRef": "archive-content-97cb4e6df2166bc6",
+      "sourceDigest": "dfb8115b5e529fa5aa98e5ec7d01a93b49f1d4ee9b7256957e847ccbacda0f4d",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-13T12:02:29",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/13/why-choose-a-private-school",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-eac5819edaed31a2",
+      "label": "Open School’s Institut Constructivism",
+      "sourceRef": "archive-content-eac5819edaed31a2",
+      "sourceDigest": "9e9fa84561585fc4a8ca82ae6c5d9c81de1c3984eee9905581d60bb1daf440f8",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-22T12:07:25",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/22/open-schools-institut-constructivism-in-action",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-8a0e7347437ae6c8",
+      "label": "Thank You for Bringing in Those Toys",
+      "sourceRef": "archive-content-8a0e7347437ae6c8",
+      "sourceDigest": "92a384d71f5c682590d72a3acddf9c32d1b2d103760662dbb111bbef165d2a05",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-22T12:06:11",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/22/thank-you-for-bringing-in-those-toys",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-a274799c9c14936f",
+      "label": "Thinking skills Simply amazing! Great",
+      "sourceRef": "archive-content-a274799c9c14936f",
+      "sourceDigest": "9ec09baeee742f28dd9f792378396b3086800dd565f2388430628cca96e349d0",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-22T11:56:42",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/22/thinking-skills-simply-amazing-great",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-4689dcb558446b24",
+      "label": "Cinnamon Pancakes Served with Syrup",
+      "sourceRef": "archive-content-4689dcb558446b24",
+      "sourceDigest": "ff5c4d2fcea225837e780e3fb8dd6d5debb6fbf2aebccb53f0d8f94e1c09f5c0",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-24T14:43:33",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/24/cinnamon-pancakes-served-with-syrup-2",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-8bf75cee176a56a6",
+      "label": "Lunch with Sandwich",
+      "sourceRef": "archive-content-8bf75cee176a56a6",
+      "sourceDigest": "f04c328d44d67108d46f64ed2587f0d2e7859eb84cc369325bce3fc99bb741ac",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-24T14:36:01",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/24/cinnamon-pancakes-served-with-syrup",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-2af317ff60b9a55e",
+      "label": "Sesame butterflied Chicken",
+      "sourceRef": "archive-content-2af317ff60b9a55e",
+      "sourceDigest": "60330a41951e083774467c3a2a1204a7fb6d8067886250d2a77fb16359583325",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2017-02-24T14:45:57",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2017/02/24/sesame-butterflied-chicken",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-42d0578732dfa6f6",
+      "label": "Activities 2016",
+      "sourceRef": "archive-content-42d0578732dfa6f6",
+      "sourceDigest": "e2213a83c2c0910f7beeeef6893a879d816eeb6f0cc2b7b8f11b08f6030ecb7a",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2018-10-02T10:33:50",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2018/10/02/activities-2016",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-fa89d550d444e4f7",
+      "label": "Hello world!",
+      "sourceRef": "archive-content-fa89d550d444e4f7",
+      "sourceDigest": "ba6d90c55dcef26bd6f6d738865d46125de916806fb2c553a2431f1143c453bc",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2018-10-02T06:24:29",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2018/10/02/hello-world",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-e84047dff2255ad2",
+      "label": "Independence Day",
+      "sourceRef": "archive-content-e84047dff2255ad2",
+      "sourceDigest": "8d26cc66f85779250c6a7220a90d3a64c4a7a7853d1c17b1f423b590e90e2a32",
+      "sourceKind": "post",
+      "sourceVisibility": "public",
+      "sourceStatus": "publish",
+      "sourceModifiedOn": "2021-08-13T17:55:30",
+      "area": "news",
+      "identityProtected": false,
+      "legacyPath": "/2021/08/13/independence-day",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-4e4ca7fcedc88a05",
+      "label": "Not Found",
+      "sourceRef": "archive-content-4e4ca7fcedc88a05",
+      "sourceDigest": "5bd4eec51c3537554a5c899193fe1d433f80e5f094482abf320cc57f6bfebcb2",
+      "sourceKind": "post_format",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": null,
+      "area": "taxonomy",
+      "identityProtected": false,
+      "legacyPath": "/type/image",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-f610c63003c281a7",
+      "label": "5th Foundation day Celebration at SSKEMS",
+      "sourceRef": "archive-content-f610c63003c281a7",
+      "sourceDigest": "0fe7aad835a5cb7748a43e2cec177657f57c2294fe034331ad21188676673d19",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-07T07:01:40",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/5th-foundation-day-celebration-at-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-cacdb534d19e1094",
+      "label": "75th Independence day celebration at sskems",
+      "sourceRef": "archive-content-cacdb534d19e1094",
+      "sourceDigest": "722a11f2cb881d554dc15d1efa115467d2398a0e9182855a9a19f6876616b98c",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-07T09:17:27",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/75th-independence-day-celebration-at-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-7a84ab88f3130673",
+      "label": "Aashadi Ekadashi Celebration at SSKEMS",
+      "sourceRef": "archive-content-7a84ab88f3130673",
+      "sourceDigest": "cd4256ddd24b87c71c541c2667175cacb44c39865dbd835e373f1c01863f11fb",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-07T08:00:58",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/aashadi-ekadashi-celebration-at-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-451aa3a00981e822",
+      "label": "Achievements",
+      "sourceRef": "archive-content-451aa3a00981e822",
+      "sourceDigest": "17a07e6a60efa572d5c0bd95f1b227f632b180449e33db2769837c8b12cbcb5e",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-17T11:41:35",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/achievements",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-3361d0e494df6525",
+      "label": "Birth Anniversary Celebration of Savitribai Phule",
+      "sourceRef": "archive-content-3361d0e494df6525",
+      "sourceDigest": "6b353246b3a969015107849858252e2c4dc4b274946732f331eae229ceb53484",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2022-01-05T05:38:32",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/birth-anniversary-celebration-of-savitribai-phule",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-e9c5347f2c1c9198",
+      "label": "Bondla Activity",
+      "sourceRef": "archive-content-e9c5347f2c1c9198",
+      "sourceDigest": "0716167e1aff8e20708ce4ca13a95941b9eae7fd1173a3f22a30a11c278ce558",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-10-21T06:24:15",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/bondla-activity",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-a7b1511670593a7e",
+      "label": "Celebration of Birth Anniversery of Dr. Apj Abdul Kalam Azad",
+      "sourceRef": "archive-content-a7b1511670593a7e",
+      "sourceDigest": "4d50d4f9d2f2758c4fd9bc684bd1602ba9abd0ca76319b23bdb0db743d018ee8",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-10-21T06:17:55",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/celebration-of-birth-anniversery-of-dr-apj-abdul-kalam-azad",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-5bc96c04d0f1fcad",
+      "label": "Celebration of Mahatma Gandhi & Lal Bahadur Shastri Birth Anniversery",
+      "sourceRef": "archive-content-5bc96c04d0f1fcad",
+      "sourceDigest": "21581609c1c77dd02530c48742c6590daa7bbc18ccfb7b4ada497991c621e337",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-10-05T10:53:20",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/celebration-of-mahatma-gandhi-lal-bahadur-shastri-birth-anniversery",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-796bdfc27479612c",
+      "label": "Christmas day Celebration at SSKEMS",
+      "sourceRef": "archive-content-796bdfc27479612c",
+      "sourceDigest": "d9ca1df8fb5a87ddbb694232ec941313ee098bb1b542325cbb18dcc0fb50c2c5",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2022-01-05T05:13:47",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/christmas-day-celebration-at-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-8017c7111b34dc24",
+      "label": "Deputy collector (khed) visit to SSKEMS",
+      "sourceRef": "archive-content-8017c7111b34dc24",
+      "sourceDigest": "7168c867e9aeb891b50be854311ed96e5bda14ac825ae1db868998e9d6952248",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-07T06:57:30",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/deputy-collector-khed-visit-to-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-6a65852e6dfb1e53",
+      "label": "Dr. Sonawane (Dervan) Visit to SSKEMS",
+      "sourceRef": "archive-content-6a65852e6dfb1e53",
+      "sourceDigest": "5835727dbeb2fdcb2c149b1e51bc71a2b4a850f6f0d42bce9e427b1d95c94143",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-07T06:46:22",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/dr-sonawane-dervan-visit-to-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-623cb73099e23e2b",
+      "label": "Felicitation of students for outstanding Achievement in International Space & Astronomy Olympiad (ISAO) Exam",
+      "sourceRef": "archive-content-623cb73099e23e2b",
+      "sourceDigest": "7ad223935f37ecf2b2d4df3558657d086e8ce5d95f679cc97caef0fddaf09e42",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2022-02-21T08:09:37",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/felicitation-of-students-for-outstanding-achievement-in-international-space-astronomy-olympiad-isao-exam",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-ff4442710c786ba9",
+      "label": "Felicitation programme of Std X Students",
+      "sourceRef": "archive-content-ff4442710c786ba9",
+      "sourceDigest": "e681d62fa6c12d41296129bba61dcb8b77085cc12eb311ab424f8010b33ef8d9",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-07T06:36:45",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/felicitation-programme-of-std-x-students",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-5789689b28c589a6",
+      "label": "Ganpati Sthapna",
+      "sourceRef": "archive-content-5789689b28c589a6",
+      "sourceDigest": "1f9e75bbfcdaaea696c1c163b9d654e5e2253eb4c755b9ba12bdea823831c561",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-08T05:08:13",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/ganpati-sthapna",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-05184b714a37553b",
+      "label": "Haldi – Kunku Celebration at SSKEM School",
+      "sourceRef": "archive-content-05184b714a37553b",
+      "sourceDigest": "a2a58d56091f3f2c277ff7535caf832c7275b3ae51b220a8ba6238d7bb74a61b",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2022-01-28T11:43:56",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/haldi-kunku-celebration-at-sskem-school",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-2b7f1e7718ee2af2",
+      "label": "Haldi-Kunku celebration at SSKEMS",
+      "sourceRef": "archive-content-2b7f1e7718ee2af2",
+      "sourceDigest": "e5bb121a06b5c8e7cca7d21170c53ff97f8022feda6807470879087f00ee9b78",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-07T06:48:26",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/haldi-kunku-celebration-at-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-dff685d52f8e1907",
+      "label": "Health Checkup program of Students in School",
+      "sourceRef": "archive-content-dff685d52f8e1907",
+      "sourceDigest": "f1686131f79989641ff6f3c71f061807e984dc6d187c8e246980c5aca8f756e2",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-10-07T11:40:03",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/health-checkup-program-of-students-in-school",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-c02a4b2c599fc7a2",
+      "label": "Institute",
+      "sourceRef": "archive-content-c02a4b2c599fc7a2",
+      "sourceDigest": "84c7a08dfe7e2bbf92a73683926f2f2e8ab2d44a984f06d9642cdd93fe4724eb",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-10-22T08:24:00",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/institute",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-e05e308e89b5f8dc",
+      "label": "Master. Rajveer Sonawane From Class 2 Secured 2nd rank From Maharashtra State Level LogiQids First Stage Mental Aptitude Olympiad Exam",
+      "sourceRef": "archive-content-e05e308e89b5f8dc",
+      "sourceDigest": "500201cbffa77854a1f83d7c195e794395ae1762f7dc251ff31843e13e559d6b",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2022-01-31T10:08:01",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/master-rajveer-sonawane-from-class-2-secured-2nd-rank-from-maharashtra-state-level-logiqids-first-stage-mental-aptitude-olympiad-exam",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-b4cbdbf9d0e4125f",
+      "label": "Matru – Pitru Din Celebration at SSKEM SCHOOL",
+      "sourceRef": "archive-content-b4cbdbf9d0e4125f",
+      "sourceDigest": "f62686fe27be87204c283c439e61329a448f044d513e1409a7261fb1f378db0d",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2022-02-21T08:03:11",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/matru-pitru-din-celebration-at-sskem-school",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-189802806708627d",
+      "label": "Matru – Pitru Din Celebration at SSKEMS",
+      "sourceRef": "archive-content-189802806708627d",
+      "sourceDigest": "0606058a4ed011b1b99d26d0558dc72712a4b7714fbb7866595dbec92e518423",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2022-02-21T08:06:38",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/matru-pitru-din-celebration-at-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-f8ef68113e9948c3",
+      "label": "Republic Day Celebration at SSKEMS",
+      "sourceRef": "archive-content-f8ef68113e9948c3",
+      "sourceDigest": "02b1d4aa1775db78231908420f46b320141c859567165584adb184c520881008",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-07T06:54:54",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/republic-day-celebration-at-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-394c0aa16d42efe8",
+      "label": "Republic Day Celebration @ SSKEM School",
+      "sourceRef": "archive-content-394c0aa16d42efe8",
+      "sourceDigest": "faca32da5ccb7d46bf358f329d202127ad2d101beb425323464dc16ecc2ff5d3",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2022-01-28T11:49:24",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/republic-day-celebration-sskem-school",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-b09532cf17017503",
+      "label": "Shiv Jayanti Celebration at SSKEMS",
+      "sourceRef": "archive-content-b09532cf17017503",
+      "sourceDigest": "069543914abff3c17d78d7046d40f8f5fa27612d27842ca9a1048babf3d212cb",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2022-02-21T07:51:28",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/shiv-jayanti-celebration-at-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-65bae85f8140735f",
+      "label": "ShivJayanti Celebration at SSKEMS",
+      "sourceRef": "archive-content-65bae85f8140735f",
+      "sourceDigest": "337d0b7a5ec7ed950afa8f19f471b321c767823563eaedf933356462b0a30281",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-07T06:40:00",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/shivjayanti-celebration-at-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-6e4f9569b06409ff",
+      "label": "Successfull Students In HOTS Olympiad",
+      "sourceRef": "archive-content-6e4f9569b06409ff",
+      "sourceDigest": "a5dc31ec12b842ad0e855121972d425d78038175eb74f4176f20ad1b0df5749c",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2022-01-31T10:00:10",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/successfull-students-in-hots-olympiad",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-5bc443464780388a",
+      "label": "Teachers day Celebration at SSKEMS",
+      "sourceRef": "archive-content-5bc443464780388a",
+      "sourceDigest": "85e33e0d7510b1df960fa658efee15c3c3df56e64e5ce4480bbc77721c92d3a8",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-08T05:15:02",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/teachers-day-celebration-at-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-60255bd6e88d446b",
+      "label": "Tree plantation on occassion of death anniversery of Dr.Nanasaheb Dharmadhikari",
+      "sourceRef": "archive-content-60255bd6e88d446b",
+      "sourceDigest": "8af1743d5bf4ab1d740e42fc99d3665e8390d1799775b21a37a13dbff5c896db",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2021-09-07T06:59:41",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/tree-plantation-on-occassion-of-death-anniversery-of-dr-nanasaheb-dharmadhikari",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-1541dd1a501d62d7",
+      "label": "Vaccination Camp Organized for Students between Age Group of 15 to 18 at SSKEMS",
+      "sourceRef": "archive-content-1541dd1a501d62d7",
+      "sourceDigest": "eb3eac1b8c79dc5119aa3f6d60f830521551873f743c4dbc9811274f3f7d8ec9",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2022-02-21T07:48:48",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/vaccination-camp-organized-for-students-between-age-group-of-15-to-18-at-sskems",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-8b86cd4e009ee66e",
+      "label": "Women’s day Celebration at SSKEM School",
+      "sourceRef": "archive-content-8b86cd4e009ee66e",
+      "sourceDigest": "1c07e5329de633d617c78bb525e8c60f8e0eb0f15bf8001e27bc6f02314418d8",
+      "sourceKind": "sk_igallery",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2023-03-02T09:57:28",
+      "area": "media",
+      "identityProtected": false,
+      "legacyPath": "/sk_igallery/womens-day-celebration-at-sskem-school",
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-7c3fa3cf0163a393",
+      "label": "Identity-bearing teacher record",
+      "sourceRef": "archive-content-7c3fa3cf0163a393",
+      "sourceDigest": "82b8c36cef741a39cca2d7a83a58299bfef22bcc41b86680ef2e044e6360e246",
+      "sourceKind": "teacher",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2017-02-21T10:28:54",
+      "area": "identity",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-8d39537c77fdd335",
+      "label": "Identity-bearing teacher record",
+      "sourceRef": "archive-content-8d39537c77fdd335",
+      "sourceDigest": "c0f82e11fbc1db96ab0e24f7aa004973d66672cdd7d612f68322f93a9f637a57",
+      "sourceKind": "teacher",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2017-02-21T10:45:53",
+      "area": "identity",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-2c376d1d3f386395",
+      "label": "Identity-bearing teacher record",
+      "sourceRef": "archive-content-2c376d1d3f386395",
+      "sourceDigest": "76448125b9da058d29706092608b21493c2cb1494e3aa829824e1aefd41d02c2",
+      "sourceKind": "teacher",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2017-02-21T09:51:59",
+      "area": "identity",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-0c554f49e7e5b41e",
+      "label": "Identity-bearing teacher record",
+      "sourceRef": "archive-content-0c554f49e7e5b41e",
+      "sourceDigest": "724edef1865afa575063ceda8b9c34fd07f646d8cfe329f59808f706dc83772d",
+      "sourceKind": "teacher",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2017-02-21T09:18:03",
+      "area": "identity",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-336fdcc23aca57ef",
+      "label": "Identity-bearing teacher record",
+      "sourceRef": "archive-content-336fdcc23aca57ef",
+      "sourceDigest": "b1ca70d8a028560ecc32f464244bbdf9f8c864a4e0289936d6708a887fae7686",
+      "sourceKind": "teacher",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2017-02-21T10:28:13",
+      "area": "identity",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-b0b3d8855db4500d",
+      "label": "Identity-bearing teacher record",
+      "sourceRef": "archive-content-b0b3d8855db4500d",
+      "sourceDigest": "beb19e449929e18562d941db816a7d87a3663ac15d4ba6591379a86888203525",
+      "sourceKind": "teacher",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": "2017-02-21T09:53:31",
+      "area": "identity",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-6f2265e9ad0d5c3f",
+      "label": "Identity-bearing user record",
+      "sourceRef": "archive-content-6f2265e9ad0d5c3f",
+      "sourceDigest": "48cd573426ce9b65968500ffdf03c2e5eda90ebc7ac3aec8a8d2292836998c84",
+      "sourceKind": "user",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": null,
+      "area": "identity",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-cf295fa7d18c1539",
+      "label": "Identity-bearing user record",
+      "sourceRef": "archive-content-cf295fa7d18c1539",
+      "sourceDigest": "2182a1cf683b74042e7b221065aba7a8b7a9b4876b2ec3515daeeaf19d826f7c",
+      "sourceKind": "user",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": null,
+      "area": "identity",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-092ccf7316e4ec25",
+      "label": "Identity-bearing user record",
+      "sourceRef": "archive-content-092ccf7316e4ec25",
+      "sourceDigest": "c45b5f0c7736392bf9e3b1d3a5a4989bfed92b90a22dbb06277818edee49220e",
+      "sourceKind": "user",
+      "sourceVisibility": "public",
+      "sourceStatus": "public-index",
+      "sourceModifiedOn": null,
+      "area": "identity",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-41c529f672104d48",
+      "label": "Private page record",
+      "sourceRef": "archive-content-41c529f672104d48",
+      "sourceDigest": "36de85e8c48615dba5349de3b235ae43c51f237544d903717fc23afffbdb6804",
+      "sourceKind": "page",
+      "sourceVisibility": "private-review",
+      "sourceStatus": "draft",
+      "sourceModifiedOn": "2019-07-25T08:01:06",
+      "area": "other",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-313c5add17af9297",
+      "label": "Private page record",
+      "sourceRef": "archive-content-313c5add17af9297",
+      "sourceDigest": "9dc0f068adb7ce2728219795bc85fbf6a0e3055b29facfd8061993e13d839ec6",
+      "sourceKind": "page",
+      "sourceVisibility": "private-review",
+      "sourceStatus": "draft",
+      "sourceModifiedOn": "2021-05-19T07:42:17",
+      "area": "other",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "privacy",
+        "rights",
+        "retention",
+        "accessibility"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-6e35440b005bd9a7",
+      "label": "Private page record",
+      "sourceRef": "archive-content-6e35440b005bd9a7",
+      "sourceDigest": "93e7426ba159146daeca2e93063b702e9790f41dded4c159ec7f6956677be2dd",
+      "sourceKind": "page",
+      "sourceVisibility": "private-review",
+      "sourceStatus": "draft",
+      "sourceModifiedOn": "2022-06-23T10:00:09",
+      "area": "other",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-748beac6703d361a",
+      "label": "Private page record",
+      "sourceRef": "archive-content-748beac6703d361a",
+      "sourceDigest": "1e987b99aafec4d41c3775278e2f5a7138644ad6145089e0271c3f8b504c5a8d",
+      "sourceKind": "page",
+      "sourceVisibility": "private-review",
+      "sourceStatus": "draft",
+      "sourceModifiedOn": "2023-03-23T04:07:22",
+      "area": "other",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval",
+        "institutional-model",
+        "evidence"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-f13bb27096dc8d74",
+      "label": "Private post record",
+      "sourceRef": "archive-content-f13bb27096dc8d74",
+      "sourceDigest": "910de12ec16e1abc0c1c2299d9976190ee323bbeccff5a988cecbe9830773320",
+      "sourceKind": "post",
+      "sourceVisibility": "private-review",
+      "sourceStatus": "draft",
+      "sourceModifiedOn": "2017-03-13T14:20:48",
+      "area": "news",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-90fd799c05a6e691",
+      "label": "Private post record",
+      "sourceRef": "archive-content-90fd799c05a6e691",
+      "sourceDigest": "edbb6b9f5f47a6703edcca94a781bd6ae503b3c51a4baafc21ff9cdca389f7ec",
+      "sourceKind": "post",
+      "sourceVisibility": "private-review",
+      "sourceStatus": "draft",
+      "sourceModifiedOn": "2021-04-27T08:32:11",
+      "area": "news",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    },
+    {
+      "id": "migration-f9fdbcd04ebcc97f",
+      "label": "Private post record",
+      "sourceRef": "archive-content-f9fdbcd04ebcc97f",
+      "sourceDigest": "04094ec4c098cbdac2cde5812356b09f6601f84c2fa55c6457787c5ff498b56b",
+      "sourceKind": "post",
+      "sourceVisibility": "private-review",
+      "sourceStatus": "draft",
+      "sourceModifiedOn": "2023-02-28T06:38:16",
+      "area": "news",
+      "identityProtected": true,
+      "legacyPath": null,
+      "routeContinuity": {
+        "status": "decision-required",
+        "action": "unselected",
+        "targetPath": null,
+        "cutoverRecordId": null
+      },
+      "requiredReviews": [
+        "accuracy",
+        "currency",
+        "editorial",
+        "management-approval"
+      ],
+      "contentDecision": {
+        "decision": "unselected",
+        "targetPath": null,
+        "mergeIntoRecordId": null,
+        "rationale": null,
+        "ownerRole": null,
+        "reviewedOn": null
+      },
+      "implementationStatus": "not-started",
+      "publicationEligible": false,
+      "publicationReason": "decision-and-approval-required"
+    }
+  ]
+}

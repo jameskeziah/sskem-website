@@ -21,6 +21,12 @@ import {
   PROGRAMME_INSTITUTIONAL_MODEL_RULES,
 } from "../lib/programmes-data-adapter.ts";
 import {
+  isIssuedProgrammeExpiryProjection,
+  planProgrammeExpiryRollback,
+  resolveProgrammeExpiryProjection,
+  validateProgrammeExpiryReceipt,
+} from "../lib/programmes-expiry.ts";
+import {
   buildBreadcrumbListSchema,
   buildEducationalOrganizationSchema,
   buildEducationalProgrammeSchema,
@@ -489,6 +495,10 @@ test("adapts one exact approved package into immutable component-ready page data
   assert.equal(isApprovedProgrammeRenderGate(result.pages["/programmes/jee-neet"].gate, "/programmes/jee-neet"), true);
   assert.equal(result.pages["/programmes/jee-neet"].components.results.results.length, 1);
   assert.equal(result.pages["/programmes/jee-neet"].components.feeSummary.fees.length, 1);
+  assert.equal(result.pages["/programmes/jee-neet"].components.schedule.validUntil, "2027-05-31");
+  assert.equal(result.pages["/programmes/jee-neet"].components.feeSummary.validUntil, "2027-05-31");
+  assert.equal(result.pages["/programmes/jee-neet"].components.results.results[0].validUntil, "2027-05-31");
+  assert.equal(result.pages["/programmes/jee-neet"].components.admissionsCta.validUntil, "2027-05-31");
   assert.deepEqual(result.pages["/programmes/jee-neet"].components.documents.documents, []);
   assert.equal(result.limitations[0].code, "DOCUMENTS_NOT_MODELLED_IN_V1");
   assert.deepEqual(packageData, before);
@@ -497,6 +507,109 @@ test("adapts one exact approved package into immutable component-ready page data
   assert.doesNotMatch(serialized, /CONTROLLED\//);
   assert.doesNotMatch(serialized, /manifestRecordId/);
   assert.doesNotMatch(serialized, /approvedByRole|approvalId/);
+});
+
+test("projects current Programme sections through their inclusive approval end date", () => {
+  const packageData = makePackage();
+  const adapted = adaptProgrammesPublicationPackage({ packageData, manifest: approvedManifest(packageData), now: NOW });
+  assert.equal(adapted.ok, true, adapted.ok ? undefined : JSON.stringify(adapted.issues, null, 2));
+  const page = adapted.pages["/programmes/jee-neet"];
+  const projection = resolveProgrammeExpiryProjection({ page, now: "2027-05-31T23:59:59.999Z" });
+
+  assert.equal(isIssuedProgrammeExpiryProjection(projection, page.gate), true);
+  assert.deepEqual(Object.fromEntries(Object.entries(projection.sections).map(([key, value]) => [key, value.state])), {
+    fees: "current",
+    schedule: "current",
+    results: "current",
+    admissions: "current",
+  });
+  assert.equal(projection.sections.fees.content.fees[0].approvedPublicWording, "Use the approved current fee circular for the exact amount.");
+  assert.deepEqual(validateProgrammeExpiryReceipt(projection.receipt), []);
+  assert.equal(projection.receipt.controls.repositoryWritePerformed, false);
+  assert.equal(projection.receipt.controls.deploymentPerformed, false);
+  assert.equal(Object.isFrozen(projection), true);
+  assert.equal(isIssuedProgrammeExpiryProjection({ ...projection }, page.gate), false);
+});
+
+test("removes expired fee, schedule, result and admissions values and retains canonical safe fallbacks", () => {
+  const packageData = makePackage();
+  const adapted = adaptProgrammesPublicationPackage({ packageData, manifest: approvedManifest(packageData), now: NOW });
+  assert.equal(adapted.ok, true, adapted.ok ? undefined : JSON.stringify(adapted.issues, null, 2));
+  const page = adapted.pages["/programmes/jee-neet"];
+  const projection = resolveProgrammeExpiryProjection({ page, now: "2027-06-01T00:00:00.000Z" });
+
+  for (const [section, decision] of Object.entries(projection.sections)) {
+    assert.equal(decision.state, "fallback", section);
+    assert.equal(decision.reason, "expired", section);
+    assert.equal(decision.content, null, section);
+    assert.equal(decision.fallback.action.href, "/contact", section);
+  }
+  assert.deepEqual(validateProgrammeExpiryReceipt(projection.receipt), []);
+  const serialized = JSON.stringify(projection);
+  assert.doesNotMatch(serialized, /Use the approved current fee circular/);
+  assert.doesNotMatch(serialized, /Approved current schedule summary/);
+  assert.doesNotMatch(serialized, /Approved aggregate value/);
+  assert.doesNotMatch(serialized, /Approved current admission summary/);
+
+  const school = resolveProgrammeExpiryProjection({
+    page: adapted.pages["/school/academics"],
+    now: "2027-06-01T00:00:00.000Z",
+  });
+  assert.equal(school.sections.fees.state, "not-applicable");
+  assert.equal(school.sections.results.state, "not-applicable");
+  assert.equal(school.sections.schedule.state, "fallback");
+  assert.equal(school.sections.admissions.state, "fallback");
+});
+
+test("issues an exact rollback target but blocks restoration after its content expires", () => {
+  const packageData = makePackage();
+  const adapted = adaptProgrammesPublicationPackage({ packageData, manifest: approvedManifest(packageData), now: NOW });
+  assert.equal(adapted.ok, true, adapted.ok ? undefined : JSON.stringify(adapted.issues, null, 2));
+  const page = adapted.pages["/programmes/jee-neet"];
+  const target = resolveProgrammeExpiryProjection({ page, now: "2026-09-01T12:00:00.000Z" });
+  const active = resolveProgrammeExpiryProjection({
+    page,
+    now: "2026-09-02T12:00:00.000Z",
+    previousReceipt: target.receipt,
+  });
+
+  assert.equal(active.receipt.rollbackTarget.receiptDigest, target.receipt.receiptDigest);
+  const ready = planProgrammeExpiryRollback({
+    activeReceipt: active.receipt,
+    targetReceipt: target.receipt,
+    now: "2026-09-02T12:01:00.000Z",
+  });
+  assert.equal(ready.status, "ready-for-explicit-rollback");
+  assert.deepEqual(ready.blockers, []);
+  assert.equal(ready.controls.repositoryWritePerformed, false);
+
+  const expiredActive = resolveProgrammeExpiryProjection({
+    page,
+    now: "2027-06-01T00:00:00.000Z",
+    previousReceipt: target.receipt,
+  });
+  const blocked = planProgrammeExpiryRollback({
+    activeReceipt: expiredActive.receipt,
+    targetReceipt: target.receipt,
+    now: "2027-06-01T00:00:00.000Z",
+  });
+  assert.equal(blocked.status, "blocked");
+  assert.ok(blocked.blockers.some((issue) => /restore expired fees content/i.test(issue)));
+
+  const tampered = structuredClone(target.receipt);
+  tampered.sections.fees.validUntil = "2027-06-30";
+  assert.ok(validateProgrammeExpiryReceipt(tampered).some((issue) => /digest does not match/i.test(issue)));
+  assert.equal(planProgrammeExpiryRollback({ activeReceipt: active.receipt, targetReceipt: tampered }).status, "blocked");
+});
+
+test("rejects invalid Programme expiry clocks instead of treating them as current", () => {
+  const packageData = makePackage();
+  const adapted = adaptProgrammesPublicationPackage({ packageData, manifest: approvedManifest(packageData), now: NOW });
+  assert.equal(adapted.ok, true, adapted.ok ? undefined : JSON.stringify(adapted.issues, null, 2));
+  assert.throws(
+    () => resolveProgrammeExpiryProjection({ page: adapted.pages["/junior-college"], now: "not-a-date" }),
+    /valid current time/i,
+  );
 });
 
 test("programme data adapter atomically rejects expired approvals, missing evidence and unverified results", () => {
@@ -648,7 +761,36 @@ test("ships a formal schema, read-only planner and fail-closed public route boun
   assert.doesNotMatch(planner, /writeFile|rename|mkdir|fetch\s*\(/);
   assert.match(catchAll, /isProgrammesPublicationRoute\(path\)\) notFound\(\)/);
   assert.match(navigation, /filter\(\(item\) => !isProgrammesPublicationRoute\(item\.href\)\)/);
-  assert.match(footer, /filter\(\(link\) => !isProgrammesPublicationRoute\(link\.href\)\)/);
+  assert.match(navigation, /links:\s*group\.links\.filter\(\(link\) => !isProgrammesPublicationRoute\(link\.href\)\)/);
+  assert.match(footer, /footerNavigationGroups/);
   assert.match(sitemap, /filter\(\(path\) => !isProgrammesPublicationRoute\(path\)\)/);
   assert.match(packageJson, /"programmes:plan"/);
+});
+
+test("ships strict Programme expiry receipts, guarded renderers and read-only rollback planners", async () => {
+  const [schemaText, component, expiryPlanner, rollbackPlanner, packageText] = await Promise.all([
+    readFile(new URL("../content/programmes-expiry-receipt.schema.json", import.meta.url), "utf8"),
+    readFile(new URL("../components/programmes/programme-expiry-sections.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/plan-programmes-expiry.mjs", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/plan-programmes-expiry-rollback.mjs", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8"),
+  ]);
+  const schema = JSON.parse(schemaText);
+  const packageJson = JSON.parse(packageText);
+
+  assert.equal(schema.additionalProperties, false);
+  assert.equal(schema.properties.receiptType.const, "programme-expiry-projection");
+  assert.deepEqual(schema.properties.sections.required, ["fees", "schedule", "results", "admissions"]);
+  assert.equal(schema.properties.controls.properties.expiredContentIncluded.const, false);
+  assert.equal(schema.properties.controls.properties.expiredContentRestorationAllowed.const, false);
+  assert.match(component, /isIssuedProgrammeExpiryProjection\(projection, gate\)/);
+  assert.match(component, /ProgrammeExpiringFeeSummary/);
+  assert.match(component, /ProgrammeExpiringSchedule/);
+  assert.match(component, /ProgrammeExpiringResults/);
+  assert.match(component, /ProgrammeExpiringAdmissionsCta/);
+  assert.doesNotMatch(component, /dangerouslySetInnerHTML/);
+  assert.doesNotMatch(expiryPlanner, /writeFile|rename|unlink|mkdir|rm\s*\(|fetch\s*\(/);
+  assert.doesNotMatch(rollbackPlanner, /writeFile|rename|unlink|mkdir|rm\s*\(|fetch\s*\(/);
+  assert.match(packageJson.scripts["programmes:expiry:plan"], /plan-programmes-expiry\.mjs/);
+  assert.match(packageJson.scripts["programmes:expiry:rollback-plan"], /plan-programmes-expiry-rollback\.mjs/);
 });

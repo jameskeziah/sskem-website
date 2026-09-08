@@ -14,6 +14,7 @@ const controlledInputs = [
   "content/public-document-publication-bindings.json",
   "content/homepage-media-performance-budget.json",
   "content/legacy-cutover-inventory.json",
+  "content/legacy-content-migration-matrix.json",
 ];
 
 async function digest(path) {
@@ -24,20 +25,21 @@ function readyGate(required = 1) {
   return { completed: required, required, ready: true, blocker: "Blocked." };
 }
 
-test("combines all six independent release gates fail closed", () => {
+test("combines all seven independent release gates fail closed", () => {
   const report = createPublicReleaseReadiness({
     approvals: { completed: 0, required: 33, ready: false, blocker: "Approvals remain." },
     campusMedia: { completed: 0, required: 4, ready: false, blocker: "Bindings remain." },
     publicDocuments: { completed: 0, required: 12, ready: false, blocker: "Documents remain." },
     mediaPerformance: { completed: 4, required: 5, ready: false, blocker: "One overage remains." },
     legacyRoutes: readyGate(35),
+    contentMigration: { completed: 0, required: 115, ready: false, blocker: "Migration remains." },
     reviewTreatment: { completed: 0, required: 1, ready: false, blocker: "Review treatment remains." },
   });
 
   assert.equal(report.readyGates, 1);
-  assert.equal(report.blockedGates, 5);
-  assert.equal(report.totalGates, 6);
-  assert.equal(report.blockingItems, 51);
+  assert.equal(report.blockedGates, 6);
+  assert.equal(report.totalGates, 7);
+  assert.equal(report.blockingItems, 166);
   assert.equal(report.privateReviewAllowed, true);
   assert.equal(report.releaseReady, false);
   assert.deepEqual(report.gates.map((gate) => gate.id), [
@@ -46,6 +48,7 @@ test("combines all six independent release gates fail closed", () => {
     "public-document-bindings",
     "homepage-media-performance",
     "legacy-route-cutover",
+    "legacy-content-migration",
     "review-only-treatment",
   ]);
 });
@@ -57,10 +60,11 @@ test("reports public release ready only when every gate passes", () => {
     publicDocuments: readyGate(12),
     mediaPerformance: readyGate(5),
     legacyRoutes: readyGate(35),
+    contentMigration: readyGate(115),
     reviewTreatment: readyGate(1),
   });
 
-  assert.equal(report.readyGates, 6);
+  assert.equal(report.readyGates, 7);
   assert.equal(report.blockedGates, 0);
   assert.equal(report.blockingItems, 0);
   assert.equal(report.releaseReady, true);
@@ -73,6 +77,7 @@ test("treats malformed gate counts as integrity failures", () => {
     publicDocuments: readyGate(12),
     mediaPerformance: readyGate(5),
     legacyRoutes: readyGate(35),
+    contentMigration: readyGate(115),
     reviewTreatment: readyGate(1),
   });
 
@@ -88,9 +93,9 @@ test("audits the current repository as one read-only launch decision", async () 
 
   assert.deepEqual(after, before, "The composite audit must not mutate controlled release inputs");
   assert.equal(report.readyGates, 2);
-  assert.equal(report.blockedGates, 4);
-  assert.equal(report.totalGates, 6);
-  assert.equal(report.blockingItems, 50);
+  assert.equal(report.blockedGates, 5);
+  assert.equal(report.totalGates, 7);
+  assert.equal(report.blockingItems, 165);
   assert.deepEqual(report.issues, []);
   assert.equal(report.privateReviewAllowed, true);
   assert.equal(report.releaseReady, false);
@@ -102,6 +107,7 @@ test("audits the current repository as one read-only launch decision", async () 
       { id: "public-document-bindings", completed: 0, required: 12, ready: false },
       { id: "homepage-media-performance", completed: 4, required: 5, ready: false },
       { id: "legacy-route-cutover", completed: 35, required: 35, ready: true },
+      { id: "legacy-content-migration", completed: 0, required: 115, ready: false },
       { id: "review-only-treatment", completed: 1, required: 1, ready: true },
     ],
   );

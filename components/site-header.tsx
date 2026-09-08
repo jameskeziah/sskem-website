@@ -44,7 +44,7 @@ const focusableSelector = [
 ].join(",");
 
 function setPageInert(inert: boolean) {
-  document.querySelectorAll<HTMLElement>("#main-content, footer, .site-header").forEach((element) => {
+  document.querySelectorAll<HTMLElement>("#main-content, footer, .site-header, .skip-links").forEach((element) => {
     if (inert) element.setAttribute("inert", "");
     else element.removeAttribute("inert");
   });
@@ -58,7 +58,7 @@ function BrandIdentity() {
       </span>
       <span className="brand-identity__copy">
         <strong>{siteFacts.shortName}</strong>
-        <span>English Medium School · CBSE</span>
+        <span>English Medium School · Veral</span>
       </span>
     </Link>
   );
@@ -263,9 +263,22 @@ export function SiteHeader({
     submenuButtons.current[label]?.focus({ preventScroll: true });
   }
 
+  function openMobileNavigation() {
+    const currentSection = primaryNavigation.find((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
+    setMobileExpanded(currentSection?.label ?? null);
+    setMobileOpen(true);
+  }
+
+  function closeMobileNavigation() {
+    setMobileOpen(false);
+  }
+
   return (
     <>
-      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <nav className="skip-links" aria-label="Skip links">
+        <a className="skip-link" href="#main-content">Skip to main content</a>
+        <a className="skip-link" href="#site-footer">Skip to footer</a>
+      </nav>
       <header ref={headerRef} className="site-header">
         <NoticeBar>
           {activeEditorial.notice.message}{activeEditorial.notice.href ? (
@@ -345,7 +358,7 @@ export function SiteHeader({
             </ul>
           </nav>
           <Link className="button button--primary header-cta" href="/admissions/enquire">Enquire now</Link>
-          <IconButton ref={menuButtonRef} className="mobile-menu-button" label="Open navigation" onClick={() => setMobileOpen(true)}>
+          <IconButton ref={menuButtonRef} className="mobile-menu-button" label="Open navigation" onClick={openMobileNavigation}>
             <span aria-hidden="true">☰</span>
           </IconButton>
           </div>
@@ -361,11 +374,13 @@ export function SiteHeader({
 
       {mobileOpen ? (
         <div className="mobile-drawer-layer" role="presentation">
-          <button className="mobile-drawer-backdrop" aria-label="Close navigation" onClick={() => setMobileOpen(false)} />
-          <div className="mobile-drawer" ref={drawerRef} role="dialog" aria-modal="true" aria-label="Site navigation">
+          <button className="mobile-drawer-backdrop" aria-label="Close navigation" onClick={closeMobileNavigation} />
+          <div className="mobile-drawer" ref={drawerRef} role="dialog" aria-modal="true" aria-labelledby="mobile-navigation-title" aria-describedby="mobile-navigation-description">
+            <h2 className="visually-hidden" id="mobile-navigation-title">Site navigation</h2>
+            <p className="visually-hidden" id="mobile-navigation-description">Choose a section or press Escape to close this menu.</p>
             <div className="mobile-drawer__header">
               <BrandIdentity />
-              <IconButton label="Close navigation" onClick={() => setMobileOpen(false)}><span aria-hidden="true">×</span></IconButton>
+              <IconButton label="Close navigation" onClick={closeMobileNavigation}><span aria-hidden="true">×</span></IconButton>
             </div>
             <button className="mobile-search-trigger" type="button" onClick={() => { setMobileOpen(false); setSearchOpen(true); }}>
               <span aria-hidden="true">⌕</span> Search the website
@@ -378,13 +393,13 @@ export function SiteHeader({
                   return (
                     <li key={item.href}>
                       <div className="mobile-navigation__entry" data-section-current={pathname === item.href || pathname.startsWith(`${item.href}/`) || undefined}>
-                        <Link href={item.href} aria-current={pathname === item.href ? "page" : undefined}>{item.label}</Link>
-                        <button type="button" aria-label={`Show ${item.label} links`} aria-expanded={expanded} aria-controls={controlId} onClick={() => setMobileExpanded(expanded ? null : item.label)}>
+                        <Link href={item.href} aria-current={pathname === item.href ? "page" : undefined} onClick={closeMobileNavigation}>{item.label}</Link>
+                        <button type="button" aria-label={`${expanded ? "Hide" : "Show"} ${item.label} links`} aria-expanded={expanded} aria-controls={controlId} onClick={() => setMobileExpanded(expanded ? null : item.label)}>
                           <span aria-hidden="true">{expanded ? "−" : "+"}</span>
                         </button>
                       </div>
                       <ul id={controlId} hidden={!expanded}>
-                        {item.children.map((child) => <li key={child.href}><Link href={child.href} aria-current={pathname === child.href ? "page" : undefined}>{child.label}</Link></li>)}
+                        {item.children.map((child) => <li key={child.href}><Link href={child.href} aria-current={pathname === child.href ? "page" : undefined} onClick={closeMobileNavigation}>{child.label}</Link></li>)}
                       </ul>
                     </li>
                   );
@@ -392,11 +407,11 @@ export function SiteHeader({
               </ul>
             </nav>
             <div className="mobile-drawer__utility">
-              {utilityNavigation.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}
+              {utilityNavigation.map((item) => <Link href={item.href} key={item.href} aria-current={pathname === item.href ? "page" : undefined} onClick={closeMobileNavigation}>{item.label}</Link>)}
               <a href={`tel:${activeEditorial.contact.phone.replace(/\s/g, "")}`}>{activeEditorial.contact.phone}</a>
               <a href={`mailto:${activeEditorial.contact.email}`}>{activeEditorial.contact.email}</a>
             </div>
-            <Link className="button button--primary button--full" href="/admissions/enquire">Enquire now</Link>
+            <Link className="button button--primary button--full" href="/admissions/enquire" onClick={closeMobileNavigation}>Enquire now</Link>
           </div>
         </div>
       ) : null}
@@ -410,10 +425,10 @@ export function SiteHeader({
               <IconButton label="Close search" onClick={() => setSearchOpen(false)}><span aria-hidden="true">×</span></IconButton>
             </div>
             <label className="visually-hidden" htmlFor="site-search">Search pages</label>
-            <SearchInput ref={searchInputRef} id="site-search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Try admissions, calendar or faculty" />
+            <SearchInput ref={searchInputRef} id="site-search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Try admissions, calendar or documents" />
             <div className="search-results" aria-live="polite">
               <p className="caption">{results.length} suggested {results.length === 1 ? "page" : "pages"}</p>
-              <ul>{results.map((item) => <li key={item.href}><Link href={item.href}>{item.label}<span aria-hidden="true">→</span></Link></li>)}</ul>
+              <ul>{results.map((item) => <li key={item.href}><Link href={item.href} onClick={() => setSearchOpen(false)}>{item.label}<span aria-hidden="true">→</span></Link></li>)}</ul>
             </div>
           </div>
         </div>

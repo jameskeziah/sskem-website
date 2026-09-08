@@ -35,12 +35,21 @@ best-effort record dropping, production bypass or administrator override exists.
 - `lib/programmes-data-adapter.ts` converts one fully accepted package into
   immutable component-ready page projections and rejects incompatible owning
   institution types.
+- `lib/programmes-expiry.ts`, the strict expiry receipt schema and
+  `components/programmes/programme-expiry-sections.tsx` remove expired fees,
+  schedules, results and admissions values, substitute canonical safe contact
+  guidance and issue digest-bound rollback targets. The paired command-line
+  planners are read-only and cannot restore expired values.
 - `lib/programmes-seo.ts` prepares exact metadata, canonical URLs, breadcrumbs
   and independently suppressible Schema.org organization/programme graphs from
   adapter-issued page projections only.
 - `lib/programmes-media.ts` and `components/programmes/programme-media.tsx`
   provide private-only responsive image/video slots with strict source,
   ratio, caption, alt-text, loading and reduced-motion rules.
+- `content/programmes-performance-budget.json`,
+  `lib/programmes-performance-budget.ts` and the paired static/browser audits
+  enforce hero, page-weight, font, animation, LCP and CLS ceilings before real
+  Programme media can be accepted.
 - `lib/programmes-document-integration.ts` and
   `components/programmes/programme-document-groups.tsx` resolve exact guarded
   PDF bindings into route-scoped brochure, timetable/calendar, fee-circular
@@ -178,6 +187,16 @@ After management supplies the future package, run:
 npm run programmes:plan -- <approved-package.json>
 ```
 
+To project the four time-sensitive sections and generate non-authorizing expiry
+receipts, run:
+
+```text
+npm run programmes:expiry:plan -- <approved-package.json> --now=<ISO-date-time>
+```
+
+The full expiry, fallback and rollback contract is documented in
+`docs/programmes-expiry-and-rollback.md`.
+
 For reproducible review at a controlled time:
 
 ```text
@@ -221,6 +240,8 @@ A passing plan still requires a separate implementation and activation change:
 2. implement the three route projections from canonical references;
 3. privately review the exact rendered output;
 4. bind the exact package, route projections and code revision;
-5. rerun media, document, accessibility, performance and release audits;
-6. activate route/navigation/sitemap projections atomically; and
-7. deploy only with separate explicit authorization and rollback ownership.
+5. rerun media, document, Programme accessibility/performance and release audits;
+6. connect the expiry projection and retain exact projection/rollback receipts
+   in the controlled release store;
+7. activate route/navigation/sitemap projections atomically; and
+8. deploy only with separate explicit authorization and rollback ownership.

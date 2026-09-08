@@ -234,6 +234,16 @@ documented in `docs/legacy-cutover.md`. It implements direct permanent redirects
 to safe rebuilt destinations without copying old claims, forms, uploads or pupil
 media. Route readiness is separate from publication approval.
 
+The authenticated `/publication-review/migration-decision-intake` workspace
+validates the full digest-bound legacy decision CSV locally without uploading or
+persisting it. `migration:decisions` reproduces the plan read-only by default;
+an exact batch ID and explicit acknowledgement are required for one atomic local
+matrix update with an ignored-work rollback snapshot. It records decisions only
+and cannot verify implementation, grant approval, publish content or deploy.
+Decision and refresh writers share an exclusive local lock. Free-form rationale,
+personal role values and unregistered/system target paths are rejected; a rare
+post-commit receipt-marker failure has a separate hash-checked repair command.
+
 The test command regenerates design tokens, creates a production build, checks
 the Phase 1, Stage 2 and Stage 3 contracts, validates document-publication and
 admissions safeguards, and runs accessibility, keyboard, responsive,

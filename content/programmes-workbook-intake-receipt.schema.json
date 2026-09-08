@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/programmes-workbook-intake-receipt.schema.json",
+  "title": "SSKEMS sanitized Programmes workbook intake receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "receiptId",
+    "generatedOn",
+    "sourceFingerprint",
+    "status",
+    "structure",
+    "contractBinding",
+    "totals",
+    "records",
+    "repeatingRows",
+    "compatibility",
+    "issueCodes",
+    "outcomes",
+    "privacy",
+    "guardrails"
+  ],
+  "properties": {
+    "$schema": { "const": "./programmes-workbook-intake-receipt.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "receiptId": { "const": "sskem-programmes-workbook-intake-receipt" },
+    "generatedOn": { "type": "string", "format": "date" },
+    "sourceFingerprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "value", "byteLength"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "value": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "byteLength": { "type": "integer", "minimum": 1, "maximum": 10485760 }
+      }
+    },
+    "status": { "enum": ["blocked", "ready-for-controlled-reconciliation"] },
+    "structure": { "$ref": "#/$defs/structure" },
+    "contractBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intakeId", "schemaVersion", "sourceMarkerPresent", "expectedWorksheetCount", "matchedWorksheetCount", "exactStructureMatch"],
+      "properties": {
+        "intakeId": { "const": "sskem-programmes-intake-system" },
+        "schemaVersion": { "const": 1 },
+        "sourceMarkerPresent": { "type": "boolean" },
+        "expectedWorksheetCount": { "const": 9 },
+        "matchedWorksheetCount": { "type": "integer", "minimum": 0, "maximum": 9 },
+        "exactStructureMatch": { "type": "boolean" }
+      }
+    },
+    "totals": { "$ref": "#/$defs/totals" },
+    "records": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/record" }
+    },
+    "repeatingRows": { "$ref": "#/$defs/repeatingRows" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonicalProgrammePathwaysRequired",
+        "canonicalProgrammePathwaysDirectlyMapped",
+        "automaticContentPackageCreationSupported",
+        "manualInstitutionalModelDecisionRequired"
+      ],
+      "properties": {
+        "canonicalProgrammePathwaysRequired": { "const": 3 },
+        "canonicalProgrammePathwaysDirectlyMapped": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "automaticContentPackageCreationSupported": { "const": false },
+        "manualInstitutionalModelDecisionRequired": { "const": true }
+      }
+    },
+    "issueCodes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "invalid-workbook-structure",
+          "contract-marker-missing",
+          "canonical-contract-structure-mismatch",
+          "unsupported-package-parts",
+          "unresolved-responses",
+          "unresolved-critical-responses",
+          "management-confirmation-missing",
+          "publication-decision-missing",
+          "tracker-approval-missing",
+          "tracker-publication-readiness-missing",
+          "approved-evidence-missing",
+          "result-claims-suppressed",
+          "canonical-model-reconciliation-required",
+          "potential-private-data-detected"
+        ]
+      }
+    },
+    "outcomes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["auditReceiptReady", "sanitizedProjectionReady", "publicationAuthorized"],
+      "properties": {
+        "auditReceiptReady": { "const": true },
+        "sanitizedProjectionReady": { "const": false },
+        "publicationAuthorized": { "const": false }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "potentialPersonRecordsPresent",
+        "potentialContactFieldsPresent",
+        "internalFeeRowsPresent",
+        "evidenceRegisterRowsPresent",
+        "rawWorkbookContentReturned",
+        "sourceFilenameReturned",
+        "sourcePathReturned"
+      ],
+      "properties": {
+        "potentialPersonRecordsPresent": { "type": "boolean" },
+        "potentialContactFieldsPresent": { "type": "boolean" },
+        "internalFeeRowsPresent": { "type": "boolean" },
+        "evidenceRegisterRowsPresent": { "type": "boolean" },
+        "rawWorkbookContentReturned": { "const": false },
+        "sourceFilenameReturned": { "const": false },
+        "sourcePathReturned": { "const": false }
+      }
+    },
+    "guardrails": { "$ref": "#/$defs/guardrails" }
+  },
+  "$defs": {
+    "nonNegativeInteger": { "type": "integer", "minimum": 0 },
+    "structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "worksheetCount",
+        "requiredWorksheetCount",
+        "matchedRequiredWorksheetCount",
+        "formulaCellCount",
+        "externalLinkPartCount",
+        "macroPartCount",
+        "embeddedObjectPartCount"
+      ],
+      "properties": {
+        "worksheetCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "requiredWorksheetCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "matchedRequiredWorksheetCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "formulaCellCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "externalLinkPartCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "macroPartCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "embeddedObjectPartCount": { "$ref": "#/$defs/nonNegativeInteger" }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "programmeForms",
+        "responseFields",
+        "notConfirmedResponses",
+        "criticalFields",
+        "unresolvedCriticalResponses",
+        "managementConfirmedForms",
+        "approvedForPublicationForms",
+        "trackerApprovedRows",
+        "trackerPublicationReadyRows",
+        "approvedEvidenceRows"
+      ],
+      "properties": {
+        "programmeForms": { "$ref": "#/$defs/nonNegativeInteger" },
+        "responseFields": { "$ref": "#/$defs/nonNegativeInteger" },
+        "notConfirmedResponses": { "$ref": "#/$defs/nonNegativeInteger" },
+        "criticalFields": { "$ref": "#/$defs/nonNegativeInteger" },
+        "unresolvedCriticalResponses": { "$ref": "#/$defs/nonNegativeInteger" },
+        "managementConfirmedForms": { "$ref": "#/$defs/nonNegativeInteger" },
+        "approvedForPublicationForms": { "$ref": "#/$defs/nonNegativeInteger" },
+        "trackerApprovedRows": { "$ref": "#/$defs/nonNegativeInteger" },
+        "trackerPublicationReadyRows": { "$ref": "#/$defs/nonNegativeInteger" },
+        "approvedEvidenceRows": { "$ref": "#/$defs/nonNegativeInteger" }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recordId",
+        "responseFields",
+        "notConfirmedResponses",
+        "criticalFields",
+        "unresolvedCriticalResponses",
+        "managementConfirmed",
+        "approvedForPublication"
+      ],
+      "properties": {
+        "recordId": { "enum": ["programme-record-01", "programme-record-02", "programme-record-03"] },
+        "responseFields": { "$ref": "#/$defs/nonNegativeInteger" },
+        "notConfirmedResponses": { "$ref": "#/$defs/nonNegativeInteger" },
+        "criticalFields": { "$ref": "#/$defs/nonNegativeInteger" },
+        "unresolvedCriticalResponses": { "$ref": "#/$defs/nonNegativeInteger" },
+        "managementConfirmed": { "type": "boolean" },
+        "approvedForPublication": { "type": "boolean" }
+      }
+    },
+    "repeatingRows": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["campus", "faculty", "fees", "results", "scholarships", "mediaAndEvidence", "publicationTracker"],
+      "properties": {
+        "campus": { "$ref": "#/$defs/nonNegativeInteger" },
+        "faculty": { "$ref": "#/$defs/nonNegativeInteger" },
+        "fees": { "$ref": "#/$defs/nonNegativeInteger" },
+        "results": { "$ref": "#/$defs/nonNegativeInteger" },
+        "scholarships": { "$ref": "#/$defs/nonNegativeInteger" },
+        "mediaAndEvidence": { "$ref": "#/$defs/nonNegativeInteger" },
+        "publicationTracker": { "$ref": "#/$defs/nonNegativeInteger" }
+      }
+    },
+    "guardrails": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "networkRequestPerformed",
+        "serverPersistencePerformed",
+        "repositoryWritePerformed",
+        "managementApprovalGranted",
+        "contentPackageCreated",
+        "approvalManifestUpdated",
+        "cmsWritePerformed",
+        "publicContentPublished",
+        "navigationActivated",
+        "deploymentPerformed",
+        "malwareScanPerformed"
+      ],
+      "properties": {
+        "networkRequestPerformed": { "const": false },
+        "serverPersistencePerformed": { "const": false },
+        "repositoryWritePerformed": { "const": false },
+        "managementApprovalGranted": { "const": false },
+        "contentPackageCreated": { "const": false },
+        "approvalManifestUpdated": { "const": false },
+        "cmsWritePerformed": { "const": false },
+        "publicContentPublished": { "const": false },
+        "navigationActivated": { "const": false },
+        "deploymentPerformed": { "const": false },
+        "malwareScanPerformed": { "const": false }
+      }
+    }
+  }
+}

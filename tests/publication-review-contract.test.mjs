@@ -38,7 +38,7 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   assert.match(page, /publicReleaseReadinessDashboard/);
   assert.match(page, /Composite launch gate/);
   assert.match(page, /One result across every release dependency\./);
-  assert.match(page, /all six independent gates pass/);
+  assert.match(page, /all seven independent gates pass/);
   assert.match(page, /npm run release:audit/);
   assert.match(page, /Approve the four campus photographs first\./);
   assert.match(page, /Guarded update:/);

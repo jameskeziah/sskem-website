@@ -1,5 +1,6 @@
 import { approvalManifest, approvalSummary } from "./publication-approval";
 import { legacyCutoverDashboard } from "./legacy-cutover";
+import { legacyContentMigrationDashboard } from "./legacy-content-migration";
 import { campusMediaPublicationSummary } from "../../lib/campus-media-publication.ts";
 import { homepageMediaPerformanceSummary } from "../../lib/homepage-media-performance.ts";
 import { homepageAchievementPublicationSummary } from "../../lib/homepage-achievement-publication.ts";
@@ -49,6 +50,12 @@ export function publicReleaseReadinessDashboard() {
       required: legacyCutoverDashboard.total,
       ready: legacyCutoverDashboard.pendingImplementation === 0,
       blocker: `${legacyCutoverDashboard.pendingImplementation} legacy route implementation(s) remain.`,
+    },
+    contentMigration: {
+      completed: legacyContentMigrationDashboard.verified,
+      required: legacyContentMigrationDashboard.total,
+      ready: legacyContentMigrationDashboard.completionReady,
+      blocker: `${legacyContentMigrationDashboard.total - legacyContentMigrationDashboard.verified} archived content record(s) still require a final decision, implementation and verification.`,
     },
     reviewTreatment: {
       completed: achievements.publicProjectionSafe ? 1 : 0,

@@ -54,6 +54,7 @@ export default async function ProgrammesContentPackagePage() {
         <PageContainer>
           <nav className="programmes-package-toolbar" aria-label="Programmes content package navigation">
             <Link href="/publication-review">Back to approval queue</Link>
+            <Link href="/publication-review/programmes-workbook-intake">Review workbook preflight</Link>
             <Link href="/junior-college">View current pending pathway</Link>
           </nav>
 

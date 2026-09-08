@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/legacy-content-migration-matrix.schema.json",
+  "title": "SSKEMS legacy content migration matrix",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "matrixId", "builtOn", "archive", "policy", "records"],
+  "properties": {
+    "$schema": { "const": "./legacy-content-migration-matrix.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "matrixId": { "const": "sskem-legacy-content-migration" },
+    "builtOn": { "$ref": "#/$defs/date" },
+    "archive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "capturedOn", "sitemapSha256", "checksumManifestSha256", "expectedRecords", "expectedPublicRecords", "expectedPrivateRecords"],
+      "properties": {
+        "id": { "const": "SSKEMS-BACKUP-2026-08-29" },
+        "capturedOn": { "const": "2026-08-29" },
+        "sitemapSha256": { "$ref": "#/$defs/sha256" },
+        "checksumManifestSha256": { "$ref": "#/$defs/sha256" },
+        "expectedRecords": { "const": 115 },
+        "expectedPublicRecords": { "const": 108 },
+        "expectedPrivateRecords": { "const": 7 }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["legacyContentIsApprovalEvidence", "privateSourceDetailsStored", "decisionsPreselected", "downloadPersistsChanges", "publicPublicationAllowed", "notes"],
+      "properties": {
+        "legacyContentIsApprovalEvidence": { "const": false },
+        "privateSourceDetailsStored": { "const": false },
+        "decisionsPreselected": { "const": false },
+        "downloadPersistsChanges": { "const": false },
+        "publicPublicationAllowed": { "const": false },
+        "notes": { "type": "string", "minLength": 40, "maxLength": 500 }
+      }
+    },
+    "records": {
+      "type": "array",
+      "minItems": 115,
+      "maxItems": 115,
+      "items": { "$ref": "#/$defs/record" }
+    }
+  },
+  "$defs": {
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "pathOrNull": {
+      "anyOf": [
+        { "type": "string", "pattern": "^(?:/|/(?:[a-z0-9_-]+/)*[a-z0-9_-]+)$" },
+        { "type": "null" }
+      ]
+    },
+    "publicTargetPathOrNull": {
+      "anyOf": [
+        {
+          "type": "string",
+          "anyOf": [
+            { "enum": ["/", "/appendix-ix", "/contact", "/guideline-procedure", "/institute", "/junior-college", "/mandatory-public-disclosure", "/registration-form", "/saras", "/section-strength", "/student-enrolment"] },
+            { "pattern": "^/(?:about|admissions|documents|programmes|school|student-life)(?:/[a-z0-9_-]+)*$" }
+          ]
+        },
+        { "type": "null" }
+      ]
+    },
+    "nonReservedTargetPathOrNull": {
+      "anyOf": [
+        { "type": "string", "pattern": "^(?!(?:/_next|/api|/publication-review|/studio|/wp-admin|/wp-content|/wp-includes|/wp-json|/wp-login)(?:/|$))(?:/|/(?:[a-z0-9_-]+/)*[a-z0-9_-]+)$" },
+        { "type": "null" }
+      ]
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "sourceRef", "sourceDigest", "sourceKind", "sourceVisibility", "sourceStatus", "sourceModifiedOn", "area", "identityProtected", "legacyPath", "routeContinuity", "requiredReviews", "contentDecision", "implementationStatus", "publicationEligible", "publicationReason"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^migration-[a-f0-9]{16}$" },
+        "label": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "sourceRef": { "type": "string", "pattern": "^archive-content-[a-f0-9]{16}$" },
+        "sourceDigest": { "$ref": "#/$defs/sha256" },
+        "sourceKind": { "enum": ["page", "post", "category", "post_format", "sk_igallery", "teacher", "user"] },
+        "sourceVisibility": { "enum": ["public", "private-review"] },
+        "sourceStatus": { "enum": ["publish", "public-index", "draft"] },
+        "sourceModifiedOn": {
+          "anyOf": [
+            { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$" },
+            { "type": "null" }
+          ]
+        },
+        "area": { "enum": ["home", "about", "academics", "admissions", "disclosure", "facilities", "contact", "media", "news", "identity", "taxonomy", "other"] },
+        "identityProtected": { "type": "boolean" },
+        "legacyPath": { "$ref": "#/$defs/pathOrNull" },
+        "routeContinuity": { "$ref": "#/$defs/routeContinuity" },
+        "requiredReviews": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "enum": ["accuracy", "currency", "editorial", "management-approval", "privacy", "rights", "retention", "institutional-model", "evidence", "accessibility", "data-protection"] }
+        },
+        "contentDecision": { "$ref": "#/$defs/contentDecision" },
+        "implementationStatus": { "enum": ["not-started", "in-progress", "implemented", "verified"] },
+        "publicationEligible": { "type": "boolean" },
+        "publicationReason": { "enum": ["decision-and-approval-required", "implementation-unverified", "approval-required", "verified-for-separate-publication-gates"] }
+      }
+    },
+    "routeContinuity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "action", "targetPath", "cutoverRecordId"],
+      "properties": {
+        "status": { "enum": ["implemented", "decision-required", "planned"] },
+        "action": { "enum": ["unselected", "retain", "redirect", "archive", "retire", "private-only"] },
+        "targetPath": { "$ref": "#/$defs/nonReservedTargetPathOrNull" },
+        "cutoverRecordId": {
+          "anyOf": [
+            { "type": "string", "pattern": "^legacy-[a-z0-9-]+$" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "contentDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "targetPath", "mergeIntoRecordId", "rationale", "ownerRole", "reviewedOn"],
+      "properties": {
+        "decision": { "enum": ["unselected", "migrate", "rewrite", "merge", "archive", "redirect-only", "retire"] },
+        "targetPath": { "$ref": "#/$defs/publicTargetPathOrNull" },
+        "mergeIntoRecordId": {
+          "anyOf": [
+            { "type": "string", "pattern": "^migration-[a-f0-9]{16}$" },
+            { "type": "null" }
+          ]
+        },
+        "rationale": {
+          "anyOf": [
+            { "enum": ["preserve-existing-public-information", "replace-with-current-information", "consolidate-overlapping-information", "retain-as-controlled-history", "preserve-route-continuity-only", "remove-obsolete-or-out-of-scope-information", "protect-identity-or-private-information", "hold-for-rights-or-evidence-review"] },
+            { "type": "null" }
+          ]
+        },
+        "ownerRole": {
+          "anyOf": [
+            { "enum": ["academic-office", "admissions-office", "compliance-owner", "content-editor", "media-owner", "school-management", "school-office", "student-life-owner", "website-owner"] },
+            { "type": "null" }
+          ]
+        },
+        "reviewedOn": {
+          "anyOf": [
+            { "$ref": "#/$defs/date" },
+            { "type": "null" }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -29,6 +29,8 @@ render gate per page. The page projection contains:
 - public organisation identity and institutional type;
 - component data for hero, subjects/streams, eligibility, schedule, fees,
   faculty, facilities, aggregate results, documents and admissions CTA;
+- approval-derived end dates for fees, schedule, each aggregate result and the
+  admissions CTA, used by the downstream expiry projection;
 - approved academic detail, scholarships and claims;
 - opaque approved media descriptors, never controlled paths or URLs;
 - SEO metadata, related governed routes and separately gated navigation.
@@ -75,12 +77,22 @@ const { media: heroMedia, ...heroProps } = page.components.hero;
 <ProgrammeHero gate={page.gate} {...heroProps} approvedMedia={resolveMedia(heroMedia)} />
 <ProgrammeSubjectsStreams gate={page.gate} {...page.components.subjectsStreams} />
 <ProgrammeEligibility gate={page.gate} {...page.components.eligibility} />
-<ProgrammeSchedule gate={page.gate} {...page.components.schedule} />
+const expiry = resolveProgrammeExpiryProjection({ page, now: new Date() });
+
+<ProgrammeExpiringSchedule gate={page.gate} projection={expiry} />
+<ProgrammeExpiringFeeSummary gate={page.gate} projection={expiry} />
+<ProgrammeExpiringResults gate={page.gate} projection={expiry} />
+<ProgrammeExpiringAdmissionsCta gate={page.gate} projection={expiry} />
 ```
 
 Media resolution must separately bind the descriptor ID to the exact approved
 public media artifact. The adapter never turns a controlled evidence reference
 into a public asset URL.
+
+Adapter version `1.1.0` adds the derived end dates but does not change the
+source package schema. The expiry projection removes expired values before the
+four time-sensitive components can receive them. See
+`docs/programmes-expiry-and-rollback.md` for the receipt and rollback contract.
 
 ## Version 1 limitation
 

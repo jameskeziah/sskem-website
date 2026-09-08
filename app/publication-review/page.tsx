@@ -19,6 +19,8 @@ import {
   legacyCutoverDashboard,
   legacyCutoverInventory,
 } from "@/app/data/legacy-cutover";
+import { legacyContentMigrationDashboard } from "@/app/data/legacy-content-migration";
+import { programmesWorkbookIntakeReceipt } from "@/app/data/programmes-workbook-intake";
 import { publicReleaseReadinessDashboard } from "@/app/data/public-release-readiness";
 import { PageContainer } from "@/components/layout";
 import { SiteFooter } from "@/components/site-footer";
@@ -188,7 +190,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
                 <p className="eyebrow">Composite launch gate</p>
                 <h2 id="review-readiness-title">One result across every release dependency.</h2>
               </div>
-              <p>Public release becomes ready only when all six independent gates pass. A structurally valid manifest alone is not a launch decision.</p>
+              <p>Public release becomes ready only when all seven independent gates pass. A structurally valid manifest alone is not a launch decision.</p>
             </div>
             <dl className="review-readiness__grid">
               {releaseReadiness.gates.map((gate) => (
@@ -246,6 +248,30 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
             </div>
           </section>
 
+          <section className="review-migration" aria-labelledby="review-migration-title">
+            <div className="review-section-heading">
+              <div>
+                <p className="eyebrow">Complete archive accounting</p>
+                <h2 id="review-migration-title">Route continuity is not content migration.</h2>
+              </div>
+              <p>The migration matrix reconciles every archived content record while keeping private identities, source files and evidence in the controlled archive.</p>
+            </div>
+            <dl className="review-migration__grid">
+              <div><dt>Archive records</dt><dd><strong>{legacyContentMigrationDashboard.total}</strong><span>{legacyContentMigrationDashboard.publicRecords} public and {legacyContentMigrationDashboard.privateRecords} private.</span></dd></div>
+              <div><dt>Existing route treatments</dt><dd><strong>{legacyContentMigrationDashboard.routeImplemented}</strong><span>Imported from the verified cutover register.</span></dd></div>
+              <div><dt>Public routes to decide</dt><dd><strong>{legacyContentMigrationDashboard.publicRouteDecisionRequired}</strong><span>Keep, redirect, archive or retire.</span></dd></div>
+              <div><dt>Migration verified</dt><dd><strong>{legacyContentMigrationDashboard.verified} of {legacyContentMigrationDashboard.total}</strong><span>Public release remains blocked until every row is accounted for.</span></dd></div>
+            </dl>
+            <div className="review-migration__actions">
+              <p>Download is read-only and contains public-safe metadata plus opaque source references—not archived copy or approval evidence.</p>
+              <div>
+                <Link className="button button--primary" href="/publication-review/migration-matrix">Open migration matrix</Link>
+                <Link className="button button--quiet" href="/publication-review/migration-matrix-export">Download safe worksheet</Link>
+                <Link className="button button--quiet" href="/publication-review/migration-decision-intake">Validate completed worksheet</Link>
+              </div>
+            </div>
+          </section>
+
           <section className="review-summary" aria-labelledby="review-summary-title">
             <div className="review-section-heading">
               <div><p className="eyebrow">Manifest snapshot</p><h2 id="review-summary-title">{summary.total} governed records</h2></div>
@@ -261,13 +287,14 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
 
           <section className="review-programmes-package" aria-labelledby="review-programmes-package-title">
             <div className="review-section-heading">
-              <div><p className="eyebrow">Programmes content gate</p><h2 id="review-programmes-package-title">Confirm Senior Secondary, Junior College and JEE/NEET as one package.</h2></div>
-              <p>Capture the institutional model, programme facts, exact public claims, requested media and navigation placement before implementation.</p>
+              <div><p className="eyebrow">Programmes content gate</p><h2 id="review-programmes-package-title">The latest workbook is blocked from content-package entry.</h2></div>
+              <p>{programmesWorkbookIntakeReceipt.totals.notConfirmedResponses} of {programmesWorkbookIntakeReceipt.totals.responseFields} responses still contain NOT CONFIRMED, and {programmesWorkbookIntakeReceipt.totals.approvedForPublicationForms} of {programmesWorkbookIntakeReceipt.totals.programmeForms} programme forms are approved for publication.</p>
             </div>
             <div className="review-programmes-package__actions">
               <p>The authenticated worksheet downloads a controlled JSON handoff. It does not store evidence, alter approvals, publish content or activate routes.</p>
               <div className="review-programmes-package__links">
-                <Link className="button button--primary" href="/publication-review/programmes-content-package">Complete Programmes content package</Link>
+                <Link className="button button--primary" href="/publication-review/programmes-workbook-intake">Review Programmes workbook</Link>
+                <Link className="button button--quiet" href="/publication-review/programmes-content-package">Complete Programmes content package</Link>
                 <Link className="button button--quiet" href="/publication-review/programmes-preview">Preview Programmes art direction</Link>
                 <Link className="button button--quiet" href="/school/academics">Review private route shells</Link>
               </div>

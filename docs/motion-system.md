@@ -74,3 +74,6 @@ institutional status, and publication consent are confirmed. Crest motion and
 scroll-linked parallax remain deferred. Pinning, scrubbing on content,
 smooth-scroll libraries, custom cursors, counters, continuous loops, and global
 reveal scanners are prohibited.
+
+No further decorative motion should be scheduled ahead of site-state, print,
+focus, skip-link, footer, mobile-navigation or management-content acceptance.
