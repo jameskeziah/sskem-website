@@ -11,6 +11,17 @@ import {
 
 const projectRoot = new URL("../", import.meta.url);
 
+test("embeds the approval manifest without a worker-unsafe import.meta URL", async () => {
+  const [source, updateSource] = await Promise.all([
+    readFile(new URL("lib/approval-manifest.mjs", projectRoot), "utf8"),
+    readFile(new URL("lib/approval-manifest-update.mjs", projectRoot), "utf8"),
+  ]);
+
+  assert.match(source, /import approvalManifest from "\.\.\/content\/approval-manifest\.json"/);
+  assert.doesNotMatch(source, /new URL\([^\n]+import\.meta\.url/);
+  assert.doesNotMatch(updateSource, /new URL\([^\n]+import\.meta\.url/);
+});
+
 test("validates the 37-record media, claim, and document approval inventory", async () => {
   const manifest = await loadApprovalManifest();
   const issues = validateApprovalManifest(manifest);
