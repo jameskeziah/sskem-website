@@ -17,8 +17,9 @@ timings.
 | Admissions architectural mask | 4 | Initial page entry | Bottom-to-top clipped decorative layer | Authored static mask | `slow`, `emphasised` | None | Once | Static mask, no travel | Static final state | GSAP |
 | Admissions four-step preview | 4 | `top 82%` | `opacity: 0`, bounded vertical travel | Fully visible at authored position | `deliberate`, `enter` | `60ms` desktop/tablet, `40ms` mobile; four items maximum | Once | Four items maximum, `y: 10px` | Static final state | GSAP + ScrollTrigger |
 | Full eight-step process | 3 | Each four-step group at `top 82%` | Four related items share one reveal | Fully visible at authored position | `deliberate`, `enter` | No item stagger | Once | Two groups of four; no scrub | Static final state | GSAP + ScrollTrigger |
-| Homepage arrival heading | 4 | Initial page entry below `64rem` | `opacity: 0`, `y: 10px` | Fully visible at authored position | `slow`, `emphasised` | Mobile token; three lines maximum | Once | Live heading reveal | Static final state | GSAP |
-| Homepage approved desktop artwork | 4 | Initial render at `64rem` and above | Exact authored `/og.png` composition | Static, uncropped and unoverlaid artwork | None | None | Never | Replaced by live copy and a static campus photograph | Static final state | Responsive CSS |
+| Homepage arrival heading | 4 | Initial page entry below `64rem`, plus private-review desktop | `opacity: 0`, bounded responsive `y` | Fully visible at authored position | `slow`, `emphasised` | Responsive heading token; three lines maximum | Once | Live heading reveal | Static final state | GSAP |
+| Homepage public desktop artwork | 4 | Public render at `64rem` and above | Exact authored `/og.png` composition | Static, uncropped and unoverlaid artwork | None | None | Never | Replaced by live copy and a static campus photograph | Static final state | Responsive CSS |
+| Homepage private desktop media | 4 | Private-review render at `64rem` and above | Campus image at the approved image-mask scale maximum | Static authored campus frame | `slow`, `emphasised` | Coordinated with the heading timeline | Once | Static image beneath live copy | Static final state | GSAP |
 | Homepage campus chapter | 4 | Section at `top 82%` | Copy reveal plus three bounded image masks | Fully visible at authored position | `deliberate` through `slow` | Card token; three frames maximum | Once | Copy reveal only | Static final state | GSAP + ScrollTrigger |
 | Homepage publication review | 4 | Section at `top 82%` | Four supplied artwork cards share one reveal | Fully visible at authored position | `deliberate`, `enter` | `60ms` desktop/tablet, `40ms` mobile | Once | Bounded `y: 10px` | Static final state | GSAP + ScrollTrigger |
 | Floating primary navigation | 3 | Original navigation leaves viewport; scroll direction changes | Full-width authored header, then a dark institutional floating bar | Down-scroll hides; up-scroll, menu activity and keyboard focus reveal | `standard`, `move` | Direction threshold prevents jitter | Repeats only on intentional direction changes | Same interaction with compact spacing | Floating bar remains visible with no tween | React + GSAP |
@@ -28,6 +29,12 @@ timings.
 Homepage essential-service links, the publication approval note, hero facts,
 admissions actions, forms, notices, disclosure records, document lists, tables,
 dates, and legal content remain outside all reveal timelines.
+
+The private homepage P0 identity strip, publication-aware pathway cards and
+Admissions 2026–27 feature are server-rendered in their readable final state.
+Only the private hero copy and campus-image arrival use the expanded motion
+recipe; the institutional facts, programme availability and admissions status
+never depend on animation.
 
 The Programmes recipes run only at the authenticated
 `/publication-review/programmes-preview` route. Their supplied programme copy,

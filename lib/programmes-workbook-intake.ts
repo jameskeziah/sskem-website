@@ -4,6 +4,7 @@ export const PROGRAMMES_WORKBOOK_RECEIPT_ID = "sskem-programmes-workbook-intake-
 export const PROGRAMMES_WORKBOOK_RECEIPT_VERSION = 1;
 export const PROGRAMMES_WORKBOOK_MAX_BYTES = 10 * 1024 * 1024;
 export const PROGRAMMES_INTAKE_CONTRACT_ID = "sskem-programmes-intake-system";
+export const PROGRAMMES_INTAKE_CONTRACT_VERSION = 2;
 
 const MAX_ENTRY_BYTES = 8 * 1024 * 1024;
 const MAX_SELECTED_UNCOMPRESSED_BYTES = 32 * 1024 * 1024;
@@ -46,12 +47,20 @@ const programmeSheets = [
 
 const canonicalIntakeSheetNames = [
   "Programmes",
+  "Organisations",
+  "Programme Governance",
   "Faculty",
   "Fees",
   "Results",
   "Scholarships",
   "Campus",
-  "Evidence Register",
+  "Programme Documents",
+  "Admissions Actions",
+  "Organisation Relationships",
+  "Board & Status",
+  "Institution Identifiers",
+  "Campus Availability",
+  "Media & Evidence",
   "Publication Tracker",
   "Lists",
 ] as const;
@@ -108,7 +117,7 @@ export type ProgrammesWorkbookIntakeReceipt = {
   };
   contractBinding: {
     intakeId: typeof PROGRAMMES_INTAKE_CONTRACT_ID;
-    schemaVersion: 1;
+    schemaVersion: 1 | typeof PROGRAMMES_INTAKE_CONTRACT_VERSION;
     sourceMarkerPresent: boolean;
     expectedWorksheetCount: number;
     matchedWorksheetCount: number;
@@ -660,7 +669,7 @@ async function createProgrammesWorkbookIntakeReceipt(
     },
     contractBinding: {
       intakeId: PROGRAMMES_INTAKE_CONTRACT_ID,
-      schemaVersion: 1,
+      schemaVersion: PROGRAMMES_INTAKE_CONTRACT_VERSION,
       sourceMarkerPresent,
       expectedWorksheetCount: canonicalIntakeSheetNames.length,
       matchedWorksheetCount: canonicalMatches,
@@ -782,11 +791,16 @@ export function validateProgrammesWorkbookIntakeReceipt(value: unknown): string[
     "intakeId", "schemaVersion", "sourceMarkerPresent", "expectedWorksheetCount", "matchedWorksheetCount",
     "exactStructureMatch",
   ], "Contract binding");
+  const supportedContractBinding = (receipt.contractBinding?.schemaVersion === 1
+      && receipt.contractBinding?.expectedWorksheetCount === 9)
+    || (receipt.contractBinding?.schemaVersion === PROGRAMMES_INTAKE_CONTRACT_VERSION
+      && receipt.contractBinding?.expectedWorksheetCount === canonicalIntakeSheetNames.length);
   if (receipt.contractBinding?.intakeId !== PROGRAMMES_INTAKE_CONTRACT_ID
-    || receipt.contractBinding?.schemaVersion !== 1
+    || !supportedContractBinding
     || typeof receipt.contractBinding?.sourceMarkerPresent !== "boolean"
-    || receipt.contractBinding?.expectedWorksheetCount !== canonicalIntakeSheetNames.length
     || !Number.isInteger(receipt.contractBinding?.matchedWorksheetCount)
+    || (receipt.contractBinding?.matchedWorksheetCount ?? -1) < 0
+    || (receipt.contractBinding?.matchedWorksheetCount ?? Number.POSITIVE_INFINITY) > (receipt.contractBinding?.expectedWorksheetCount ?? -1)
     || typeof receipt.contractBinding?.exactStructureMatch !== "boolean") {
     issues.push("Contract binding is invalid.");
   }

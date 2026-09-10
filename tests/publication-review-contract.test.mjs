@@ -30,7 +30,7 @@ test("builds the reviewer queue directly from the canonical approval manifest", 
   ]);
   const manifest = JSON.parse(manifestText);
 
-  assert.equal(manifest.records.length, 33);
+  assert.equal(manifest.records.length, 37);
   assert.match(data, /import manifestData from ["']@\/content\/approval-manifest\.json["']/);
   assert.match(data, /export const firstReviewBatch[\s\S]*?checkProfile === ["']campus-media["']/);
   assert.match(data, /export function approvalQueueCsv/);

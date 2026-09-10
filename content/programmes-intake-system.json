@@ -1,10 +1,12 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
+  "contractVersion": "1.1.0-draft",
   "intakeId": "sskem-programmes-intake-system",
   "purpose": "Collect and track management-reviewed programme information before it enters the guarded Programmes content package.",
   "authoritativeBoundaries": {
     "approvalManifest": "content/approval-manifest.json",
     "programmesPackageSchema": "content/programmes-content-package.schema.json",
+    "programmesPublicationContractDraft": "content/programmes-publication-v1.1-draft.schema.json",
     "programmesReviewWorkspace": "/publication-review/programmes-content-package",
     "programmesWorkbookIntakeWorkspace": "/publication-review/programmes-workbook-intake",
     "programmesWorkbookIntakeReceipt": "content/programmes-workbook-intake-receipt.json",
@@ -14,17 +16,22 @@
   },
   "identifiers": {
     "programmes": [
-      { "id": "PRG-CBSE-SS", "label": "CBSE Senior Secondary" },
-      { "id": "PRG-JUNIOR-COLLEGE", "label": "Separate Junior College" },
-      { "id": "PRG-EXAM-PREP", "label": "JEE, NEET and CET preparation" }
+      { "id": "PRG-CBSE-SS", "publicationId": "school-academics", "route": "/school/academics", "label": "CBSE Senior Secondary" },
+      { "id": "PRG-JUNIOR-COLLEGE", "publicationId": "junior-college", "route": "/junior-college", "label": "Separate Junior College" },
+      { "id": "PRG-EXAM-PREP", "publicationId": "jee-neet", "route": "/programmes/jee-neet", "label": "JEE, NEET and CET preparation" }
     ],
     "campusIdPattern": "^CMP-[A-Z0-9-]{2,40}$",
     "facultyIdPattern": "^FAC-[A-Z0-9-]{2,40}$",
     "feeIdPattern": "^FEE-20[0-9]{2}-20[0-9]{2}-[A-Z0-9-]{2,40}$",
     "resultIdPattern": "^RES-20[0-9]{2}-20[0-9]{2}-[A-Z0-9-]{2,40}$",
     "scholarshipIdPattern": "^SCH-20[0-9]{2}-20[0-9]{2}-[A-Z0-9-]{2,40}$",
-    "evidenceIdPattern": "^EVD-20[0-9]{2}-[0-9]{4}$",
-    "publicationItemIdPattern": "^PUB-[A-Z0-9-]{3,60}$"
+    "evidenceIdPattern": "^EVD-20[0-9]{2}-[0-9]{3,4}$",
+    "publicationItemIdPattern": "^PUB-[A-Z0-9-]{3,60}$",
+    "documentReferenceIdPattern": "^DOCREF-[A-Z0-9-]{2,72}$",
+    "admissionsActionIdPattern": "^CTA-[A-Z0-9-]{2,75}$",
+    "relationshipIdPattern": "^REL-[A-Z0-9-]{2,75}$",
+    "institutionalStatusIdPattern": "^STATUS-[A-Z0-9-]{2,72}$",
+    "campusAvailabilityIdPattern": "^CAMPUS-AVAIL-[A-Z0-9-]{2,66}$"
   },
   "googleForm": {
     "title": "SSKEMS Programmes management intake",
@@ -34,9 +41,48 @@
         "id": "FORM-CONTROL",
         "title": "Control record",
         "fields": [
-          { "id": "academicYear", "label": "Academic year", "type": "short-text", "required": true, "validation": "consecutive YYYY-YYYY" },
+          { "id": "academicYear", "label": "Academic year", "type": "short-text", "required": true, "validation": "consecutive YYYY-YYYY; normalize abbreviated 2026-27 only after reviewer confirmation" },
+          { "id": "shortDisplayName", "label": "Short display name", "type": "short-text", "required": true },
+          { "id": "programmeCategories", "label": "Selected programme categories", "type": "checkboxes", "required": true, "options": ["school", "foundation", "junior-college", "jee", "neet", "integrated", "hi-tech-lab"], "validation": "select actual categories; do not paste the option list" },
+          { "id": "programmeStatuses", "label": "Current programme status", "type": "checkboxes", "required": true, "options": ["active", "admissions-open", "inactive", "not-confirmed"] },
+          { "id": "requestedWebsitePublicationState", "label": "Requested website publication state", "type": "multiple-choice", "required": true, "options": ["do-not-publish", "request-publication-review"], "validation": "a request never grants publication authority" },
           { "id": "submissionRole", "label": "Submitting role", "type": "dropdown", "required": true, "validation": "role only; no name or email in exported package" },
-          { "id": "institutionalModel", "label": "Current institutional model", "type": "multiple-choice", "required": true, "options": ["cbse-senior-secondary-only", "separate-junior-college-only", "both", "neither-current"] }
+          { "id": "institutionalModel", "label": "Current institutional model", "type": "multiple-choice", "required": true, "options": ["cbse-senior-secondary-only", "separate-junior-college-only", "both", "neither-current", "not-confirmed"] }
+        ]
+      },
+      {
+        "id": "OWNERSHIP-GOVERNANCE",
+        "title": "Ownership and governance",
+        "fields": [
+          { "id": "ownership.officialOperatorOrganisationId", "label": "Organisation that officially operates the programme", "type": "short-text", "required": true, "validation": "stable ORG-* ID backed by the Organisations tab" },
+          { "id": "ownership.enrolmentOrganisationId", "label": "Organisation under which students are officially enrolled", "type": "short-text", "required": true, "validation": "stable ORG-* ID; yes/no is invalid" },
+          { "id": "ownership.feeCollectionOrganisationId", "label": "Organisation that collects fees", "type": "short-text", "required": true, "validation": "stable ORG-* ID" },
+          { "id": "ownership.academicDeliveryOrganisationId", "label": "Organisation responsible for academic delivery", "type": "short-text", "required": true, "validation": "stable ORG-* ID" },
+          { "id": "ownership.entranceExamCoachingOrganisationId", "label": "Organisation responsible for entrance-exam coaching", "type": "short-text", "required": true, "validation": "stable ORG-* ID or NOT CONFIRMED" },
+          { "id": "ownership.certificationEntityOrganisationId", "label": "Certification or awarding entity", "type": "short-text", "required": false, "validation": "stable ORG-* ID or not-applicable; verify against the board record" },
+          { "id": "ownership.governanceEvidenceIds", "label": "Governance responsibility evidence IDs", "type": "paragraph-list", "required": true, "validation": "opaque IDs only" },
+          { "id": "ownership.factState", "label": "Ownership facts confirmed?", "type": "multiple-choice", "required": true, "options": ["confirmed", "not-confirmed"] }
+        ]
+      },
+      {
+        "id": "INSTITUTIONAL-RELATIONSHIP",
+        "title": "Organisation relationship and wording",
+        "fields": [
+          { "id": "organisationRelationship.fromOrganisationId", "label": "Primary organisation ID", "type": "short-text", "required": true, "validation": "stable ORG-* ID" },
+          { "id": "organisationRelationship.toOrganisationId", "label": "Related organisation ID", "type": "short-text", "required": true, "validation": "stable ORG-* ID distinct from the primary organisation" },
+          { "id": "organisationRelationship.programmeIds", "label": "Programmes in relationship scope", "type": "checkboxes", "required": true },
+          { "id": "organisationRelationship.relationshipType", "label": "Relationship type", "type": "dropdown", "required": true, "options": ["no-current-relationship", "operated-by", "delivered-by", "academic-partner", "part-of", "separate-institution", "not-confirmed"] },
+          { "id": "organisationRelationship.approvedPublicWording", "label": "Official approved relationship wording", "type": "paragraph", "requiredWhen": "relationshipType is not no-current-relationship or not-confirmed" },
+          { "id": "organisationRelationship.academicWingTermDecision", "label": "May the website call the related organisation the academic wing?", "type": "multiple-choice", "required": true, "options": ["yes", "no", "not-confirmed"] },
+          { "id": "organisationRelationship.coachingWingTermDecision", "label": "May the website call the related organisation the coaching wing?", "type": "multiple-choice", "required": true, "options": ["yes", "no", "not-confirmed"] },
+          { "id": "organisationRelationship.partnerTermDecision", "label": "May the website call the related organisation a partner?", "type": "multiple-choice", "required": true, "options": ["yes", "no", "not-confirmed"] },
+          { "id": "organisationRelationship.integratedTermDecision", "label": "May the website use integrated for this relationship?", "type": "multiple-choice", "required": true, "options": ["yes", "no", "not-confirmed"] },
+          { "id": "organisationRelationship.otherWordingRestrictions", "label": "Other wording restrictions", "type": "paragraph", "required": false },
+          { "id": "organisationRelationship.claimRecordId", "label": "Relationship claim record ID", "type": "short-text", "requiredWhen": "relationshipType is not no-current-relationship or not-confirmed" },
+          { "id": "organisationRelationship.evidenceIds", "label": "Relationship evidence IDs", "type": "paragraph-list", "required": true, "validation": "opaque IDs only; a confirmed no-current-relationship restriction still requires its decision evidence" },
+          { "id": "organisationRelationship.validFrom", "label": "Relationship decision valid from", "type": "date", "required": true },
+          { "id": "organisationRelationship.validUntil", "label": "Relationship decision valid until", "type": "date", "required": true },
+          { "id": "organisationRelationship.factState", "label": "Relationship facts confirmed?", "type": "multiple-choice", "required": true, "options": ["confirmed", "not-confirmed"] }
         ]
       },
       {
@@ -45,15 +91,39 @@
         "showWhen": "institutionalModel is cbse-senior-secondary-only or both",
         "fields": [
           { "id": "cbseSeniorSecondary.officialName", "label": "Official name", "type": "short-text", "required": true },
+          { "id": "cbseSeniorSecondary.officialRecognisedInstitutionName", "label": "Official recognised institution name", "type": "short-text", "required": true },
           { "id": "cbseSeniorSecondary.board", "label": "Board", "type": "short-text", "required": true },
+          { "id": "cbseSeniorSecondary.affiliationOrRecognitionNumber", "label": "Affiliation or recognition number", "type": "short-text", "required": true },
+          { "id": "cbseSeniorSecondary.institutionCode", "label": "Institution or school code", "type": "short-text", "required": false },
+          { "id": "cbseSeniorSecondary.udiseOrOfficialCode", "label": "UDISE or other official code", "type": "short-text", "required": false },
+          { "id": "cbseSeniorSecondary.affiliationValidFrom", "label": "Affiliation valid from", "type": "date", "required": true },
+          { "id": "cbseSeniorSecondary.affiliationValidUntil", "label": "Affiliation valid until", "type": "date", "required": true },
+          { "id": "cbseSeniorSecondary.supportingDocumentState", "label": "Supporting affiliation or approval document", "type": "multiple-choice", "required": true, "options": ["available", "not-available", "not-confirmed"] },
+          { "id": "cbseSeniorSecondary.supportingDocumentReference", "label": "Supporting document opaque reference", "type": "short-text", "requiredWhen": "supportingDocumentState is available", "validation": "opaque evidence or guarded document ID only; never a filename, path or URL" },
           { "id": "cbseSeniorSecondary.affiliationOrRecognition", "label": "Affiliation or recognition wording", "type": "paragraph", "required": true },
           { "id": "cbseSeniorSecondary.classes", "label": "Classes", "type": "paragraph-list", "required": true },
+          { "id": "cbseSeniorSecondary.providesClassesXiXii", "label": "Does the institution officially provide Classes XI-XII?", "type": "multiple-choice", "required": true, "options": ["yes", "no", "not-confirmed"] },
+          { "id": "cbseSeniorSecondary.mayUseJuniorCollegeTerm", "label": "May the website use Junior College?", "type": "multiple-choice", "required": true, "options": ["yes", "no", "not-confirmed"] },
+          { "id": "cbseSeniorSecondary.mayUseSeniorSecondaryTerm", "label": "May the website use Senior Secondary?", "type": "multiple-choice", "required": true, "options": ["yes", "no", "not-confirmed"] },
+          { "id": "cbseSeniorSecondary.xiXiiEnrolmentOrganisation", "label": "Official institution under which XI-XII students are enrolled", "type": "short-text", "requiredWhen": "providesClassesXiXii is yes", "validation": "organisation name or stable organisation ID; yes/no is invalid" },
           { "id": "cbseSeniorSecondary.streams", "label": "Streams", "type": "paragraph-list", "required": true },
           { "id": "cbseSeniorSecondary.subjects", "label": "Subjects", "type": "paragraph-list", "required": true },
+          { "id": "cbseSeniorSecondary.durationSummary", "label": "Programme duration", "type": "short-text", "required": true },
+          { "id": "cbseSeniorSecondary.deliveryMode", "label": "General delivery mode", "type": "dropdown", "required": true, "options": ["on-campus", "hybrid", "online", "not-confirmed"] },
           { "id": "cbseSeniorSecondary.eligibility", "label": "Eligibility", "type": "paragraph", "required": true },
           { "id": "cbseSeniorSecondary.feeSummary", "label": "Approved public fee summary", "type": "paragraph", "required": true },
           { "id": "cbseSeniorSecondary.admissionProcedure", "label": "Admission procedure", "type": "paragraph", "required": true },
-          { "id": "cbseSeniorSecondary.publicSummary", "label": "Approved public summary", "type": "paragraph", "required": true }
+          { "id": "cbseSeniorSecondary.admissionsWindowState", "label": "Admissions window", "type": "dropdown", "required": true, "options": ["dated", "year-round", "not-confirmed"] },
+          { "id": "cbseSeniorSecondary.admissionsOpenOn", "label": "Admissions open on", "type": "date", "requiredWhen": "admissionsWindowState is dated" },
+          { "id": "cbseSeniorSecondary.admissionsCloseOn", "label": "Admissions close on", "type": "date", "requiredWhen": "admissionsWindowState is dated" },
+          { "id": "cbseSeniorSecondary.admissionsDecisionBy", "label": "Admissions decision by", "type": "date", "required": false },
+          { "id": "cbseSeniorSecondary.batchCount", "label": "Current batch count", "type": "number", "required": true },
+          { "id": "cbseSeniorSecondary.intakeCapacity", "label": "Current intake capacity", "type": "number", "required": true },
+          { "id": "cbseSeniorSecondary.admissionsCtaLabel", "label": "Approved admissions CTA label", "type": "short-text", "required": true },
+          { "id": "cbseSeniorSecondary.admissionsCtaDestination", "label": "Admissions CTA destination", "type": "short-text", "required": true, "validation": "safe internal path or HTTPS URL" },
+          { "id": "cbseSeniorSecondary.publicContactRoute", "label": "Public contact route", "type": "short-text", "required": true, "validation": "safe internal route; no personal phone or email" },
+          { "id": "cbseSeniorSecondary.publicSummary", "label": "Approved public summary", "type": "paragraph", "required": true },
+          { "id": "cbseSeniorSecondary.factState", "label": "CBSE Senior Secondary facts confirmed?", "type": "multiple-choice", "required": true, "options": ["confirmed", "not-confirmed"] }
         ]
       },
       {
@@ -62,15 +132,39 @@
         "showWhen": "institutionalModel is separate-junior-college-only or both",
         "fields": [
           { "id": "juniorCollege.officialName", "label": "Official name", "type": "short-text", "required": true },
+          { "id": "juniorCollege.officialRecognisedInstitutionName", "label": "Official recognised institution name", "type": "short-text", "required": true },
           { "id": "juniorCollege.board", "label": "Board", "type": "short-text", "required": true },
+          { "id": "juniorCollege.affiliationOrRecognitionNumber", "label": "Affiliation or recognition number", "type": "short-text", "required": true },
+          { "id": "juniorCollege.institutionCode", "label": "Institution or college code", "type": "short-text", "required": false },
+          { "id": "juniorCollege.udiseOrOfficialCode", "label": "UDISE or other official code", "type": "short-text", "required": false },
+          { "id": "juniorCollege.affiliationValidFrom", "label": "Recognition valid from", "type": "date", "required": true },
+          { "id": "juniorCollege.affiliationValidUntil", "label": "Recognition valid until", "type": "date", "required": true },
+          { "id": "juniorCollege.supportingDocumentState", "label": "Supporting recognition document", "type": "multiple-choice", "required": true, "options": ["available", "not-available", "not-confirmed"] },
+          { "id": "juniorCollege.supportingDocumentReference", "label": "Supporting document opaque reference", "type": "short-text", "requiredWhen": "supportingDocumentState is available", "validation": "opaque evidence or guarded document ID only; never a filename, path or URL" },
           { "id": "juniorCollege.affiliationOrRecognition", "label": "Affiliation or recognition wording", "type": "paragraph", "required": true },
           { "id": "juniorCollege.classes", "label": "Classes", "type": "paragraph-list", "required": true },
+          { "id": "juniorCollege.providesClassesXiXii", "label": "Does the institution officially provide Classes XI-XII?", "type": "multiple-choice", "required": true, "options": ["yes", "no", "not-confirmed"] },
+          { "id": "juniorCollege.mayUseJuniorCollegeTerm", "label": "May the website use Junior College?", "type": "multiple-choice", "required": true, "options": ["yes", "no", "not-confirmed"] },
+          { "id": "juniorCollege.mayUseSeniorSecondaryTerm", "label": "May the website use Senior Secondary?", "type": "multiple-choice", "required": true, "options": ["yes", "no", "not-confirmed"] },
+          { "id": "juniorCollege.xiXiiEnrolmentOrganisation", "label": "Official institution under which XI-XII students are enrolled", "type": "short-text", "requiredWhen": "providesClassesXiXii is yes", "validation": "organisation name or stable organisation ID; yes/no is invalid" },
           { "id": "juniorCollege.streams", "label": "Streams", "type": "paragraph-list", "required": true },
           { "id": "juniorCollege.subjects", "label": "Subjects", "type": "paragraph-list", "required": true },
+          { "id": "juniorCollege.durationSummary", "label": "Programme duration", "type": "short-text", "required": true },
+          { "id": "juniorCollege.deliveryMode", "label": "General delivery mode", "type": "dropdown", "required": true, "options": ["on-campus", "hybrid", "online", "not-confirmed"] },
           { "id": "juniorCollege.eligibility", "label": "Eligibility", "type": "paragraph", "required": true },
           { "id": "juniorCollege.feeSummary", "label": "Approved public fee summary", "type": "paragraph", "required": true },
           { "id": "juniorCollege.admissionProcedure", "label": "Admission procedure", "type": "paragraph", "required": true },
-          { "id": "juniorCollege.publicSummary", "label": "Approved public summary", "type": "paragraph", "required": true }
+          { "id": "juniorCollege.admissionsWindowState", "label": "Admissions window", "type": "dropdown", "required": true, "options": ["dated", "year-round", "not-confirmed"] },
+          { "id": "juniorCollege.admissionsOpenOn", "label": "Admissions open on", "type": "date", "requiredWhen": "admissionsWindowState is dated" },
+          { "id": "juniorCollege.admissionsCloseOn", "label": "Admissions close on", "type": "date", "requiredWhen": "admissionsWindowState is dated" },
+          { "id": "juniorCollege.admissionsDecisionBy", "label": "Admissions decision by", "type": "date", "required": false },
+          { "id": "juniorCollege.batchCount", "label": "Current batch count", "type": "number", "required": true },
+          { "id": "juniorCollege.intakeCapacity", "label": "Current intake capacity", "type": "number", "required": true },
+          { "id": "juniorCollege.admissionsCtaLabel", "label": "Approved admissions CTA label", "type": "short-text", "required": true },
+          { "id": "juniorCollege.admissionsCtaDestination", "label": "Admissions CTA destination", "type": "short-text", "required": true, "validation": "safe internal path or HTTPS URL" },
+          { "id": "juniorCollege.publicContactRoute", "label": "Public contact route", "type": "short-text", "required": true, "validation": "safe internal route; no personal phone or email" },
+          { "id": "juniorCollege.publicSummary", "label": "Approved public summary", "type": "paragraph", "required": true },
+          { "id": "juniorCollege.factState", "label": "Junior College facts confirmed?", "type": "multiple-choice", "required": true, "options": ["confirmed", "not-confirmed"] }
         ]
       },
       {
@@ -81,6 +175,8 @@
           { "id": "examPreparation.operatorName", "label": "Official operator name", "type": "short-text", "requiredWhen": "operator is separate-institute or external-partner or junior-college" },
           { "id": "examPreparation.programmes", "label": "Examinations or programmes", "type": "paragraph-list", "requiredWhen": "operator is not not-offered" },
           { "id": "examPreparation.studentGroups", "label": "Student groups", "type": "paragraph-list", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.durationSummary", "label": "Programme duration", "type": "short-text", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.deliveryMode", "label": "General delivery mode", "type": "dropdown", "requiredWhen": "operator is not not-offered", "options": ["on-campus", "hybrid", "online", "not-confirmed"] },
           { "id": "examPreparation.curriculum", "label": "Curriculum summary", "type": "paragraph", "requiredWhen": "operator is not not-offered" },
           { "id": "examPreparation.timetable", "label": "Timetable summary", "type": "paragraph", "requiredWhen": "operator is not not-offered" },
           { "id": "examPreparation.facultySummary", "label": "Approved public faculty summary", "type": "paragraph", "requiredWhen": "operator is not not-offered" },
@@ -88,7 +184,29 @@
           { "id": "examPreparation.facilitiesSummary", "label": "Facilities summary", "type": "paragraph", "requiredWhen": "operator is not not-offered" },
           { "id": "examPreparation.resultsPublication", "label": "Results-publication decision", "type": "multiple-choice", "requiredWhen": "operator is not not-offered", "options": ["no-results-published", "verified-results-approved"] },
           { "id": "examPreparation.verifiedResultsSummary", "label": "Verified aggregate results summary", "type": "paragraph", "requiredWhen": "resultsPublication is verified-results-approved" },
-          { "id": "examPreparation.publicSummary", "label": "Approved public summary", "type": "paragraph", "required": true }
+          { "id": "examPreparation.admissionsWindowState", "label": "Admissions window", "type": "dropdown", "requiredWhen": "operator is not not-offered", "options": ["dated", "year-round", "not-confirmed"] },
+          { "id": "examPreparation.admissionsOpenOn", "label": "Admissions open on", "type": "date", "requiredWhen": "admissionsWindowState is dated" },
+          { "id": "examPreparation.admissionsCloseOn", "label": "Admissions close on", "type": "date", "requiredWhen": "admissionsWindowState is dated" },
+          { "id": "examPreparation.admissionsDecisionBy", "label": "Admissions decision by", "type": "date", "required": false },
+          { "id": "examPreparation.batchCount", "label": "Current batch count", "type": "number", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.intakeCapacity", "label": "Current intake capacity", "type": "number", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.admissionsCtaLabel", "label": "Approved admissions CTA label", "type": "short-text", "requiredWhen": "operator is not not-offered" },
+          { "id": "examPreparation.admissionsCtaDestination", "label": "Admissions CTA destination", "type": "short-text", "requiredWhen": "operator is not not-offered", "validation": "safe internal path or HTTPS URL" },
+          { "id": "examPreparation.publicContactRoute", "label": "Public contact route", "type": "short-text", "requiredWhen": "operator is not not-offered", "validation": "safe internal route; no personal phone or email" },
+          { "id": "examPreparation.publicSummary", "label": "Approved public summary", "type": "paragraph", "required": true },
+          { "id": "examPreparation.factState", "label": "Exam-preparation facts confirmed?", "type": "multiple-choice", "required": true, "options": ["confirmed", "not-confirmed"] }
+        ]
+      },
+      {
+        "id": "POLICY-VALIDITY",
+        "title": "Policy permissions and review ownership",
+        "fields": [
+          { "id": "governance.publicationPolicyPermission", "label": "Policy permission for public programme information", "type": "multiple-choice", "required": true, "options": ["approved", "not-approved", "not-confirmed"] },
+          { "id": "governance.privacyPermission", "label": "Privacy and consent requirements satisfied for the proposed public fields", "type": "multiple-choice", "required": true, "options": ["approved", "not-approved", "not-confirmed"] },
+          { "id": "governance.informationValidUntil", "label": "Information valid until", "type": "date", "required": true },
+          { "id": "governance.nextReviewDate", "label": "Next review date", "type": "date", "required": true },
+          { "id": "governance.futureUpdateOwnerRole", "label": "Future update owner role", "type": "short-text", "required": true, "validation": "role slug only; never a person's name or email" },
+          { "id": "governance.internalOnlyNotes", "label": "Confidential or internal-only notes", "type": "paragraph", "required": false, "exportPolicy": "controlled-system-only-never-public-package" }
         ]
       },
       {
@@ -120,7 +238,17 @@
       {
         "name": "Programmes",
         "keyColumn": "programmeId",
-        "columns": ["programmeId", "academicYear", "programmeLabel", "institutionalPathway", "ownerRole", "publicSummary", "admissionSummary", "scheduleSummary", "facilitiesSummary", "claimRecordIds", "evidenceIds", "reviewStatus", "lastReviewedOn"]
+        "columns": ["programmeId", "publicationProgrammeId", "route", "academicYear", "shortDisplayName", "programmeCategories", "programmeStatuses", "institutionalPathway", "officialOperatorOrganisationId", "enrolmentOrganisationId", "feeCollectionOrganisationId", "academicDeliveryOrganisationId", "entranceExamCoachingOrganisationId", "certificationEntityOrganisationId", "durationSummary", "deliveryMode", "publicSummary", "admissionSummary", "scheduleSummary", "facilitiesSummary", "claimRecordIds", "evidenceIds", "factState", "reviewStatus", "informationValidUntil", "nextReviewDate", "futureUpdateOwnerRole", "lastReviewedOn"]
+      },
+      {
+        "name": "Organisations",
+        "keyColumn": "organisationId",
+        "columns": ["organisationId", "officialName", "shortDisplayName", "organisationType", "evidenceIds", "claimRecordIds", "factState", "reviewStatus", "validFrom", "validUntil"]
+      },
+      {
+        "name": "Programme Governance",
+        "keyColumn": "governanceId",
+        "columns": ["governanceId", "programmeId", "route", "academicYear", "responsibilityType", "organisationId", "approvedPublicWording", "claimRecordIds", "evidenceIds", "factState", "validFrom", "validUntil", "reviewStatus"]
       },
       {
         "name": "Faculty",
@@ -148,14 +276,45 @@
         "columns": ["campusId", "publicName", "publicLocationSummary", "programmeIds", "facilitySummary", "approvedMediaRecordIds", "claimRecordIds", "publicationDecision", "lastReviewedOn"]
       },
       {
-        "name": "Evidence Register",
+        "name": "Programme Documents",
+        "keyColumn": "documentReferenceId",
+        "columns": ["documentReferenceId", "programmeId", "route", "kind", "catalogueStatus", "publicDocumentId", "pipelineRecordId", "evidenceIds", "claimRecordIds", "reviewStatus"]
+      },
+      {
+        "name": "Admissions Actions",
+        "keyColumn": "admissionsActionId",
+        "columns": ["admissionsActionId", "programmeId", "route", "purpose", "label", "destination", "publicContactRoute", "windowState", "opensOn", "closesOn", "decisionBy", "evidenceIds", "claimRecordIds", "factState", "reviewStatus"]
+      },
+      {
+        "name": "Organisation Relationships",
+        "keyColumn": "relationshipId",
+        "columns": ["relationshipId", "sourceOrganisationId", "targetOrganisationId", "programmeIds", "relationshipType", "approvedPublicWording", "academicWingTermDecision", "coachingWingTermDecision", "partnerTermDecision", "integratedTermDecision", "otherWordingRestrictions", "claimRecordIds", "evidenceIds", "factState", "validFrom", "validUntil", "reviewStatus"]
+      },
+      {
+        "name": "Board & Status",
+        "keyColumn": "institutionalStatusId",
+        "columns": ["institutionalStatusId", "programmeId", "organisationId", "route", "academicYear", "boardType", "boardPublicName", "officialRecognisedInstitutionName", "institutionalStatus", "publicStatusWording", "claimRecordIds", "evidenceIds", "supportingDocumentReferenceId", "factState", "validFrom", "validUntil", "reviewStatus"]
+      },
+      {
+        "name": "Institution Identifiers",
+        "keyColumn": "identifierId",
+        "columns": ["identifierId", "organisationId", "programmeId", "route", "identifierType", "publicValue", "claimRecordId", "evidenceIds", "factState", "validFrom", "validUntil", "reviewStatus"]
+      },
+      {
+        "name": "Campus Availability",
+        "keyColumn": "campusAvailabilityId",
+        "columns": ["campusAvailabilityId", "campusId", "programmeId", "route", "academicYear", "availability", "deliveryMode", "durationSummary", "batchCount", "intakeCapacity", "publicAvailabilityWording", "evidenceIds", "claimRecordIds", "factState", "validFrom", "validUntil", "reviewStatus"]
+      },
+      {
+        "name": "Media & Evidence",
         "keyColumn": "evidenceId",
-        "columns": ["evidenceId", "evidenceType", "academicYear", "controlledDriveLink", "ownerRole", "verificationStatus", "verifiedOn", "validUntil", "approvedPublicUse", "notes"]
+        "mode": "protected-intake-view",
+        "columns": ["evidenceId", "programmeIds", "mediaOrDocumentRecordId", "evidenceType", "academicYear", "controlledDriveLink", "ownerRole", "verificationStatus", "verifiedOn", "validUntil", "approvedPublicUse", "rightsStatus", "consentStatus", "notes"]
       },
       {
         "name": "Publication Tracker",
         "keyColumn": "publicationItemId",
-        "columns": ["publicationItemId", "contentType", "programmeId", "sourceRecordId", "sanityState", "missingFieldsStatus", "evidenceStatus", "claimApprovalStatus", "managementDecision", "url", "seoTitleStatus", "seoDescriptionStatus", "navigationPlacement", "scheduledPublishDate", "actualPublishDate", "bindingOrReceiptId", "overallStatus", "blocker"]
+        "columns": ["publicationItemId", "contractVersion", "contentType", "programmeId", "sourceRecordId", "factState", "missingFieldsStatus", "evidenceStatus", "claimApprovalStatus", "managementDecision", "publicationPolicyPermission", "privacyPermission", "informationValidUntil", "nextReviewDate", "futureUpdateOwnerRole", "url", "seoTitleStatus", "seoDescriptionStatus", "navigationPlacement", "documentPipelineStatus", "mediaPipelineStatus", "scheduledPublishDate", "actualPublishDate", "bindingOrReceiptId", "overallStatus", "blocker"]
       },
       {
         "name": "Lists",
@@ -186,10 +345,14 @@
   "publicationTracker": {
     "states": ["draft", "in-review", "blocked", "ready-for-implementation", "published", "retired"],
     "requiredGates": [
+      "the intake and proposed package use the same reviewed contract version",
       "all required public fields are complete",
+      "every critical fact has confirmed rather than not-confirmed state",
       "all cited evidence IDs are verified and current",
       "every exact public claim has a current approved manifest record",
       "management decision is approved and current",
+      "publication-policy and privacy permissions are approved",
+      "information validity and next-review ownership are current",
       "SEO title and description are reviewed",
       "navigation placement is explicitly approved",
       "public URL is assigned",
@@ -200,13 +363,15 @@
     "sanityRule": "A Sanity state is editorial workflow state, not approval evidence and not publication authority."
   },
   "privacy": {
-    "allowedInRepository": ["blank field definitions", "public-safe labels", "opaque evidence IDs", "role slugs", "approved public content", "exact public publication receipts"],
+    "allowedInRepository": ["blank field definitions", "public-safe labels", "opaque evidence IDs", "role slugs", "explicitly labelled non-authorizing private-review candidates", "approved public content", "exact public publication receipts"],
     "forbiddenInRepositoryOrSanity": ["pupil or applicant records", "guardian details", "private consent evidence", "approver identities", "staff contact details", "private evidence files", "private Drive links", "source file paths", "passwords or tokens"],
     "completedWorkbookRule": "The populated workbook remains in controlled Drive. Only approved public projections and opaque references may be exported for implementation."
   },
   "guardrails": {
     "googleAssetsProvisioned": false,
     "realProgrammeDataCollected": false,
+    "v11ContractActivated": false,
+    "unverifiedCandidateUsedAsApproval": false,
     "privateEvidenceIncluded": false,
     "managementApprovalGranted": false,
     "approvalManifestUpdated": false,

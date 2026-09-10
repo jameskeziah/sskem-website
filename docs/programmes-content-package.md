@@ -18,6 +18,10 @@ one management-approved content handoff for:
 
 The output conforms to `content/programmes-content-package.schema.json`.
 
+## Current private-review candidate
+
+The current CBSE official-record candidate is `Shree Samarth Krupa English Medium School`. The earlier submitted wording `SHREE SAMARTHA KRUPA ENGLISH MEDIUM SCHOOL (CBSE)` is retained only as a superseded audit value. The corrected name is prefilled only in the authenticated Programmes workspace and still requires exact evidence and manifest binding before public use.
+
 ## Operating order
 
 1. Confirm the institutional model from authoritative current records.

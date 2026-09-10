@@ -98,11 +98,11 @@ export const privateProgrammeRouteShells: Record<ProgrammesPublicationRoute, Pri
     route: "/school/academics",
     eyebrow: "School route review",
     title: "School academics",
-    summary: "A private structural shell for reviewing how approved school-level academic records will become a clear parent-facing page.",
+    summary: "A private structural shell for the separately identified CBSE Senior Secondary school, with its verified identifiers and academic candidates still awaiting package and manifest binding.",
     reviewQuestion: "Does this order make curriculum, subject choice, learning support and admissions easy to understand without introducing unapproved facts?",
     blockers: [
-      "Approved school levels, curriculum, subjects and assessment wording are not bound.",
-      "Current faculty, facilities, schedule, documents and admissions CTA records are not bound.",
+      "Verified identity, affiliation, levels, streams and subject candidates are not yet bound into an accepted Programme package and approval manifest.",
+      "Current eligibility, fees, faculty, facilities, schedule, documents and admissions procedure are not fully approved and bound.",
       "No digest-covered public projection has been accepted for this route.",
     ],
     slots: slots({
@@ -130,11 +130,11 @@ export const privateProgrammeRouteShells: Record<ProgrammesPublicationRoute, Pri
     route: "/junior-college",
     eyebrow: "Institutional route review",
     title: "Junior College",
-    summary: "A private structural shell awaiting confirmation of institutional status, board, recognition, classes, streams and current admissions information.",
+    summary: "A private structural shell for the distinct Maharashtra Junior College, kept separate from the CBSE school and awaiting its recognition order and current programme records.",
     reviewQuestion: "Can a family identify the exact institution, board, XI-XII pathway, streams, eligibility, costs and schedule from approved records alone?",
     blockers: [
-      "XI-XII status, board and recognised-institution wording are not represented by approved canonical fields.",
-      "Affiliation, current streams, fees, schedule and campus availability are not bound.",
+      "The Board record, College No. 25.04.028, UDISE 27320420206 and XI-XII status are candidates, but the recognition or sanction order and validity are not bound.",
+      "Science is currently evidenced; Commerce still needs current sanction confirmation and Arts must remain withheld. Subjects, fees, schedule and campus availability are not bound.",
       "No digest-covered public projection has been accepted for this route.",
     ],
     slots: slots({
@@ -162,11 +162,11 @@ export const privateProgrammeRouteShells: Record<ProgrammesPublicationRoute, Pri
     route: "/programmes/jee-neet",
     eyebrow: "Competitive-exam route review",
     title: "JEE and NEET preparation",
-    summary: "A private structural shell awaiting approved operator, relationship, delivery, subject, faculty, fee, schedule and aggregate-result records.",
+    summary: "A private structural shell for Shree Samarth Krupa Institute. NEET delivery candidates are recorded, while detailed JEE and legal-operator claims remain withheld pending evidence.",
     reviewQuestion: "Does the future page clearly distinguish the operator, institutional relationship, delivery model and verified outcomes without using unsupported programme language?",
     blockers: [
-      "The operator and SSKEMS-ProTrack relationship are not bound as approved canonical records.",
-      "Use of integrated terminology, delivery model, exams, classes, faculty, fees and schedule is not approved.",
+      "Shree Samarth Krupa Institute is the supplied operator candidate, but its legal or operator document and controlled evidence ID are not bound.",
+      "NEET is evidenced by the legacy public source; current JEE scope, student groups, eligibility, faculty, fees, admissions and schedule are not approved.",
       "No digest-covered public projection has been accepted for this route.",
     ],
     slots: slots({

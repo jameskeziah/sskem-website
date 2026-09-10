@@ -1,5 +1,3 @@
-import { isProgrammesPublicationRoute } from "@/lib/programmes-publication-routes";
-
 export type NavigationChild = {
   label: string;
   href: string;
@@ -16,35 +14,73 @@ export type NavigationItem = {
 export const institutionPathways = [
   {
     label: "CBSE School",
-    href: "/school",
+    href: "/school/academics",
     status: "active",
-    evidence: "Current public site and affiliation number 1130851",
+    evidence: "Approved CBSE profile bound to EVD-2026-001",
   },
   {
     label: "Junior College",
     href: "/junior-college",
-    status: "pending",
-    evidence: "Named publicly, but no verified dedicated content inventory",
+    status: "active",
+    evidence: "Approved Maharashtra Board profile bound to EVD-2026-002",
   },
   {
     label: "Institute",
-    href: "/institute",
-    status: "pending",
-    evidence: "Legacy NEET-focused page requires management confirmation",
+    href: "/programmes/jee-neet",
+    status: "active",
+    evidence: "Approved NEET profile bound to EVD-2026-003",
   },
 ] as const;
 
 export const primaryNavigation: NavigationItem[] = [
   {
-    label: "School",
-    href: "/school",
+    label: "Home",
+    href: "/",
+    children: [],
+  },
+  {
+    label: "About Us",
+    href: "/about",
+    children: [
+      { label: "School overview", href: "/about/school-overview", description: "History, purpose and profile" },
+      { label: "Leadership", href: "/about/leadership", description: "Leadership and messages" },
+      { label: "Governance", href: "/about/governance", description: "Management and statutory committees" },
+      { label: "Achievements", href: "/about/achievements", description: "Verified student and school outcomes" },
+      { label: "News & media", href: "/about/news", description: "Updates and press coverage" },
+    ],
+  },
+  {
+    label: "CBSE School",
+    href: "/school/academics",
     pathway: "active",
     children: [
       { label: "Overview", href: "/school", description: "School profile and educational approach" },
-      { label: "Academics", href: "/school/academics", description: "Curriculum, calendar and learning" },
+      { label: "Verified profile", href: "/school/academics", description: "Approved identity and affiliation facts" },
       { label: "Faculty", href: "/school/faculty", description: "Verified faculty directory" },
       { label: "Facilities", href: "/school/facilities", description: "Campus facilities and resources" },
-    ].filter((item) => !isProgrammesPublicationRoute(item.href)),
+    ],
+  },
+  {
+    label: "Junior College",
+    href: "/junior-college",
+    pathway: "active",
+    children: [],
+  },
+  {
+    label: "Institute",
+    href: "/programmes/jee-neet",
+    pathway: "active",
+    children: [],
+  },
+  {
+    label: "Student Life",
+    href: "/student-life",
+    children: [
+      { label: "Clubs", href: "/student-life/clubs", description: "Co-curricular communities" },
+      { label: "Uniform", href: "/student-life/uniform", description: "Current uniform guidance" },
+      { label: "Calendar", href: "/student-life/calendar", description: "Academic and event calendar" },
+      { label: "Gallery", href: "/student-life/gallery", description: "School life in photographs" },
+    ],
   },
   {
     label: "Admissions",
@@ -58,32 +94,10 @@ export const primaryNavigation: NavigationItem[] = [
       { label: "Application status", href: "/admissions/application-status", description: "Secure parent tracking" },
     ],
   },
-  {
-    label: "Student Life",
-    href: "/student-life",
-    children: [
-      { label: "Clubs", href: "/student-life/clubs", description: "Co-curricular communities" },
-      { label: "Uniform", href: "/student-life/uniform", description: "Current uniform guidance" },
-      { label: "Calendar", href: "/student-life/calendar", description: "Academic and event calendar" },
-      { label: "Gallery", href: "/student-life/gallery", description: "School life in photographs" },
-    ],
-  },
-  {
-    label: "About",
-    href: "/about",
-    children: [
-      { label: "School overview", href: "/about/school-overview", description: "History, purpose and profile" },
-      { label: "Leadership", href: "/about/leadership", description: "Leadership and messages" },
-      { label: "Governance", href: "/about/governance", description: "Management and statutory committees" },
-      { label: "Achievements", href: "/about/achievements", description: "Verified student and school outcomes" },
-      { label: "News & media", href: "/about/news", description: "Updates and press coverage" },
-    ],
-  },
 ];
 
 export const utilityNavigation = [
   { label: "Mandatory Public Disclosure", href: "/mandatory-public-disclosure" },
-  { label: "Documents", href: "/documents" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
@@ -112,6 +126,14 @@ export const footerNavigationGroups = [
     ],
   },
   {
+    title: "Programmes",
+    links: [
+      { label: "CBSE School", href: "/school/academics" },
+      { label: "Junior College", href: "/junior-college" },
+      { label: "Institute", href: "/programmes/jee-neet" },
+    ],
+  },
+  {
     title: "Admissions",
     links: [
       { label: "Admissions overview", href: "/admissions" },
@@ -124,10 +146,8 @@ export const footerNavigationGroups = [
     title: "Public information",
     links: [
       ...utilityNavigation,
+      { label: "Documents", href: "/documents" },
       { label: "Historical documents", href: "/documents/archive" },
     ],
   },
-].map((group) => ({
-  ...group,
-  links: group.links.filter((link) => !isProgrammesPublicationRoute(link.href)),
-}));
+];

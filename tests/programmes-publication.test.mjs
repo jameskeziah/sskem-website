@@ -743,7 +743,7 @@ test("ships a structured-data renderer that omits rejected and empty graphs", as
   assert.doesNotMatch(source, /JSON\.stringify\(seo\.structuredData\.graph\)/);
 });
 
-test("ships a formal schema, read-only planner and fail-closed public route boundary", async () => {
+test("keeps the complete-package planner fail closed while exposing the separately approved profile lane", async () => {
   const [schemaText, planner, catchAll, navigation, footer, sitemap, packageJson] = await Promise.all([
     readFile(new URL("../content/programmes-publication.schema.json", import.meta.url), "utf8"),
     readFile(new URL("../scripts/plan-programmes-publication.mjs", import.meta.url), "utf8"),
@@ -760,11 +760,15 @@ test("ships a formal schema, read-only planner and fail-closed public route boun
   assert.match(planner, /repositoryWritePerformed:\s*false/);
   assert.doesNotMatch(planner, /writeFile|rename|mkdir|fetch\s*\(/);
   assert.match(catchAll, /isProgrammesPublicationRoute\(path\)\) notFound\(\)/);
-  assert.match(navigation, /filter\(\(item\) => !isProgrammesPublicationRoute\(item\.href\)\)/);
-  assert.match(navigation, /links:\s*group\.links\.filter\(\(link\) => !isProgrammesPublicationRoute\(link\.href\)\)/);
+  assert.match(navigation, /href:\s*"\/school\/academics"/);
+  assert.match(navigation, /href:\s*"\/junior-college"/);
+  assert.match(navigation, /href:\s*"\/programmes\/jee-neet"/);
   assert.match(footer, /footerNavigationGroups/);
-  assert.match(sitemap, /filter\(\(path\) => !isProgrammesPublicationRoute\(path\)\)/);
+  assert.match(sitemap, /"\/school\/academics"/);
+  assert.match(sitemap, /"\/junior-college"/);
+  assert.match(sitemap, /"\/programmes\/jee-neet"/);
   assert.match(packageJson, /"programmes:plan"/);
+  assert.match(packageJson, /"programmes:profiles:audit"/);
 });
 
 test("ships strict Programme expiry receipts, guarded renderers and read-only rollback planners", async () => {

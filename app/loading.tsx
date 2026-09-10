@@ -8,7 +8,7 @@ export default function Loading() {
       <main id="main-content" tabIndex={-1} className="site-state-page" aria-busy="true">
         <section className="site-state-card" aria-labelledby="loading-title">
           <p className="eyebrow">Please wait</p>
-          <h1 id="loading-title">Loading this page.</h1>
+          <h2 id="loading-title">Loading this page.</h2>
           <p role="status" aria-live="polite">The requested public information is being prepared.</p>
           <div className="site-loading-placeholder" aria-hidden="true">
             <span />

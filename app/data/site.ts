@@ -3,7 +3,7 @@ export const siteFacts = {
   shortName: "SSKEMS",
   trust: "Shree Samartha Krupa Vishwa Pratishthan, Veral",
   affiliationNumber: "1130851",
-  location: "Veral, Khed, Ratnagiri, Maharashtra",
+  location: "Shree Samarth Krupa Vishwa, Veral, Near Khed Railway Station, Taluka Khed, Ratnagiri, Maharashtra - 415709",
   phone: "02356 295800",
   mobile: "7219819806",
   email: "info@sskemschool.com",
@@ -13,7 +13,7 @@ export const siteFacts = {
     saturday: "Saturday, 9:00 a.m.–1:00 p.m.",
   },
   factStatus:
-    "Public contact baseline reviewed 2 August 2026; postal PIN and institutional pathways still require management confirmation.",
+    "Institutional name, CBSE affiliation and postal address reviewed for the approved public profile on 9 September 2026.",
 } as const;
 
 export const disclosureSample = {

@@ -27,7 +27,7 @@ test("builds a create-only local plan while the canonical claims remain blocked"
   const plan = createSiteSettingsImportPlan({ now: NOW });
 
   assert.equal(plan.status, "blocked");
-  assert.deepEqual(plan.blockingApprovalRecordIds, ["claim-complete-address", "claim-public-contact"]);
+  assert.deepEqual(plan.blockingApprovalRecordIds, ["claim-public-contact"]);
   assert.equal(plan.target.draftDocumentId, SITE_SETTINGS_DRAFT_ID);
   assert.equal(plan.mutation.mutations[0].create._id, SITE_SETTINGS_DRAFT_ID);
   assert.equal(plan.mutation.mutations[0].create.publication.state, "draft");
@@ -68,7 +68,7 @@ test("apply refuses blocked claims and a missing exact acknowledgement before an
 
   await assert.rejects(
     executeSiteSettingsDraftImport({ apply: true, acknowledgement: SITE_SETTINGS_IMPORT_ACKNOWLEDGEMENT, environment: importEnvironment, fetchImpl, migration: { now: NOW } }),
-    /blocked by: claim-complete-address, claim-public-contact.*No external request was made/,
+    /blocked by: claim-public-contact.*No external request was made/,
   );
   await assert.rejects(
     executeSiteSettingsDraftImport({ apply: true, environment: importEnvironment, fetchImpl, migration: readyMigration }),

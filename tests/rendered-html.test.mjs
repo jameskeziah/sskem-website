@@ -36,6 +36,10 @@ function textContent(markup) {
     .trim();
 }
 
+function documentMarkup(markup) {
+  return markup.replace(/<script\b[\s\S]*?<\/script>/gi, "");
+}
+
 function anchorsIn(html) {
   return [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)].map(
     ([, attributes, content]) => ({
@@ -52,6 +56,7 @@ test("server-renders the current SSKEMS website foundation", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
+  const documentHtml = documentMarkup(html);
   const title = textContent(html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? "");
   assert.match(title, /SSKEMS/i);
   assert.match(title, /Shree Samarth Krupa/i);
@@ -90,11 +95,18 @@ test("server-renders the current SSKEMS website foundation", async () => {
     "Enquire Now must be one direct link away",
   );
 
-  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, "The page must have one h1");
+  assert.equal((documentHtml.match(/<h1\b/gi) ?? []).length, 1, "The page must have one h1");
   assert.match(html, /data-motion-component=["']home-hero["']/i);
   assert.match(html, /data-motion-component=["']home-campus["']/i);
   assert.match(html, /data-motion-component=["']home-achievements["']/i);
+  assert.match(html, /data-homepage-review-mode=["']private-review["']/i);
+  assert.match(html, /data-homepage-p0=["']identity-strip["']/i);
+  assert.match(html, /data-homepage-p0=["']institution-pathways["']/i);
+  assert.match(html, /data-homepage-p0=["']admissions-feature["']/i);
+  assert.equal((documentHtml.match(/data-publication-state=["']approved-public-subset["']/gi) ?? []).length, 3);
   assert.match(textContent(html), /Here, possibility begins\./i);
+  assert.match(textContent(html), /Distinct paths\. One place to begin\./i);
+  assert.match(textContent(html), /Begin with the right information\./i);
   assert.match(textContent(html), /Admissions information for 2026–27 is being verified\./i);
   assert.doesNotMatch(html, /class=["']home-events["']/i);
   assert.match(html, /data-publication-review=["']required["']/i);

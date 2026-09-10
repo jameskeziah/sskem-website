@@ -60,7 +60,7 @@ function ProgrammeDetailsFields({
         <label>
           <span>Official name</span>
           <input name={`${prefix}:officialName`} type="text" autoComplete="off" defaultValue={officialNameCandidate} required={active} />
-          {officialNameCandidate ? <small>Private-review candidate only; documentary and management approval remain required.</small> : null}
+          {officialNameCandidate ? <small>Private-review candidate only; the submitted management decision still requires documentary verification and manifest binding.</small> : null}
         </label>
         <label><span>Board</span><input name={`${prefix}:board`} type="text" autoComplete="off" required={active} /></label>
         <label className="programmes-package-wide"><span>Affiliation or recognition</span><textarea name={`${prefix}:affiliationOrRecognition`} rows={2} required={active} /></label>

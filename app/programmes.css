@@ -407,6 +407,66 @@
   color: var(--color-neutral-0);
 }
 
+/* Verified public profile lane */
+.programme-public-profile__hero {
+  background: var(--color-brand-950);
+}
+
+.programme-public-profile__hero .programme-hero__layout {
+  min-height: clamp(32rem, 66svh, 42rem);
+}
+
+.programme-public-profile__identity {
+  max-width: 52rem;
+  color: var(--color-brand-100);
+  font-weight: var(--font-weight-bold);
+}
+
+.programme-public-profile__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+}
+
+.programme-public-profile__hero .button--primary {
+  background: var(--surface-raised);
+  color: var(--action-primary);
+}
+
+.programme-public-profile__hero .button--secondary {
+  border-color: var(--color-brand-200);
+  color: var(--text-on-brand);
+}
+
+.programme-public-profile__scope .alert {
+  max-width: 64rem;
+}
+
+.programme-public-profile__related {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-16);
+}
+
+.programme-public-profile__related a {
+  display: grid;
+  gap: var(--space-8);
+  padding: var(--space-24);
+  border: var(--border-width-default) solid var(--border-default);
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.programme-public-profile__related a > span:first-child {
+  grid-column: 1 / -1;
+  color: var(--text-muted);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .programme-document-card__actions a:hover {
     color: var(--action-primary-hover);
@@ -459,6 +519,10 @@
   }
 
   .programme-admissions-cta__actions .button {
+    width: 100%;
+  }
+
+  .programme-public-profile__actions .button {
     width: 100%;
   }
 }

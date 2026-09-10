@@ -85,14 +85,14 @@ test("search dialog moves and restores focus", async ({ page }) => {
   await expect(trigger).toBeFocused();
 });
 
-test("governed Programme routes remain absent from public navigation and sitemap", async ({ page, request }) => {
+test("approved Programme profiles appear in navigation and sitemap", async ({ page, request }) => {
   await page.goto("/");
   const sitemap = await request.get("/sitemap.xml");
   const sitemapText = await sitemap.text();
 
   for (const route of ["/school/academics", "/junior-college", "/programmes/jee-neet"]) {
-    await expect(page.locator(`header a[href="${route}"]`), route).toHaveCount(0);
-    await expect(page.locator(`footer a[href="${route}"]`), route).toHaveCount(0);
-    expect(sitemapText, route).not.toContain(route);
+    expect(await page.locator(`header a[href="${route}"]`).count(), route).toBeGreaterThan(0);
+    expect(await page.locator(`footer a[href="${route}"]`).count(), route).toBeGreaterThan(0);
+    expect(sitemapText, route).toContain(route);
   }
 });

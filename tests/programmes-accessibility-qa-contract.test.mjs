@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-test("keeps the private Programme accessibility and responsive QA suite wired", async () => {
+test("keeps the approved Programme profile accessibility and responsive QA suite wired", async () => {
   const [spec, packageText, globalStyles] = await Promise.all([
     readFile(new URL("./browser/programmes-accessibility-responsive.spec.ts", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
@@ -25,4 +25,3 @@ test("keeps the private Programme accessibility and responsive QA suite wired", 
   assert.match(packageJson.scripts["test:qa:programmes:review"], /programmes-accessibility-responsive\.spec\.ts/);
   assert.match(globalStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?animation-duration: 0ms !important;[\s\S]*?transition-duration: 0ms !important;/);
 });
-

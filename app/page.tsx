@@ -5,6 +5,9 @@ import Link from "next/link";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { CampusPicture } from "@/components/campus-picture";
+import { HomepageAdmissionsFeature } from "@/components/home/homepage-admissions-feature";
+import { HomepageIdentityStrip } from "@/components/home/homepage-identity-strip";
+import { HomepageInstitutionPathways } from "@/components/home/homepage-institution-pathways";
 import { HomeAchievementsMotion } from "@/components/motion/home-achievements-motion";
 import { HomeCampusMotion } from "@/components/motion/home-campus-motion";
 import { HomeHeroMotion } from "@/components/motion/home-hero-motion";
@@ -19,30 +22,6 @@ export const metadata: Metadata = {
   description:
     "Explore SSKEMS in Veral, including the CBSE school, admissions guidance, campus, student life and Mandatory Public Disclosure.",
 };
-
-const pathways = [
-  {
-    number: "01",
-    title: "School",
-    description: "Begin with the school overview, academics, faculty and campus information.",
-    href: "/school",
-    link: "Explore the school",
-  },
-  {
-    number: "02",
-    title: "Admissions",
-    description: "Review the process, current criteria status, document guidance and enquiry route.",
-    href: "/admissions",
-    link: "Plan your next step",
-  },
-  {
-    number: "03",
-    title: "Student life",
-    description: "Find clubs, the calendar, uniform guidance and photographs from school life.",
-    href: "/student-life",
-    link: "Discover student life",
-  },
-] as const;
 
 const serviceLinks = [
   {
@@ -74,13 +53,14 @@ const eventDateFormatter = new Intl.DateTimeFormat("en-IN", {
 
 export default async function Home() {
   const editorial = await getHomepageEditorialContent();
-  const privateAchievementReview = process.env.HOMEPAGE_REVIEW_MODE === "private";
+  const privateHomepageReview = process.env.HOMEPAGE_REVIEW_MODE === "private";
+  const privateAchievementReview = privateHomepageReview;
   const achievementArtwork = selectHomepageAchievementArtwork({
     mode: privateAchievementReview ? "private-review" : "public",
   });
-  const eventsChapter = achievementArtwork.length ? "06" : "05";
+  const eventsChapter = achievementArtwork.length ? "07" : "06";
   const invitationChapter = String(
-    5 + Number(achievementArtwork.length > 0) + Number(editorial.events.length > 0),
+    6 + Number(achievementArtwork.length > 0) + Number(editorial.events.length > 0),
   ).padStart(2, "0");
 
   return (
@@ -100,25 +80,34 @@ export default async function Home() {
         }}
       />
       <main id="main-content" tabIndex={-1} className="home-page">
-        <HomeHeroMotion>
+        <HomeHeroMotion reviewMode={privateHomepageReview ? "private-review" : "public"}>
           <div className="home-hero__desktop-poster" data-home-hero-art aria-hidden="true" />
 
           <div className="home-hero__live-copy">
+            {privateHomepageReview ? (
+              <p className="home-hero__review-note">Private homepage prototype</p>
+            ) : null}
             <p className="home-kicker" data-motion-home-hero-intro>
               <strong>SSKEMS</strong> · Veral
             </p>
             <h1 id="home-title" className="home-hero__title" aria-label="Here, possibility begins.">
-              <span data-motion-home-hero-heading>
-                Here<span className="home-hero__punctuation" aria-hidden="true">,</span>
+              <span className="home-hero__line">
+                <span data-motion-home-hero-heading>
+                  Here<span className="home-hero__punctuation" aria-hidden="true">,</span>
+                </span>
               </span>
-              <span data-motion-home-hero-heading>possibility</span>
-              <span data-motion-home-hero-heading>
-                begins<span className="home-hero__punctuation" aria-hidden="true">.</span>
+              <span className="home-hero__line">
+                <span data-motion-home-hero-heading>possibility</span>
+              </span>
+              <span className="home-hero__line">
+                <span data-motion-home-hero-heading>
+                  begins<span className="home-hero__punctuation" aria-hidden="true">.</span>
+                </span>
               </span>
             </h1>
           </div>
 
-          <div className="home-hero__mobile-media">
+          <div className="home-hero__mobile-media" data-motion-home-hero-media>
             <CampusPicture
               recordId="media-campus-main"
               fallbackSrc="/media/home/campus-main.jpeg"
@@ -145,15 +134,17 @@ export default async function Home() {
               </dl>
               <div className="home-actions">
                 <Link className="home-button home-button--light" href="/school">
-                  Explore the school <span aria-hidden="true">→</span>
+                  {privateHomepageReview ? "Explore SSKEMS" : "Explore the school"} <span aria-hidden="true">→</span>
                 </Link>
                 <Link className="home-button home-button--outline-light" href="/admissions/enquire">
-                  Admissions enquiry
+                  {privateHomepageReview ? `Admissions ${editorial.admissionsCycle.academicYear}` : "Admissions enquiry"}
                 </Link>
               </div>
             </div>
           </div>
         </HomeHeroMotion>
+
+        <HomepageIdentityStrip />
 
         <section className="home-manifesto" aria-labelledby="manifesto-title">
           <div className="home-shell home-manifesto__grid">
@@ -219,36 +210,14 @@ export default async function Home() {
           </div>
         </HomeCampusMotion>
 
-        <section className="home-pathways" aria-labelledby="pathways-title">
-          <div className="home-shell">
-            <div className="home-section-heading home-section-heading--split">
-              <div>
-                <p className="home-chapter-label"><span>03</span> Find your way</p>
-                <h2 id="pathways-title">The right information, without the search.</h2>
-              </div>
-              <p>Start with the part of school life that matters to you today.</p>
-            </div>
-            <div className="home-pathways__grid">
-              {pathways.map((pathway) => (
-                <article className="home-pathway-card" key={pathway.href}>
-                  <span className="home-pathway-card__number">{pathway.number}</span>
-                  <div>
-                    <h3>{pathway.title}</h3>
-                    <p>{pathway.description}</p>
-                  </div>
-                  <Link href={pathway.href}>
-                    {pathway.link} <span aria-hidden="true">→</span>
-                  </Link>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+        <HomepageInstitutionPathways privateReview={privateHomepageReview} />
+
+        <HomepageAdmissionsFeature cycle={editorial.admissionsCycle} />
 
         <section className="home-services" aria-labelledby="services-title">
           <div className="home-shell home-services__grid">
             <div className="home-services__intro">
-              <p className="home-chapter-label home-chapter-label--light"><span>04</span> Essential access</p>
+              <p className="home-chapter-label home-chapter-label--light"><span>05</span> Essential access</p>
               <h2 id="services-title">Trust is built by making important information easy to reach.</h2>
               <p>Admissions guidance, public disclosure and document records remain readable and usable before any animation loads.</p>
             </div>
@@ -270,7 +239,7 @@ export default async function Home() {
             <div className="home-shell">
               <div className="home-section-heading home-section-heading--split">
                 <div>
-                  <p className="home-chapter-label"><span>05</span> {privateAchievementReview ? "Publication review" : "Verified achievements"}</p>
+                  <p className="home-chapter-label"><span>06</span> {privateAchievementReview ? "Publication review" : "Verified achievements"}</p>
                   <h2 id="achievements-title">Effort deserves a thoughtful stage.</h2>
                 </div>
                 <div className={`home-achievements__review${privateAchievementReview ? "" : " home-achievements__review--approved"}`} id="achievement-review-note">

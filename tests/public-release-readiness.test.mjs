@@ -95,14 +95,14 @@ test("audits the current repository as one read-only launch decision", async () 
   assert.equal(report.readyGates, 2);
   assert.equal(report.blockedGates, 5);
   assert.equal(report.totalGates, 7);
-  assert.equal(report.blockingItems, 165);
+  assert.equal(report.blockingItems, 159);
   assert.deepEqual(report.issues, []);
   assert.equal(report.privateReviewAllowed, true);
   assert.equal(report.releaseReady, false);
   assert.deepEqual(
     report.gates.map(({ id, completed, required, ready }) => ({ id, completed, required, ready })),
     [
-      { id: "publication-approvals", completed: 0, required: 33, ready: false },
+      { id: "publication-approvals", completed: 10, required: 37, ready: false },
       { id: "campus-media-bindings", completed: 0, required: 4, ready: false },
       { id: "public-document-bindings", completed: 0, required: 12, ready: false },
       { id: "homepage-media-performance", completed: 4, required: 5, ready: false },

@@ -34,18 +34,20 @@ test("defines one complete ten-slot shell for every governed Programme route", (
   }
 });
 
-test("keeps every direct route private, authenticated, dynamic and non-indexable", async () => {
+test("publishes each approved profile while retaining private-deployment authentication", async () => {
   for (const route of PROGRAMMES_PUBLICATION_ROUTES) {
     const page = await source(routeFiles[route]);
-    const guardPosition = page.indexOf('process.env.HOMEPAGE_REVIEW_MODE !== "private"');
+    const profilePosition = page.indexOf("getPublicProgrammeProfile(route)");
     const authPosition = page.indexOf("requireChatGPTUser(route)");
 
-    assert.ok(guardPosition >= 0, `${route} private-mode guard`);
-    assert.ok(authPosition > guardPosition, `${route} authenticates after denying public mode`);
+    assert.ok(profilePosition >= 0, `${route} resolves its approved public profile`);
+    assert.ok(authPosition > profilePosition, `${route} authenticates only for the private deployment preview`);
     assert.match(page, /notFound\(\)/, route);
     assert.match(page, /export const dynamic = "force-dynamic"/, route);
-    assert.match(page, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false,\s*nocache:\s*true\s*\}/, route);
-    assert.match(page, /PrivateProgrammeRouteShell/, route);
+    assert.match(page, /index:\s*true, follow:\s*true/, route);
+    assert.match(page, /\?\s*\{\s*index:\s*false,\s*follow:\s*false,\s*nocache:\s*true\s*\}/, route);
+    assert.match(page, /PublicProgrammeProfilePage/, route);
+    assert.match(page, /alternates:\s*\{ canonical:/, route);
   }
 });
 
@@ -64,7 +66,22 @@ test("shows placeholders and blockers instead of manufacturing a public-ready st
   assert.doesNotMatch(data, /\b100%\b|\bNo\.\s*1\b|\bbest\b/i);
 });
 
-test("links the shells only from private review while public navigation and sitemap remain filtered", async () => {
+test("reflects the reconciled institutional model while retaining route blockers", () => {
+  const school = privateProgrammeRouteShells["/school/academics"];
+  const juniorCollege = privateProgrammeRouteShells["/junior-college"];
+  const institute = privateProgrammeRouteShells["/programmes/jee-neet"];
+
+  assert.match(school.summary, /separately identified CBSE Senior Secondary school/i);
+  assert.match(juniorCollege.summary, /distinct Maharashtra Junior College/i);
+  assert.match(juniorCollege.blockers.join(" "), /25\.04\.028/);
+  assert.match(juniorCollege.blockers.join(" "), /Arts must remain withheld/i);
+  assert.match(institute.summary, /Shree Samarth Krupa Institute/);
+  assert.match(institute.blockers.join(" "), /NEET is evidenced/i);
+  assert.match(institute.blockers.join(" "), /current JEE scope/i);
+  assert.doesNotMatch(institute.blockers.join(" "), /ProTrack/);
+});
+
+test("retains the private shell workspace while public navigation and sitemap expose approved profiles", async () => {
   const [preview, dashboard, navigation, footer, sitemap] = await Promise.all([
     source("app/publication-review/programmes-preview/page.tsx"),
     source("app/publication-review/page.tsx"),
@@ -77,8 +94,10 @@ test("links the shells only from private review while public navigation and site
     assert.match(preview, new RegExp(route.replaceAll("/", "\\/")), route);
   }
   assert.match(dashboard, /Review private route shells/);
-  assert.match(navigation, /filter\(\(item\) => !isProgrammesPublicationRoute\(item\.href\)\)/);
+  assert.match(navigation, /label:\s*"CBSE School"[\s\S]*?href:\s*"\/school\/academics"/);
+  assert.match(navigation, /label:\s*"Junior College"[\s\S]*?href:\s*"\/junior-college"/);
+  assert.match(navigation, /label:\s*"Institute"[\s\S]*?href:\s*"\/programmes\/jee-neet"/);
   assert.match(footer, /footerNavigationGroups/);
   assert.doesNotMatch(footer, /\/junior-college|\/programmes\/jee-neet|\/school\/academics/);
-  assert.match(sitemap, /filter\(\(path\) => !isProgrammesPublicationRoute\(path\)\)/);
+  for (const route of PROGRAMMES_PUBLICATION_ROUTES) assert.match(sitemap, new RegExp(route.replaceAll("/", "\\/")));
 });

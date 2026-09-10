@@ -1,0 +1,31 @@
+{
+  "registryVersion": "1.0.0",
+  "activeContractVersion": "1.0.0",
+  "contracts": [
+    {
+      "version": "1.0.0",
+      "status": "frozen-current",
+      "packageType": "programmes-publication",
+      "schemaPath": "content/programmes-publication.schema.json",
+      "schemaSha256": "6d5a72a61a06bfdec060b3fe4266dfc02b7940bd5de531296174b49dd4f04bd3"
+    },
+    {
+      "version": "1.1.0-draft",
+      "status": "draft-not-activated",
+      "packageType": "programmes-publication-draft-supplement",
+      "schemaPath": "content/programmes-publication-v1.1-draft.schema.json",
+      "extends": "1.0.0",
+      "activationStep": "extend-approved-package-schema-after-contract-review"
+    }
+  ],
+  "guardrails": {
+    "v1SchemaModified": false,
+    "draftAcceptedByRuntime": false,
+    "approvalGranted": false,
+    "approvalManifestUpdated": false,
+    "publicContentPublished": false,
+    "navigationActivated": false,
+    "sitemapActivated": false,
+    "deploymentPerformed": false
+  }
+}

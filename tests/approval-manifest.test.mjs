@@ -11,18 +11,18 @@ import {
 
 const projectRoot = new URL("../", import.meta.url);
 
-test("validates the 33-record media, claim, and document approval inventory", async () => {
+test("validates the 37-record media, claim, and document approval inventory", async () => {
   const manifest = await loadApprovalManifest();
   const issues = validateApprovalManifest(manifest);
   const summary = approvalSummary(manifest);
 
   assert.deepEqual(issues, []);
-  assert.equal(summary.total, 33);
-  assert.deepEqual(summary.byKind, { media: 9, claim: 12, document: 12 });
-  assert.deepEqual(summary.byDecision, { blocked: 25, "review-required": 8, approved: 0, withdrawn: 0 });
-  assert.deepEqual(summary.blockingByKind, { media: 9, claim: 12, document: 12 });
+  assert.equal(summary.total, 37);
+  assert.deepEqual(summary.byKind, { media: 9, claim: 16, document: 12 });
+  assert.deepEqual(summary.byDecision, { blocked: 22, "review-required": 5, approved: 10, withdrawn: 0 });
+  assert.deepEqual(summary.blockingByKind, { media: 9, claim: 6, document: 12 });
   assert.equal(summary.releaseReady, false);
-  assert.equal(summary.blockingRecords.length, 33);
+  assert.equal(summary.blockingRecords.length, 27);
 });
 
 test("publishes the JSON schema and keeps its evidence policy aligned with the validator", async () => {

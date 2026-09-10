@@ -8,9 +8,9 @@ const privateReviewHeaders = {
 };
 
 const routes = [
-  { path: "/school/academics", title: "School academics" },
-  { path: "/junior-college", title: "Junior College" },
-  { path: "/programmes/jee-neet", title: "JEE and NEET preparation" },
+  { path: "/school/academics", title: "A verified profile of our CBSE school." },
+  { path: "/junior-college", title: "Higher Secondary education, clearly identified." },
+  { path: "/programmes/jee-neet", title: "Structured NEET-UG preparation." },
 ] as const;
 
 async function pageOverflow(page: Page) {
@@ -23,11 +23,11 @@ async function pageOverflow(page: Page) {
 async function clippedCriticalElements(page: Page) {
   return page.locator([
     "main h1",
-    ".private-programme-shell__routes",
-    ".private-programme-shell__state",
-    ".programme-media-slot",
-    ".private-programme-shell__slots > li",
-    ".private-programme-shell__actions-grid",
+    ".programme-fact-grid",
+    ".programme-list-card",
+    ".programme-public-profile__related a",
+    ".programme-public-profile__actions",
+    ".programme-admissions-cta__actions",
   ].join(", ")).evaluateAll((elements) => elements.flatMap((element) => {
     const rect = element.getBoundingClientRect();
     return rect.left < -1 || rect.right > document.documentElement.clientWidth + 1
@@ -47,7 +47,7 @@ for (const route of routes) {
     expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
 
     const contrast = await new AxeBuilder({ page })
-      .include("main[data-private-programme-shell]")
+      .include("main[data-programme-profile]")
       .withRules(["color-contrast"])
       .analyze();
     expect(contrast.violations, JSON.stringify(contrast.violations, null, 2)).toEqual([]);
@@ -63,14 +63,14 @@ for (const route of routes) {
 
     await expect(main).toHaveCount(1);
     await expect(main.getByRole("heading", { level: 1, name: route.title })).toHaveCount(1);
-    await expect(main.getByRole("navigation", { name: "Private Programme route shells" })).toHaveCount(1);
-    await expect(main.locator(".private-programme-shell__slots > li")).toHaveCount(10);
+    await expect(main.getByRole("navigation", { name: "Related programme profiles" })).toHaveCount(1);
+    expect(await main.locator(".programme-fact-grid > div").count()).toBeGreaterThan(0);
 
     const accessibilityTree = await main.ariaSnapshot();
     expect(accessibilityTree).toContain(`heading "${route.title}" [level=1]`);
-    expect(accessibilityTree).toContain("navigation \"Private Programme route shells\"");
-    expect(accessibilityTree).toContain("Private review only");
-    expect(accessibilityTree).toContain("Awaiting approved source");
+    expect(accessibilityTree).toContain("navigation \"Related programme profiles\"");
+    expect(accessibilityTree).toContain("Approved public facts");
+    expect(accessibilityTree).toContain("Information still withheld");
 
     const headingLevels = await main.locator("h1, h2, h3, h4, h5, h6").evaluateAll((headings) =>
       headings.map((heading) => Number(heading.tagName.slice(1))),
@@ -80,14 +80,11 @@ for (const route of routes) {
       expect(headingLevels[index] - headingLevels[index - 1], "Heading levels must not skip downward.").toBeLessThanOrEqual(1);
     }
 
-    const media = main.locator(".programme-media-slot");
-    const alternative = await media.locator("img").getAttribute("alt");
-    expect(alternative?.trim().length).toBeGreaterThanOrEqual(20);
-    await expect(media.locator("figcaption")).toBeVisible();
+    await expect(main.locator("img, video, audio")).toHaveCount(0);
   });
 }
 
-test("keyboard users can skip the header and traverse the Programme route switcher", async ({ page }) => {
+test("keyboard users can skip the header and reach the admissions actions", async ({ page }) => {
   await page.goto("/school/academics");
 
   await page.keyboard.press("Tab");
@@ -96,21 +93,19 @@ test("keyboard users can skip the header and traverse the Programme route switch
   await page.keyboard.press("Enter");
   await expect(page.getByRole("main")).toBeFocused();
 
-  const routeLinks = page.getByRole("navigation", { name: "Private Programme route shells" }).getByRole("link");
-  for (let index = 0; index < 3; index += 1) {
-    await page.keyboard.press("Tab");
-    await expect(routeLinks.nth(index)).toBeFocused();
-    const focusStyle = await routeLinks.nth(index).evaluate((element) => {
-      const style = getComputedStyle(element);
-      return { outlineStyle: style.outlineStyle, outlineWidth: Number.parseFloat(style.outlineWidth) };
-    });
-    expect(focusStyle.outlineStyle).not.toBe("none");
-    expect(focusStyle.outlineWidth).toBeGreaterThanOrEqual(2);
-  }
+  await page.keyboard.press("Tab");
+  const firstAction = page.getByRole("main").getByRole("link", { name: "Apply for Admission" }).first();
+  await expect(firstAction).toBeFocused();
+  const focusStyle = await firstAction.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { outlineStyle: style.outlineStyle, outlineWidth: Number.parseFloat(style.outlineWidth) };
+  });
+  expect(focusStyle.outlineStyle).not.toBe("none");
+  expect(focusStyle.outlineWidth).toBeGreaterThanOrEqual(2);
 });
 
 for (const width of [320, 360, 768]) {
-  test(`all private Programme shells reflow without clipping at ${width}px`, async ({ page }) => {
+test(`all approved Programme profiles reflow without clipping at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
 
     for (const route of routes) {
@@ -120,7 +115,7 @@ for (const width of [320, 360, 768]) {
       expect(overflow.scrollWidth - overflow.clientWidth, `${route.path} page-level overflow`).toBeLessThanOrEqual(1);
       expect(await clippedCriticalElements(page), `${route.path} clipped critical content`).toEqual([]);
 
-      const routeLinkHeights = await page.locator(".private-programme-shell__routes a").evaluateAll((links) =>
+      const routeLinkHeights = await page.locator(".programme-public-profile__related a").evaluateAll((links) =>
         links.map((link) => link.getBoundingClientRect().height),
       );
       expect(routeLinkHeights.every((height) => height >= 44)).toBe(true);
@@ -128,7 +123,7 @@ for (const width of [320, 360, 768]) {
   });
 }
 
-test("Programme shells reflow at the 200-percent browser-zoom equivalent", async ({ page }) => {
+test("Programme profiles reflow at the 200-percent browser-zoom equivalent", async ({ page }) => {
   // Browser zoom reduces the CSS viewport. 640 CSS px represents a 1280 px desktop viewport at 200% zoom.
   await page.setViewportSize({ width: 640, height: 900 });
 
@@ -138,7 +133,7 @@ test("Programme shells reflow at the 200-percent browser-zoom equivalent", async
     expect(overflow.scrollWidth - overflow.clientWidth, `${route.path} at 200% zoom`).toBeLessThanOrEqual(1);
     expect(await clippedCriticalElements(page), `${route.path} clipping at 200% zoom`).toEqual([]);
     await expect(page.getByRole("heading", { level: 1, name: route.title })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Open content package" })).toBeVisible();
+    await expect(page.getByRole("main").getByRole("link", { name: "Enquire Now" }).first()).toBeVisible();
   }
 });
 
@@ -148,7 +143,7 @@ test("reduced motion leaves Programme content static and readable", async ({ pag
   for (const route of routes) {
     await page.goto(route.path);
     await expect(page.getByRole("heading", { level: 1, name: route.title })).toBeVisible();
-    const motionState = await page.locator("main[data-private-programme-shell]").evaluate((main) => {
+    const motionState = await page.locator("main[data-programme-profile]").evaluate((main) => {
       const nonZero = (value: string) => value.split(",").some((part) => Number.parseFloat(part) > 0);
       const moving = Array.from(main.querySelectorAll("*"), (element) => {
         const style = getComputedStyle(element);
@@ -185,9 +180,9 @@ test("essential Programme content and navigation remain available without JavaSc
     const response = await page.goto(new URL(route.path, baseUrl).href, { waitUntil: "domcontentloaded" });
     expect(response?.status()).toBe(200);
     await expect(page.getByRole("heading", { level: 1, name: route.title })).toBeVisible();
-    await expect(page.locator(".private-programme-shell__slots > li")).toHaveCount(10);
-    await expect(page.locator(".programme-media-slot img")).toBeVisible();
-    await expect(page.getByRole("link", { name: "Open content package" })).toBeVisible();
+    expect(await page.locator(".programme-fact-grid > div").count()).toBeGreaterThan(0);
+    await expect(page.locator("main img, main video, main audio")).toHaveCount(0);
+    await expect(page.getByRole("main").getByRole("link", { name: "Apply for Admission" }).first()).toBeVisible();
     await expect(page.locator(".mobile-menu-button")).toBeHidden();
 
     const fallback = page.locator(".static-navigation-fallback");

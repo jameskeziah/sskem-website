@@ -43,7 +43,7 @@ for (const route of routes) {
     });
 
     await page.goto(route, { waitUntil: "networkidle" });
-    await expect(page.locator("main[data-private-programme-shell]")).toBeVisible();
+    await expect(page.locator("main[data-programme-profile]")).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(250);
 
@@ -58,7 +58,7 @@ for (const route of routes) {
       }));
       const fontResources = measured.filter((entry) => /\.(?:woff2?|ttf|otf)(?:\?|$)/i.test(entry.name));
       const videoResources = measured.filter((entry) => /\.(?:mp4|webm)(?:\?|$)/i.test(entry.name));
-      const hero = document.querySelector<HTMLImageElement>(".private-programme-shell__media img");
+      const hero = document.querySelector<HTMLImageElement>(".programme-public-profile__hero img");
       const heroEntry = hero
         ? measured.find((entry) => entry.name === hero.currentSrc || entry.name.endsWith(hero.getAttribute("src") ?? ""))
         : undefined;
@@ -95,7 +95,7 @@ for (const route of routes) {
     expect(metrics.zeroByteEntries, `Every initial resource must expose a measurable transfer size.\n${evidence}`).toEqual([]);
     expect(metrics.transferBytes, evidence).toBeLessThanOrEqual(budget.pageWeight.maximumInitialTransferBytes);
     expect(metrics.requests, evidence).toBeLessThanOrEqual(budget.pageWeight.maximumRequests);
-    expect(metrics.heroBytes, evidence).toBeGreaterThan(0);
+    expect(metrics.heroBytes, "Approved public profiles deliberately ship without unapproved hero media.").toBe(0);
     expect(metrics.heroBytes, evidence).toBeLessThanOrEqual(budget.heroMedia.maximumImageBytes);
     expect(metrics.videoBytes, evidence).toBeLessThanOrEqual(budget.heroMedia.maximumInitialVideoTransferBytes);
     expect(metrics.fontFiles, evidence).toBeLessThanOrEqual(budget.fonts.maximumFiles);

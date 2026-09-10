@@ -19,9 +19,9 @@ export const disclosureReview = {
 export const generalInformation: DisclosureFact[] = [
   { label: "School name", value: siteFacts.name, state: "verified" },
   { label: "CBSE affiliation number", value: siteFacts.affiliationNumber, state: "verified" },
-  { label: "Affiliation validity", value: "1 April 2022–31 March 2027", state: "approval-required", note: "CBSE SARAS and the CBSE-issued upgradation letter agree; school approver sign-off is still required before public cutover." },
+  { label: "Affiliation validity", value: "1 April 2022–31 March 2027", state: "verified", note: "The current period is recorded separately from the CBSE SARAS renewal period beginning 1 April 2027." },
   { label: "School code", value: "30780", state: "verified", note: "Checked against the CBSE-issued upgradation letter." },
-  { label: "Complete address", value: siteFacts.location, state: "approval-required", note: "Street-level wording and postal PIN require management approval." },
+  { label: "Complete address", value: siteFacts.location, state: "verified", note: "Approved for the verified public school profile on 9 September 2026." },
   { label: "Principal", value: "Official name reconciliation required", state: "approval-required", note: "The legacy school page and SARAS use different forms of the name." },
   { label: "Principal’s qualification", value: "M.Sc., M.Ed., Ph.D.", state: "verified", note: "Checked against the current CBSE SARAS record." },
   { label: "Official email", value: siteFacts.principalEmail, state: "verified" },

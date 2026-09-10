@@ -8,6 +8,7 @@ import {
   createProgrammesContentPackage,
   programmeClaimRecordIds,
 } from "../lib/programmes-content-package.ts";
+import { programmesPrivateReviewCandidates } from "../app/data/programmes-private-review-candidates.ts";
 
 const validInput = {
   academicYear: "2026-2027",
@@ -122,22 +123,35 @@ test("keeps evidence opaque and approval attribution role-only", () => {
 });
 
 test("ships a schema, private workspace, dashboard link and operating guide", async () => {
-  const [schemaText, page, form, dashboard, sitemap, guide] = await Promise.all([
+  const [schemaText, page, form, dashboard, sitemap, guide, manifestText, publicHome, publicLayout] = await Promise.all([
     readFile(new URL("../content/programmes-content-package.schema.json", import.meta.url), "utf8"),
     readFile(new URL("../app/publication-review/programmes-content-package/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/publication-review/programmes-content-package/programmes-content-package-form.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/publication-review/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/sitemap.ts", import.meta.url), "utf8"),
     readFile(new URL("../docs/programmes-content-package.md", import.meta.url), "utf8"),
+    readFile(new URL("../content/approval-manifest.json", import.meta.url), "utf8"),
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
   ]);
   const schema = JSON.parse(schemaText);
+  const manifest = JSON.parse(manifestText);
+  const nameClaim = manifest.records.find((record) => record.id === "claim-school-name");
   assert.equal(schema.properties.packageId.const, PROGRAMMES_CONTENT_PACKAGE_ID);
   assert.equal(schema.properties.guardrails.properties.publicContentPublished.const, false);
   assert.match(page, /requireChatGPTUser\("\/publication-review\/programmes-content-package"\)/);
   assert.match(page, /HOMEPAGE_REVIEW_MODE !== "private"/);
   assert.match(form, /URL\.createObjectURL/);
+  assert.match(form, /programmesPrivateReviewCandidates\.cbseSeniorSecondary\.officialName/);
   assert.doesNotMatch(form, /\bfetch\s*\(|\baction=/);
   assert.match(dashboard, /Complete Programmes content package/);
   assert.doesNotMatch(sitemap, /programmes-content-package/);
   assert.match(guide, /does not post or persist form data/i);
+  assert.equal(programmesPrivateReviewCandidates.cbseSeniorSecondary.officialName, "Shree Samarth Krupa English Medium School");
+  assert.equal(programmesPrivateReviewCandidates.cbseSeniorSecondary.supersededPrivateCandidateName, "SHREE SAMARTHA KRUPA ENGLISH MEDIUM SCHOOL (CBSE)");
+  assert.equal(programmesPrivateReviewCandidates.cbseSeniorSecondary.publicationAuthorized, false);
+  assert.equal(nameClaim.decision, "approved");
+  assert.equal(nameClaim.checks["authoritative-source"], "verified");
+  assert.equal(nameClaim.checks["management-approval"], "verified");
+  assert.doesNotMatch(`${publicHome}\n${publicLayout}\n${sitemap}`, /programmes-private-review-candidates/);
 });

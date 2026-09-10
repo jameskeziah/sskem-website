@@ -1,0 +1,614 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/programmes-publication-v1.1-draft.schema.json",
+  "title": "SSKEMS Programmes publication v1.1 draft supplement",
+  "description": "Design-time, non-activating supplement for the frozen v1.0 Programmes publication contract.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageType",
+    "status",
+    "basePackage",
+    "academicYear",
+    "publicDocuments",
+    "admissionsActions",
+    "programmeGovernance",
+    "organisationRelationships",
+    "boardAndStatus",
+    "institutionalIdentifiers",
+    "campusAvailability",
+    "guardrails"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.1.0-draft" },
+    "packageType": { "const": "programmes-publication-draft-supplement" },
+    "status": { "const": "draft-not-activated" },
+    "basePackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "schemaSha256", "packageId", "packageSha256"],
+      "properties": {
+        "schemaVersion": { "const": "1.0.0" },
+        "schemaSha256": { "const": "6d5a72a61a06bfdec060b3fe4266dfc02b7940bd5de531296174b49dd4f04bd3" },
+        "packageId": { "type": "string", "pattern": "^programmes-20[0-9]{2}-20[0-9]{2}-v[1-9][0-9]*$" },
+        "packageSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "academicYear": { "$ref": "#/$defs/academicYear" },
+    "publicDocuments": {
+      "type": "array",
+      "maxItems": 36,
+      "items": { "$ref": "#/$defs/publicDocument" }
+    },
+    "admissionsActions": {
+      "type": "array",
+      "maxItems": 12,
+      "items": { "$ref": "#/$defs/admissionsAction" }
+    },
+    "programmeGovernance": {
+      "type": "array",
+      "maxItems": 36,
+      "items": { "$ref": "#/$defs/programmeGovernance" }
+    },
+    "organisationRelationships": {
+      "type": "array",
+      "maxItems": 12,
+      "items": { "$ref": "#/$defs/organisationRelationship" }
+    },
+    "boardAndStatus": {
+      "type": "array",
+      "maxItems": 12,
+      "items": { "$ref": "#/$defs/boardAndStatus" }
+    },
+    "institutionalIdentifiers": {
+      "type": "array",
+      "maxItems": 36,
+      "items": { "$ref": "#/$defs/institutionalIdentifier" }
+    },
+    "campusAvailability": {
+      "type": "array",
+      "maxItems": 36,
+      "items": { "$ref": "#/$defs/campusAvailability" }
+    },
+    "guardrails": { "$ref": "#/$defs/guardrails" }
+  },
+  "$defs": {
+    "academicYear": {
+      "type": "string",
+      "pattern": "^20[0-9]{2}-20[0-9]{2}$"
+    },
+    "programmeId": {
+      "enum": ["school-academics", "junior-college", "jee-neet"]
+    },
+    "programmeRoute": {
+      "enum": ["/school/academics", "/junior-college", "/programmes/jee-neet"]
+    },
+    "reviewStatus": {
+      "enum": ["draft", "review-required", "withdrawn"]
+    },
+    "factState": {
+      "enum": ["confirmed", "not-confirmed"]
+    },
+    "nullableDate": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "idList": {
+      "type": "array",
+      "maxItems": 30,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9-]{2,79}$" }
+    },
+    "publicDocument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "programmeId",
+        "route",
+        "kind",
+        "catalogueStatus",
+        "publicDocumentId",
+        "pipelineRecordId",
+        "evidenceIds",
+        "claimIds",
+        "reviewStatus"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^DOCREF-[A-Z0-9-]{2,72}$" },
+        "programmeId": { "$ref": "#/$defs/programmeId" },
+        "route": { "$ref": "#/$defs/programmeRoute" },
+        "kind": { "enum": ["brochure", "timetable", "fee-circular", "affiliation-document"] },
+        "catalogueStatus": { "enum": ["registered", "catalogue-extension-required"] },
+        "publicDocumentId": {
+          "oneOf": [
+            { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+            { "type": "null" }
+          ]
+        },
+        "pipelineRecordId": {
+          "oneOf": [
+            { "type": "string", "pattern": "^document-[a-z0-9]+(?:-[a-z0-9]+)*$" },
+            { "type": "null" }
+          ]
+        },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "claimIds": { "$ref": "#/$defs/idList" },
+        "reviewStatus": { "$ref": "#/$defs/reviewStatus" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "catalogueStatus": { "const": "registered" } } },
+          "then": {
+            "properties": {
+              "publicDocumentId": { "type": "string" },
+              "pipelineRecordId": { "type": "string" }
+            }
+          },
+          "else": {
+            "properties": {
+              "publicDocumentId": { "type": "null" },
+              "pipelineRecordId": { "type": "null" }
+            }
+          }
+        }
+      ]
+    },
+    "admissionsAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "programmeId",
+        "route",
+        "purpose",
+        "label",
+        "destination",
+        "publicContactRoute",
+        "windowState",
+        "opensOn",
+        "closesOn",
+        "decisionBy",
+        "evidenceIds",
+        "claimIds",
+        "factState",
+        "reviewStatus"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^CTA-[A-Z0-9-]{2,75}$" },
+        "programmeId": { "$ref": "#/$defs/programmeId" },
+        "route": { "$ref": "#/$defs/programmeRoute" },
+        "purpose": { "enum": ["admissions-enquiry", "application-guidance", "document-checklist", "visit-request"] },
+        "label": {
+          "oneOf": [
+            { "type": "string", "minLength": 2, "maxLength": 80 },
+            { "type": "null" }
+          ]
+        },
+        "destination": {
+          "oneOf": [
+            { "type": "string", "pattern": "^/(?!/)[a-z0-9/_-]+/?$" },
+            { "type": "string", "format": "uri", "pattern": "^https://" },
+            { "type": "null" }
+          ]
+        },
+        "publicContactRoute": {
+          "oneOf": [
+            { "type": "string", "pattern": "^/(?!/)[a-z0-9/_-]+/?$" },
+            { "type": "null" }
+          ]
+        },
+        "windowState": { "enum": ["dated", "year-round", "not-confirmed"] },
+        "opensOn": { "$ref": "#/$defs/nullableDate" },
+        "closesOn": { "$ref": "#/$defs/nullableDate" },
+        "decisionBy": { "$ref": "#/$defs/nullableDate" },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "claimIds": { "$ref": "#/$defs/idList" },
+        "factState": { "$ref": "#/$defs/factState" },
+        "reviewStatus": { "$ref": "#/$defs/reviewStatus" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "factState": { "const": "confirmed" }
+            }
+          },
+          "then": {
+            "properties": {
+              "label": { "type": "string" },
+              "destination": { "type": "string" },
+              "publicContactRoute": { "type": "string" },
+              "evidenceIds": { "minItems": 1 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "windowState": { "const": "dated" } } },
+          "then": {
+            "properties": {
+              "opensOn": { "type": "string", "format": "date" },
+              "closesOn": { "type": "string", "format": "date" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "windowState": { "const": "year-round" } } },
+          "then": {
+            "properties": {
+              "opensOn": { "type": "null" },
+              "closesOn": { "type": "null" }
+            }
+          }
+        }
+      ]
+    },
+    "programmeGovernance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "programmeId",
+        "route",
+        "academicYear",
+        "responsibilityType",
+        "organisationId",
+        "publicWording",
+        "claimIds",
+        "evidenceIds",
+        "factState",
+        "validFrom",
+        "validUntil",
+        "reviewStatus"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^GOV-[A-Z0-9-]{2,75}$" },
+        "programmeId": { "$ref": "#/$defs/programmeId" },
+        "route": { "$ref": "#/$defs/programmeRoute" },
+        "academicYear": { "$ref": "#/$defs/academicYear" },
+        "responsibilityType": { "enum": ["official-operator", "student-enrolment", "fee-collection", "academic-delivery", "entrance-exam-coaching", "certification-or-awarding"] },
+        "organisationId": { "type": "string", "pattern": "^ORG-[A-Z0-9-]{2,75}$" },
+        "publicWording": {
+          "oneOf": [
+            { "type": "string", "minLength": 2, "maxLength": 300 },
+            { "type": "null" }
+          ]
+        },
+        "claimIds": { "$ref": "#/$defs/idList" },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "factState": { "$ref": "#/$defs/factState" },
+        "validFrom": { "$ref": "#/$defs/nullableDate" },
+        "validUntil": { "$ref": "#/$defs/nullableDate" },
+        "reviewStatus": { "$ref": "#/$defs/reviewStatus" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "factState": { "const": "confirmed" } } },
+          "then": { "properties": { "evidenceIds": { "minItems": 1 } } }
+        }
+      ]
+    },
+    "organisationRelationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "fromOrganisationId",
+        "toOrganisationId",
+        "programmeIds",
+        "relationshipType",
+        "publicWording",
+        "termDecisions",
+        "claimId",
+        "evidenceIds",
+        "factState",
+        "validFrom",
+        "validUntil",
+        "reviewStatus"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^REL-[A-Z0-9-]{2,75}$" },
+        "fromOrganisationId": { "type": "string", "pattern": "^ORG-[A-Z0-9-]{2,75}$" },
+        "toOrganisationId": { "type": "string", "pattern": "^ORG-[A-Z0-9-]{2,75}$" },
+        "programmeIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/programmeId" }
+        },
+        "relationshipType": { "enum": ["operated-by", "delivered-by", "academic-partner", "part-of", "separate-institution", "no-current-relationship"] },
+        "publicWording": {
+          "oneOf": [
+            { "type": "string", "minLength": 2, "maxLength": 300 },
+            { "type": "null" }
+          ]
+        },
+        "termDecisions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["academicWing", "coachingWing", "partner", "integrated"],
+          "properties": {
+            "academicWing": { "enum": ["yes", "no", "not-confirmed"] },
+            "coachingWing": { "enum": ["yes", "no", "not-confirmed"] },
+            "partner": { "enum": ["yes", "no", "not-confirmed"] },
+            "integrated": { "enum": ["yes", "no", "not-confirmed"] }
+          }
+        },
+        "claimId": {
+          "oneOf": [
+            { "type": "string", "pattern": "^[A-Z][A-Z0-9-]{2,79}$" },
+            { "type": "null" }
+          ]
+        },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "factState": { "$ref": "#/$defs/factState" },
+        "validFrom": { "$ref": "#/$defs/nullableDate" },
+        "validUntil": { "$ref": "#/$defs/nullableDate" },
+        "reviewStatus": { "$ref": "#/$defs/reviewStatus" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "factState": { "const": "confirmed" },
+              "relationshipType": { "not": { "const": "no-current-relationship" } }
+            }
+          },
+          "then": {
+            "properties": {
+              "publicWording": { "type": "string" },
+              "claimId": { "type": "string" },
+              "evidenceIds": { "minItems": 1 }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "factState": { "const": "confirmed" },
+              "relationshipType": { "const": "no-current-relationship" }
+            }
+          },
+          "then": {
+            "properties": {
+              "publicWording": { "type": "null" },
+              "claimId": { "type": "null" },
+              "evidenceIds": { "minItems": 1 },
+              "termDecisions": {
+                "properties": {
+                  "academicWing": { "const": "no" },
+                  "coachingWing": { "const": "no" },
+                  "partner": { "const": "no" },
+                  "integrated": { "const": "no" }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "boardAndStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "programmeId",
+        "organisationId",
+        "route",
+        "boardType",
+        "boardName",
+        "institutionalStatus",
+        "officialRecognisedInstitutionName",
+        "publicStatusWording",
+        "claimId",
+        "evidenceIds",
+        "factState",
+        "validFrom",
+        "validUntil",
+        "reviewStatus"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^STATUS-[A-Z0-9-]{2,72}$" },
+        "programmeId": { "$ref": "#/$defs/programmeId" },
+        "organisationId": { "type": "string", "pattern": "^ORG-[A-Z0-9-]{2,75}$" },
+        "route": { "$ref": "#/$defs/programmeRoute" },
+        "boardType": { "enum": ["cbse", "state-board", "other-approved-board", "not-confirmed"] },
+        "boardName": {
+          "oneOf": [
+            { "type": "string", "minLength": 2, "maxLength": 120 },
+            { "type": "null" }
+          ]
+        },
+        "institutionalStatus": { "enum": ["affiliated", "recognized", "programme-approved", "not-confirmed"] },
+        "officialRecognisedInstitutionName": {
+          "oneOf": [
+            { "type": "string", "minLength": 2, "maxLength": 180 },
+            { "type": "null" }
+          ]
+        },
+        "publicStatusWording": {
+          "oneOf": [
+            { "type": "string", "minLength": 2, "maxLength": 300 },
+            { "type": "null" }
+          ]
+        },
+        "claimId": {
+          "oneOf": [
+            { "type": "string", "pattern": "^[A-Z][A-Z0-9-]{2,79}$" },
+            { "type": "null" }
+          ]
+        },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "factState": { "$ref": "#/$defs/factState" },
+        "validFrom": { "$ref": "#/$defs/nullableDate" },
+        "validUntil": { "$ref": "#/$defs/nullableDate" },
+        "reviewStatus": { "$ref": "#/$defs/reviewStatus" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "factState": { "const": "confirmed" } } },
+          "then": {
+            "properties": {
+              "boardType": { "not": { "const": "not-confirmed" } },
+              "boardName": { "type": "string" },
+              "institutionalStatus": { "not": { "const": "not-confirmed" } },
+              "officialRecognisedInstitutionName": { "type": "string" },
+              "publicStatusWording": { "type": "string" },
+              "claimId": { "type": "string" },
+              "evidenceIds": { "minItems": 1 }
+            }
+          }
+        }
+      ]
+    },
+    "institutionalIdentifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "programmeId",
+        "organisationId",
+        "route",
+        "identifierType",
+        "publicValue",
+        "claimId",
+        "evidenceIds",
+        "factState",
+        "validFrom",
+        "validUntil",
+        "reviewStatus"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^IDENT-[A-Z0-9-]{2,73}$" },
+        "programmeId": { "$ref": "#/$defs/programmeId" },
+        "organisationId": { "type": "string", "pattern": "^ORG-[A-Z0-9-]{2,75}$" },
+        "route": { "$ref": "#/$defs/programmeRoute" },
+        "identifierType": { "enum": ["affiliation-or-recognition-number", "institution-or-school-code", "udise-or-official-code"] },
+        "publicValue": {
+          "oneOf": [
+            { "type": "string", "minLength": 2, "maxLength": 80 },
+            { "type": "null" }
+          ]
+        },
+        "claimId": {
+          "oneOf": [
+            { "type": "string", "pattern": "^[A-Z][A-Z0-9-]{2,79}$" },
+            { "type": "null" }
+          ]
+        },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "factState": { "$ref": "#/$defs/factState" },
+        "validFrom": { "$ref": "#/$defs/nullableDate" },
+        "validUntil": { "$ref": "#/$defs/nullableDate" },
+        "reviewStatus": { "$ref": "#/$defs/reviewStatus" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "factState": { "const": "confirmed" } } },
+          "then": {
+            "properties": {
+              "publicValue": { "type": "string" },
+              "claimId": { "type": "string" },
+              "evidenceIds": { "minItems": 1 }
+            }
+          }
+        }
+      ]
+    },
+    "campusAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "campusId",
+        "programmeId",
+        "route",
+        "academicYear",
+        "availability",
+        "deliveryMode",
+        "durationSummary",
+        "batchCount",
+        "intakeCapacity",
+        "publicAvailabilityWording",
+        "evidenceIds",
+        "claimIds",
+        "factState",
+        "validFrom",
+        "validUntil",
+        "reviewStatus"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^CAMPUS-AVAIL-[A-Z0-9-]{2,66}$" },
+        "campusId": { "type": "string", "pattern": "^CMP-[A-Z0-9-]{2,75}$" },
+        "programmeId": { "$ref": "#/$defs/programmeId" },
+        "route": { "$ref": "#/$defs/programmeRoute" },
+        "academicYear": { "$ref": "#/$defs/academicYear" },
+        "availability": { "enum": ["available", "not-available", "not-confirmed"] },
+        "deliveryMode": { "enum": ["on-campus", "hybrid", "online", "not-confirmed"] },
+        "durationSummary": {
+          "oneOf": [
+            { "type": "string", "minLength": 2, "maxLength": 120 },
+            { "type": "null" }
+          ]
+        },
+        "batchCount": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 },
+        "intakeCapacity": { "type": ["integer", "null"], "minimum": 0, "maximum": 10000 },
+        "publicAvailabilityWording": {
+          "oneOf": [
+            { "type": "string", "minLength": 2, "maxLength": 300 },
+            { "type": "null" }
+          ]
+        },
+        "evidenceIds": { "$ref": "#/$defs/idList" },
+        "claimIds": { "$ref": "#/$defs/idList" },
+        "factState": { "$ref": "#/$defs/factState" },
+        "validFrom": { "$ref": "#/$defs/nullableDate" },
+        "validUntil": { "$ref": "#/$defs/nullableDate" },
+        "reviewStatus": { "$ref": "#/$defs/reviewStatus" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "factState": { "const": "confirmed" } } },
+          "then": {
+            "properties": {
+              "availability": { "not": { "const": "not-confirmed" } },
+              "deliveryMode": { "not": { "const": "not-confirmed" } },
+              "publicAvailabilityWording": { "type": "string" },
+              "evidenceIds": { "minItems": 1 }
+            }
+          }
+        }
+      ]
+    },
+    "guardrails": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "draftOnly",
+        "v1SchemaModified",
+        "approvalGranted",
+        "approvalManifestUpdated",
+        "publicContentPublished",
+        "navigationActivated",
+        "documentApprovalGranted",
+        "schemaActivated",
+        "deploymentPerformed",
+        "privateEvidenceIncluded"
+      ],
+      "properties": {
+        "draftOnly": { "const": true },
+        "v1SchemaModified": { "const": false },
+        "approvalGranted": { "const": false },
+        "approvalManifestUpdated": { "const": false },
+        "publicContentPublished": { "const": false },
+        "navigationActivated": { "const": false },
+        "documentApprovalGranted": { "const": false },
+        "schemaActivated": { "const": false },
+        "deploymentPerformed": { "const": false },
+        "privateEvidenceIncluded": { "const": false }
+      }
+    }
+  }
+}

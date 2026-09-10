@@ -90,13 +90,15 @@ function StaticNavigationFallback({ pathname, contact }: { pathname: string; con
             {primaryNavigation.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} aria-current={pathname === item.href ? "page" : undefined}>{item.label}</Link>
-                <ul>
-                  {item.children.map((child) => (
-                    <li key={child.href}>
-                      <Link href={child.href} aria-current={pathname === child.href ? "page" : undefined}>{child.label}</Link>
-                    </li>
-                  ))}
-                </ul>
+                {item.children.length ? (
+                  <ul>
+                    {item.children.map((child) => (
+                      <li key={child.href}>
+                        <Link href={child.href} aria-current={pathname === child.href ? "page" : undefined}>{child.label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             ))}
             {utilityNavigation.map((item) => (
@@ -318,46 +320,50 @@ export function SiteHeader({
                   <li className="desktop-navigation__item" key={item.href}>
                     <div className="desktop-navigation__entry" data-section-current={pathname === item.href || pathname.startsWith(`${item.href}/`) || undefined}>
                       <Link href={item.href} aria-current={pathname === item.href ? "page" : undefined}>{item.label}</Link>
-                      <button
-                        ref={(node) => { submenuButtons.current[item.label] = node; }}
-                        type="button"
-                        aria-label={`Show ${item.label} links`}
-                        aria-expanded={open}
-                        aria-controls={controlId}
-                        onClick={() => setOpenDesktop(open ? null : item.label)}
-                        onKeyDown={(event) => {
-                          if (event.key === "Escape") {
-                            event.preventDefault();
-                            closeDesktopWithFocus(item.label);
-                          }
-                        }}
-                      >
-                        <span aria-hidden="true">⌄</span>
-                      </button>
+                      {item.children.length ? (
+                        <button
+                          ref={(node) => { submenuButtons.current[item.label] = node; }}
+                          type="button"
+                          aria-label={`Show ${item.label} links`}
+                          aria-expanded={open}
+                          aria-controls={controlId}
+                          onClick={() => setOpenDesktop(open ? null : item.label)}
+                          onKeyDown={(event) => {
+                            if (event.key === "Escape") {
+                              event.preventDefault();
+                              closeDesktopWithFocus(item.label);
+                            }
+                          }}
+                        >
+                          <span aria-hidden="true">⌄</span>
+                        </button>
+                      ) : null}
                     </div>
-                    <div className="desktop-submenu" id={controlId} hidden={!open}>
-                      <ul>
-                        {item.children.map((child) => (
-                          <li key={child.href}>
-                            <Link href={child.href} aria-current={pathname === child.href ? "page" : undefined} onKeyDown={(event) => {
-                              if (event.key === "Escape") {
-                                event.preventDefault();
-                                closeDesktopWithFocus(item.label);
-                              }
-                            }}>
-                              <strong>{child.label}</strong>
-                              <span>{child.description}</span>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    {item.children.length ? (
+                      <div className="desktop-submenu" id={controlId} hidden={!open}>
+                        <ul>
+                          {item.children.map((child) => (
+                            <li key={child.href}>
+                              <Link href={child.href} aria-current={pathname === child.href ? "page" : undefined} onKeyDown={(event) => {
+                                if (event.key === "Escape") {
+                                  event.preventDefault();
+                                  closeDesktopWithFocus(item.label);
+                                }
+                              }}>
+                                <strong>{child.label}</strong>
+                                <span>{child.description}</span>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
                   </li>
                 );
               })}
             </ul>
           </nav>
-          <Link className="button button--primary header-cta" href="/admissions/enquire">Enquire now</Link>
+          <Link className="button button--primary header-cta" href="/admissions/apply">Apply for Admission</Link>
           <IconButton ref={menuButtonRef} className="mobile-menu-button" label="Open navigation" onClick={openMobileNavigation}>
             <span aria-hidden="true">☰</span>
           </IconButton>
@@ -394,13 +400,17 @@ export function SiteHeader({
                     <li key={item.href}>
                       <div className="mobile-navigation__entry" data-section-current={pathname === item.href || pathname.startsWith(`${item.href}/`) || undefined}>
                         <Link href={item.href} aria-current={pathname === item.href ? "page" : undefined} onClick={closeMobileNavigation}>{item.label}</Link>
-                        <button type="button" aria-label={`${expanded ? "Hide" : "Show"} ${item.label} links`} aria-expanded={expanded} aria-controls={controlId} onClick={() => setMobileExpanded(expanded ? null : item.label)}>
-                          <span aria-hidden="true">{expanded ? "−" : "+"}</span>
-                        </button>
+                        {item.children.length ? (
+                          <button type="button" aria-label={`${expanded ? "Hide" : "Show"} ${item.label} links`} aria-expanded={expanded} aria-controls={controlId} onClick={() => setMobileExpanded(expanded ? null : item.label)}>
+                            <span aria-hidden="true">{expanded ? "−" : "+"}</span>
+                          </button>
+                        ) : null}
                       </div>
-                      <ul id={controlId} hidden={!expanded}>
-                        {item.children.map((child) => <li key={child.href}><Link href={child.href} aria-current={pathname === child.href ? "page" : undefined} onClick={closeMobileNavigation}>{child.label}</Link></li>)}
-                      </ul>
+                      {item.children.length ? (
+                        <ul id={controlId} hidden={!expanded}>
+                          {item.children.map((child) => <li key={child.href}><Link href={child.href} aria-current={pathname === child.href ? "page" : undefined} onClick={closeMobileNavigation}>{child.label}</Link></li>)}
+                        </ul>
+                      ) : null}
                     </li>
                   );
                 })}
@@ -411,7 +421,7 @@ export function SiteHeader({
               <a href={`tel:${activeEditorial.contact.phone.replace(/\s/g, "")}`}>{activeEditorial.contact.phone}</a>
               <a href={`mailto:${activeEditorial.contact.email}`}>{activeEditorial.contact.email}</a>
             </div>
-            <Link className="button button--primary button--full" href="/admissions/enquire" onClick={closeMobileNavigation}>Enquire now</Link>
+            <Link className="button button--primary button--full" href="/admissions/apply" onClick={closeMobileNavigation}>Apply for Admission</Link>
           </div>
         </div>
       ) : null}

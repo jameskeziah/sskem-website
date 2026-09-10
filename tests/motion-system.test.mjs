@@ -141,9 +141,10 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(admissions, /data-motion-step/);
   assert.match(admissions, /<AdmissionsTimelineMotion preview=\{preview\}>/);
   assert.match(homeHero, /data-motion-component="home-hero"/);
-  assert.match(homeHero, /conditions\.reduce \|\| !conditions\.mobile/);
-  assert.doesNotMatch(homeHero, /data-motion-home-hero-(?:accent|media|support)/);
-  assert.doesNotMatch(homeHero, /motionScale/);
+  assert.match(homeHero, /reviewMode === "private-review"/);
+  assert.match(homeHero, /conditions\.reduce \|\| !animateLiveHero/);
+  assert.match(homeHero, /data-motion-home-hero-media/);
+  assert.match(homeHero, /motionScale\.imageMaskMaximum/);
   assert.match(homeCampus, /data-motion-component="home-campus"/);
   assert.match(homeCampus, /ScrollTrigger/);
   assert.match(homeAchievements, /data-motion-component="home-achievements"/);
@@ -156,12 +157,47 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(programmesPreview, /<ProgrammesHeroMotion>/);
   assert.match(programmesPreview, /<ProgrammesGridMotion>/);
   assert.match(programmesPreview, /data-motion-programme-card/);
-  assert.match(homepage, /<HomeHeroMotion>/);
+  assert.match(homepage, /<HomeHeroMotion reviewMode=/);
   assert.match(homepage, /data-home-hero-art/);
-  assert.doesNotMatch(homepage, /data-motion-home-hero-(?:accent|media|support)/);
+  assert.match(homepage, /data-motion-home-hero-media/);
   assert.match(homepageStyles, /background-image:\s*url\(["']\/og\.png["']\)/);
   assert.match(homepage, /<HomeCampusMotion>/);
   assert.match(homepage, /<HomeAchievementsMotion\b/);
+});
+
+test("keeps the homepage P0 prototype publication-aware and readable", async () => {
+  const [homepage, identity, pathways, admissions, styles] = await Promise.all([
+    source("app/page.tsx"),
+    source("components/home/homepage-identity-strip.tsx"),
+    source("components/home/homepage-institution-pathways.tsx"),
+    source("components/home/homepage-admissions-feature.tsx"),
+    source("app/homepage.css"),
+  ]);
+
+  assert.match(homepage, /process\.env\.HOMEPAGE_REVIEW_MODE === "private"/);
+  assert.match(homepage, /<HomepageIdentityStrip \/>/);
+  assert.match(homepage, /<HomepageInstitutionPathways privateReview=\{privateHomepageReview\} \/>/);
+  assert.match(homepage, /<HomepageAdmissionsFeature cycle=\{editorial\.admissionsCycle\} \/>/);
+
+  assert.match(identity, /data-homepage-p0="identity-strip"/);
+  assert.match(identity, /siteFacts\.affiliationNumber/);
+  assert.match(identity, /href="\/mandatory-public-disclosure"/);
+  assert.doesNotMatch(identity, /affiliat(?:ed|ion)\s+(?:until|valid)/i);
+
+  assert.match(pathways, /PROGRAMMES_PUBLICATION_ROUTES\.flatMap/);
+  assert.match(pathways, /getPublicProgrammeProfile\(route, now\)/);
+  assert.match(pathways, /if \(!privateReview\) return \[\]/);
+  assert.match(pathways, /data-publication-state=\{pathway\.state\}/);
+  assert.doesNotMatch(pathways, /institutionPathways|publicProgrammeNavigation/);
+
+  assert.match(admissions, /cycle\.publicStatus/);
+  assert.match(admissions, /cycle\.publicMessage/);
+  assert.match(admissions, /admissionsProcess\.slice\(0, 4\)/);
+  assert.doesNotMatch(admissions, /Admissions Open|fee amount|result statistic/i);
+
+  assert.match(styles, /\.home-hero--private-review \.home-hero__live-copy/);
+  assert.match(styles, /\.home-identity-strip/);
+  assert.match(styles, /\.home-admissions-feature/);
 });
 
 test("rejects prohibited, unbounded and layout-changing motion patterns", async () => {

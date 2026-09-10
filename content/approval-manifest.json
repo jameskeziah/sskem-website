@@ -2,252 +2,953 @@
   "$schema": "./approval-manifest.schema.json",
   "schemaVersion": 1,
   "manifestId": "sskem-publication-approvals",
-  "updatedOn": "2026-08-10",
+  "updatedOn": "2026-09-09",
   "evidencePolicy": {
     "privateEvidenceStoredInRepository": false,
     "referencePattern": "^[A-Z0-9][A-Z0-9._/-]{2,79}$",
     "notes": "Store only opaque references here. Consent forms, identity records, signed approvals and source documents remain in the school's controlled system."
   },
   "checkProfiles": {
-    "campus-media": ["accuracy", "rights", "privacy", "management-approval"],
-    "pupil-media": ["accuracy", "rights", "guardian-consent", "privacy", "institutional-status", "management-approval"],
-    "derived-media": ["accuracy", "rights", "source-assets", "management-approval"],
-    "institutional-claim": ["accuracy", "authoritative-source", "institutional-status", "management-approval"],
-    "result-claim": ["accuracy", "authoritative-source", "guardian-consent", "privacy", "institutional-status", "management-approval"],
-    "public-document": ["authenticity", "metadata", "malware-scan", "privacy", "accessibility", "management-approval"]
+    "campus-media": [
+      "accuracy",
+      "rights",
+      "privacy",
+      "management-approval"
+    ],
+    "pupil-media": [
+      "accuracy",
+      "rights",
+      "guardian-consent",
+      "privacy",
+      "institutional-status",
+      "management-approval"
+    ],
+    "derived-media": [
+      "accuracy",
+      "rights",
+      "source-assets",
+      "management-approval"
+    ],
+    "institutional-claim": [
+      "accuracy",
+      "authoritative-source",
+      "institutional-status",
+      "management-approval"
+    ],
+    "result-claim": [
+      "accuracy",
+      "authoritative-source",
+      "guardian-consent",
+      "privacy",
+      "institutional-status",
+      "management-approval"
+    ],
+    "public-document": [
+      "authenticity",
+      "metadata",
+      "malware-scan",
+      "privacy",
+      "accessibility",
+      "management-approval"
+    ]
   },
   "records": [
     {
-      "id": "media-campus-main", "kind": "media", "title": "Main campus exterior",
-      "sourcePointer": "public/media/home/campus-main.jpeg", "publicTargets": ["/", "/og.png"],
-      "checkProfile": "campus-media", "checks": { "accuracy": "pending", "rights": "pending", "privacy": "pending", "management-approval": "pending" },
-      "decision": "review-required", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "media-campus-main",
+      "kind": "media",
+      "title": "Main campus exterior",
+      "sourcePointer": "public/media/home/campus-main.jpeg",
+      "publicTargets": [
+        "/",
+        "/og.png"
+      ],
+      "checkProfile": "campus-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "privacy": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Confirm source rights, location and that no identifiable person requires consent."
     },
     {
-      "id": "media-campus-grounds", "kind": "media", "title": "Campus grounds exterior",
-      "sourcePointer": "public/media/home/campus-grounds.jpeg", "publicTargets": ["/"],
-      "checkProfile": "campus-media", "checks": { "accuracy": "pending", "rights": "pending", "privacy": "pending", "management-approval": "pending" },
-      "decision": "review-required", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "media-campus-grounds",
+      "kind": "media",
+      "title": "Campus grounds exterior",
+      "sourcePointer": "public/media/home/campus-grounds.jpeg",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "campus-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "privacy": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Confirm source rights, capture context and privacy review."
     },
     {
-      "id": "media-campus-entrance", "kind": "media", "title": "Campus entrance exterior",
-      "sourcePointer": "public/media/home/campus-entrance.jpeg", "publicTargets": ["/"],
-      "checkProfile": "campus-media", "checks": { "accuracy": "pending", "rights": "pending", "privacy": "pending", "management-approval": "pending" },
-      "decision": "review-required", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "media-campus-entrance",
+      "kind": "media",
+      "title": "Campus entrance exterior",
+      "sourcePointer": "public/media/home/campus-entrance.jpeg",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "campus-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "privacy": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Review visible people, signage, contact details and source rights."
     },
     {
-      "id": "media-campus-courtyard", "kind": "media", "title": "Campus perspective from grounds",
-      "sourcePointer": "public/media/home/campus-courtyard.jpeg", "publicTargets": ["/"],
-      "checkProfile": "campus-media", "checks": { "accuracy": "pending", "rights": "pending", "privacy": "pending", "management-approval": "pending" },
-      "decision": "review-required", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "media-campus-courtyard",
+      "kind": "media",
+      "title": "Campus perspective from grounds",
+      "sourcePointer": "public/media/home/campus-courtyard.jpeg",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "campus-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "privacy": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Confirm source rights and whether the shaded image meets publication quality."
     },
     {
-      "id": "media-class-x-results-2025-26", "kind": "media", "title": "Class X results artwork 2025-26",
-      "sourcePointer": "public/media/home/class-x-results-2025-26.jpeg", "publicTargets": ["/"],
-      "checkProfile": "pupil-media", "checks": { "accuracy": "pending", "rights": "pending", "guardian-consent": "pending", "privacy": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "media-class-x-results-2025-26",
+      "kind": "media",
+      "title": "Class X results artwork 2025-26",
+      "sourcePointer": "public/media/home/class-x-results-2025-26.jpeg",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "pupil-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Verify every name, portrait, mark, academic year and guardian consent."
     },
     {
-      "id": "media-xii-science-2025-26", "kind": "media", "title": "XII Science results artwork 2025-26",
-      "sourcePointer": "public/media/home/xii-science-2025-26.jpeg", "publicTargets": ["/"],
-      "checkProfile": "pupil-media", "checks": { "accuracy": "pending", "rights": "pending", "guardian-consent": "pending", "privacy": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "media-xii-science-2025-26",
+      "kind": "media",
+      "title": "XII Science results artwork 2025-26",
+      "sourcePointer": "public/media/home/xii-science-2025-26.jpeg",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "pupil-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Junior College status, results and guardian consent require explicit approval."
     },
     {
-      "id": "media-rangotsav-2025-26", "kind": "media", "title": "Rangotsav award artwork 2025-26",
-      "sourcePointer": "public/media/home/rangotsav-2025-26.jpeg", "publicTargets": ["/"],
-      "checkProfile": "pupil-media", "checks": { "accuracy": "pending", "rights": "pending", "guardian-consent": "pending", "privacy": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "media-rangotsav-2025-26",
+      "kind": "media",
+      "title": "Rangotsav award artwork 2025-26",
+      "sourcePointer": "public/media/home/rangotsav-2025-26.jpeg",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "pupil-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Verify recipients, award wording, classes, image rights and guardian consent."
     },
     {
-      "id": "media-result-admissions-2025-26", "kind": "media", "title": "Results and admissions composite 2025-26",
-      "sourcePointer": "public/media/home/result-and-admissions-2025-26.jpg", "publicTargets": ["/"],
-      "checkProfile": "pupil-media", "checks": { "accuracy": "pending", "rights": "pending", "guardian-consent": "pending", "privacy": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "media-result-admissions-2025-26",
+      "kind": "media",
+      "title": "Results and admissions composite 2025-26",
+      "sourcePointer": "public/media/home/result-and-admissions-2025-26.jpg",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "pupil-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Verify pupil result, contact details, document checklist and engineering/medical claims."
     },
     {
-      "id": "media-homepage-social-poster", "kind": "media", "title": "Homepage and social poster",
-      "sourcePointer": "public/og.png", "publicTargets": ["/", "/og.png"],
-      "checkProfile": "derived-media", "checks": { "accuracy": "pending", "rights": "pending", "source-assets": "pending", "management-approval": "pending" },
-      "decision": "review-required", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "media-homepage-social-poster",
+      "kind": "media",
+      "title": "Homepage and social poster",
+      "sourcePointer": "public/og.png",
+      "publicTargets": [
+        "/",
+        "/og.png"
+      ],
+      "checkProfile": "derived-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "source-assets": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Reapprove whenever copy, affiliation data or source photography changes."
     },
-
     {
-      "id": "claim-school-name", "kind": "claim", "title": "Official school name",
-      "sourcePointer": "app/data/site.ts#siteFacts.name", "publicTargets": ["/", "/school", "/mandatory-public-disclosure"],
-      "checkProfile": "institutional-claim", "checks": { "accuracy": "verified", "authoritative-source": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "review-required", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "claim-school-name",
+      "kind": "claim",
+      "title": "Official school name",
+      "sourcePointer": "app/data/site.ts#siteFacts.name",
+      "publicTargets": [
+        "/",
+        "/school",
+        "/school/academics",
+        "/mandatory-public-disclosure"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "verified",
+        "authoritative-source": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
+      },
+      "decision": "approved",
+      "evidenceReferences": [
+        "EVD-2026-001"
+      ],
+      "approvedByRole": "school-management",
+      "approvedAt": "2026-09-09T05:10:00.000Z",
+      "expiresAt": null,
       "notes": "Record the controlling school document and management approval reference."
     },
     {
-      "id": "claim-affiliation-number", "kind": "claim", "title": "CBSE affiliation number 1130851",
-      "sourcePointer": "app/data/site.ts#siteFacts.affiliationNumber", "publicTargets": ["/", "/mandatory-public-disclosure"],
-      "checkProfile": "institutional-claim", "checks": { "accuracy": "verified", "authoritative-source": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "review-required", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "claim-affiliation-number",
+      "kind": "claim",
+      "title": "CBSE affiliation number 1130851",
+      "sourcePointer": "app/data/site.ts#siteFacts.affiliationNumber",
+      "publicTargets": [
+        "/",
+        "/school/academics",
+        "/mandatory-public-disclosure"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "verified",
+        "authoritative-source": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
+      },
+      "decision": "approved",
+      "evidenceReferences": [
+        "EVD-2026-001"
+      ],
+      "approvedByRole": "school-management",
+      "approvedAt": "2026-09-09T05:10:00.000Z",
+      "expiresAt": null,
       "notes": "Link the current CBSE source and school sign-off before release."
     },
     {
-      "id": "claim-school-code", "kind": "claim", "title": "CBSE school code 30780",
-      "sourcePointer": "app/data/disclosure.ts#generalInformation.school-code", "publicTargets": ["/mandatory-public-disclosure"],
-      "checkProfile": "institutional-claim", "checks": { "accuracy": "verified", "authoritative-source": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "review-required", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "claim-school-code",
+      "kind": "claim",
+      "title": "CBSE school code 30780",
+      "sourcePointer": "app/data/disclosure.ts#generalInformation.school-code",
+      "publicTargets": [
+        "/school/academics",
+        "/mandatory-public-disclosure"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "verified",
+        "authoritative-source": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
+      },
+      "decision": "approved",
+      "evidenceReferences": [
+        "EVD-2026-001"
+      ],
+      "approvedByRole": "school-management",
+      "approvedAt": "2026-09-09T05:10:00.000Z",
+      "expiresAt": null,
       "notes": "Retain an opaque reference to the current CBSE-issued source."
     },
     {
-      "id": "claim-affiliation-validity", "kind": "claim", "title": "Affiliation validity period",
-      "sourcePointer": "app/data/disclosure.ts#generalInformation.affiliation-validity", "publicTargets": ["/mandatory-public-disclosure"],
-      "checkProfile": "institutional-claim", "checks": { "accuracy": "pending", "authoritative-source": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": "2027-03-31",
-      "notes": "Reconcile CBSE SARAS and the current extension letter."
+      "id": "claim-affiliation-validity",
+      "kind": "claim",
+      "title": "Affiliation validity period",
+      "sourcePointer": "app/data/disclosure.ts#generalInformation.affiliation-validity",
+      "publicTargets": [
+        "/school/academics",
+        "/mandatory-public-disclosure"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "verified",
+        "authoritative-source": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
+      },
+      "decision": "approved",
+      "evidenceReferences": [
+        "EVD-2026-001"
+      ],
+      "approvedByRole": "school-management",
+      "approvedAt": "2026-09-09T05:10:00.000Z",
+      "expiresAt": "2027-03-31",
+      "notes": "Current period ends 31 March 2027; keep the later renewal in its separate claim record."
     },
     {
-      "id": "claim-complete-address", "kind": "claim", "title": "Complete postal address",
-      "sourcePointer": "app/data/site.ts#siteFacts.location", "publicTargets": ["/contact", "/mandatory-public-disclosure"],
-      "checkProfile": "institutional-claim", "checks": { "accuracy": "pending", "authoritative-source": "pending", "institutional-status": "verified", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
-      "notes": "Street-level wording and postal PIN remain unconfirmed."
+      "id": "claim-complete-address",
+      "kind": "claim",
+      "title": "Complete postal address",
+      "sourcePointer": "app/data/site.ts#siteFacts.location",
+      "publicTargets": [
+        "/school/academics",
+        "/contact",
+        "/mandatory-public-disclosure"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "verified",
+        "authoritative-source": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
+      },
+      "decision": "approved",
+      "evidenceReferences": [
+        "EVD-2026-001"
+      ],
+      "approvedByRole": "school-management",
+      "approvedAt": "2026-09-09T05:10:00.000Z",
+      "expiresAt": null,
+      "notes": "The approved profile supplies the street-level wording and postal PIN."
     },
     {
-      "id": "claim-principal-identity", "kind": "claim", "title": "Principal name and qualification",
-      "sourcePointer": "app/data/disclosure.ts#generalInformation.principal", "publicTargets": ["/school/leadership", "/mandatory-public-disclosure"],
-      "checkProfile": "institutional-claim", "checks": { "accuracy": "pending", "authoritative-source": "pending", "institutional-status": "verified", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "claim-principal-identity",
+      "kind": "claim",
+      "title": "Principal name and qualification",
+      "sourcePointer": "app/data/disclosure.ts#generalInformation.principal",
+      "publicTargets": [
+        "/school/leadership",
+        "/mandatory-public-disclosure"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "pending",
+        "authoritative-source": "pending",
+        "institutional-status": "verified",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Reconcile the principal's official name across current records."
     },
     {
-      "id": "claim-public-contact", "kind": "claim", "title": "Authorised public contact details",
-      "sourcePointer": "app/data/site.ts#siteFacts.contact", "publicTargets": ["/", "/contact", "/mandatory-public-disclosure"],
-      "checkProfile": "institutional-claim", "checks": { "accuracy": "pending", "authoritative-source": "pending", "institutional-status": "verified", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "claim-public-contact",
+      "kind": "claim",
+      "title": "Authorised public contact details",
+      "sourcePointer": "app/data/site.ts#siteFacts.contact",
+      "publicTargets": [
+        "/",
+        "/contact",
+        "/mandatory-public-disclosure"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "pending",
+        "authoritative-source": "pending",
+        "institutional-status": "verified",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Confirm which mobile number may be published and the official contact baseline."
     },
     {
-      "id": "claim-junior-college-status", "kind": "claim", "title": "Junior College institutional status",
-      "sourcePointer": "app/data/navigation.ts#institutionalPathways.junior-college", "publicTargets": ["/junior-college"],
-      "checkProfile": "institutional-claim", "checks": { "accuracy": "pending", "authoritative-source": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
-      "notes": "The pathway remains pending and outside primary navigation."
+      "id": "claim-junior-college-status",
+      "kind": "claim",
+      "title": "Junior College institutional status",
+      "sourcePointer": "content/programmes-public-profiles.json#junior-college",
+      "publicTargets": [
+        "/junior-college"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "verified",
+        "authoritative-source": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
+      },
+      "decision": "approved",
+      "evidenceReferences": [
+        "EVD-2026-002"
+      ],
+      "approvedByRole": "school-management",
+      "approvedAt": "2026-09-09T05:10:00.000Z",
+      "expiresAt": null,
+      "notes": "Covers the Maharashtra Board pathway, Classes XI-XII and separate UDISE identity without asserting an unverified recognition-order number."
     },
     {
-      "id": "claim-class-x-results-2025-26", "kind": "claim", "title": "Class X results 2025-26",
-      "sourcePointer": "public/media/home/class-x-results-2025-26.jpeg", "publicTargets": ["/"],
-      "checkProfile": "result-claim", "checks": { "accuracy": "pending", "authoritative-source": "pending", "guardian-consent": "pending", "privacy": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "claim-class-x-results-2025-26",
+      "kind": "claim",
+      "title": "Class X results 2025-26",
+      "sourcePointer": "public/media/home/class-x-results-2025-26.jpeg",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "result-claim",
+      "checks": {
+        "accuracy": "pending",
+        "authoritative-source": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Verify names, marks, ranking language and the approved result record."
     },
     {
-      "id": "claim-xii-science-results-2025-26", "kind": "claim", "title": "XII Science results 2025-26",
-      "sourcePointer": "public/media/home/xii-science-2025-26.jpeg", "publicTargets": ["/"],
-      "checkProfile": "result-claim", "checks": { "accuracy": "pending", "authoritative-source": "pending", "guardian-consent": "pending", "privacy": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "claim-xii-science-results-2025-26",
+      "kind": "claim",
+      "title": "XII Science results 2025-26",
+      "sourcePointer": "public/media/home/xii-science-2025-26.jpeg",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "result-claim",
+      "checks": {
+        "accuracy": "pending",
+        "authoritative-source": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Verify institutional applicability, pupils and published marks."
     },
     {
-      "id": "claim-rangotsav-awards-2025-26", "kind": "claim", "title": "Rangotsav awards 2025-26",
-      "sourcePointer": "public/media/home/rangotsav-2025-26.jpeg", "publicTargets": ["/"],
-      "checkProfile": "result-claim", "checks": { "accuracy": "pending", "authoritative-source": "pending", "guardian-consent": "pending", "privacy": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "claim-rangotsav-awards-2025-26",
+      "kind": "claim",
+      "title": "Rangotsav awards 2025-26",
+      "sourcePointer": "public/media/home/rangotsav-2025-26.jpeg",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "result-claim",
+      "checks": {
+        "accuracy": "pending",
+        "authoritative-source": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Verify the awarding body, award wording, recipients and classes."
     },
     {
-      "id": "claim-engineering-medical-guidance", "kind": "claim", "title": "Engineering and medical admissions guidance",
-      "sourcePointer": "public/media/home/result-and-admissions-2025-26.jpg", "publicTargets": ["/"],
-      "checkProfile": "institutional-claim", "checks": { "accuracy": "pending", "authoritative-source": "pending", "institutional-status": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "claim-cbse-school-public-profile",
+      "kind": "claim",
+      "title": "CBSE school status and UDISE public profile",
+      "sourcePointer": "content/programmes-public-profiles.json#cbse-school",
+      "publicTargets": [
+        "/school/academics"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "verified",
+        "authoritative-source": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
+      },
+      "decision": "approved",
+      "evidenceReferences": [
+        "EVD-2026-001"
+      ],
+      "approvedByRole": "school-management",
+      "approvedAt": "2026-09-09T05:10:00.000Z",
+      "expiresAt": null,
+      "notes": "Covers CBSE authority, Senior Secondary independent status and UDISE 27320420205."
+    },
+    {
+      "id": "claim-cbse-affiliation-renewal",
+      "kind": "claim",
+      "title": "CBSE affiliation renewal period 2027-2032",
+      "sourcePointer": "content/programmes-public-profiles.json#cbse-school-affiliation-record",
+      "publicTargets": [
+        "/school/academics"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "verified",
+        "authoritative-source": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
+      },
+      "decision": "approved",
+      "evidenceReferences": [
+        "EVD-2026-001"
+      ],
+      "approvedByRole": "school-management",
+      "approvedAt": "2026-09-09T05:10:00.000Z",
+      "expiresAt": "2032-03-31",
+      "notes": "Renewal shown separately from the current affiliation period: 1 April 2027 to 31 March 2032."
+    },
+    {
+      "id": "claim-junior-college-public-profile",
+      "kind": "claim",
+      "title": "Junior College identifiers and Science stream profile",
+      "sourcePointer": "content/programmes-public-profiles.json#junior-college",
+      "publicTargets": [
+        "/junior-college"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "verified",
+        "authoritative-source": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
+      },
+      "decision": "approved",
+      "evidenceReferences": [
+        "EVD-2026-002"
+      ],
+      "approvedByRole": "school-management",
+      "approvedAt": "2026-09-09T05:10:00.000Z",
+      "expiresAt": null,
+      "notes": "Covers College No. 25.04.028, UDISE 27320420206 and Science only; Commerce, Arts and recognition validity remain withheld."
+    },
+    {
+      "id": "claim-institute-neet-public-profile",
+      "kind": "claim",
+      "title": "Shree Samarth Krupa Institute NEET public profile",
+      "sourcePointer": "content/programmes-public-profiles.json#neet-institute",
+      "publicTargets": [
+        "/programmes/jee-neet"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "verified",
+        "authoritative-source": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
+      },
+      "decision": "approved",
+      "evidenceReferences": [
+        "EVD-2026-003"
+      ],
+      "approvedByRole": "school-management",
+      "approvedAt": "2026-09-09T05:10:00.000Z",
+      "expiresAt": "2026-12-01",
+      "notes": "Covers the Institute name, NEET-UG scope, PCB subjects and approved support description; detailed JEE and legal-operator claims remain withheld."
+    },
+    {
+      "id": "claim-engineering-medical-guidance",
+      "kind": "claim",
+      "title": "Engineering and medical admissions guidance",
+      "sourcePointer": "public/media/home/result-and-admissions-2025-26.jpg",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "institutional-claim",
+      "checks": {
+        "accuracy": "pending",
+        "authoritative-source": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Verify course scope, current checklist, contact details and authority to publish."
     },
-
     {
-      "id": "document-mpd-b-1", "kind": "document", "title": "Affiliation/upgradation letter and latest extension",
-      "sourcePointer": "app/data/documents.ts#mpd-b-1", "publicTargets": ["/mandatory-public-disclosure", "/documents/affiliation-upgradation-and-extension-letter"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-b-1",
+      "kind": "document",
+      "title": "Affiliation/upgradation letter and latest extension",
+      "sourcePointer": "app/data/documents.ts#mpd-b-1",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/affiliation-upgradation-and-extension-letter"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Current approved extension and public validity metadata are required."
     },
     {
-      "id": "document-mpd-b-2", "kind": "document", "title": "Trust registration and renewal",
-      "sourcePointer": "app/data/documents.ts#mpd-b-2", "publicTargets": ["/mandatory-public-disclosure", "/documents/trust-registration-and-renewal"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-b-2",
+      "kind": "document",
+      "title": "Trust registration and renewal",
+      "sourcePointer": "app/data/documents.ts#mpd-b-2",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/trust-registration-and-renewal"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "A current public-safe self-attested copy is required."
     },
     {
-      "id": "document-mpd-b-3", "kind": "document", "title": "State NOC where applicable",
-      "sourcePointer": "app/data/documents.ts#mpd-b-3", "publicTargets": ["/mandatory-public-disclosure", "/documents/state-no-objection-certificate"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-b-3",
+      "kind": "document",
+      "title": "State NOC where applicable",
+      "sourcePointer": "app/data/documents.ts#mpd-b-3",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/state-no-objection-certificate"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Confirm applicability and the approved public copy."
     },
     {
-      "id": "document-mpd-b-4", "kind": "document", "title": "RTE recognition certificate and renewal",
-      "sourcePointer": "app/data/documents.ts#mpd-b-4", "publicTargets": ["/mandatory-public-disclosure", "/documents/rte-recognition-certificate"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-b-4",
+      "kind": "document",
+      "title": "RTE recognition certificate and renewal",
+      "sourcePointer": "app/data/documents.ts#mpd-b-4",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/rte-recognition-certificate"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Issue, renewal and expiry metadata must come from the signed certificate."
     },
     {
-      "id": "document-mpd-b-5", "kind": "document", "title": "Building safety certificate",
-      "sourcePointer": "app/data/documents.ts#mpd-b-5", "publicTargets": ["/mandatory-public-disclosure", "/documents/building-safety-certificate"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-b-5",
+      "kind": "document",
+      "title": "Building safety certificate",
+      "sourcePointer": "app/data/documents.ts#mpd-b-5",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/building-safety-certificate"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Authority, issue date and validity are not yet verified."
     },
     {
-      "id": "document-mpd-b-6", "kind": "document", "title": "Fire safety certificate",
-      "sourcePointer": "app/data/documents.ts#mpd-b-6", "publicTargets": ["/mandatory-public-disclosure", "/documents/fire-safety-certificate"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-b-6",
+      "kind": "document",
+      "title": "Fire safety certificate",
+      "sourcePointer": "app/data/documents.ts#mpd-b-6",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/fire-safety-certificate"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Current copy and renewal status require approval."
     },
     {
-      "id": "document-mpd-b-7", "kind": "document", "title": "DEO certificate or self-certification",
-      "sourcePointer": "app/data/documents.ts#mpd-b-7", "publicTargets": ["/mandatory-public-disclosure", "/documents/deo-certificate-or-self-certification"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-b-7",
+      "kind": "document",
+      "title": "DEO certificate or self-certification",
+      "sourcePointer": "app/data/documents.ts#mpd-b-7",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/deo-certificate-or-self-certification"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "The applicable instrument has not been supplied."
     },
     {
-      "id": "document-mpd-b-8", "kind": "document", "title": "Water, health and sanitation documents",
-      "sourcePointer": "app/data/documents.ts#mpd-b-8", "publicTargets": ["/mandatory-public-disclosure", "/documents/water-health-sanitation-certificates"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-b-8",
+      "kind": "document",
+      "title": "Water, health and sanitation documents",
+      "sourcePointer": "app/data/documents.ts#mpd-b-8",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/water-health-sanitation-certificates"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "This row may require several separately approved PDFs."
     },
     {
-      "id": "document-mpd-c-1", "kind": "document", "title": "Current fee structure",
-      "sourcePointer": "app/data/documents.ts#mpd-c-1", "publicTargets": ["/mandatory-public-disclosure", "/documents/current-fee-structure"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-c-1",
+      "kind": "document",
+      "title": "Current fee structure",
+      "sourcePointer": "app/data/documents.ts#mpd-c-1",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/current-fee-structure"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Academic year, approving authority and effective date are pending."
     },
     {
-      "id": "document-mpd-c-2", "kind": "document", "title": "Annual academic calendar",
-      "sourcePointer": "app/data/documents.ts#mpd-c-2", "publicTargets": ["/mandatory-public-disclosure", "/documents/annual-academic-calendar"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-c-2",
+      "kind": "document",
+      "title": "Annual academic calendar",
+      "sourcePointer": "app/data/documents.ts#mpd-c-2",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/annual-academic-calendar"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "The current approved calendar has not been supplied."
     },
     {
-      "id": "document-mpd-c-3", "kind": "document", "title": "School Management Committee list",
-      "sourcePointer": "app/data/documents.ts#mpd-c-3", "publicTargets": ["/mandatory-public-disclosure", "/documents/school-management-committee-list"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-c-3",
+      "kind": "document",
+      "title": "School Management Committee list",
+      "sourcePointer": "app/data/documents.ts#mpd-c-3",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/school-management-committee-list"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "Current membership must exclude unnecessary personal addresses."
     },
     {
-      "id": "document-mpd-c-4", "kind": "document", "title": "Parent Teacher Association list",
-      "sourcePointer": "app/data/documents.ts#mpd-c-4", "publicTargets": ["/mandatory-public-disclosure", "/documents/parent-teacher-association-list"],
-      "checkProfile": "public-document", "checks": { "authenticity": "pending", "metadata": "pending", "malware-scan": "pending", "privacy": "pending", "accessibility": "pending", "management-approval": "pending" },
-      "decision": "blocked", "evidenceReferences": [], "approvedByRole": null, "approvedAt": null, "expiresAt": null,
+      "id": "document-mpd-c-4",
+      "kind": "document",
+      "title": "Parent Teacher Association list",
+      "sourcePointer": "app/data/documents.ts#mpd-c-4",
+      "publicTargets": [
+        "/mandatory-public-disclosure",
+        "/documents/parent-teacher-association-list"
+      ],
+      "checkProfile": "public-document",
+      "checks": {
+        "authenticity": "pending",
+        "metadata": "pending",
+        "malware-scan": "pending",
+        "privacy": "pending",
+        "accessibility": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "blocked",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
       "notes": "The current approved public list has not been supplied."
     }
   ]

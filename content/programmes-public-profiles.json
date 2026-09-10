@@ -1,0 +1,133 @@
+{
+  "$schema": "./programmes-public-profiles.schema.json",
+  "schemaVersion": 1,
+  "profileSetId": "sskem-verified-programme-profiles-2026-09",
+  "approvalReference": "APR-2026-001",
+  "publishedOn": "2026-09-09",
+  "profiles": [
+    {
+      "id": "cbse-school",
+      "route": "/school/academics",
+      "organisationId": "ORG-SSKEMS-CBSE",
+      "organisationType": "cbse-school",
+      "displayName": "Shree Samarth Krupa English Medium School",
+      "navigationLabel": "CBSE School",
+      "eyebrow": "CBSE Senior Secondary School",
+      "title": "A verified profile of our CBSE school.",
+      "summary": "Shree Samarth Krupa English Medium School is a CBSE-affiliated co-educational Senior Secondary school in Veral, Khed.",
+      "publicationNote": "This page publishes the institutional and affiliation facts currently supported by the approved record. Academic combinations, fees, eligibility and schedules will be added only when their current source records are approved.",
+      "facts": [
+        { "label": "Official institution name", "value": "Shree Samarth Krupa English Medium School" },
+        { "label": "Board", "value": "Central Board of Secondary Education (CBSE)" },
+        { "label": "Status", "value": "Senior Secondary, independent school" },
+        { "label": "Affiliation number", "value": "1130851" },
+        { "label": "CBSE school code", "value": "30780" },
+        { "label": "UDISE code", "value": "27320420205" },
+        { "label": "Address", "value": "Shree Samarth Krupa Vishwa, Veral, Near Khed Railway Station, Taluka Khed, Ratnagiri, Maharashtra - 415709" }
+      ],
+      "groups": [
+        {
+          "title": "Affiliation record",
+          "description": "The current period and the recorded renewal are shown separately so the dates are not confused.",
+          "items": [
+            "Current affiliation: through 31 March 2027",
+            "Renewal period recorded by CBSE SARAS: 1 April 2027 to 31 March 2032"
+          ]
+        }
+      ],
+      "withheldSections": ["streams and subjects", "eligibility", "fees", "admission procedure", "schedule", "faculty", "results", "documents", "media"],
+      "evidenceReferences": ["EVD-2026-001"],
+      "claimRecordIds": [
+        "claim-school-name",
+        "claim-affiliation-number",
+        "claim-school-code",
+        "claim-affiliation-validity",
+        "claim-complete-address",
+        "claim-cbse-school-public-profile",
+        "claim-cbse-affiliation-renewal"
+      ],
+      "seo": {
+        "title": "CBSE School in Veral",
+        "description": "Verified CBSE affiliation, school code, UDISE and address for Shree Samarth Krupa English Medium School in Veral.",
+        "canonicalPath": "/school/academics"
+      },
+      "validUntil": null
+    },
+    {
+      "id": "junior-college",
+      "route": "/junior-college",
+      "organisationId": "ORG-SSKEMS-JUNIOR-COLLEGE",
+      "organisationType": "junior-college",
+      "displayName": "Shree Samarth Krupa English Medium School and Junior College, Veral",
+      "navigationLabel": "Junior College",
+      "eyebrow": "Maharashtra Junior College",
+      "title": "Higher Secondary education, clearly identified.",
+      "summary": "Shree Samarth Krupa Junior College, Veral provides Higher Secondary education under the Maharashtra State Board. It is recorded separately from the CBSE school and serves students in Classes XI and XII.",
+      "publicationNote": "Science is the only stream included in this approved public profile. Other stream, subject, intake, fee and schedule details remain omitted until the current sanction and programme records are supplied.",
+      "facts": [
+        { "label": "Official recorded name", "value": "SHRI SAMARTH KRUPA ENG MED SCH AND JR COL, VERAL" },
+        { "label": "Public name", "value": "Shree Samarth Krupa English Medium School and Junior College, Veral" },
+        { "label": "Authority", "value": "Maharashtra State Board of Secondary and Higher Secondary Education" },
+        { "label": "Division", "value": "Konkan" },
+        { "label": "College No.", "value": "25.04.028" },
+        { "label": "Junior College UDISE", "value": "27320420206" },
+        { "label": "Classes", "value": "XI-XII / Higher Secondary" }
+      ],
+      "groups": [
+        {
+          "title": "Currently evidenced stream",
+          "description": "The public profile is intentionally limited to the stream supported by the current approved evidence set.",
+          "items": ["Science"]
+        }
+      ],
+      "withheldSections": ["additional streams", "subject combinations", "recognition-order number and validity", "eligibility", "fees", "admission procedure", "schedule", "faculty", "results", "documents", "media"],
+      "evidenceReferences": ["EVD-2026-002"],
+      "claimRecordIds": ["claim-junior-college-status", "claim-junior-college-public-profile"],
+      "seo": {
+        "title": "Junior College in Veral",
+        "description": "Verified Maharashtra Junior College identity, College No., UDISE and Science stream information for SSKEMS in Veral.",
+        "canonicalPath": "/junior-college"
+      },
+      "validUntil": null
+    },
+    {
+      "id": "neet-institute",
+      "route": "/programmes/jee-neet",
+      "organisationId": "ORG-SSKVI",
+      "organisationType": "institute",
+      "displayName": "Shree Samarth Krupa Institute",
+      "navigationLabel": "Institute",
+      "eyebrow": "Entrance-examination preparation",
+      "title": "Structured NEET-UG preparation.",
+      "summary": "Shree Samarth Krupa Institute provides structured competitive-examination preparation through concept-based teaching, revision, doubt support, topic-wise practice, regular testing and board-examination support.",
+      "publicationNote": "This approved profile covers NEET-UG preparation only. Detailed JEE programme claims, current batch timings, fees, eligibility, faculty and the legal-operator document remain outside this publication.",
+      "facts": [
+        { "label": "Public entity", "value": "Shree Samarth Krupa Institute" },
+        { "label": "Approved programme scope", "value": "NEET-UG preparation" },
+        { "label": "Core subjects", "value": "Physics, Chemistry and Biology" }
+      ],
+      "groups": [
+        {
+          "title": "Learning and test support",
+          "description": "The approved public description covers the teaching approach, not a current timetable or fee offer.",
+          "items": [
+            "Concept-based teaching and topic-wise practice",
+            "Revision classes and doubt support",
+            "Modules and question-bank practice",
+            "Regular minor, major and board-pattern tests",
+            "Board-examination support"
+          ]
+        }
+      ],
+      "withheldSections": ["detailed JEE programme claims", "student groups and eligibility", "current batch timings", "fees", "admission procedure", "faculty", "results", "legal-operator documents", "media"],
+      "evidenceReferences": ["EVD-2026-003"],
+      "claimRecordIds": ["claim-institute-neet-public-profile"],
+      "seo": {
+        "title": "Shree Samarth Krupa Institute",
+        "description": "Approved public information about NEET-UG preparation and learning support at Shree Samarth Krupa Institute in Veral.",
+        "canonicalPath": "/programmes/jee-neet"
+      },
+      "validUntil": "2026-12-01"
+    }
+  ]
+}

@@ -13,7 +13,8 @@ Programmes content package. It is the source specification for:
    package and, later, the public website.
 
 The machine-readable definition is
-`content/programmes-intake-system.json`. It contains no real school claim,
+`content/programmes-intake-system.json`, schema version 2 and contract version
+`1.1.0-draft`. It contains no real school claim,
 fee, result, person, approval or evidence record. Its Google assets are not yet
 provisioned.
 
@@ -43,7 +44,7 @@ The intake uses three fixed programme IDs:
 | `PRG-EXAM-PREP` | JEE, NEET and CET preparation |
 
 Repeating rows use typed stable IDs: `CMP-*`, `FAC-*`, `FEE-*`, `RES-*`,
-`SCH-*`, `EVD-YYYY-NNNN` and `PUB-*`. Never use a person's name, phone number,
+`SCH-*`, `EVD-YYYY-NNN` or `EVD-YYYY-NNNN`, and `PUB-*`. Never use a person's name, phone number,
 email address, Drive URL or filename as an ID.
 
 ## Google Form build specification
@@ -52,18 +53,26 @@ Create a restricted Form named **SSKEMS Programmes management intake**. Use one
 response per academic-year package and branch the CBSE Senior Secondary and
 Junior College sections from the institutional-model answer.
 
-The six sections and exact field IDs are defined in
+The nine sections and exact field IDs are defined in
 `programmes-intake-system.json#googleForm.sections`:
 
-1. Control record: academic year, submitting role and institutional model.
-2. CBSE Senior Secondary: official identity, board, affiliation, classes,
+1. Control record: academic year, short name, categories, lifecycle status,
+   publication request, submitting role and institutional model.
+2. Ownership and governance: stable organisation IDs for operation, enrolment,
+   fees, delivery, coaching and certification plus governance evidence.
+3. Organisation relationship and wording: two distinct organisation IDs,
+   relationship type, exact wording, four term-use decisions, evidence and
+   validity. It is not hard-coded to any former partner name.
+4. CBSE Senior Secondary: official identity, board, affiliation, classes,
    streams, subjects, eligibility, public fee wording, admissions and summary.
-3. Separate Junior College: the same verified programme facts, shown only when
+5. Separate Junior College: the same verified programme facts, shown only when
    that pathway is current.
-4. JEE, NEET and CET preparation: operator, curriculum, timetable, public
+6. JEE, NEET and CET preparation: operator, curriculum, timetable, public
    faculty and fee summaries, facilities, results decision and public summary.
-5. Publication direction: exact claims, requested media IDs and navigation.
-6. Approval: at least two opaque evidence IDs, approving role, dates and the
+7. Policy and validity: publication/privacy permission, information validity,
+   next review, future owner role and controlled internal-only notes.
+8. Publication direction: exact claims, requested media IDs and navigation.
+9. Approval: at least two opaque evidence IDs, approving role, dates and the
    exact final confirmation value expected by the existing package validator.
 
 The Form may use the authorised Google account for access auditing inside the
@@ -82,12 +91,20 @@ The register has these tabs:
 | Tab | One row per | Critical rule |
 | --- | --- | --- |
 | Programmes | Programme and academic year | Summary row only; detail stays in the Form/package |
+| Organisations | Governed organisation | Exact official identity and stable `ORG-*` ID; no inferred legal identity |
+| Programme Governance | Responsibility and programme | Operation, enrolment, fees, delivery, coaching and certification remain separate evidence-bound responsibilities |
 | Faculty | Public faculty profile and programme | No contact details; public name/bio requires the applicable consent and claim decision |
 | Fees | Fee category and academic year | Record only exact approved public wording and a current circular reference |
 | Results | Aggregate result claim | No pupil-level data; every published metric needs result-proof evidence and a claim record |
 | Scholarships | Scholarship and academic year | Eligibility, benefit and deadline must match current evidence |
 | Campus | Campus | Use approved public location/facility wording and approved media IDs only |
-| Evidence Register | Controlled evidence item | The Drive link remains private; repository exports keep only the evidence ID |
+| Programme Documents | Guarded programme document reference | No arbitrary URL or invented brochure ID; the existing document pipeline remains authoritative |
+| Admissions Actions | Programme CTA and window | Keep lifecycle status separate from admissions dates; contact is a public route, not a personal address |
+| Organisation Relationships | Relationship between two distinct organisations | Preserve exact relationship and explicit terminology permissions/prohibitions |
+| Board & Status | Programme institutional status | Board, recognised institution, status wording, evidence and validity are explicit |
+| Institution Identifiers | One typed official identifier | Affiliation, school and UDISE values are never collapsed into one ambiguous field |
+| Campus Availability | Campus, programme and academic year | Availability, delivery, duration, batches and capacity must be current and evidenced |
+| Media & Evidence | Controlled media/evidence index | Drive links stay private; repository exports keep only opaque IDs and approved public projections |
 | Publication Tracker | Proposed public item | One explicit blocker whenever all gates do not pass |
 | Lists | Dropdown value | Protected administrator-owned reference data |
 
@@ -96,10 +113,14 @@ Its logic is:
 
 ```text
 READY only if
+  intake and package use the same reviewed contract version
   required public fields are complete
+  AND every critical fact is confirmed rather than NOT CONFIRMED
   AND evidence is verified and current
   AND every exact claim has a current approved manifest record
   AND management decision is approved and current
+  AND publication-policy and privacy permissions are approved
+  AND information validity, next review and update ownership are current
   AND SEO title and description are reviewed
   AND navigation placement and public URL are assigned
   AND selected media/documents pass their own pipelines
@@ -159,14 +180,40 @@ Built in the repository:
 - the private, browser-only XLSX intake preflight and sanitized digest receipt;
 - the schema-backed JSON package and validator;
 - the programme, evidence, navigation and approval guardrails;
-- the machine-readable Form/Sheet/Drive/tracker specification; and
+- the machine-readable Form/Sheet/Drive/tracker specification;
+- the v1.1-aligned Form, governance, relationship, identifier, admissions,
+  campus-availability, document and tracker field definitions;
+- a private, explicitly non-authorizing assessment of the supplied rows 2-32; and
 - automated contract checks for the intake boundary.
+
+The private assessment now records the user's three follow-up decisions:
+`SSKEMS` as the short display name, `both` as the institutional model, and
+`SSKEMS` as the XI-XII enrolment institution candidate. They remove those three
+intake ambiguities but do not provide documentary verification or publication
+approval.
+
+A later management-labelled submission covering rows 1-141 is also retained
+only as a privacy-safe assessment. It declares a final approval role and date,
+but the package is rejected for public use because required institutional,
+programme, admissions, schedule, validity and evidence fields remain blank or
+contain option lists/placeholders. Approver and change-contact identities are
+not stored in the repository. No route, navigation item, manifest record or
+deployment is activated by that submission.
+
+A subsequent official-record reconciliation now supplies public-safe candidates
+for the two distinct regulatory entities. The CBSE school uses UDISE
+`27320420205`; the Maharashtra Junior College uses UDISE `27320420206` and
+College No. `25.04.028`. `EVD-2026-001` and `EVD-2026-002` are retained as
+opaque evidence references only. Shree Samarth Krupa Institute is recorded as
+the supplied entrance-exam operator candidate, but its legal/operator document
+and evidence ID remain required. This reconciliation narrows the blockers; it
+does not itself constitute an approval-manifest decision or activate output.
 
 Still external and deliberately not claimed as complete:
 
 - Google Drive connection and restricted folder provisioning;
 - native Google Sheet and Form creation;
-- real current school, Junior College and JEE/NEET/CET source collection;
+- completion of the remaining current school, Junior College and JEE/NEET source documents and controlled evidence metadata;
 - resolution of the blockers recorded by the current workbook intake receipt;
 - management decisions, evidence verification and claim approvals;
 - completion of the first approved Programmes JSON package;

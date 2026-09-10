@@ -252,7 +252,7 @@ test("exports the complete Phase 1 component inventory", async () => {
   );
 });
 
-test("keeps unconfirmed institutional pathways out of primary navigation", async () => {
+test("exposes only the approved institutional profiles in primary navigation", async () => {
   const navigation = await source("app/data/navigation.ts");
 
   assert.match(
@@ -261,11 +261,11 @@ test("keeps unconfirmed institutional pathways out of primary navigation", async
   );
   assert.match(
     navigation,
-    /label:\s*["']Junior College["'][\s\S]*?status:\s*["']pending["']/,
+    /label:\s*["']Junior College["'][\s\S]*?status:\s*["']active["']/,
   );
   assert.match(
     navigation,
-    /label:\s*["']Institute["'][\s\S]*?status:\s*["']pending["']/,
+    /label:\s*["']Institute["'][\s\S]*?status:\s*["']active["']/,
   );
 
   const primaryStart = navigation.indexOf("export const primaryNavigation");
@@ -273,15 +273,15 @@ test("keeps unconfirmed institutional pathways out of primary navigation", async
   assert.ok(primaryStart >= 0 && primaryEnd > primaryStart);
   const primaryNavigation = navigation.slice(primaryStart, primaryEnd);
 
-  assert.match(primaryNavigation, /label:\s*["']School["']/);
-  assert.match(primaryNavigation, /href:\s*["']\/school["']/);
-  assert.doesNotMatch(primaryNavigation, /label:\s*["']Junior College["']/);
-  assert.doesNotMatch(primaryNavigation, /label:\s*["']Institute["']/);
+  assert.match(primaryNavigation, /label:\s*["']CBSE School["']/);
+  assert.match(primaryNavigation, /href:\s*["']\/school\/academics["']/);
+  assert.match(primaryNavigation, /label:\s*["']Junior College["']/);
+  assert.match(primaryNavigation, /label:\s*["']Institute["']/);
   assert.match(navigation, /Mandatory Public Disclosure/);
   assert.match(navigation, /href:\s*["']\/admissions\/enquire["']/);
 });
 
-test("ships complete site states and a consistent accessible shell without exposing Programme details", async () => {
+test("ships complete site states, an accessible shell and the approved Programme profile lane", async () => {
   const [notFound, loading, errorPage, globalError, header, footer, navigation, css, catchAll, schoolRoute, collegeRoute, preparationRoute] = await Promise.all([
     source("app/not-found.tsx"),
     source("app/loading.tsx"),
@@ -325,7 +325,8 @@ test("ships complete site states and a consistent accessible shell without expos
   assert.match(footer, /footerNavigationGroups/);
   assert.doesNotMatch(footer, /institutionPathways|confirmation pending|· confirmed/);
   assert.match(navigation, /footerNavigationGroups/);
-  assert.match(navigation, /links:\s*group\.links\.filter\(\(link\) => !isProgrammesPublicationRoute\(link\.href\)\)/);
+  assert.match(navigation, /title:\s*["']Programmes["']/);
+  assert.match(navigation, /href:\s*["']\/programmes\/jee-neet["']/);
   assert.doesNotMatch(catchAll, /"\/junior-college"\s*:\s*\{|"\/institute"\s*:\s*\{/);
   assert.doesNotMatch(catchAll, /\.\.\.institutionPathways/);
   assert.match(catchAll, /isProgrammesPublicationRoute\(path\) \|\| !allKnownPaths\.has\(path\)/);
@@ -339,9 +340,10 @@ test("ships complete site states and a consistent accessible shell without expos
 
   for (const route of [schoolRoute, collegeRoute, preparationRoute]) {
     const publicMetadata = route.slice(route.indexOf("export function generateMetadata"), route.indexOf("export default"));
-    assert.match(publicMetadata, /HOMEPAGE_REVIEW_MODE !== "private"/);
-    assert.match(publicMetadata, /title:\s*"Page not found"/);
-    assert.match(publicMetadata, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false,\s*nocache:\s*true\s*\}/);
+    assert.match(publicMetadata, /getPublicProgrammeProfile\(route\)/);
+    assert.match(publicMetadata, /alternates:\s*\{ canonical:/);
+    assert.match(publicMetadata, /index:\s*true, follow:\s*true/);
+    assert.match(publicMetadata, /index:\s*false, follow:\s*false, nocache:\s*true/);
   }
 });
 

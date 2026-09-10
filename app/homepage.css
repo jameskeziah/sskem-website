@@ -129,6 +129,19 @@
   color: var(--color-brand-300);
 }
 
+.home-hero__review-note {
+  width: fit-content;
+  margin: 0 0 var(--space-8);
+  padding: var(--space-8) var(--space-12);
+  border: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 45%, transparent);
+  border-radius: var(--radius-pill);
+  color: var(--color-neutral-100);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 .home-hero__title {
   display: grid;
   max-width: 50rem;
@@ -143,8 +156,13 @@
   text-transform: uppercase;
 }
 
-.home-hero__title > span {
+.home-hero__line,
+.home-hero__line > span {
   display: block;
+}
+
+.home-hero__line {
+  overflow: hidden;
 }
 
 .home-hero__punctuation {
@@ -317,6 +335,61 @@
     display: none;
   }
 
+  .home-hero--private-review .home-hero__desktop-poster {
+    display: none;
+  }
+
+  .home-hero--private-review .home-hero__live-copy {
+    position: absolute !important;
+    z-index: 2;
+    inset: 0 0 auto;
+    display: grid;
+    width: 100% !important;
+    height: clamp(36rem, 52.5vw, 46rem) !important;
+    align-content: center;
+    gap: var(--space-16);
+    padding: clamp(var(--space-48), 7vw, 7rem) max(var(--space-32), calc((100vw - var(--layout-wide)) / 2)) !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    clip: auto !important;
+    clip-path: none !important;
+    white-space: normal !important;
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--color-neutral-950) 94%, transparent) 0%, color-mix(in srgb, var(--color-neutral-950) 74%, transparent) 39%, color-mix(in srgb, var(--color-neutral-950) 15%, transparent) 72%, transparent 100%),
+      linear-gradient(180deg, color-mix(in srgb, var(--color-neutral-950) 28%, transparent), color-mix(in srgb, var(--color-neutral-950) 60%, transparent));
+    border: 0 !important;
+    pointer-events: none;
+  }
+
+  .home-hero--private-review .home-hero__live-copy > * {
+    pointer-events: auto;
+  }
+
+  .home-hero--private-review .home-hero__title {
+    max-width: 54rem;
+    font-size: clamp(6rem, 10.4vw, 10.5rem);
+    line-height: 0.78;
+  }
+
+  .home-hero--private-review .home-hero__mobile-media {
+    display: block;
+    height: clamp(36rem, 52.5vw, 46rem);
+    overflow: hidden;
+  }
+
+  .home-hero--private-review .home-hero__mobile-media::before {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--space-8);
+    transform: none;
+  }
+
+  .home-hero--private-review .home-hero__mobile-media img {
+    object-position: 50% 50%;
+  }
+
   .home-hero__dock-inner {
     grid-template-columns: minmax(17rem, 0.8fr) minmax(20rem, 0.9fr) auto;
     gap: clamp(var(--space-24), 4vw, var(--space-48));
@@ -349,6 +422,80 @@
   .home-hero__dock .home-actions {
     justify-content: flex-end;
   }
+}
+
+/* Verified identity */
+.home-identity-strip {
+  border-top: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 16%, transparent);
+  border-bottom: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 20%, transparent);
+  background: var(--color-brand-950);
+  color: var(--text-on-brand);
+}
+
+.home-identity-strip__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.45fr);
+}
+
+.home-identity-strip__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.home-identity-strip__facts > div,
+.home-identity-strip__inner > a {
+  display: grid;
+  gap: var(--space-8);
+  padding: var(--space-24) var(--space-32);
+  border-inline-end: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 20%, transparent);
+}
+
+.home-identity-strip__facts > div:first-child {
+  padding-inline-start: 0;
+}
+
+.home-identity-strip dt,
+.home-identity-strip__inner > a > span {
+  color: var(--color-brand-200);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.home-identity-strip dd {
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: clamp(var(--font-size-300), 2vw, var(--font-size-500));
+  font-weight: var(--font-weight-bold);
+}
+
+.home-identity-strip__inner > a {
+  position: relative;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border-inline-end: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-identity-strip__inner > a > span,
+.home-identity-strip__inner > a > strong {
+  grid-column: 1;
+}
+
+.home-identity-strip__inner > a > strong {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-300);
+}
+
+.home-identity-strip__inner > a > i {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: center;
+  color: var(--color-brand-200);
+  font-size: var(--font-size-500);
+  font-style: normal;
 }
 
 /* Foundation statement */
@@ -579,18 +726,20 @@
 
 .home-pathways__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-block: var(--border-width-default) solid var(--border-strong);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--border-width-default);
+  padding: var(--border-width-default);
+  background: var(--border-strong);
 }
 
 .home-pathway-card {
   position: relative;
   display: grid;
-  min-height: 30rem;
+  min-height: 31rem;
+  grid-column: span 3;
   align-content: space-between;
   gap: var(--space-32);
   padding: var(--space-32);
-  border-inline-end: var(--border-width-default) solid var(--border-strong);
   background: var(--surface-raised);
   transition:
     transform var(--motion-duration-standard) var(--motion-ease-enter),
@@ -598,8 +747,25 @@
     color var(--motion-duration-standard) var(--motion-ease-enter);
 }
 
-.home-pathway-card:last-child {
-  border-inline-end: 0;
+.home-pathway-card:first-child {
+  grid-column: span 6;
+  background:
+    radial-gradient(circle at 85% 8%, color-mix(in srgb, var(--color-blue) 34%, transparent), transparent 18rem),
+    var(--color-neutral-950);
+  color: var(--text-on-brand);
+}
+
+.home-pathway-card--private-pending {
+  background:
+    repeating-linear-gradient(-45deg, transparent 0, transparent var(--space-12), color-mix(in srgb, var(--border-strong) 22%, transparent) var(--space-12), color-mix(in srgb, var(--border-strong) 22%, transparent) var(--space-16)),
+    var(--surface-page);
+}
+
+.home-pathway-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
 }
 
 .home-pathway-card__number {
@@ -607,6 +773,25 @@
   font-size: var(--font-size-100);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.12em;
+}
+
+.home-pathway-card__status {
+  padding: var(--space-8) var(--space-12);
+  border: var(--border-width-default) solid currentColor;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.home-pathway-card__label {
+  margin: 0 0 var(--space-12) !important;
+  color: var(--text-muted);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .home-pathway-card h3 {
@@ -626,6 +811,11 @@
   color: var(--text-secondary);
 }
 
+.home-pathway-card:first-child p,
+.home-pathway-card:first-child .home-pathway-card__number {
+  color: var(--color-neutral-300);
+}
+
 .home-pathway-card > a {
   display: flex;
   min-height: 2.75rem;
@@ -636,6 +826,135 @@
   border-top: var(--border-width-default) solid currentColor;
   font-weight: var(--font-weight-bold);
   text-decoration: none;
+}
+
+.home-pathway-card__withheld {
+  display: block;
+  padding-top: var(--space-16);
+  border-top: var(--border-width-default) solid currentColor;
+  color: var(--text-muted);
+  font-size: var(--font-size-200);
+  font-weight: var(--font-weight-bold);
+}
+
+.home-pathways__supporting {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16) var(--space-24);
+  padding-top: var(--space-24);
+}
+
+.home-pathways__supporting > span {
+  color: var(--text-muted);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.home-pathways__supporting a {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Admissions feature */
+.home-admissions-feature {
+  padding-block: clamp(var(--space-64), 10vw, 9rem);
+  background:
+    radial-gradient(circle at 88% 14%, color-mix(in srgb, var(--surface-raised) 64%, transparent), transparent 25rem),
+    var(--color-brand-300);
+  color: var(--home-ink);
+}
+
+.home-admissions-feature__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.7fr);
+  align-items: end;
+  gap: clamp(var(--space-48), 8vw, 8rem);
+}
+
+.home-admissions-feature__intro {
+  display: grid;
+  justify-items: start;
+}
+
+.home-admissions-feature__institution {
+  margin: var(--space-24) 0 0;
+  font-size: var(--font-size-200);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.home-admissions-feature h2 {
+  max-width: 56rem;
+  margin: var(--space-16) 0 var(--space-32);
+  font-family: var(--home-display);
+  font-size: clamp(3.5rem, 7.4vw, 7rem);
+  font-stretch: condensed;
+  font-weight: 800;
+  letter-spacing: -0.065em;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+.home-admissions-feature__status {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 44rem;
+  padding: var(--space-16) var(--space-20);
+  border: var(--border-width-default) solid color-mix(in srgb, var(--home-ink) 42%, transparent);
+  border-radius: var(--radius-large);
+  background: color-mix(in srgb, var(--surface-raised) 44%, transparent);
+}
+
+.home-admissions-feature__status span {
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.home-admissions-feature__status strong {
+  font-size: var(--font-size-300);
+}
+
+.home-admissions-feature__message {
+  max-width: 44rem;
+  margin: var(--space-24) 0;
+  font-size: var(--font-size-300);
+  line-height: 1.55;
+}
+
+.home-admissions-feature__steps {
+  margin: 0;
+  padding: 0;
+  border-top: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 24%, transparent);
+  background: var(--color-neutral-950);
+  color: var(--text-on-brand);
+  list-style: none;
+}
+
+.home-admissions-feature__steps li {
+  display: grid;
+  min-height: 6.5rem;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-16);
+  padding: var(--space-20) var(--space-24);
+  border-bottom: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 24%, transparent);
+}
+
+.home-admissions-feature__steps span {
+  color: var(--color-brand-300);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+}
+
+.home-admissions-feature__steps strong {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-300);
 }
 
 /* Essential services */
@@ -935,6 +1254,7 @@
 
 @media (max-width: 70rem) {
   .home-section-heading--split,
+  .home-admissions-feature__grid,
   .home-services__grid,
   .home-events__grid,
   .home-invitation__grid {
@@ -946,7 +1266,12 @@
   }
 
   .home-pathway-card {
-    min-height: 26rem;
+    min-height: 25rem;
+    grid-column: span 6;
+  }
+
+  .home-pathway-card:first-child {
+    grid-column: 1 / -1;
   }
 
   .home-services__intro {
@@ -975,6 +1300,7 @@
   .home-manifesto__grid h2,
   .home-campus__heading h2,
   .home-section-heading h2,
+  .home-admissions-feature h2,
   .home-services__intro h2,
   .home-invitation h2 {
     font-size: clamp(3rem, 14vw, 5rem);
@@ -1020,14 +1346,26 @@
     grid-template-columns: 1fr;
   }
 
-  .home-pathway-card {
+  .home-pathway-card,
+  .home-pathway-card:first-child {
     min-height: 22rem;
+    grid-column: 1;
     padding: var(--space-24);
-    border-inline-end: 0;
-    border-bottom: var(--border-width-default) solid var(--border-strong);
   }
 
-  .home-pathway-card:last-child {
+  .home-identity-strip__inner,
+  .home-identity-strip__facts {
+    grid-template-columns: 1fr;
+  }
+
+  .home-identity-strip__facts > div,
+  .home-identity-strip__inner > a {
+    padding: var(--space-20) 0;
+    border-inline-end: 0;
+    border-bottom: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 20%, transparent);
+  }
+
+  .home-identity-strip__inner > a {
     border-bottom: 0;
   }
 

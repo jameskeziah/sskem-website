@@ -6,6 +6,7 @@ import { strToU8, zipSync } from "fflate";
 
 import {
   PROGRAMMES_INTAKE_CONTRACT_ID,
+  PROGRAMMES_INTAKE_CONTRACT_VERSION,
   PROGRAMMES_WORKBOOK_RECEIPT_ID,
   inspectProgrammesWorkbook,
   inspectProgrammesWorkbookForPrivateDraft,
@@ -179,6 +180,8 @@ test("records the supplied workbook audit as a blocked, code-only receipt", asyn
     embeddedObjectPartCount: 0,
   });
   assert.equal(data.contractBinding.matchedWorksheetCount, 5);
+  assert.equal(data.contractBinding.schemaVersion, 1);
+  assert.equal(data.contractBinding.expectedWorksheetCount, 9);
   assert.equal(data.contractBinding.exactStructureMatch, false);
   assert.equal(data.totals.notConfirmedResponses, 263);
   assert.equal(data.totals.unresolvedCriticalResponses, 119);
@@ -194,6 +197,8 @@ test("inspects XLSX bytes without returning private cell values or source identi
   const receipt = await inspectProgrammesWorkbook({ bytes, generatedOn: "2026-09-07" });
   const serialized = JSON.stringify(receipt);
   assert.equal(receipt.status, "blocked");
+  assert.equal(receipt.contractBinding.schemaVersion, PROGRAMMES_INTAKE_CONTRACT_VERSION);
+  assert.equal(receipt.contractBinding.expectedWorksheetCount, 17);
   assert.equal(receipt.structure.matchedRequiredWorksheetCount, 14);
   assert.equal(receipt.totals.managementConfirmedForms, 0);
   assert.equal(receipt.privacy.potentialPersonRecordsPresent, true);
@@ -375,6 +380,10 @@ test("receipt validation rejects unknown properties and changed non-authorizing 
     ...receipt,
     guardrails: { ...receipt.guardrails, cmsWritePerformed: true },
   }).join(" "), /guardrails must remain false/i);
+  assert.match(validateProgrammesWorkbookIntakeReceipt({
+    ...receipt,
+    contractBinding: { ...receipt.contractBinding, schemaVersion: 1 },
+  }).join(" "), /contract binding is invalid/i);
 });
 
 test("ships an authenticated browser-memory-only workspace with no upload, persistence or public path", async () => {

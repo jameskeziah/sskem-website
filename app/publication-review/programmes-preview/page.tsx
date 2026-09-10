@@ -131,7 +131,7 @@ const programmes = [
 }>;
 
 const publicationGates = [
-  ["Institutional model", "Confirm CBSE Senior Secondary, separate Junior College, or both, plus the ProTrack relationship."],
+  ["Institutional model", "Confirm CBSE Senior Secondary, separate Junior College, or both, plus every relevant organisation relationship."],
   ["Programme operations", "Approve active classes, subjects, eligibility, duration, delivery mode, branch availability and admission procedure."],
   ["Commercial details", "Supply current fees, scholarships and offers from controlled management records."],
   ["People and facilities", "Approve current faculty assignments, laboratories, technology, transport and hostel statements."],

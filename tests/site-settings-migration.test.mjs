@@ -30,7 +30,7 @@ test("maps every public siteSettings field to its controlling claim without an e
     principalEmail: siteFacts.principalEmail,
     workingHours: siteFacts.workingHours,
   });
-  assert.deepEqual(packet.blockingApprovalRecordIds, ["claim-complete-address", "claim-public-contact"]);
+  assert.deepEqual(packet.blockingApprovalRecordIds, ["claim-public-contact"]);
   assert.deepEqual(packet.guardrails, {
     externalWritePerformed: false,
     publicationState: "draft",

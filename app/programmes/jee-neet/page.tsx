@@ -2,22 +2,33 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { requireChatGPTUser } from "@/app/chatgpt-auth";
-import { PrivateProgrammeRouteShell, privateProgrammeRouteShellSpec } from "@/components/programmes/private-programme-route-shell";
+import { getPublicProgrammeProfile } from "@/app/data/programmes-public-profiles";
+import { PublicProgrammeProfilePage } from "@/components/programmes/public-programme-profile";
+
+import "../../programmes.css";
 
 const route = "/programmes/jee-neet" as const;
 
 export const dynamic = "force-dynamic";
 
 export function generateMetadata(): Metadata {
-  if (process.env.HOMEPAGE_REVIEW_MODE !== "private") {
-    return { title: "Page not found", description: "The requested SSKEMS page is not publicly available.", robots: { index: false, follow: false, nocache: true } };
-  }
-  return { title: "JEE and NEET Route Shell", description: "Private SSKEMS review shell for the future JEE and NEET programme route.", robots: { index: false, follow: false, nocache: true } };
+  const profile = getPublicProgrammeProfile(route);
+  if (!profile) return { title: "Page not found", robots: { index: false, follow: false } };
+  return {
+    title: profile.seo.title,
+    description: profile.seo.description,
+    alternates: { canonical: profile.seo.canonicalPath },
+    robots: process.env.HOMEPAGE_REVIEW_MODE === "private"
+      ? { index: false, follow: false, nocache: true }
+      : { index: true, follow: true },
+  };
 }
 
-export default async function JeeNeetRouteShellPage() {
-  if (process.env.HOMEPAGE_REVIEW_MODE !== "private") notFound();
-  await requireChatGPTUser(route);
+export default async function JeeNeetPage() {
+  const profile = getPublicProgrammeProfile(route);
+  if (!profile) notFound();
+  const privatePreview = process.env.HOMEPAGE_REVIEW_MODE === "private";
+  if (privatePreview) await requireChatGPTUser(route);
 
-  return <PrivateProgrammeRouteShell spec={privateProgrammeRouteShellSpec(route)} />;
+  return <PublicProgrammeProfilePage profile={profile} privatePreview={privatePreview} />;
 }

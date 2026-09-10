@@ -9,6 +9,7 @@ import {
   motionDurationSeconds,
   motionEase,
   motionMedia,
+  motionScale,
   motionStaggerSeconds,
 } from "@/lib/motion";
 
@@ -17,9 +18,17 @@ gsap.registerPlugin(useGSAP);
 type MotionConditions = {
   reduce?: boolean;
   mobile?: boolean;
+  tablet?: boolean;
+  desktop?: boolean;
 };
 
-export function HomeHeroMotion({ children }: { children: ReactNode }) {
+export function HomeHeroMotion({
+  children,
+  reviewMode = "public",
+}: {
+  children: ReactNode;
+  reviewMode?: "public" | "private-review";
+}) {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -32,17 +41,43 @@ export function HomeHeroMotion({ children }: { children: ReactNode }) {
         const conditions = context.conditions as MotionConditions;
         const intro = element.querySelector<HTMLElement>("[data-motion-home-hero-intro]");
         const headings = gsap.utils.toArray<HTMLElement>("[data-motion-home-hero-heading]", element);
-        const targets = [intro, ...headings].filter(Boolean) as HTMLElement[];
+        const heroMedia = element.querySelector<HTMLElement>("[data-motion-home-hero-media] img");
+        const targets = [intro, ...headings, heroMedia].filter(Boolean) as HTMLElement[];
+        const privatePrototype = reviewMode === "private-review";
+        const animateLiveHero = conditions.mobile || privatePrototype;
 
-        if (conditions.reduce || !conditions.mobile) {
+        if (conditions.reduce || !animateLiveHero) {
           gsap.set(targets, { clearProps: "all" });
           return;
         }
 
-        const distance = motionDistancePixels.revealMobile;
+        const distance = conditions.mobile
+          ? motionDistancePixels.revealMobile
+          : conditions.tablet
+            ? motionDistancePixels.revealTablet
+            : motionDistancePixels.revealDesktop;
+        const timeline = gsap.timeline();
+
+        if (privatePrototype && heroMedia && !conditions.mobile) {
+          timeline.fromTo(
+            heroMedia,
+            {
+              scale: motionScale.imageMaskMaximum,
+              transformOrigin: "50% 50%",
+              willChange: "transform",
+            },
+            {
+              scale: 1,
+              duration: motionDurationSeconds.slow,
+              ease: motionEase.emphasised,
+              clearProps: "all",
+            },
+            0,
+          );
+        }
 
         if (intro) {
-          gsap.fromTo(
+          timeline.fromTo(
             intro,
             { opacity: 0, y: distance, willChange: "transform, opacity" },
             {
@@ -52,10 +87,11 @@ export function HomeHeroMotion({ children }: { children: ReactNode }) {
               ease: motionEase.enter,
               clearProps: "all",
             },
+            0,
           );
         }
 
-        gsap.fromTo(
+        timeline.fromTo(
           headings,
           { opacity: 0, y: distance, willChange: "transform, opacity" },
           {
@@ -63,9 +99,10 @@ export function HomeHeroMotion({ children }: { children: ReactNode }) {
             y: 0,
             duration: motionDurationSeconds.slow,
             ease: motionEase.emphasised,
-            stagger: motionStaggerSeconds.mobile,
+            stagger: conditions.mobile ? motionStaggerSeconds.mobile : motionStaggerSeconds.heading,
             clearProps: "all",
           },
+          0,
         );
       });
 
@@ -77,10 +114,11 @@ export function HomeHeroMotion({ children }: { children: ReactNode }) {
   return (
     <section
       ref={root}
-      className="home-hero"
+      className={`home-hero${reviewMode === "private-review" ? " home-hero--private-review" : ""}`}
       aria-labelledby="home-title"
       data-motion-component="home-hero"
       data-motion-level="4"
+      data-homepage-review-mode={reviewMode}
     >
       {children}
     </section>

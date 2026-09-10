@@ -25,11 +25,11 @@ This audit does not approve content, activate navigation, publish a route, write
 | 4. Publication gates | Deliberate deviation | `validateProgrammesPublicationPackage` calculates route gates and `publicationReady`; `lib/programmes-render-gate.ts` issues an opaque digest-bound render token only from a validator-issued immutable plan. | `navigation` is intentionally downstream of route readiness, matching section 12 but differing from the simplified equality in section 4. `relatedLinkable` is not implemented. |
 | 5. Academic-year rules | Partial | Full consecutive academic years are validated; programme, fee, eligibility, schedule, admission and scholarship year mismatches block; historical aggregate results are allowed. | Add year-sensitive campus/facility availability and explicit admission-date records. |
 | 6. Approval rules | Conforms with safer identity boundary | Package and child statuses are checked; current validity windows are enforced; most restrictive status wins. Approval uses `approvedByRole`, not a person's identity. | Carry `approvedByRole` into the next checkpoint wording. Add explicit child validity windows where the source contract requires them. |
-| 7. Evidence rules | Partial | Stable evidence IDs, type, status, controlled opaque reference, validity and programme scope are validated. Missing, pending, expired and wrongly scoped evidence block. | Model organisation/relationship scope explicitly; align partnership evidence with the ProTrack relationship claim; strengthen route-specific board/recognition requirements. |
+| 7. Evidence rules | Partial | Stable evidence IDs, type, status, controlled opaque reference, validity and programme scope are validated. Missing, pending, expired and wrongly scoped evidence block. | Model organisation/relationship scope explicitly; align relationship evidence with the exact operator claim; strengthen route-specific board/recognition requirements. |
 | 8. Result rules | Conforms with safer privacy boundary | Only aggregate result fields are accepted. Verification and aggregate-result evidence are mandatory; unverified results block the route and cannot be silently omitted. | Add an explicit result-without-evidence test and document any consent rule that can apply even to aggregate publication. Pupil identities and marksheets remain outside the public package. |
 | 9. Claims rules | Partial | Canonical claim records and manifest bindings exist; regulatory, financial, performance and comparative claims require verified evidence. | Add an explicit partnership/relationship claim model, approved use of the word `integrated`, and a prohibited-superlative rule or review gate. Academic claim evidence currently assumes programme approval and does not express every allowed relationship evidence path. |
 | 10. Media rules | Conforms for publication validation and private presentation | Stable IDs, type, role, programme scope, approval status, manifest record, alt text, people flag, rights and consent decisions are validated. `lib/programmes-media.ts` and the Programme media components now enforce private-only paths, five fixed ratios, intrinsic ratio agreement, responsive loading, visible captions, descriptive alt text, video captions and a static reduced-motion poster. The three private route shells use only existing campus prototypes and cannot resolve production bindings. | Add explicit publication-validator tests for unresolved rights and required consent. Supply a real private video/poster/WebVTT set before visual video review; do not fabricate one. Production route media still requires exact approved derivative resolution. |
-| 11. Route plans and components | Partial | `createProgrammesImplementationPlan` produces three read-only route plans. `components/programmes/programme-components.tsx` provides Hero, Subjects/Streams, Eligibility, Schedule, Fees, Faculty, Facilities, Results, Documents and Admissions CTA components. `lib/programmes-data-adapter.ts` converts an exact accepted package into immutable component-ready projections with digest-bound route gates. `lib/programmes-expiry.ts` and the four guarded expiry renderers remove stale time-sensitive values and substitute canonical contact guidance. The new guarded document resolver and four specialised components require an active exact PDF binding, compatible document kind and explicit Programme-route target before rendering. `components/programmes/private-programme-route-shell.tsx` prepares the same ten structural slots on all three authenticated route shells. | Wire a reviewed resolver to the adapter and expiry projection; do not make the private shells public. Add canonical brochure and other public-document references plus CTA/contact records to a new versioned schema before public wiring. Add exact XI-XII, board, recognised-institution, ProTrack relationship, integrated terminology and campus-availability gates. |
+| 11. Route plans and components | Partial | `createProgrammesImplementationPlan` produces three read-only route plans. `components/programmes/programme-components.tsx` provides Hero, Subjects/Streams, Eligibility, Schedule, Fees, Faculty, Facilities, Results, Documents and Admissions CTA components. `lib/programmes-data-adapter.ts` converts an exact accepted package into immutable component-ready projections with digest-bound route gates. `lib/programmes-expiry.ts` and the four guarded expiry renderers remove stale time-sensitive values and substitute canonical contact guidance. The new guarded document resolver and four specialised components require an active exact PDF binding, compatible document kind and explicit Programme-route target before rendering. `components/programmes/private-programme-route-shell.tsx` prepares the same ten structural slots on all three authenticated route shells. | Wire a reviewed resolver to the adapter and expiry projection; do not make the private shells public. Add canonical brochure and other public-document references plus CTA/contact records to a new versioned schema before public wiring. Add exact XI-XII, board, recognised-institution, organisation relationship, integrated terminology and campus-availability gates. |
 | 12. Navigation | Conforms | Canonical navigation records are mapped only when the route is ready and the navigation record is approved. Static legacy links to governed routes are filtered. | Activate only from a future accepted package; no action now. |
 | 13. Sitemap | Conforms | `buildProgrammesSitemap` emits publication-ready routes; `app/sitemap.ts` removes dormant governed routes. | Replace the dormant static exclusion only when a trusted package projection is wired. |
 | 14. Public route | Conforms | Dedicated pages now exist at all three exact paths, but each checks private-review mode before authentication and returns not found outside that mode. Their metadata is non-indexable and no-cache. Navigation, footer and sitemap still exclude them. | Replace only the approved branch with a production resolver that requires an issued route gate. Preserve the private/public split and do not add a bypass flag. |
@@ -37,23 +37,56 @@ This audit does not approve content, activate navigation, publish a route, write
 | 16. Digest and receipt | Conforms | Deterministic canonical JSON, package SHA-256, route-level SHA-256 values, counts, route states and an exact read-only receipt exist. Plans are now deep-frozen and marked as validator-issued. The expiry layer adds strict source/projection/receipt digests, exact predecessor pointers and a rollback planner that refuses to restore expired sections. | Add an explicit route-relevant mutation test for the corresponding route digest. Retain real projection bundles and receipts in the controlled release store only after approved data exists. |
 | 17. Required tests | Partial | Core schema/version/unknown/duplicate, reference, status, evidence, expiry, academic-year, result, claim, privacy, canonical digest, public-boundary and browser route tests exist. Component boundary tests now exist. The private shells also have automated Axe/contrast, semantic, keyboard, reduced-motion, no-JavaScript, 320/360/768-pixel, 200%-zoom-equivalent and runtime performance coverage. | Add the specific missing publication-validator cases listed below. Repeat accessibility, assistive-technology and performance acceptance with the final adapter-fed approved fixture and real media. |
 | 18. Frozen invariant | Conforms for route, nav, sitemap and indexing | The validator's `publicationReady` controls public route planning, sitemap inclusion and indexing; navigation adds its required approval gate. The component token cannot be replaced by a copied object or standalone boolean. | Implement `relatedLinkable` and ensure the eventual route resolver consumes the issued token. |
-| 19. Checkpoint rule | Missing | The attached checkpoint exists outside the repository and this audit preserves its meaning. | Add a checkpoint registry and immutable repository copy. Any schema/intake change must become v1.1 or an explicitly breaking v2.0; do not edit v1.0 in place. |
+| 19. Checkpoint rule | Conforms | `content/programmes-publication-contract-registry.json` pins the active v1.0 schema to its exact SHA-256 and registers the separate v1.1 draft supplement. The existing schema and validator still accept only `1.0.0`. | Review the v1.1 field contract before promoting it through the later intake and approved-schema steps; never edit v1.0 in place. |
 
-## Intake fields still missing
+## Intake fields built; source values still unresolved
 
-The current management Form does not explicitly collect:
+Schema version 2 of the intake specification now collects programme duration
+and delivery mode; programme governance responsibilities; the formal
+organisation relationships and term restrictions; admission dates, batches,
+capacity and CTA/contact routes; policy/privacy permissions; information
+validity and review ownership; structured `not-confirmed` states; and
+controlled internal-only notes. The Sheet definition now includes the draft
+v1.1 collections, separate typed institutional identifiers and a protected
+`Media & Evidence` tab.
 
-- programme duration and general delivery mode;
-- the formal SSKEMS-ProTrack relationship and supporting relationship claim;
-- admission opening, closing and decision dates;
-- intake, batch count and capacity;
-- approved admissions CTA labels, destination and public contact route;
-- policy and privacy permissions;
-- information validity, next review date and future update owner;
-- a structured `NOT CONFIRMED` state for critical facts;
-- confidential/internal-only information separated from the public export.
+The supplied rows 2-32 are recorded only as a blocked private-review candidate.
+The user has now confirmed `SSKEMS` as the short display name, `both` as the
+institutional model, and `SSKEMS` as the XI-XII enrolment institution candidate.
+These decisions remain private-review inputs rather than documentary
+verification. Exact organisation IDs, recognised institution name, official
+identifiers, status evidence and validity, stream scope, admissions dates and
+the remaining programme facts are not yet complete or verified.
 
-The workbook has separate Campus and Evidence Register tabs, but no explicit combined `Media & Evidence` repeating-data tab. Media IDs are referenced indirectly. This is workable but does not exactly match the frozen checkpoint.
+The subsequent management-labelled rows 1-141 contain a declared final
+approval, but they still fail the publication contract: the affiliation and
+evidence fields are blank, most programme/admissions/schedule fields are blank,
+several values are option lists or authoring instructions rather than final
+copy, and blanket student-publication answers do not replace individual consent.
+The repository retains only a privacy-safe rejection assessment; approver and
+change-contact identities are excluded.
+
+## Official-record reconciliation received 8 September 2026
+
+The later research package is recorded separately from the rejected intake
+snapshot. It distinguishes three programme operators and pathways instead of
+silently rewriting the historical submission:
+
+- the CBSE Senior Secondary school: affiliation `1130851`, school code `30780`,
+  UDISE `27320420205`, with its current 2027 end date and the separately stated
+  2027-2032 renewal period under `EVD-2026-001`;
+- the distinct Maharashtra Junior College: College No. `25.04.028`, UDISE
+  `27320420206`, Science in the latest Board performance record, Science and
+  Commerce in the current admissions portal, and Arts withheld under
+  `EVD-2026-002`; and
+- Shree Samarth Krupa Institute as the supplied entrance-exam operator
+  candidate, with NEET delivery evidenced by the legacy public source while
+  detailed JEE and legal-entity claims remain withheld.
+
+The exact stale legacy wording `Affiliated up to 31/03/2022` is prohibited from
+current public output but retained in the immutable migration archive. The
+requested sibling navigation and CTA labels are recorded as candidates only;
+no route, navigation, sitemap or deployment state changed.
 
 ## Route-specific validation still missing
 
@@ -73,7 +106,7 @@ The workbook has separate Campus and Evidence Register tabs, but no explicit com
 
 ### `/programmes/jee-neet`
 
-- the SSKEMS-ProTrack relationship is not an explicit approved canonical record;
+- the Institute/operator relationship is not an explicit approved canonical record;
 - `integrated` terminology is not governed as a specific approved claim;
 - operator and delivery summaries exist, but the legal/operational relationship type is not modeled;
 - non-empty faculty and facility lists are not route-specific requirements;
@@ -109,9 +142,9 @@ The component system does **not** make draft data approved. Its future caller mu
 
 ## Chronological remaining build order
 
-1. **Version the contract:** store v1.0 unchanged; draft v1.1 for documents, CTA/contact, relationship, board/status and campus-year fields.
-2. **Close the intake gaps:** update the Form, Sheet definitions and tracker without collecting real private data in the repository.
-3. **Extend the approved package schema:** add public document and CTA records, explicit board/status and partner relationship records, and current-year campus availability.
+1. **Version the contract — built:** v1.0 remains unchanged and digest-pinned; the separate, non-activating v1.1 draft defines documents, CTA/contact, programme governance, relationship terminology, board/status, typed institutional identifiers and campus-year fields. It is available only in authenticated private review and is not imported by the live validator.
+2. **Close the intake gaps — built:** Form schema version 2, the repeating-data tabs and the tracker now cover governance, relationship wording restrictions, typed identifiers, documents, CTA/contact, campus-year data, permissions, validity and structured `not-confirmed` states. The supplied partial answers remain blocked private-review candidates and no private evidence is stored.
+3. **Extend the approved package schema:** add public document and CTA records, explicit board/status and partner relationship records, current-year campus availability, multiple affiliation periods and stream-to-subject mappings.
 4. **Strengthen route validation:** implement exact Junior College and JEE/NEET gates, prohibited claim wording, relationship evidence and related-link readiness.
 5. **Complete frozen tests:** add every explicit missing test above before page wiring.
 6. **Approved public projection — built:** `lib/programmes-data-adapter.ts` maps only accepted digest-covered records, rejects the package atomically and issues the opaque component gate.
