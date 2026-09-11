@@ -5,9 +5,18 @@ import test from "node:test";
 
 import {
   legacyContentMigrationWaveCsv,
+  legacyContentMigrationCsv,
   legacyMigrationDecisionWorksheetHeaders,
   validateLegacyContentMigrationMatrix,
 } from "../lib/legacy-content-migration.ts";
+import {
+  createLegacyMigrationDecisionPlan,
+  parseLegacyMigrationDecisionCsv,
+} from "../lib/legacy-migration-decision-intake.ts";
+import {
+  createLegacyMigrationWaveMergePlan,
+  serializeLegacyMigrationDecisionCsv,
+} from "../lib/legacy-migration-wave-merge.ts";
 
 const root = process.cwd();
 const source = (relativePath) => readFile(path.join(root, relativePath), "utf8");
@@ -25,6 +34,30 @@ const expectedRecordIds = [
   "migration-1c86da4771879da4",
   "migration-bf6e1be8e9a1aecf",
 ];
+
+function completeWaveWorksheet(csv, matrix, reviewedOn) {
+  const parsed = parseLegacyMigrationDecisionCsv(csv);
+  assert.equal(parsed.error, false);
+  const [header, ...rows] = parsed.rows;
+  const column = Object.fromEntries(header.map((name, index) => [name, index]));
+  const recordsById = new Map(matrix.records.map((record) => [record.id, record]));
+  for (const row of rows) {
+    const record = recordsById.get(row[column.record_id]);
+    assert.ok(record);
+    const target = record.routeContinuity.targetPath ?? "/about";
+    if (record.routeContinuity.status === "decision-required") {
+      row[column.proposed_route_action] = "redirect";
+      row[column.proposed_route_target] = target;
+    }
+    row[column.proposed_content_decision] = "rewrite";
+    row[column.proposed_content_target] = target;
+    row[column.proposed_merge_into_record_id] = "";
+    row[column.proposed_reason_code] = "replace-with-current-information";
+    row[column.proposed_owner_role] = "content-editor";
+    row[column.proposed_reviewed_on] = reviewedOn;
+  }
+  return serializeLegacyMigrationDecisionCsv([header, ...rows]);
+}
 
 test("defines a bounded, public-safe Wave 1 without selecting migration decisions", async () => {
   const [matrix, wave, schema] = await Promise.all([
@@ -77,9 +110,88 @@ test("exports only the ten digest-bound Wave 1 rows using the canonical decision
   );
 });
 
-test("ships Wave 1 as a private noindex download-only decision workspace", async () => {
-  const [page, exportRoute, dataModule, dashboard, sitemap, guide] = await Promise.all([
+test("validates and merges Wave 1 into a complete master without recording or publishing it", async () => {
+  const [matrix, wave] = await Promise.all([
+    json("content/legacy-content-migration-matrix.json"),
+    json("content/legacy-migration-wave-1.json"),
+  ]);
+  const now = new Date().toISOString();
+  const [waveTemplate, masterCsv] = await Promise.all([
+    legacyContentMigrationWaveCsv(matrix, wave.recordIds),
+    legacyContentMigrationCsv(matrix),
+  ]);
+  const waveCsv = completeWaveWorksheet(waveTemplate, matrix, now.slice(0, 10));
+  const plan = await createLegacyMigrationWaveMergePlan({ waveCsv, masterCsv, matrix, waveRecordIds: wave.recordIds, now });
+
+  assert.equal(plan.status, "ready-for-download", JSON.stringify(plan.issues));
+  assert.match(plan.planId, /^legacy-wave-merge-[a-f0-9]{24}$/);
+  assert.equal(plan.summary.acceptedWaveRecords, 10);
+  assert.equal(plan.summary.masterRecords, 115);
+  assert.equal(plan.summary.carriedContentDecisions, 10);
+  assert.equal(plan.summary.remainingContentDecisions, 105);
+  assert.equal(plan.summary.remainingRouteDecisions, 79);
+  assert.equal(plan.summary.issueCount, 0);
+  assert.ok(plan.mergedCsv);
+  assert.equal(parseLegacyMigrationDecisionCsv(plan.mergedCsv).rows.length, 116);
+  assert.equal(plan.guardrails.repositoryWritePerformed, false);
+  assert.equal(plan.guardrails.networkRequestPerformed, false);
+  assert.equal(plan.guardrails.publicationAuthorized, false);
+
+  const canonicalPlan = await createLegacyMigrationDecisionPlan({ csv: plan.mergedCsv, matrix, now });
+  assert.equal(canonicalPlan.status, "blocked");
+  assert.ok(canonicalPlan.issues.every((issue) => ["content-decision-missing", "route-decision-missing"].includes(issue.code)));
+  const mergedRows = parseLegacyMigrationDecisionCsv(plan.mergedCsv).rows.slice(1);
+  const recordColumn = legacyMigrationDecisionWorksheetHeaders.indexOf("record_id");
+  const waveRows = new Set(mergedRows.map((row, index) => expectedRecordIds.includes(row[recordColumn]) ? index + 2 : null).filter(Boolean));
+  assert.ok(canonicalPlan.issues.every((issue) => !issue.row || !waveRows.has(issue.row)));
+});
+
+test("blocks stale Wave 1 bindings and unsafe decision targets without creating a download", async () => {
+  const [matrix, wave] = await Promise.all([
+    json("content/legacy-content-migration-matrix.json"),
+    json("content/legacy-migration-wave-1.json"),
+  ]);
+  const now = new Date().toISOString();
+  const [waveTemplate, masterCsv] = await Promise.all([
+    legacyContentMigrationWaveCsv(matrix, wave.recordIds),
+    legacyContentMigrationCsv(matrix),
+  ]);
+  const reviewed = completeWaveWorksheet(waveTemplate, matrix, now.slice(0, 10));
+
+  const staleRows = parseLegacyMigrationDecisionCsv(reviewed).rows;
+  const sourceDigestColumn = legacyMigrationDecisionWorksheetHeaders.indexOf("source_digest");
+  staleRows[1][sourceDigestColumn] = "0".repeat(64);
+  const stale = await createLegacyMigrationWaveMergePlan({
+    waveCsv: serializeLegacyMigrationDecisionCsv(staleRows),
+    masterCsv,
+    matrix,
+    waveRecordIds: wave.recordIds,
+    now,
+  });
+  assert.equal(stale.status, "blocked");
+  assert.equal(stale.mergedCsv, null);
+  assert.ok(stale.issues.some((issue) => issue.code === "wave-binding-stale"));
+
+  const unsafeRows = parseLegacyMigrationDecisionCsv(reviewed).rows;
+  const contentTargetColumn = legacyMigrationDecisionWorksheetHeaders.indexOf("proposed_content_target");
+  unsafeRows[1][contentTargetColumn] = "/wp-admin";
+  const unsafe = await createLegacyMigrationWaveMergePlan({
+    waveCsv: serializeLegacyMigrationDecisionCsv(unsafeRows),
+    masterCsv,
+    matrix,
+    waveRecordIds: wave.recordIds,
+    now,
+  });
+  assert.equal(unsafe.status, "blocked");
+  assert.equal(unsafe.mergedCsv, null);
+  assert.ok(unsafe.issues.some((issue) => issue.code === "content-target-invalid" && issue.source === "decision-contract"));
+});
+
+test("ships Wave 1 as a private noindex browser-only validation and merge workspace", async () => {
+  const [page, form, mergeLibrary, exportRoute, dataModule, dashboard, sitemap, guide] = await Promise.all([
     source("app/publication-review/migration-wave-1/page.tsx"),
+    source("app/publication-review/migration-wave-1/migration-wave-merge-form.tsx"),
+    source("lib/legacy-migration-wave-merge.ts"),
     source("app/publication-review/migration-wave-1/export/route.ts"),
     source("app/data/legacy-migration-wave-1.ts"),
     source("app/publication-review/page.tsx"),
@@ -90,7 +202,14 @@ test("ships Wave 1 as a private noindex download-only decision workspace", async
   assert.match(page, /requireChatGPTUser\("\/publication-review\/migration-wave-1"\)/);
   assert.match(page, /robots: \{ index: false, follow: false, nocache: true \}/);
   assert.match(page, /No archived copy is approved or published/);
+  assert.match(page, /MigrationWaveMergeForm/);
   assert.doesNotMatch(page, /\bfetch\s*\(|FormData|localStorage|sessionStorage|use server/);
+  assert.match(form, /Promise\.all\(\[waveFile\.text\(\), masterFile\.text\(\)\]\)/);
+  assert.match(form, /URL\.createObjectURL\(new Blob/);
+  assert.doesNotMatch(form, /\bfetch\s*\(|FormData|localStorage|sessionStorage|use server/);
+  assert.match(mergeLibrary, /createLegacyMigrationDecisionPlan/);
+  assert.match(mergeLibrary, /repositoryWritePerformed: false/);
+  assert.match(mergeLibrary, /publicationAuthorized: false/);
   assert.match(exportRoute, /requireChatGPTUser\("\/publication-review\/migration-wave-1\/export"\)/);
   assert.match(exportRoute, /"cache-control": "private, no-store"/);
   assert.match(exportRoute, /legacyMigrationWave1WorksheetCsv\(\)/);
@@ -98,5 +217,5 @@ test("ships Wave 1 as a private noindex download-only decision workspace", async
   assert.match(dataModule, /implementationStatus !== "not-started"/);
   assert.match(dashboard, /href="\/publication-review\/migration-wave-1"/);
   assert.doesNotMatch(sitemap, /migration-wave-1/);
-  assert.match(guide, /existing intake remains the authoritative validator/i);
+  assert.match(guide, /existing full intake remains the authoritative validator/i);
 });

@@ -4,6 +4,9 @@ import { notFound } from "next/navigation";
 
 import { requireChatGPTUser } from "@/app/chatgpt-auth";
 import {
+  legacyContentMigrationMatrix,
+} from "@/app/data/legacy-content-migration";
+import {
   legacyMigrationWave1Manifest,
   legacyMigrationWave1Records,
   legacyMigrationWave1Summary,
@@ -11,6 +14,8 @@ import {
 import { PageContainer } from "@/components/layout";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+
+import { MigrationWaveMergeForm } from "./migration-wave-merge-form";
 
 import "../review.css";
 import "./workspace.css";
@@ -63,6 +68,11 @@ export default async function LegacyMigrationWave1Page() {
             </div>
             <p>This workspace exposes public-safe labels, routes, review requirements and opaque source references. It contains no legacy page text, approval evidence, private path, approver identity or automatic publication action.</p>
           </section>
+
+          <MigrationWaveMergeForm
+            matrix={legacyContentMigrationMatrix}
+            waveRecordIds={legacyMigrationWave1Manifest.recordIds}
+          />
 
           <section className="migration-wave-summary" aria-labelledby="migration-wave-summary-title">
             <div className="review-section-heading">
@@ -132,7 +142,7 @@ export default async function LegacyMigrationWave1Page() {
               <li>Open each opaque source reference only inside the controlled archive and check accuracy and currency.</li>
               <li>Complete the eight <code>proposed_*</code> columns without changing any binding or current-state column.</li>
               <li>Use institutional role codes, not personal names, and keep evidence locations outside the worksheet.</li>
-              <li>Copy the ten completed rows into a fresh full migration worksheet; the existing browser-only intake still requires all 115 rows before recording.</li>
+              <li>Use the browser-only validator above to merge the ten rows into a fresh full worksheet; the authoritative intake still requires all 115 decisions before recording.</li>
             </ol>
             <div className="migration-wave-next__actions">
               <Link className="button button--primary" href="/publication-review/migration-wave-1/export">Download Wave 1 worksheet</Link>

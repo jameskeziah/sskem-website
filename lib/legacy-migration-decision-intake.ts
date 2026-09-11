@@ -160,9 +160,9 @@ export type LegacyMigrationDecisionPlan = {
   };
 };
 
-type ParsedCsv = { rows: string[][]; error: boolean };
+export type LegacyMigrationParsedCsv = { rows: string[][]; error: boolean };
 
-function parseCsv(input: string): ParsedCsv {
+export function parseLegacyMigrationDecisionCsv(input: string): LegacyMigrationParsedCsv {
   const source = input.startsWith("\uFEFF") ? input.slice(1) : input;
   const rows: string[][] = [];
   let row: string[] = [];
@@ -350,7 +350,9 @@ export async function createLegacyMigrationDecisionPlan(options: {
   if (byteLength > LEGACY_MIGRATION_DECISION_MAX_BYTES) add("worksheet-too-large");
   if (/[\u0000\uFFFD\u200B-\u200F\u202A-\u202E\u2060\u2066-\u2069]/u.test(csv)) add("worksheet-encoding");
 
-  const parsed = byteLength > LEGACY_MIGRATION_DECISION_MAX_BYTES ? { rows: [], error: false } : parseCsv(csv);
+  const parsed = byteLength > LEGACY_MIGRATION_DECISION_MAX_BYTES
+    ? { rows: [], error: false }
+    : parseLegacyMigrationDecisionCsv(csv);
   if (parsed.error) add("csv-malformed");
   const [header = [], ...rows] = parsed.rows;
   if (header.length !== legacyMigrationDecisionWorksheetHeaders.length

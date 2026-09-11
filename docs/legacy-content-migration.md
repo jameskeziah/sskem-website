@@ -31,7 +31,9 @@ The worksheet contains public-safe labels, opaque source references, exact matri
 
 `/publication-review/migration-wave-1` is an authenticated, noindex decision packet for ten high-value public page records: home, school overview, vision, facilities, clubs, uniform guidance, admissions guidance, enrolment and contact. It deliberately excludes galleries, results, staff identities, fees, notices and regulatory documents.
 
-Its download uses the same 35-column decision contract and the same full-matrix and record digests as the canonical worksheet, but contains only the ten Wave 1 rows. It preselects nothing and cannot be submitted, persisted or published. Management completes the eight `proposed_*` columns, then copies those rows into a fresh full worksheet. The existing intake remains the authoritative validator and still requires all 115 canonical rows before any controlled decision write.
+Its download uses the same 35-column decision contract and the same full-matrix and record digests as the canonical worksheet, but contains only the ten Wave 1 rows. It preselects nothing and cannot be submitted, persisted or published. Management completes the eight `proposed_*` columns, then the browser-only Wave 1 validator combines them with a separately selected fresh 115-row master worksheet.
+
+The merger performs no request, upload, browser storage or server persistence. It rejects stale bindings, missing or duplicate records, changed immutable fields, formula-like values, unsafe targets, incompatible routes, invalid reason/role codes and invalid review dates through the canonical decision contract. A successful result is a local combined CSV download only. The existing full intake remains the authoritative validator and still requires all 115 canonical rows before any controlled decision write.
 
 ## Decision contract
 
@@ -64,7 +66,7 @@ The structural audit runs before the composite release audit. Migration completi
 1. Preserve the current archive and its checksum register.
 2. Start with the private Wave 1 packet or download the full safe worksheet.
 3. Consult exact archived sources only inside the controlled system.
-4. Complete Wave 1 without changing bindings, then copy its ten rows into a fresh full worksheet.
+4. Complete Wave 1 without changing bindings, then validate and merge it with a fresh full worksheet in the browser-only Wave 1 tool.
 5. Complete route and content decisions for the remaining records until all 115 are decided.
 6. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
 7. Implement each destination, redirect, archive or retirement.
