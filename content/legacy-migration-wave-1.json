@@ -5,6 +5,7 @@
   "label": "Core information",
   "matrixId": "sskem-legacy-content-migration",
   "matrixBuiltOn": "2026-09-07",
+  "prerequisiteWaveIds": [],
   "recordIds": [
     "migration-8a8cfc64190a0285",
     "migration-5bd82d2a895ec993",

@@ -1,0 +1,27 @@
+{
+  "$schema": "./legacy-migration-wave.schema.json",
+  "schemaVersion": 1,
+  "waveId": "legacy-leadership-services-wave-2",
+  "label": "Leadership, governance and services",
+  "matrixId": "sskem-legacy-content-migration",
+  "matrixBuiltOn": "2026-09-07",
+  "prerequisiteWaveIds": [
+    "legacy-core-information-wave-1"
+  ],
+  "recordIds": [
+    "migration-d48577eec84a1738",
+    "migration-beb7efe0fa999ead",
+    "migration-ee7347abe582effd",
+    "migration-548562883ea96ae3",
+    "migration-3f491a7dece252d2",
+    "migration-3b5cee90ab0dea7c",
+    "migration-d7aee3c336bdc9b2",
+    "migration-4cacdb25890096ea"
+  ],
+  "policy": {
+    "sourceContentIncluded": false,
+    "decisionsPreselected": false,
+    "repositoryWritePerformed": false,
+    "publicationAuthorized": false
+  }
+}

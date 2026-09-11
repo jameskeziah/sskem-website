@@ -266,6 +266,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
               <p>Download is read-only and contains public-safe metadata plus opaque source references—not archived copy or approval evidence.</p>
               <div>
                 <Link className="button button--primary" href="/publication-review/migration-wave-1">Start core information Wave 1</Link>
+                <Link className="button button--primary" href="/publication-review/migration-wave-2">Continue with leadership and services Wave 2</Link>
                 <Link className="button button--primary" href="/publication-review/migration-matrix">Open migration matrix</Link>
                 <Link className="button button--quiet" href="/publication-review/migration-matrix-export">Download safe worksheet</Link>
                 <Link className="button button--quiet" href="/publication-review/migration-decision-intake">Validate completed worksheet</Link>

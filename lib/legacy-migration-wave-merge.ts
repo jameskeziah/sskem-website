@@ -23,9 +23,12 @@ export const legacyMigrationWaveMergeIssueCodes = [
   "wave-record-invalid",
   "wave-record-duplicate",
   "wave-record-missing",
+  "wave-decision-conflict",
   "master-record-invalid",
   "master-record-duplicate",
   "master-record-missing",
+  "prerequisite-record-invalid",
+  "prerequisite-decision-missing",
   "wave-binding-stale",
   "decision-contract-blocked",
 ] as const;
@@ -48,6 +51,8 @@ export type LegacyMigrationWaveMergePlan = {
   summary: {
     expectedWaveRecords: number;
     acceptedWaveRecords: number;
+    prerequisiteRecordsRequired: number;
+    prerequisiteRecordsPresent: number;
     masterRecords: number;
     carriedContentDecisions: number;
     remainingContentDecisions: number;
@@ -76,23 +81,33 @@ const currentRouteStatusColumn = legacyMigrationDecisionWorksheetHeaders.indexOf
 const currentContentDecisionColumn = legacyMigrationDecisionWorksheetHeaders.indexOf("current_content_decision");
 const proposedContentDecisionColumn = legacyMigrationDecisionWorksheetHeaders.indexOf("proposed_content_decision");
 
-function issueMessage(code: LegacyMigrationWaveMergeIssueCode) {
+function issueMessage(code: LegacyMigrationWaveMergeIssueCode, context: {
+  waveName: string;
+  expectedWaveRecords: number;
+  expectedMasterRecords: number;
+  prerequisiteRecordsRequired: number;
+}) {
   const messages: Record<LegacyMigrationWaveMergeIssueCode, string> = {
     "canonical-matrix-invalid": "The canonical migration matrix failed its integrity checks.",
-    "worksheet-empty": "Choose both the completed Wave 1 worksheet and a fresh full master worksheet.",
+    "worksheet-empty": `Choose both the completed ${context.waveName} worksheet and a current full master worksheet.`,
     "worksheet-too-large": "A selected worksheet exceeds the one-megabyte intake limit.",
     "csv-malformed": "A selected worksheet contains malformed CSV quoting or rows.",
     "header-contract-mismatch": "Both files must use the exact current migration decision columns.",
-    "wave-row-count-mismatch": "The Wave 1 worksheet must contain exactly the ten Wave 1 records.",
-    "master-row-count-mismatch": "The master worksheet must contain exactly all 115 migration records.",
+    "wave-row-count-mismatch": `The ${context.waveName} worksheet must contain exactly ${context.expectedWaveRecords} current wave records.`,
+    "master-row-count-mismatch": `The master worksheet must contain exactly all ${context.expectedMasterRecords} migration records.`,
     "column-count-mismatch": "A worksheet row does not contain the exact decision-contract columns.",
-    "wave-record-invalid": "The Wave 1 worksheet contains a record outside the current wave.",
-    "wave-record-duplicate": "A Wave 1 record appears more than once.",
-    "wave-record-missing": "At least one current Wave 1 record is missing.",
+    "wave-record-invalid": `The ${context.waveName} worksheet contains a record outside the current wave.`,
+    "wave-record-duplicate": `A ${context.waveName} record appears more than once.`,
+    "wave-record-missing": `At least one current ${context.waveName} record is missing.`,
+    "wave-decision-conflict": context.prerequisiteRecordsRequired > 0
+      ? `The master already contains a different ${context.waveName} decision; start again from the combined master that contains every prerequisite wave.`
+      : `The master already contains a different ${context.waveName} decision; start again from a fresh canonical master.`,
     "master-record-invalid": "The master worksheet contains an unknown migration record.",
     "master-record-duplicate": "A master migration record appears more than once.",
     "master-record-missing": "At least one canonical migration record is missing from the master worksheet.",
-    "wave-binding-stale": "A Wave 1 binding or current-state field differs from the selected master worksheet.",
+    "prerequisite-record-invalid": `A prerequisite for ${context.waveName} is unknown, duplicated or overlaps the current wave.`,
+    "prerequisite-decision-missing": `Complete and merge every prerequisite wave before ${context.waveName}.`,
+    "wave-binding-stale": `A ${context.waveName} binding or current-state field differs from the selected master worksheet.`,
     "decision-contract-blocked": "The merged worksheet failed the canonical migration decision contract.",
   };
   return messages[code];
@@ -115,7 +130,7 @@ function safeNow(value?: string) {
   const now = value ?? new Date().toISOString();
   const parsed = new Date(now);
   if (Number.isNaN(parsed.getTime()) || parsed.toISOString() !== now) {
-    throw new Error("Legacy migration Wave 1 merge requires a canonical UTC timestamp.");
+    throw new Error("Legacy migration wave merge requires a canonical UTC timestamp.");
   }
   return now;
 }
@@ -124,18 +139,35 @@ export async function createLegacyMigrationWaveMergePlan(options: {
   waveCsv: string;
   masterCsv: string;
   matrix: LegacyContentMigrationMatrix;
+  waveId: string;
+  waveName: string;
   waveRecordIds: readonly string[];
+  prerequisiteRecordIds?: readonly string[];
   now?: string;
 }): Promise<LegacyMigrationWaveMergePlan> {
-  const { waveCsv, masterCsv, matrix, waveRecordIds } = options;
+  const {
+    waveCsv,
+    masterCsv,
+    matrix,
+    waveId,
+    waveName,
+    waveRecordIds,
+    prerequisiteRecordIds = [],
+  } = options;
   const generatedOn = safeNow(options.now);
+  const context = {
+    waveName,
+    expectedWaveRecords: waveRecordIds.length,
+    expectedMasterRecords: matrix.records.length,
+    prerequisiteRecordsRequired: prerequisiteRecordIds.length,
+  };
   const issues: LegacyMigrationWaveMergeIssue[] = [];
   const add = (
     code: LegacyMigrationWaveMergeIssueCode,
     source: "wave" | "master",
     row: number | null = null,
     column: string | null = null,
-  ) => issues.push({ code, source, row, column, message: issueMessage(code) });
+  ) => issues.push({ code, source, row, column, message: issueMessage(code, context) });
 
   if (validateLegacyContentMigrationMatrix(matrix).length > 0) add("canonical-matrix-invalid", "master");
   for (const [source, csv] of [["wave", waveCsv], ["master", masterCsv]] as const) {
@@ -157,6 +189,14 @@ export async function createLegacyMigrationWaveMergePlan(options: {
 
   const canonicalIds = new Set(matrix.records.map((record) => record.id));
   const waveIds = new Set(waveRecordIds);
+  const prerequisiteIds = new Set(prerequisiteRecordIds);
+  if (waveIds.size !== waveRecordIds.length || waveRecordIds.some((recordId) => !canonicalIds.has(recordId))) {
+    add("wave-record-invalid", "wave", null, "record_id");
+  }
+  if (prerequisiteIds.size !== prerequisiteRecordIds.length
+    || prerequisiteRecordIds.some((recordId) => !canonicalIds.has(recordId) || waveIds.has(recordId))) {
+    add("prerequisite-record-invalid", "master", null, "record_id");
+  }
   const masterById = new Map<string, { row: string[]; rowNumber: number }>();
   const waveById = new Map<string, { row: string[]; rowNumber: number }>();
 
@@ -200,6 +240,25 @@ export async function createLegacyMigrationWaveMergePlan(options: {
         break;
       }
     }
+    for (let index = proposedColumnStart; index < legacyMigrationDecisionWorksheetHeaders.length; index += 1) {
+      const existingValue = masterEntry.row[index];
+      if (existingValue !== "" && existingValue !== waveEntry.row[index]) {
+        add("wave-decision-conflict", "master", masterEntry.rowNumber, legacyMigrationDecisionWorksheetHeaders[index]);
+        break;
+      }
+    }
+  }
+
+  let prerequisiteRecordsPresent = 0;
+  for (const recordId of prerequisiteIds) {
+    const masterEntry = masterById.get(recordId);
+    if (!masterEntry) continue;
+    const contentReady = masterEntry.row[currentContentDecisionColumn] !== "unselected"
+      || masterEntry.row[proposedContentDecisionColumn] !== "";
+    const routeReady = masterEntry.row[currentRouteStatusColumn] !== "decision-required"
+      || masterEntry.row[proposedColumnStart] !== "";
+    if (contentReady && routeReady) prerequisiteRecordsPresent += 1;
+    else add("prerequisite-decision-missing", "master", masterEntry.rowNumber, contentReady ? "proposed_route_action" : "proposed_content_decision");
   }
 
   let mergedCsv: string | null = null;
@@ -224,8 +283,13 @@ export async function createLegacyMigrationWaveMergePlan(options: {
     const expectedIncomplete = new Set(["content-decision-missing", "route-decision-missing"]);
     const blockingContractIssues = canonicalPlan.issues.filter((issue) => {
       if (!issue.row || !expectedIncomplete.has(issue.code)) return true;
-      const recordId = mergedRows[issue.row - 2]?.[recordIdColumn];
-      return waveIds.has(recordId);
+      const row = mergedRows[issue.row - 2];
+      const recordId = row?.[recordIdColumn];
+      if (waveIds.has(recordId) || prerequisiteIds.has(recordId)) return true;
+      const proposedValue = issue.code === "content-decision-missing"
+        ? row?.[proposedContentDecisionColumn]
+        : row?.[proposedColumnStart];
+      return proposedValue !== "";
     });
     for (const issue of blockingContractIssues) {
       issues.push({
@@ -261,7 +325,9 @@ export async function createLegacyMigrationWaveMergePlan(options: {
   const planCore = mergedCsv ? {
     matrixId: matrix.matrixId,
     matrixBuiltOn: matrix.builtOn,
+    waveId,
     waveRecordIds,
+    prerequisiteRecordIds,
     mergedWorksheetDigest: await fingerprintLegacyMigrationValue(mergedCsv),
   } : null;
   const planDigest = planCore ? await fingerprintLegacyMigrationValue(planCore) : null;
@@ -274,6 +340,8 @@ export async function createLegacyMigrationWaveMergePlan(options: {
     summary: {
       expectedWaveRecords: waveRecordIds.length,
       acceptedWaveRecords,
+      prerequisiteRecordsRequired: prerequisiteRecordIds.length,
+      prerequisiteRecordsPresent,
       masterRecords: masterRows.length,
       carriedContentDecisions,
       remainingContentDecisions,

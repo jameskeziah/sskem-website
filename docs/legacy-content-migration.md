@@ -31,9 +31,17 @@ The worksheet contains public-safe labels, opaque source references, exact matri
 
 `/publication-review/migration-wave-1` is an authenticated, noindex decision packet for ten high-value public page records: home, school overview, vision, facilities, clubs, uniform guidance, admissions guidance, enrolment and contact. It deliberately excludes galleries, results, staff identities, fees, notices and regulatory documents.
 
-Its download uses the same 35-column decision contract and the same full-matrix and record digests as the canonical worksheet, but contains only the ten Wave 1 rows. It preselects nothing and cannot be submitted, persisted or published. Management completes the eight `proposed_*` columns, then the browser-only Wave 1 validator combines them with a separately selected fresh 115-row master worksheet.
+Its download uses the same 35-column decision contract and the same full-matrix and record digests as the canonical worksheet, but contains only the ten Wave 1 rows. It preselects nothing and cannot be submitted, persisted or published. Management keeps every prefilled route cell unchanged, completes the remaining `proposed_*` decision cells, then the browser-only Wave 1 validator combines them with a separately selected fresh 115-row master worksheet.
 
 The merger performs no request, upload, browser storage or server persistence. It rejects stale bindings, missing or duplicate records, changed immutable fields, formula-like values, unsafe targets, incompatible routes, invalid reason/role codes and invalid review dates through the canonical decision contract. A successful result is a local combined CSV download only. The existing full intake remains the authoritative validator and still requires all 115 canonical rows before any controlled decision write.
+
+### Wave 2: leadership, governance and services
+
+`/publication-review/migration-wave-2` is the authenticated, noindex second decision packet. It contains eight public page records: chairman, president and principal messages; Board of Management and School Management Committee; Admission Form, Registration Form and Leaving/Transfer Certificate. All eight legacy routes already have guarded destinations, so this cohort adds no unresolved route decisions.
+
+Every Wave 2 record is still high-risk and approval-blocked. Leadership and governance content requires current role, identity, portrait and signed-copy verification. The three service pages require data-protection review and must not recreate a public submission or pupil-record lookup. The packet contains only public-safe metadata and opaque references; it includes no names, portraits, form submissions, pupil data or archival copy.
+
+Wave 2 uses the shared browser-only validator and merger. Its master input must already contain all ten valid Wave 1 decisions. A blank master, incomplete prior wave, stale binding, conflicting existing decision or invalid controlled value blocks the merge. A successful download carries 18 decisions in the 115-row master while recording, approval, implementation and publication remain unchanged.
 
 ## Decision contract
 
@@ -67,9 +75,10 @@ The structural audit runs before the composite release audit. Migration completi
 2. Start with the private Wave 1 packet or download the full safe worksheet.
 3. Consult exact archived sources only inside the controlled system.
 4. Complete Wave 1 without changing bindings, then validate and merge it with a fresh full worksheet in the browser-only Wave 1 tool.
-5. Complete route and content decisions for the remaining records until all 115 are decided.
-6. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
-7. Implement each destination, redirect, archive or retirement.
-8. Verify implementation and complete the separate approval pipelines.
-9. Run the migration release audit and composite public-release audit.
-10. Deploy only after every independent gate passes and rollback ownership is confirmed.
+5. Use the Wave 1 combined master as the required input for Wave 2; complete its eight rows and download the 18-decision combined master.
+6. Complete route and content decisions for the remaining 97 records until all 115 are decided.
+7. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
+8. Implement each destination, redirect, archive or retirement.
+9. Verify implementation and complete the separate approval pipelines.
+10. Run the migration release audit and composite public-release audit.
+11. Deploy only after every independent gate passes and rollback ownership is confirmed.
