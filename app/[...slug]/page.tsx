@@ -30,7 +30,7 @@ import {
   TextLink,
 } from "@/components/typography";
 import {
-  primaryNavigation,
+  getPublicationNavigation,
   utilityNavigation,
 } from "@/app/data/navigation";
 import {
@@ -442,8 +442,10 @@ const pageSpecs: Record<string, PageSpec> = {
   },
 };
 
+const routeNavigation = getPublicationNavigation().primaryNavigation;
+
 const allKnownPaths = new Set([
-  ...primaryNavigation.flatMap((item) => [
+  ...routeNavigation.flatMap((item) => [
     item.href,
     ...item.children.map((child) => child.href),
   ]),
@@ -453,7 +455,7 @@ const allKnownPaths = new Set([
 ].filter((path) => !isProgrammesPublicationRoute(path)));
 
 function childLinksFor(path: string) {
-  return primaryNavigation.find((item) => item.href === path)?.children ?? [];
+  return routeNavigation.find((item) => item.href === path)?.children ?? [];
 }
 
 function PageActions() {

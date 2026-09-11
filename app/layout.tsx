@@ -1,10 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
+import { getPublicationNavigation } from "./data/navigation";
+import { PublicationNavigationProvider } from "@/components/navigation/publication-navigation-provider";
 import tokens from "./design-tokens.json";
 import "./tokens.css";
 import "./globals.css";
 
 const canonicalOrigin = new URL("https://www.sskemschool.com");
+
+export const dynamic = "force-dynamic";
 
 function safeRequestOrigin(hostValue: string | null, protocolValue: string | null) {
   const host = hostValue?.split(",")[0]?.trim();
@@ -69,9 +73,15 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const navigation = getPublicationNavigation();
+
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <PublicationNavigationProvider initialValue={navigation}>
+          {children}
+        </PublicationNavigationProvider>
+      </body>
     </html>
   );
 }

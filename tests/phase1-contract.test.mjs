@@ -252,31 +252,15 @@ test("exports the complete Phase 1 component inventory", async () => {
   );
 });
 
-test("exposes only the approved institutional profiles in primary navigation", async () => {
+test("derives institutional navigation from current approved Programme profiles", async () => {
   const navigation = await source("app/data/navigation.ts");
 
-  assert.match(
-    navigation,
-    /label:\s*["']CBSE School["'][\s\S]*?status:\s*["']active["']/,
-  );
-  assert.match(
-    navigation,
-    /label:\s*["']Junior College["'][\s\S]*?status:\s*["']active["']/,
-  );
-  assert.match(
-    navigation,
-    /label:\s*["']Institute["'][\s\S]*?status:\s*["']active["']/,
-  );
-
-  const primaryStart = navigation.indexOf("export const primaryNavigation");
-  const primaryEnd = navigation.indexOf("export const utilityNavigation");
-  assert.ok(primaryStart >= 0 && primaryEnd > primaryStart);
-  const primaryNavigation = navigation.slice(primaryStart, primaryEnd);
-
-  assert.match(primaryNavigation, /label:\s*["']CBSE School["']/);
-  assert.match(primaryNavigation, /href:\s*["']\/school\/academics["']/);
-  assert.match(primaryNavigation, /label:\s*["']Junior College["']/);
-  assert.match(primaryNavigation, /label:\s*["']Institute["']/);
+  assert.match(navigation, /getCurrentPublicProgrammeProfiles\(now\)/);
+  assert.match(navigation, /profile\.navigationLabel/);
+  assert.match(navigation, /href:\s*profile\.route/);
+  assert.match(navigation, /pathway:\s*["']active["']/);
+  assert.match(navigation, /export function getPublicationNavigation/);
+  assert.doesNotMatch(navigation, /href:\s*["']\/programmes\/jee-neet["']/);
   assert.match(navigation, /Mandatory Public Disclosure/);
   assert.match(navigation, /href:\s*["']\/admissions\/enquire["']/);
 });
@@ -322,11 +306,11 @@ test("ships complete site states, an accessible shell and the approved Programme
   assert.match(header, /\$\{expanded \? "Hide" : "Show"\}/);
   assert.match(header, /onClick=\{closeMobileNavigation\}/);
   assert.match(footer, /id="site-footer"\s+tabIndex=\{-1\}/);
-  assert.match(footer, /footerNavigationGroups/);
+  assert.match(footer, /usePublicationNavigation/);
   assert.doesNotMatch(footer, /institutionPathways|confirmation pending|· confirmed/);
   assert.match(navigation, /footerNavigationGroups/);
   assert.match(navigation, /title:\s*["']Programmes["']/);
-  assert.match(navigation, /href:\s*["']\/programmes\/jee-neet["']/);
+  assert.match(navigation, /programmeLinks/);
   assert.doesNotMatch(catchAll, /"\/junior-college"\s*:\s*\{|"\/institute"\s*:\s*\{/);
   assert.doesNotMatch(catchAll, /\.\.\.institutionPathways/);
   assert.match(catchAll, /isProgrammesPublicationRoute\(path\) \|\| !allKnownPaths\.has\(path\)/);

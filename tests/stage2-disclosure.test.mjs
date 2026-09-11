@@ -153,7 +153,7 @@ test("uses the exact Mandatory Public Disclosure navigation label everywhere", a
   assert.doesNotMatch(navigation, /label:\s*["'](?:SARAS|OASIS)["']/i);
   assert.match(header, /utilityNavigation\.map/);
   assert.match(header, /aria-label=["']Mobile primary navigation["']/);
-  assert.match(footer, /footerNavigationGroups/);
+  assert.match(footer, /usePublicationNavigation/);
   assert.match(navigation, /title:\s*["']Public information["']/);
 
   const matchingHomepageLinks = anchorsIn(withoutScripts(homepage)).filter(

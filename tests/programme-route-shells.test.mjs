@@ -94,10 +94,10 @@ test("retains the private shell workspace while public navigation and sitemap ex
     assert.match(preview, new RegExp(route.replaceAll("/", "\\/")), route);
   }
   assert.match(dashboard, /Review private route shells/);
-  assert.match(navigation, /label:\s*"CBSE School"[\s\S]*?href:\s*"\/school\/academics"/);
-  assert.match(navigation, /label:\s*"Junior College"[\s\S]*?href:\s*"\/junior-college"/);
-  assert.match(navigation, /label:\s*"Institute"[\s\S]*?href:\s*"\/programmes\/jee-neet"/);
-  assert.match(footer, /footerNavigationGroups/);
+  assert.match(navigation, /getCurrentPublicProgrammeProfiles\(now\)/);
+  assert.match(navigation, /profile\.navigationLabel/);
+  assert.match(navigation, /href:\s*profile\.route/);
+  assert.match(footer, /usePublicationNavigation/);
   assert.doesNotMatch(footer, /\/junior-college|\/programmes\/jee-neet|\/school\/academics/);
-  for (const route of PROGRAMMES_PUBLICATION_ROUTES) assert.match(sitemap, new RegExp(route.replaceAll("/", "\\/")));
+  assert.match(sitemap, /programmeLinks\.map/);
 });

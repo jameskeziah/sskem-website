@@ -1,5 +1,7 @@
-import { footerNavigationGroups } from "@/app/data/navigation";
+"use client";
+
 import { siteFacts } from "@/app/data/site";
+import { usePublicationNavigation } from "@/components/navigation/publication-navigation-provider";
 import Link from "next/link";
 
 export type SiteFooterContact = {
@@ -19,6 +21,8 @@ const defaultContact: SiteFooterContact = {
 };
 
 export function SiteFooter({ contact = defaultContact }: { contact?: SiteFooterContact } = {}) {
+  const { footerNavigationGroups } = usePublicationNavigation();
+
   return (
     <footer className="site-footer" id="site-footer" tabIndex={-1}>
       <div className="page-container site-footer__grid">

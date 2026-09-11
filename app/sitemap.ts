@@ -1,8 +1,11 @@
 import type { MetadataRoute } from "next";
 
 import { documentCategories, publicDocuments } from "./data/documents";
+import { getPublicationNavigation } from "./data/navigation";
 
 const origin = "https://www.sskemschool.com";
+
+export const dynamic = "force-dynamic";
 
 const admissionsPaths = [
   "/admissions",
@@ -23,11 +26,10 @@ const admissionsPaths = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const { programmeLinks } = getPublicationNavigation();
   const paths = [
     "",
-    "/school/academics",
-    "/junior-college",
-    "/programmes/jee-neet",
+    ...programmeLinks.map(({ href }) => href),
     ...admissionsPaths,
     "/mandatory-public-disclosure",
     "/mandatory-public-disclosure/teaching-staff",

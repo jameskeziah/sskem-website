@@ -38,7 +38,7 @@ It is not an authorization or authentication mechanism. Public release remains
 subject to the composite release audit, exact media bindings, performance,
 accessibility and the private Sites access policy used for review.
 
-The next implementation priority is to make primary navigation, footer links
-and sitemap generation consume the same current-profile selector. That prevents
-an expired Programme profile from disappearing on its page while leaving a
-stale site-wide link behind.
+Primary navigation, the no-JavaScript fallback, mobile navigation, search,
+breadcrumbs, footer links and sitemap generation now consume the same current
+Programme-profile selector. An expired profile therefore disappears from its
+page and every public discovery surface together.

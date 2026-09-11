@@ -1,3 +1,6 @@
+import { getCurrentPublicProgrammeProfiles } from "./programmes-public-profiles";
+import { getProgrammePublicationDay } from "@/lib/programme-publication-window.mjs";
+
 export type NavigationChild = {
   label: string;
   href: string;
@@ -11,28 +14,25 @@ export type NavigationItem = {
   pathway?: "active" | "pending";
 };
 
-export const institutionPathways = [
-  {
-    label: "CBSE School",
-    href: "/school/academics",
-    status: "active",
-    evidence: "Approved CBSE profile bound to EVD-2026-001",
-  },
-  {
-    label: "Junior College",
-    href: "/junior-college",
-    status: "active",
-    evidence: "Approved Maharashtra Board profile bound to EVD-2026-002",
-  },
-  {
-    label: "Institute",
-    href: "/programmes/jee-neet",
-    status: "active",
-    evidence: "Approved NEET profile bound to EVD-2026-003",
-  },
-] as const;
+export type NavigationLink = {
+  label: string;
+  href: string;
+};
 
-export const primaryNavigation: NavigationItem[] = [
+export type FooterNavigationGroup = {
+  title: string;
+  links: NavigationLink[];
+};
+
+export type PublicationNavigationSnapshot = {
+  asOfDate: string;
+  primaryNavigation: NavigationItem[];
+  searchableLinks: NavigationLink[];
+  footerNavigationGroups: FooterNavigationGroup[];
+  programmeLinks: NavigationLink[];
+};
+
+const fixedPrimaryStart: NavigationItem[] = [
   {
     label: "Home",
     href: "/",
@@ -49,29 +49,9 @@ export const primaryNavigation: NavigationItem[] = [
       { label: "News & media", href: "/about/news", description: "Updates and press coverage" },
     ],
   },
-  {
-    label: "CBSE School",
-    href: "/school/academics",
-    pathway: "active",
-    children: [
-      { label: "Overview", href: "/school", description: "School profile and educational approach" },
-      { label: "Verified profile", href: "/school/academics", description: "Approved identity and affiliation facts" },
-      { label: "Faculty", href: "/school/faculty", description: "Verified faculty directory" },
-      { label: "Facilities", href: "/school/facilities", description: "Campus facilities and resources" },
-    ],
-  },
-  {
-    label: "Junior College",
-    href: "/junior-college",
-    pathway: "active",
-    children: [],
-  },
-  {
-    label: "Institute",
-    href: "/programmes/jee-neet",
-    pathway: "active",
-    children: [],
-  },
+];
+
+const fixedPrimaryEnd: NavigationItem[] = [
   {
     label: "Student Life",
     href: "/student-life",
@@ -96,17 +76,19 @@ export const primaryNavigation: NavigationItem[] = [
   },
 ];
 
+const schoolProgrammeChildren: NavigationChild[] = [
+  { label: "Overview", href: "/school", description: "School profile and educational approach" },
+  { label: "Verified profile", href: "/school/academics", description: "Approved identity and affiliation facts" },
+  { label: "Faculty", href: "/school/faculty", description: "Verified faculty directory" },
+  { label: "Facilities", href: "/school/facilities", description: "Campus facilities and resources" },
+];
+
 export const utilityNavigation = [
   { label: "Mandatory Public Disclosure", href: "/mandatory-public-disclosure" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
-export const searchableLinks = [
-  ...utilityNavigation,
-  ...primaryNavigation.flatMap((item) => [
-    { label: item.label, href: item.href },
-    ...item.children.map(({ label, href }) => ({ label, href })),
-  ]),
+const additionalSearchLinks: NavigationLink[] = [
   { label: "Admissions fees", href: "/admissions/fees" },
   { label: "Admissions FAQ", href: "/admissions/faq" },
   { label: "Visit SSKEMS", href: "/admissions/visit" },
@@ -115,39 +97,81 @@ export const searchableLinks = [
   { label: "Senior-secondary admissions", href: "/admissions/senior-secondary" },
 ];
 
-export const footerNavigationGroups = [
-  {
-    title: "School",
-    links: [
-      { label: "School overview", href: "/school" },
-      { label: "Facilities", href: "/school/facilities" },
-      { label: "Student life", href: "/student-life" },
-      { label: "About SSKEMS", href: "/about" },
-    ],
-  },
-  {
-    title: "Programmes",
-    links: [
-      { label: "CBSE School", href: "/school/academics" },
-      { label: "Junior College", href: "/junior-college" },
-      { label: "Institute", href: "/programmes/jee-neet" },
-    ],
-  },
-  {
-    title: "Admissions",
-    links: [
-      { label: "Admissions overview", href: "/admissions" },
-      { label: "Admission process", href: "/admissions/process" },
-      { label: "Documents required", href: "/admissions/documents-required" },
-      { label: "Enquire now", href: "/admissions/enquire" },
-    ],
-  },
-  {
-    title: "Public information",
-    links: [
-      ...utilityNavigation,
-      { label: "Documents", href: "/documents" },
-      { label: "Historical documents", href: "/documents/archive" },
-    ],
-  },
-];
+function cloneNavigationItem(item: NavigationItem): NavigationItem {
+  return { ...item, children: item.children.map((child) => ({ ...child })) };
+}
+
+function programmeNavigationItems(now: Date): NavigationItem[] {
+  return getCurrentPublicProgrammeProfiles(now).map((profile) => ({
+    label: profile.navigationLabel,
+    href: profile.route,
+    pathway: "active",
+    children: profile.organisationType === "cbse-school"
+      ? schoolProgrammeChildren.map((child) => ({ ...child }))
+      : [],
+  }));
+}
+
+function uniqueLinks(links: NavigationLink[]) {
+  const seen = new Set<string>();
+  return links.filter((link) => {
+    if (seen.has(link.href)) return false;
+    seen.add(link.href);
+    return true;
+  });
+}
+
+export function getPublicationNavigation(now = new Date()): PublicationNavigationSnapshot {
+  const programmeItems = programmeNavigationItems(now);
+  const programmeLinks = programmeItems.map(({ label, href }) => ({ label, href }));
+  const primaryNavigation = [
+    ...fixedPrimaryStart.map(cloneNavigationItem),
+    ...programmeItems,
+    ...fixedPrimaryEnd.map(cloneNavigationItem),
+  ];
+  const searchableLinks = uniqueLinks([
+    ...utilityNavigation,
+    ...primaryNavigation.flatMap((item) => [
+      { label: item.label, href: item.href },
+      ...item.children.map(({ label, href }) => ({ label, href })),
+    ]),
+    ...additionalSearchLinks,
+  ]);
+  const footerNavigationGroups: FooterNavigationGroup[] = [
+    {
+      title: "School",
+      links: [
+        { label: "School overview", href: "/school" },
+        { label: "Facilities", href: "/school/facilities" },
+        { label: "Student life", href: "/student-life" },
+        { label: "About SSKEMS", href: "/about" },
+      ],
+    },
+    ...(programmeLinks.length ? [{ title: "Programmes", links: programmeLinks }] : []),
+    {
+      title: "Admissions",
+      links: [
+        { label: "Admissions overview", href: "/admissions" },
+        { label: "Admission process", href: "/admissions/process" },
+        { label: "Documents required", href: "/admissions/documents-required" },
+        { label: "Enquire now", href: "/admissions/enquire" },
+      ],
+    },
+    {
+      title: "Public information",
+      links: [
+        ...utilityNavigation,
+        { label: "Documents", href: "/documents" },
+        { label: "Historical documents", href: "/documents/archive" },
+      ],
+    },
+  ];
+
+  return {
+    asOfDate: getProgrammePublicationDay(now),
+    primaryNavigation,
+    searchableLinks,
+    footerNavigationGroups,
+    programmeLinks,
+  };
+}

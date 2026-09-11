@@ -1,6 +1,10 @@
 import profilesData from "@/content/programmes-public-profiles.json";
 
 import type { ProgrammesPublicationRoute } from "@/lib/programmes-publication-routes";
+import {
+  getCurrentProgrammeProfiles,
+  isProgrammeProfileCurrent,
+} from "@/lib/programme-publication-window.mjs";
 
 export type PublicProgrammeFact = {
   label: string;
@@ -46,15 +50,14 @@ export const programmesPublicProfilePublication = {
 export const publicProgrammeProfiles = profilesData.profiles as PublicProgrammeProfile[];
 
 export function isPublicProgrammeProfileCurrent(profile: PublicProgrammeProfile, now = new Date()) {
-  return profile.validUntil === null || profile.validUntil >= now.toISOString().slice(0, 10);
+  return isProgrammeProfileCurrent(profile, now);
+}
+
+export function getCurrentPublicProgrammeProfiles(now = new Date()) {
+  return getCurrentProgrammeProfiles(publicProgrammeProfiles, now);
 }
 
 export function getPublicProgrammeProfile(route: ProgrammesPublicationRoute, now = new Date()) {
   const profile = publicProgrammeProfiles.find((candidate) => candidate.route === route);
   return profile && isPublicProgrammeProfileCurrent(profile, now) ? profile : null;
 }
-
-export const publicProgrammeNavigation = publicProgrammeProfiles.map(({ navigationLabel: label, route: href }) => ({
-  label,
-  href,
-}));

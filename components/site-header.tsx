@@ -6,9 +6,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NoticeBar, Breadcrumbs } from "./content";
 import { IconButton, SearchInput } from "./controls";
-import { primaryNavigation, searchableLinks, utilityNavigation } from "@/app/data/navigation";
+import { utilityNavigation, type NavigationItem } from "@/app/data/navigation";
 import { siteFacts } from "@/app/data/site";
 import { useFloatingNavigationMotion } from "@/components/motion/use-floating-navigation-motion";
+import { usePublicationNavigation } from "@/components/navigation/publication-navigation-provider";
 
 export type SiteHeaderEditorial = {
   notice: {
@@ -64,22 +65,37 @@ function BrandIdentity() {
   );
 }
 
-function breadcrumbItems(pathname: string) {
+function breadcrumbItems(pathname: string, primaryNavigation: NavigationItem[]) {
   if (pathname === "/") return [{ label: "Home" }];
   const segments = pathname.split("/").filter(Boolean);
+  const labelsByPath = new Map(
+    primaryNavigation.flatMap((item) => [
+      [item.href, item.label] as const,
+      ...item.children.map((child) => [child.href, child.label] as const),
+    ]),
+  );
   return [
     { label: "Home", href: "/" },
     ...segments.map((segment, index) => ({
-      label: segment
-        .split("-")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" "),
+      label: labelsByPath.get(`/${segments.slice(0, index + 1).join("/")}`)
+        ?? segment
+          .split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" "),
       href: index < segments.length - 1 ? `/${segments.slice(0, index + 1).join("/")}` : undefined,
     })),
   ];
 }
 
-function StaticNavigationFallback({ pathname, contact }: { pathname: string; contact: SiteHeaderEditorial["contact"] }) {
+function StaticNavigationFallback({
+  pathname,
+  contact,
+  primaryNavigation,
+}: {
+  pathname: string;
+  contact: SiteHeaderEditorial["contact"];
+  primaryNavigation: NavigationItem[];
+}) {
   return (
     <details className="static-navigation-fallback">
       <summary>Open full site navigation</summary>
@@ -130,6 +146,7 @@ export function SiteHeader({
     notice: editorial?.notice ?? defaultEditorial.notice,
     contact: editorial?.contact ?? defaultEditorial.contact,
   };
+  const { primaryNavigation, searchableLinks } = usePublicationNavigation();
   const pathname = usePathname();
   const [openDesktop, setOpenDesktop] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -156,7 +173,7 @@ export function SiteHeader({
     const query = searchTerm.trim().toLowerCase();
     if (!query) return searchableLinks.slice(0, 8);
     return searchableLinks.filter((item) => item.label.toLowerCase().includes(query)).slice(0, 8);
-  }, [searchTerm]);
+  }, [searchTerm, searchableLinks]);
 
   useEffect(() => {
     const header = headerRef.current;
@@ -372,10 +389,14 @@ export function SiteHeader({
 
         {showBreadcrumb ? (
           <div className="breadcrumb-bar">
-            <div className="page-container"><Breadcrumbs items={breadcrumbItems(pathname)} /></div>
+            <div className="page-container"><Breadcrumbs items={breadcrumbItems(pathname, primaryNavigation)} /></div>
           </div>
         ) : null}
-        <StaticNavigationFallback pathname={pathname} contact={activeEditorial.contact} />
+        <StaticNavigationFallback
+          pathname={pathname}
+          contact={activeEditorial.contact}
+          primaryNavigation={primaryNavigation}
+        />
       </header>
 
       {mobileOpen ? (
