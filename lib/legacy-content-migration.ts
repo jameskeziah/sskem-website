@@ -479,10 +479,13 @@ function csvCell(value: unknown) {
   return `"${text.replaceAll('"', '""')}"`;
 }
 
-export async function legacyContentMigrationCsv(matrix: LegacyContentMigrationMatrix) {
+async function legacyContentMigrationCsvForSelection(
+  matrix: LegacyContentMigrationMatrix,
+  records: readonly LegacyContentMigrationRecord[],
+) {
   const matrixDigest = await fingerprintLegacyMigrationValue(matrix);
-  const recordDigests = await Promise.all(matrix.records.map(fingerprintLegacyMigrationValue));
-  const rows = matrix.records.map((record, index) => {
+  const recordDigests = await Promise.all(records.map(fingerprintLegacyMigrationValue));
+  const rows = records.map((record, index) => {
     const routeIsOpen = record.routeContinuity.status === "decision-required";
     const contentIsOpen = record.contentDecision.decision === "unselected";
     return [
@@ -524,4 +527,24 @@ export async function legacyContentMigrationCsv(matrix: LegacyContentMigrationMa
     ];
   });
   return `\uFEFF${[legacyMigrationDecisionWorksheetHeaders, ...rows].map((row) => row.map(csvCell).join(",")).join("\r\n")}\r\n`;
+}
+
+export async function legacyContentMigrationCsv(matrix: LegacyContentMigrationMatrix) {
+  return legacyContentMigrationCsvForSelection(matrix, matrix.records);
+}
+
+export async function legacyContentMigrationWaveCsv(
+  matrix: LegacyContentMigrationMatrix,
+  recordIds: readonly string[],
+) {
+  const recordsById = new Map(matrix.records.map((record) => [record.id, record]));
+  const seen = new Set<string>();
+  const records = recordIds.map((recordId) => {
+    if (seen.has(recordId)) throw new Error(`Duplicate legacy migration wave record: ${recordId}`);
+    seen.add(recordId);
+    const record = recordsById.get(recordId);
+    if (!record) throw new Error(`Unknown legacy migration wave record: ${recordId}`);
+    return record;
+  });
+  return legacyContentMigrationCsvForSelection(matrix, records);
 }

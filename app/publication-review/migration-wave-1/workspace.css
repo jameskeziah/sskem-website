@@ -1,0 +1,198 @@
+.migration-wave-toolbar {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+  justify-content: space-between;
+  padding-block: var(--space-24);
+}
+
+.migration-wave-toolbar a {
+  font-weight: var(--font-weight-bold);
+}
+
+.migration-wave-boundary,
+.migration-wave-summary,
+.migration-wave-register,
+.migration-wave-next {
+  margin-top: clamp(var(--space-48), 7vw, var(--space-96));
+}
+
+.migration-wave-summary__grid {
+  display: grid;
+  gap: var(--space-16);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+
+.migration-wave-summary__grid > div {
+  background: var(--surface-raised);
+  border: var(--border-width-default) solid var(--border-default);
+  border-radius: var(--radius-large);
+  padding: var(--space-24);
+}
+
+.migration-wave-summary__grid dt {
+  color: var(--text-secondary);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.migration-wave-summary__grid dd {
+  margin: var(--space-12) 0 0;
+}
+
+.migration-wave-summary__grid strong,
+.migration-wave-summary__grid span {
+  display: block;
+}
+
+.migration-wave-summary__grid strong {
+  color: var(--color-brand-800);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-600);
+  line-height: 1;
+}
+
+.migration-wave-summary__grid span {
+  color: var(--text-secondary);
+  font-size: var(--font-size-200);
+  line-height: 1.5;
+  margin-top: var(--space-8);
+}
+
+.migration-wave-table-wrap {
+  border: var(--border-width-default) solid var(--border-default);
+  border-radius: var(--radius-large);
+  overflow: auto;
+}
+
+.migration-wave-table {
+  border-collapse: collapse;
+  min-width: 66rem;
+  width: 100%;
+}
+
+.migration-wave-table th,
+.migration-wave-table td {
+  border-bottom: var(--border-width-default) solid var(--border-default);
+  padding: var(--space-16);
+  text-align: left;
+  vertical-align: top;
+}
+
+.migration-wave-table thead th {
+  background: var(--color-brand-950);
+  color: var(--text-on-brand);
+  font-size: var(--font-size-100);
+  letter-spacing: 0.06em;
+  position: sticky;
+  text-transform: uppercase;
+  top: 0;
+}
+
+.migration-wave-table tbody tr:last-child th,
+.migration-wave-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.migration-wave-table tbody th strong,
+.migration-wave-table tbody th code,
+.migration-wave-table td small {
+  display: block;
+}
+
+.migration-wave-table code {
+  overflow-wrap: anywhere;
+}
+
+.migration-wave-table tbody th code,
+.migration-wave-table td small {
+  color: var(--text-secondary);
+  margin-top: var(--space-8);
+}
+
+.migration-wave-table ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.migration-wave-table li,
+.migration-wave-state {
+  background: var(--surface-subtle);
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-4) var(--space-8);
+}
+
+.migration-wave-state[data-state="decision-required"],
+.migration-wave-state[data-state="unselected"] {
+  color: var(--status-warning);
+}
+
+.migration-wave-state[data-state="implemented"] {
+  color: var(--status-success);
+}
+
+.migration-wave-next {
+  background: var(--color-brand-950);
+  border-radius: var(--radius-large);
+  color: var(--text-on-brand);
+  margin-bottom: clamp(var(--space-48), 7vw, var(--space-96));
+  padding: clamp(var(--space-24), 5vw, var(--space-48));
+}
+
+.migration-wave-next .eyebrow {
+  color: inherit;
+}
+
+.migration-wave-next ol {
+  display: grid;
+  gap: var(--space-12);
+  margin: var(--space-24) 0 0;
+  padding-left: var(--space-24);
+}
+
+.migration-wave-next__actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+  margin-top: var(--space-24);
+}
+
+.migration-wave-next__actions .button--quiet {
+  color: var(--text-on-brand);
+}
+
+.migration-wave-next__boundary {
+  border-top: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 28%, transparent);
+  margin: var(--space-24) 0 0;
+  padding-top: var(--space-20);
+}
+
+@media (max-width: 64rem) {
+  .migration-wave-summary__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 44rem) {
+  .migration-wave-toolbar,
+  .migration-wave-next__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .migration-wave-summary__grid {
+    grid-template-columns: 1fr;
+  }
+}

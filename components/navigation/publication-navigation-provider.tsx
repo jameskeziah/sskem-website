@@ -39,14 +39,9 @@ export function PublicationNavigationProvider({
   useEffect(() => {
     const now = new Date();
     const current = getPublicationNavigation(now);
-    if (current.asOfDate !== value.asOfDate) {
-      setValue(current);
-      return;
-    }
-
     const timeout = window.setTimeout(() => {
       setValue(getPublicationNavigation(new Date()));
-    }, millisecondsUntilNextUtcDay(now));
+    }, current.asOfDate !== value.asOfDate ? 0 : millisecondsUntilNextUtcDay(now));
 
     return () => window.clearTimeout(timeout);
   }, [value.asOfDate]);

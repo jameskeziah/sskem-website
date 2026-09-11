@@ -27,6 +27,12 @@ The worksheet contains public-safe labels, opaque source references, exact matri
 
 `/publication-review/migration-decision-intake` validates a completed CSV locally in the browser. It requires the exact 115-row set and rejects stale bindings, changed current fields, malformed CSV, formula-like inputs, unsafe target combinations and likely private-data leakage. It returns only a temporary, read-only plan. There is no upload, POST, browser storage or server persistence.
 
+### Wave 1: core information
+
+`/publication-review/migration-wave-1` is an authenticated, noindex decision packet for ten high-value public page records: home, school overview, vision, facilities, clubs, uniform guidance, admissions guidance, enrolment and contact. It deliberately excludes galleries, results, staff identities, fees, notices and regulatory documents.
+
+Its download uses the same 35-column decision contract and the same full-matrix and record digests as the canonical worksheet, but contains only the ten Wave 1 rows. It preselects nothing and cannot be submitted, persisted or published. Management completes the eight `proposed_*` columns, then copies those rows into a fresh full worksheet. The existing intake remains the authoritative validator and still requires all 115 canonical rows before any controlled decision write.
+
 ## Decision contract
 
 For every record, the owner must choose:
@@ -56,11 +62,12 @@ The structural audit runs before the composite release audit. Migration completi
 ## Chronological operating order
 
 1. Preserve the current archive and its checksum register.
-2. Download the private safe worksheet.
+2. Start with the private Wave 1 packet or download the full safe worksheet.
 3. Consult exact archived sources only inside the controlled system.
-4. Complete route and content decisions for all 115 records.
-5. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
-6. Implement each destination, redirect, archive or retirement.
-7. Verify implementation and complete the separate approval pipelines.
-8. Run the migration release audit and composite public-release audit.
-9. Deploy only after every independent gate passes and rollback ownership is confirmed.
+4. Complete Wave 1 without changing bindings, then copy its ten rows into a fresh full worksheet.
+5. Complete route and content decisions for the remaining records until all 115 are decided.
+6. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
+7. Implement each destination, redirect, archive or retirement.
+8. Verify implementation and complete the separate approval pipelines.
+9. Run the migration release audit and composite public-release audit.
+10. Deploy only after every independent gate passes and rollback ownership is confirmed.

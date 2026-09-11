@@ -1,0 +1,26 @@
+{
+  "$schema": "./legacy-migration-wave.schema.json",
+  "schemaVersion": 1,
+  "waveId": "legacy-core-information-wave-1",
+  "label": "Core information",
+  "matrixId": "sskem-legacy-content-migration",
+  "matrixBuiltOn": "2026-09-07",
+  "recordIds": [
+    "migration-8a8cfc64190a0285",
+    "migration-5bd82d2a895ec993",
+    "migration-e8a256da646a4053",
+    "migration-08d1d6599f0af1c0",
+    "migration-ea844261827415c3",
+    "migration-1838310754bcadae",
+    "migration-2ced57ca7af57656",
+    "migration-f04a657513398549",
+    "migration-1c86da4771879da4",
+    "migration-bf6e1be8e9a1aecf"
+  ],
+  "policy": {
+    "sourceContentIncluded": false,
+    "decisionsPreselected": false,
+    "repositoryWritePerformed": false,
+    "publicationAuthorized": false
+  }
+}
