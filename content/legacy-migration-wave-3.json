@@ -1,0 +1,28 @@
+{
+  "$schema": "./legacy-migration-wave.schema.json",
+  "schemaVersion": 1,
+  "waveId": "legacy-academic-compliance-wave-3",
+  "label": "Academic and compliance records",
+  "matrixId": "sskem-legacy-content-migration",
+  "matrixBuiltOn": "2026-09-07",
+  "prerequisiteWaveIds": [
+    "legacy-core-information-wave-1",
+    "legacy-leadership-services-wave-2"
+  ],
+  "recordIds": [
+    "migration-31d7cfe9b2187420",
+    "migration-285838132ad09bae",
+    "migration-f3dfcc0f172a767c",
+    "migration-ad39aa3124e82a9e",
+    "migration-593e5c80a327f34f",
+    "migration-7bdf9d1295a69aaa",
+    "migration-401b36ded2742646",
+    "migration-c6806a6f67019b84"
+  ],
+  "policy": {
+    "sourceContentIncluded": false,
+    "decisionsPreselected": false,
+    "repositoryWritePerformed": false,
+    "publicationAuthorized": false
+  }
+}

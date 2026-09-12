@@ -24,6 +24,7 @@
     "matrixBuiltOn": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
     "prerequisiteWaveIds": {
       "type": "array",
+      "description": "Cumulative IDs for every earlier wave, ordered from Wave 1 through the immediately preceding wave.",
       "maxItems": 20,
       "uniqueItems": true,
       "items": { "type": "string", "pattern": "^legacy-[a-z0-9-]+-wave-[1-9][0-9]*$" }

@@ -19,6 +19,26 @@ const waveIdPattern = /^legacy-[a-z0-9-]+-wave-[1-9][0-9]*$/;
 const recordIdPattern = /^migration-[a-f0-9]{16}$/;
 const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 
+function waveNumber(value: string) {
+  const match = /-wave-([1-9][0-9]*)$/.exec(value);
+  return match ? Number(match[1]) : null;
+}
+
+export function hasCumulativeLegacyMigrationWavePrerequisites(
+  waveId: unknown,
+  prerequisiteWaveIds: unknown,
+) {
+  if (typeof waveId !== "string" || !waveIdPattern.test(waveId)
+    || !Array.isArray(prerequisiteWaveIds)
+    || !prerequisiteWaveIds.every((value) => typeof value === "string" && waveIdPattern.test(value))) {
+    return false;
+  }
+  const currentWaveNumber = waveNumber(waveId);
+  return currentWaveNumber !== null
+    && prerequisiteWaveIds.length === currentWaveNumber - 1
+    && prerequisiteWaveIds.every((value, index) => waveNumber(value) === index + 1);
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
@@ -70,6 +90,7 @@ export function parseLegacyMigrationWaveManifest(value: unknown): LegacyMigratio
     || !value.prerequisiteWaveIds.every((waveId) => typeof waveId === "string" && waveIdPattern.test(waveId))
     || new Set(value.prerequisiteWaveIds).size !== value.prerequisiteWaveIds.length
     || value.prerequisiteWaveIds.includes(value.waveId)
+    || !hasCumulativeLegacyMigrationWavePrerequisites(value.waveId, value.prerequisiteWaveIds)
     || !Array.isArray(value.recordIds) || value.recordIds.length < 1 || value.recordIds.length > 12
     || !value.recordIds.every((recordId) => typeof recordId === "string" && recordIdPattern.test(recordId))
     || new Set(value.recordIds).size !== value.recordIds.length

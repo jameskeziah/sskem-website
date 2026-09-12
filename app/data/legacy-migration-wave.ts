@@ -6,7 +6,10 @@ import {
   type LegacyContentMigrationRecord,
   type MigrationArea,
 } from "@/lib/legacy-content-migration";
-import type { LegacyMigrationWaveManifest } from "@/lib/legacy-migration-wave-manifest";
+import {
+  hasCumulativeLegacyMigrationWavePrerequisites,
+  type LegacyMigrationWaveManifest,
+} from "@/lib/legacy-migration-wave-manifest";
 
 export type { LegacyMigrationWaveManifest } from "@/lib/legacy-migration-wave-manifest";
 
@@ -41,7 +44,8 @@ function assertManifestContract(manifest: LegacyMigrationWaveManifest) {
     throw new Error(`Legacy migration wave ${manifest.waveId} must contain 1-12 unique records.`);
   }
   if (new Set(manifest.prerequisiteWaveIds).size !== manifest.prerequisiteWaveIds.length
-    || manifest.prerequisiteWaveIds.includes(manifest.waveId)) {
+    || manifest.prerequisiteWaveIds.includes(manifest.waveId)
+    || !hasCumulativeLegacyMigrationWavePrerequisites(manifest.waveId, manifest.prerequisiteWaveIds)) {
     throw new Error(`Legacy migration wave ${manifest.waveId} has an invalid prerequisite set.`);
   }
   if (Object.values(manifest.policy).some((value) => value !== false)) {

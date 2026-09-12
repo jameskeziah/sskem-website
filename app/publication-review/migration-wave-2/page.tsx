@@ -22,7 +22,10 @@ export default async function LegacyMigrationWave2Page() {
     cohortEyebrow="Bounded second cohort"
     cohortHeading="Resolve stewardship and service pages next."
     introduction="Review eight high-risk public pages whose destinations are already mapped, while keeping leadership identities, portraits, form data and source copy outside this repository."
-    relatedWave={{ href: "/publication-review/migration-wave-1", label: "Return to Wave 1" }}
+    relatedWaves={[
+      { href: "/publication-review/migration-wave-1", label: "Return to Wave 1" },
+      { href: "/publication-review/migration-wave-3", label: "Continue to Wave 3" },
+    ]}
     routeBase="/publication-review/migration-wave-2"
     routeSummaryNote="All eight routes already have controlled destinations."
     sequenceInstruction="Start from the combined Wave 1 master. This validator refuses to merge Wave 2 until all ten prior-wave decisions are present and valid."

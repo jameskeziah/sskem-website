@@ -23,10 +23,10 @@ type MigrationWaveWorkspaceProps = {
   cohortDescription: string;
   routeSummaryNote: string;
   sequenceInstruction: string;
-  relatedWave?: {
+  relatedWaves?: readonly {
     href: string;
     label: string;
-  };
+  }[];
 };
 
 function titleCase(value: string) {
@@ -43,7 +43,7 @@ export function MigrationWaveWorkspace({
   cohortDescription,
   routeSummaryNote,
   sequenceInstruction,
-  relatedWave,
+  relatedWaves = [],
 }: MigrationWaveWorkspaceProps) {
   const waveName = `Wave ${waveNumber}`;
   const downloadHref = `${routeBase}/export`;
@@ -70,7 +70,7 @@ export function MigrationWaveWorkspace({
         <PageContainer>
           <nav className="migration-wave-toolbar" aria-label={`Legacy migration ${waveName} navigation`}>
             <Link href="/publication-review/migration-matrix">Back to full migration matrix</Link>
-            {relatedWave ? <Link href={relatedWave.href}>{relatedWave.label}</Link> : null}
+            {relatedWaves.map((relatedWave) => <Link href={relatedWave.href} key={relatedWave.href}>{relatedWave.label}</Link>)}
             <Link href={downloadHref}>Download {waveName} worksheet</Link>
           </nav>
 
@@ -164,7 +164,7 @@ export function MigrationWaveWorkspace({
             <div className="migration-wave-next__actions">
               <Link className="button button--primary" href={downloadHref}>Download {waveName} worksheet</Link>
               <Link className="button button--quiet" href="/publication-review/migration-decision-intake">Open full worksheet validator</Link>
-              {relatedWave ? <Link className="button button--quiet" href={relatedWave.href}>{relatedWave.label}</Link> : null}
+              {relatedWaves.map((relatedWave) => <Link className="button button--quiet" href={relatedWave.href} key={relatedWave.href}>{relatedWave.label}</Link>)}
             </div>
             <p className="migration-wave-next__boundary"><strong>Still blocked:</strong> this packet does not record decisions, implement content, satisfy reviews, authorize public release or change the existing WordPress site.</p>
           </section>

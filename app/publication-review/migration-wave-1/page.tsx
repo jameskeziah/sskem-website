@@ -22,7 +22,7 @@ export default async function LegacyMigrationWave1Page() {
     cohortEyebrow="Bounded first cohort"
     cohortHeading="Start with the information families use first."
     introduction="Review ten high-value public pages without mixing in galleries, results, staff identities, fees, notices or regulatory documents."
-    relatedWave={{ href: "/publication-review/migration-wave-2", label: "Continue to Wave 2" }}
+    relatedWaves={[{ href: "/publication-review/migration-wave-2", label: "Continue to Wave 2" }]}
     routeBase="/publication-review/migration-wave-1"
     routeSummaryNote="About Us still needs a route treatment."
     sequenceInstruction="Use the browser-only validator above to merge these ten rows into a current full worksheet; the authoritative intake still requires all 115 decisions before recording."
