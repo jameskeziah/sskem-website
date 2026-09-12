@@ -59,6 +59,7 @@ export function createLegacyMigrationWave(options: {
   allowedAreas: readonly MigrationArea[];
   prerequisiteWaves?: readonly LegacyMigrationWave[];
   requireMappedRoutes?: boolean;
+  requireRouteDecisions?: boolean;
   requiredReviews?: readonly MigrationRequiredReview[];
 }): LegacyMigrationWave {
   const {
@@ -66,9 +67,14 @@ export function createLegacyMigrationWave(options: {
     allowedAreas,
     prerequisiteWaves = [],
     requireMappedRoutes = false,
+    requireRouteDecisions = false,
     requiredReviews = [],
   } = options;
   assertManifestContract(manifest);
+
+  if (requireMappedRoutes && requireRouteDecisions) {
+    throw new Error(`Legacy migration wave ${manifest.waveId} cannot require both mapped and unresolved routes.`);
+  }
 
   const suppliedPrerequisiteIds = prerequisiteWaves.map((wave) => wave.manifest.waveId);
   if (suppliedPrerequisiteIds.length !== manifest.prerequisiteWaveIds.length
@@ -97,6 +103,9 @@ export function createLegacyMigrationWave(options: {
     }
     if (requireMappedRoutes && record.routeContinuity.status !== "implemented") {
       throw new Error(`Legacy migration wave ${manifest.waveId} requires a mapped route: ${recordId}`);
+    }
+    if (requireRouteDecisions && record.routeContinuity.status !== "decision-required") {
+      throw new Error(`Legacy migration wave ${manifest.waveId} requires an unresolved route: ${recordId}`);
     }
     if (requiredReviews.some((review) => !record.requiredReviews.includes(review))) {
       throw new Error(`Legacy migration wave ${manifest.waveId} is missing a required review: ${recordId}`);

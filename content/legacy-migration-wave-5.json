@@ -1,0 +1,27 @@
+{
+  "$schema": "./legacy-migration-wave.schema.json",
+  "schemaVersion": 1,
+  "waveId": "legacy-unresolved-media-routes-wave-5",
+  "label": "Unresolved historic media routes",
+  "matrixId": "sskem-legacy-content-migration",
+  "matrixBuiltOn": "2026-09-07",
+  "prerequisiteWaveIds": [
+    "legacy-core-information-wave-1",
+    "legacy-leadership-services-wave-2",
+    "legacy-academic-compliance-wave-3",
+    "legacy-media-gallery-index-wave-4"
+  ],
+  "recordIds": [
+    "migration-a6854dddb8e5e119",
+    "migration-aab602585bce5529",
+    "migration-0962f7a5e13423a8",
+    "migration-7fa25739598a6571",
+    "migration-9bb6e10a106c1ba0"
+  ],
+  "policy": {
+    "sourceContentIncluded": false,
+    "decisionsPreselected": false,
+    "repositoryWritePerformed": false,
+    "publicationAuthorized": false
+  }
+}

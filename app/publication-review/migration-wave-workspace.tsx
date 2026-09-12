@@ -101,7 +101,7 @@ export function MigrationWaveWorkspace({
             </div>
             <dl className="migration-wave-summary__grid">
               <div><dt>Wave records</dt><dd><strong>{wave.summary.total}</strong><span>Public page records only.</span></dd></div>
-              <div><dt>Routes already mapped</dt><dd><strong>{wave.summary.routeMapped}</strong><span>Route continuity is already defined.</span></dd></div>
+              <div><dt>Routes already mapped</dt><dd><strong>{wave.summary.routeMapped}</strong><span>{wave.summary.routeMapped > 0 ? "Route continuity is already defined." : "No route treatment is preselected."}</span></dd></div>
               <div><dt>Route decisions required</dt><dd><strong>{wave.summary.routeDecisionRequired}</strong><span>{routeSummaryNote}</span></dd></div>
               <div><dt>Implementation verified</dt><dd><strong>{wave.summary.implementationVerified}</strong><span>Work starts only after decisions are recorded.</span></dd></div>
             </dl>

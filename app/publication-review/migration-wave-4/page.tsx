@@ -24,6 +24,7 @@ export default async function LegacyMigrationWave4Page() {
     introduction="Review ten public page records whose destinations are already mapped. A page decision does not import or approve photographs, videos, captions, pupil identities, achievement claims, consent records, rights evidence or archival copy."
     relatedWaves={[
       { href: "/publication-review/migration-wave-3", label: "Return to Wave 3" },
+      { href: "/publication-review/migration-wave-5", label: "Continue to Wave 5" },
     ]}
     routeBase="/publication-review/migration-wave-4"
     routeSummaryNote="All ten routes already have controlled destinations."
