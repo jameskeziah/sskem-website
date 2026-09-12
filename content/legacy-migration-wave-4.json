@@ -1,0 +1,31 @@
+{
+  "$schema": "./legacy-migration-wave.schema.json",
+  "schemaVersion": 1,
+  "waveId": "legacy-media-gallery-index-wave-4",
+  "label": "Media and gallery index pages",
+  "matrixId": "sskem-legacy-content-migration",
+  "matrixBuiltOn": "2026-09-07",
+  "prerequisiteWaveIds": [
+    "legacy-core-information-wave-1",
+    "legacy-leadership-services-wave-2",
+    "legacy-academic-compliance-wave-3"
+  ],
+  "recordIds": [
+    "migration-a1e6df122be75213",
+    "migration-e03d63929f41f8d5",
+    "migration-b4d793ad2989b588",
+    "migration-8bad5d06e8da4be2",
+    "migration-8eb86dc3ec04ad61",
+    "migration-8375600ceb777a8a",
+    "migration-6c35e494ef66e80b",
+    "migration-5314ee0461284f1e",
+    "migration-68a35bb8f30dd722",
+    "migration-8d40923c2b35ca38"
+  ],
+  "policy": {
+    "sourceContentIncluded": false,
+    "decisionsPreselected": false,
+    "repositoryWritePerformed": false,
+    "publicationAuthorized": false
+  }
+}

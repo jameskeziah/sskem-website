@@ -51,6 +51,14 @@ Every Wave 3 record remains approval-blocked. Calendars, timetables and age rule
 
 Wave prerequisites are cumulative and chronological: Wave 3 declares and binds both Wave 1 and Wave 2, not only the immediately preceding wave. Its master input must contain all 18 earlier decisions. A successful browser-only merge carries 26 decisions in the 115-row master, leaving 89 content decisions and 79 route decisions, while recording, approval, implementation and publication remain unchanged.
 
+### Wave 4: media-page continuity
+
+`/publication-review/migration-wave-4` is the authenticated, noindex fourth decision packet. It contains ten public page records: Achievements, Gallery 2020 through Gallery 2026, Media and Fit India Movement 2020. All ten routes already have guarded destinations, so the packet introduces no new route decision.
+
+Wave 4 governs page-level continuity only. Every record still requires accuracy, currency, editorial, management, privacy, rights, retention and accessibility review. The packet contains no image or video bytes, captions, names, pupil identities, consent records, approval evidence or archival copy. Selecting a page decision cannot authorize any media asset; the independent media inspection, approval, derivative-binding and publication gates remain mandatory.
+
+Wave 4 cumulatively declares and binds Waves 1, 2 and 3. Its master input must contain all 26 earlier decisions. A successful browser-only merge carries 36 decisions in the 115-row master, leaving 79 content decisions and 79 route decisions, while recording, media approval, implementation and publication remain unchanged.
+
 ## Decision contract
 
 For every record, the owner must choose:
@@ -85,9 +93,10 @@ The structural audit runs before the composite release audit. Migration completi
 4. Complete Wave 1 without changing bindings, then validate and merge it with a fresh full worksheet in the browser-only Wave 1 tool.
 5. Use the Wave 1 combined master as the required input for Wave 2; complete its eight rows and download the 18-decision combined master.
 6. Use the Wave 2 combined master as the required input for Wave 3; complete its eight rows and download the 26-decision combined master.
-7. Complete route and content decisions for the remaining 89 records until all 115 are decided.
-8. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
-9. Implement each destination, redirect, archive or retirement.
-10. Verify implementation and complete the separate approval pipelines.
-11. Run the migration release audit and composite public-release audit.
-12. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.
+7. Use the Wave 3 combined master as the required input for Wave 4; complete its ten rows and download the 36-decision combined master.
+8. Complete route and content decisions for the remaining 79 records until all 115 are decided.
+9. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
+10. Implement each destination, redirect, archive or retirement.
+11. Verify implementation and complete the separate approval pipelines.
+12. Run the migration release audit and composite public-release audit.
+13. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.

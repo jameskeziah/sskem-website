@@ -5,6 +5,7 @@ import {
   legacyContentMigrationWaveCsv,
   type LegacyContentMigrationRecord,
   type MigrationArea,
+  type MigrationRequiredReview,
 } from "@/lib/legacy-content-migration";
 import {
   hasCumulativeLegacyMigrationWavePrerequisites,
@@ -58,8 +59,15 @@ export function createLegacyMigrationWave(options: {
   allowedAreas: readonly MigrationArea[];
   prerequisiteWaves?: readonly LegacyMigrationWave[];
   requireMappedRoutes?: boolean;
+  requiredReviews?: readonly MigrationRequiredReview[];
 }): LegacyMigrationWave {
-  const { manifest, allowedAreas, prerequisiteWaves = [], requireMappedRoutes = false } = options;
+  const {
+    manifest,
+    allowedAreas,
+    prerequisiteWaves = [],
+    requireMappedRoutes = false,
+    requiredReviews = [],
+  } = options;
   assertManifestContract(manifest);
 
   const suppliedPrerequisiteIds = prerequisiteWaves.map((wave) => wave.manifest.waveId);
@@ -89,6 +97,9 @@ export function createLegacyMigrationWave(options: {
     }
     if (requireMappedRoutes && record.routeContinuity.status !== "implemented") {
       throw new Error(`Legacy migration wave ${manifest.waveId} requires a mapped route: ${recordId}`);
+    }
+    if (requiredReviews.some((review) => !record.requiredReviews.includes(review))) {
+      throw new Error(`Legacy migration wave ${manifest.waveId} is missing a required review: ${recordId}`);
     }
     if (record.contentDecision.decision !== "unselected" || record.implementationStatus !== "not-started") {
       throw new Error(`Legacy migration wave ${manifest.waveId} must be refreshed after a decision or implementation change: ${recordId}`);

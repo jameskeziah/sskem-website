@@ -24,6 +24,7 @@ export default async function LegacyMigrationWave3Page() {
     introduction="Review eight high-risk public pages whose destinations are already mapped, without importing old schedules, eligibility rules, faculty identities, documents or affiliation claims."
     relatedWaves={[
       { href: "/publication-review/migration-wave-2", label: "Return to Wave 2" },
+      { href: "/publication-review/migration-wave-4", label: "Continue to Wave 4" },
     ]}
     routeBase="/publication-review/migration-wave-3"
     routeSummaryNote="All eight routes already have controlled destinations."
