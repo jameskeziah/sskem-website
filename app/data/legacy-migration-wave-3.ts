@@ -9,6 +9,8 @@ import { parseLegacyMigrationWaveManifest } from "@/lib/legacy-migration-wave-ma
 export const legacyMigrationWave3 = createLegacyMigrationWave({
   manifest: parseLegacyMigrationWaveManifest(waveData),
   allowedAreas: ["academics", "admissions", "disclosure"],
+  allowedSourceKinds: ["page"],
+  allowedSourceStatuses: ["publish"],
   prerequisiteWaves: [legacyMigrationWave1, legacyMigrationWave2],
   requireMappedRoutes: true,
 });

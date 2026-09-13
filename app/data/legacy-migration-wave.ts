@@ -3,9 +3,13 @@ import {
 } from "@/app/data/legacy-content-migration";
 import {
   legacyContentMigrationWaveCsv,
+  migrationSourceKinds,
+  migrationSourceStatuses,
   type LegacyContentMigrationRecord,
   type MigrationArea,
   type MigrationRequiredReview,
+  type MigrationSourceKind,
+  type MigrationSourceStatus,
 } from "@/lib/legacy-content-migration";
 import {
   hasCumulativeLegacyMigrationWavePrerequisites,
@@ -57,6 +61,8 @@ function assertManifestContract(manifest: LegacyMigrationWaveManifest) {
 export function createLegacyMigrationWave(options: {
   manifest: LegacyMigrationWaveManifest;
   allowedAreas: readonly MigrationArea[];
+  allowedSourceKinds?: readonly MigrationSourceKind[];
+  allowedSourceStatuses?: readonly MigrationSourceStatus[];
   prerequisiteWaves?: readonly LegacyMigrationWave[];
   requireMappedRoutes?: boolean;
   requireRouteDecisions?: boolean;
@@ -65,6 +71,8 @@ export function createLegacyMigrationWave(options: {
   const {
     manifest,
     allowedAreas,
+    allowedSourceKinds = ["page"],
+    allowedSourceStatuses = ["publish"],
     prerequisiteWaves = [],
     requireMappedRoutes = false,
     requireRouteDecisions = false,
@@ -74,6 +82,19 @@ export function createLegacyMigrationWave(options: {
 
   if (requireMappedRoutes && requireRouteDecisions) {
     throw new Error(`Legacy migration wave ${manifest.waveId} cannot require both mapped and unresolved routes.`);
+  }
+
+  const knownSourceKinds = new Set<MigrationSourceKind>(migrationSourceKinds);
+  const knownSourceStatuses = new Set<MigrationSourceStatus>(migrationSourceStatuses);
+  const allowedSourceKindSet = new Set(allowedSourceKinds);
+  const allowedSourceStatusSet = new Set(allowedSourceStatuses);
+  if (allowedSourceKinds.length === 0
+    || allowedSourceKindSet.size !== allowedSourceKinds.length
+    || allowedSourceKinds.some((sourceKind) => !knownSourceKinds.has(sourceKind))
+    || allowedSourceStatuses.length === 0
+    || allowedSourceStatusSet.size !== allowedSourceStatuses.length
+    || allowedSourceStatuses.some((sourceStatus) => !knownSourceStatuses.has(sourceStatus))) {
+    throw new Error(`Legacy migration wave ${manifest.waveId} has an invalid source allowlist.`);
   }
 
   const suppliedPrerequisiteIds = prerequisiteWaves.map((wave) => wave.manifest.waveId);
@@ -96,7 +117,8 @@ export function createLegacyMigrationWave(options: {
       throw new Error(`Legacy migration wave ${manifest.waveId} repeats a prerequisite record: ${recordId}`);
     }
     if (record.sourceVisibility !== "public"
-      || record.sourceKind !== "page"
+      || !allowedSourceKindSet.has(record.sourceKind)
+      || !allowedSourceStatusSet.has(record.sourceStatus)
       || record.identityProtected
       || !allowedAreaSet.has(record.area)) {
       throw new Error(`Legacy migration wave ${manifest.waveId} contains an ineligible source: ${recordId}`);
@@ -110,7 +132,10 @@ export function createLegacyMigrationWave(options: {
     if (requiredReviews.some((review) => !record.requiredReviews.includes(review))) {
       throw new Error(`Legacy migration wave ${manifest.waveId} is missing a required review: ${recordId}`);
     }
-    if (record.contentDecision.decision !== "unselected" || record.implementationStatus !== "not-started") {
+    if (record.contentDecision.decision !== "unselected"
+      || record.implementationStatus !== "not-started"
+      || record.publicationEligible !== false
+      || record.publicationReason !== "decision-and-approval-required") {
       throw new Error(`Legacy migration wave ${manifest.waveId} must be refreshed after a decision or implementation change: ${recordId}`);
     }
     return record;

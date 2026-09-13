@@ -24,6 +24,7 @@ export default async function LegacyMigrationWave5Page() {
     introduction="Review five public historical media-page records whose route treatments and content futures remain undecided. No destination is preselected. A page or route decision does not import or approve photographs, videos, captions, names, pupil identities, achievement claims, consent records, rights evidence or archival copy, and cannot authorize an asset or public release."
     relatedWaves={[
       { href: "/publication-review/migration-wave-4", label: "Return to Wave 4" },
+      { href: "/publication-review/migration-wave-6", label: "Continue to Wave 6" },
     ]}
     routeBase="/publication-review/migration-wave-5"
     routeSummaryNote="All five routes require an explicit treatment as well as a content decision."

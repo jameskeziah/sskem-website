@@ -79,7 +79,7 @@ export function MigrationWaveWorkspace({
               <p className="eyebrow">Decision packet only</p>
               <h2 id="migration-wave-boundary-title">Source copy stays in the controlled archive.</h2>
             </div>
-            <p>This workspace exposes public-safe labels, routes, review requirements and opaque source references. It contains no legacy page text, approval evidence, private path, approver identity or automatic publication action.</p>
+            <p>This workspace exposes public-safe labels, routes, review requirements and opaque source references. It contains no legacy source content, approval evidence, private path, approver identity or automatic publication action.</p>
           </section>
 
           <MigrationWaveMergeForm
@@ -100,7 +100,7 @@ export function MigrationWaveWorkspace({
               <p>{cohortDescription}</p>
             </div>
             <dl className="migration-wave-summary__grid">
-              <div><dt>Wave records</dt><dd><strong>{wave.summary.total}</strong><span>Public page records only.</span></dd></div>
+              <div><dt>Wave records</dt><dd><strong>{wave.summary.total}</strong><span>Public source records only.</span></dd></div>
               <div><dt>Routes already mapped</dt><dd><strong>{wave.summary.routeMapped}</strong><span>{wave.summary.routeMapped > 0 ? "Route continuity is already defined." : "No route treatment is preselected."}</span></dd></div>
               <div><dt>Route decisions required</dt><dd><strong>{wave.summary.routeDecisionRequired}</strong><span>{routeSummaryNote}</span></dd></div>
               <div><dt>Implementation verified</dt><dd><strong>{wave.summary.implementationVerified}</strong><span>Work starts only after decisions are recorded.</span></dd></div>
@@ -120,7 +120,7 @@ export function MigrationWaveWorkspace({
               <table className="migration-wave-table">
                 <thead>
                   <tr>
-                    <th scope="col">Archived page</th>
+                    <th scope="col">Archived source</th>
                     <th scope="col">Legacy route</th>
                     <th scope="col">Current route treatment</th>
                     <th scope="col">Required reviews</th>
@@ -130,7 +130,7 @@ export function MigrationWaveWorkspace({
                 <tbody>
                   {wave.records.map((record) => (
                     <tr key={record.id}>
-                      <th scope="row" data-label="Archived page">
+                      <th scope="row" data-label="Archived source">
                         <strong>{record.label}</strong>
                         <code>{record.sourceRef}</code>
                       </th>
@@ -153,7 +153,7 @@ export function MigrationWaveWorkspace({
           <section className="migration-wave-next" aria-labelledby="migration-wave-next-title">
             <div>
               <p className="eyebrow">What management completes</p>
-              <h2 id="migration-wave-next-title">One decision row for each archived page.</h2>
+              <h2 id="migration-wave-next-title">One decision row for each archived source.</h2>
             </div>
             <ol>
               <li>Open each opaque source reference only inside the controlled archive and check accuracy and currency.</li>

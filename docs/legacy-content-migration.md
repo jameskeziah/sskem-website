@@ -67,6 +67,14 @@ Wave 5 remains a page-level continuity decision only. It contains no photographs
 
 Wave 5 cumulatively declares and binds Waves 1 through 4. Its master input must contain all 36 earlier decisions. A successful browser-only merge carries 41 decisions in the 115-row master, leaving 74 content decisions and 74 route decisions, while recording, media approval, implementation and publication remain unchanged.
 
+### Wave 6: historic celebration galleries
+
+`/publication-review/migration-wave-6` is the authenticated, noindex sixth decision packet. It contains twelve public `sk_igallery` index records for general cultural, civic and school celebrations. They were selected because they share one eight-review contract; records involving pupils by name, results and achievements, named visitors, health or vaccination, uncertain institutional ownership, structurally ambiguous titles and ambiguous activities remain deferred.
+
+Wave 6 records route and content intent only. No destination is preselected. The `identityProtected: false` matrix classification is not proof that gallery media contains no child, that consent or rights exist, or that cultural participation establishes an individual's beliefs. The packet displays only unverified legacy index metadata. It does not retrieve or display underlying gallery content, and does not import, copy, approve, activate, transform or publish image or video bytes, captions, identities, consent records, rights evidence, asset metadata, derivatives or archival copy. Legacy event titles remain unverified and the packet cannot validate event claims. Every underlying asset remains subject to independent inspection, consent, privacy, rights, retention, accessibility, metadata, derivative-binding and publication gates.
+
+Wave 6 cumulatively declares and binds Waves 1 through 5. Its master input must contain all 41 earlier decisions. A successful browser-only merge carries 53 decisions in the 115-row master, leaving 62 content decisions, 62 route decisions and 18 event-gallery records for later waves. Recording, media approval, implementation and publication remain unchanged.
+
 ## Decision contract
 
 For every record, the owner must choose:
@@ -103,9 +111,10 @@ The structural audit runs before the composite release audit. Migration completi
 6. Use the Wave 2 combined master as the required input for Wave 3; complete its eight rows and download the 26-decision combined master.
 7. Use the Wave 3 combined master as the required input for Wave 4; complete its ten rows and download the 36-decision combined master.
 8. Use the Wave 4 combined master as the required input for Wave 5; complete route and content decisions for its five rows and download the 41-decision combined master.
-9. Complete route and content decisions for the remaining 74 records until all 115 are decided.
-10. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
-11. Implement each destination, redirect, archive or retirement.
-12. Verify implementation and complete the separate approval pipelines.
-13. Run the migration release audit and composite public-release audit.
-14. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.
+9. Use the Wave 5 combined master as the required input for Wave 6; complete route and content decisions for its twelve rows and download the 53-decision combined master.
+10. Complete route and content decisions for the remaining 62 records until all 115 are decided.
+11. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
+12. Implement each destination, redirect, archive or retirement.
+13. Verify implementation and complete the separate approval pipelines.
+14. Run the migration release audit and composite public-release audit.
+15. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.

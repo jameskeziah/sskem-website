@@ -1,0 +1,35 @@
+{
+  "$schema": "./legacy-migration-wave.schema.json",
+  "schemaVersion": 1,
+  "waveId": "legacy-celebration-galleries-wave-6",
+  "label": "Historic celebration gallery records",
+  "matrixId": "sskem-legacy-content-migration",
+  "matrixBuiltOn": "2026-09-07",
+  "prerequisiteWaveIds": [
+    "legacy-core-information-wave-1",
+    "legacy-leadership-services-wave-2",
+    "legacy-academic-compliance-wave-3",
+    "legacy-media-gallery-index-wave-4",
+    "legacy-unresolved-media-routes-wave-5"
+  ],
+  "recordIds": [
+    "migration-cacdb534d19e1094",
+    "migration-7a84ab88f3130673",
+    "migration-3361d0e494df6525",
+    "migration-5bc96c04d0f1fcad",
+    "migration-796bdfc27479612c",
+    "migration-5789689b28c589a6",
+    "migration-05184b714a37553b",
+    "migration-2b7f1e7718ee2af2",
+    "migration-f8ef68113e9948c3",
+    "migration-394c0aa16d42efe8",
+    "migration-5bc443464780388a",
+    "migration-8b86cd4e009ee66e"
+  ],
+  "policy": {
+    "sourceContentIncluded": false,
+    "decisionsPreselected": false,
+    "repositoryWritePerformed": false,
+    "publicationAuthorized": false
+  }
+}

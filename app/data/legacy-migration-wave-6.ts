@@ -1,4 +1,4 @@
-import waveData from "@/content/legacy-migration-wave-5.json";
+import waveData from "@/content/legacy-migration-wave-6.json";
 import {
   createLegacyMigrationWave,
 } from "@/app/data/legacy-migration-wave";
@@ -6,18 +6,20 @@ import { legacyMigrationWave1 } from "@/app/data/legacy-migration-wave-1";
 import { legacyMigrationWave2 } from "@/app/data/legacy-migration-wave-2";
 import { legacyMigrationWave3 } from "@/app/data/legacy-migration-wave-3";
 import { legacyMigrationWave4 } from "@/app/data/legacy-migration-wave-4";
+import { legacyMigrationWave5 } from "@/app/data/legacy-migration-wave-5";
 import { parseLegacyMigrationWaveManifest } from "@/lib/legacy-migration-wave-manifest";
 
-export const legacyMigrationWave5 = createLegacyMigrationWave({
+export const legacyMigrationWave6 = createLegacyMigrationWave({
   manifest: parseLegacyMigrationWaveManifest(waveData),
   allowedAreas: ["media"],
-  allowedSourceKinds: ["page"],
-  allowedSourceStatuses: ["publish"],
+  allowedSourceKinds: ["sk_igallery"],
+  allowedSourceStatuses: ["public-index"],
   prerequisiteWaves: [
     legacyMigrationWave1,
     legacyMigrationWave2,
     legacyMigrationWave3,
     legacyMigrationWave4,
+    legacyMigrationWave5,
   ],
   requireRouteDecisions: true,
   requiredReviews: [
@@ -32,8 +34,8 @@ export const legacyMigrationWave5 = createLegacyMigrationWave({
   ],
 });
 
-export const legacyMigrationWave5Manifest = legacyMigrationWave5.manifest;
-export const legacyMigrationWave5Records = legacyMigrationWave5.records;
-export const legacyMigrationWave5PrerequisiteRecordIds = legacyMigrationWave5.prerequisiteRecordIds;
-export const legacyMigrationWave5Summary = legacyMigrationWave5.summary;
-export const legacyMigrationWave5WorksheetCsv = legacyMigrationWave5.worksheetCsv;
+export const legacyMigrationWave6Manifest = legacyMigrationWave6.manifest;
+export const legacyMigrationWave6Records = legacyMigrationWave6.records;
+export const legacyMigrationWave6PrerequisiteRecordIds = legacyMigrationWave6.prerequisiteRecordIds;
+export const legacyMigrationWave6Summary = legacyMigrationWave6.summary;
+export const legacyMigrationWave6WorksheetCsv = legacyMigrationWave6.worksheetCsv;

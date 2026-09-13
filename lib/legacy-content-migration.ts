@@ -1,4 +1,5 @@
 export const migrationSourceKinds = ["page", "post", "category", "post_format", "sk_igallery", "teacher", "user"] as const;
+export const migrationSourceStatuses = ["publish", "public-index", "draft"] as const;
 export const migrationAreas = ["home", "about", "academics", "admissions", "disclosure", "facilities", "contact", "media", "news", "identity", "taxonomy", "other"] as const;
 export const migrationContentDecisions = ["unselected", "migrate", "rewrite", "merge", "archive", "redirect-only", "retire"] as const;
 export const migrationRouteActions = ["unselected", "retain", "redirect", "archive", "retire", "private-only"] as const;
@@ -105,6 +106,7 @@ export const legacyMigrationDecisionWorksheetHeaders = [
 ] as const;
 
 export type MigrationSourceKind = (typeof migrationSourceKinds)[number];
+export type MigrationSourceStatus = (typeof migrationSourceStatuses)[number];
 export type MigrationArea = (typeof migrationAreas)[number];
 export type MigrationContentDecision = (typeof migrationContentDecisions)[number];
 export type MigrationRouteAction = (typeof migrationRouteActions)[number];
@@ -126,7 +128,7 @@ export type LegacyContentMigrationRecord = {
   sourceDigest: string;
   sourceKind: MigrationSourceKind;
   sourceVisibility: "public" | "private-review";
-  sourceStatus: "publish" | "public-index" | "draft";
+  sourceStatus: MigrationSourceStatus;
   sourceModifiedOn: string | null;
   area: MigrationArea;
   identityProtected: boolean;
@@ -205,6 +207,7 @@ export async function fingerprintLegacyMigrationValue(value: unknown) {
 }
 
 const sourceKindSet = new Set<string>(migrationSourceKinds);
+const sourceStatusSet = new Set<string>(migrationSourceStatuses);
 const areaSet = new Set<string>(migrationAreas);
 const contentDecisionSet = new Set<string>(migrationContentDecisions);
 const routeActionSet = new Set<string>(migrationRouteActions);
@@ -331,7 +334,7 @@ export function validateLegacyContentMigrationMatrix(value: unknown): MigrationV
     if (!sourceKindSet.has(String(candidate.sourceKind))) add("source-kind", `${path}.sourceKind`, "Unsupported source kind.");
     if (!areaSet.has(String(candidate.area))) add("area", `${path}.area`, "Unsupported migration area.");
     if (candidate.sourceVisibility !== "public" && candidate.sourceVisibility !== "private-review") add("source-visibility", `${path}.sourceVisibility`, "Unsupported source visibility.");
-    if (!["publish", "public-index", "draft"].includes(String(candidate.sourceStatus))) add("source-status", `${path}.sourceStatus`, "Unsupported WordPress source status.");
+    if (!sourceStatusSet.has(String(candidate.sourceStatus))) add("source-status", `${path}.sourceStatus`, "Unsupported WordPress source status.");
     if (candidate.sourceModifiedOn !== null && !validDateTime(candidate.sourceModifiedOn)) add("source-modified", `${path}.sourceModifiedOn`, "Use a WordPress UTC timestamp or null.");
     if (candidate.sourceVisibility === "private-review" && candidate.sourceStatus !== "draft") add("private-status", path, "Private review records must remain draft sources.");
     if (candidate.sourceVisibility === "public" && candidate.sourceStatus === "draft") add("public-status", path, "Draft sources cannot be marked public.");
