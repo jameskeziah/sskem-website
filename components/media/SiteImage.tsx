@@ -64,10 +64,11 @@ export function SiteImage({
     variant === "hero";
 
   return (
-    <Image
-      {...props}
-      sizes={sizes ?? sizesByVariant[variant]}
-      preload={shouldPreload}
-    />
-  );
+  <Image
+    {...props}
+    alt={props.alt}
+    sizes={sizes ?? sizesByVariant[variant]}
+    preload={shouldPreload}
+  />
+);
 }
