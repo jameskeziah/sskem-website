@@ -24,6 +24,7 @@ export default async function LegacyMigrationWave7Page() {
     introduction="Review five public gallery-index records whose route treatments and content futures remain undecided. Two Matru-Pitru and two Shiv Jayanti titles appear similar, but this packet does not assume that their events or assets are duplicates. No destination is preselected. The matrix classification identityProtected: false does not prove that an image contains no child or that consent and rights exist. This packet displays only unverified legacy index metadata. It does not retrieve or display underlying gallery content, and does not import, copy, approve, activate, transform or publish image or video bytes, captions, identities, consent, rights evidence, asset metadata, derivatives or archived copy; it cannot validate event claims, infer an individual's beliefs or permit public release."
     relatedWaves={[
       { href: "/publication-review/migration-wave-6", label: "Return to Wave 6" },
+      { href: "/publication-review/migration-wave-8", label: "Continue to Wave 8" },
     ]}
     routeBase="/publication-review/migration-wave-7"
     routeSummaryNote="All five routes require explicit treatments and content decisions."

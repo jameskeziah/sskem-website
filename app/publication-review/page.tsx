@@ -272,6 +272,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
                 <Link className="button button--primary" href="/publication-review/migration-wave-5">Continue with unresolved media routes Wave 5</Link>
                 <Link className="button button--primary" href="/publication-review/migration-wave-6">Continue with celebration galleries Wave 6</Link>
                 <Link className="button button--primary" href="/publication-review/migration-wave-7">Continue with repeated gallery routes Wave 7</Link>
+                <Link className="button button--primary" href="/publication-review/migration-wave-8">Clarify ambiguous gallery routes Wave 8</Link>
                 <Link className="button button--primary" href="/publication-review/migration-matrix">Open migration matrix</Link>
                 <Link className="button button--quiet" href="/publication-review/migration-matrix-export">Download safe worksheet</Link>
                 <Link className="button button--quiet" href="/publication-review/migration-decision-intake">Validate completed worksheet</Link>

@@ -83,6 +83,14 @@ Wave 7 records route and content intent only. Similar titles do not establish th
 
 Wave 7 cumulatively declares and binds Waves 1 through 6. Its master input must contain all 53 earlier decisions. A successful browser-only merge carries 58 decisions in the 115-row master, leaving 57 content decisions, 57 route decisions and 13 event-gallery records for later waves. Recording, media approval, implementation and publication remain unchanged.
 
+### Wave 8: ambiguous gallery labels
+
+`/publication-review/migration-wave-8` is the authenticated, noindex eighth decision packet. It contains two public `sk_igallery` index records whose legacy labels cannot be interpreted safely: `Bondla Activity` and `Celebration of Birth Anniversery of Dr. Apj Abdul Kalam Azad`. The first does not establish an activity, venue, participants, date or purpose. The second is structurally ambiguous and appears to conflate A. P. J. Abdul Kalam with Abul Kalam Azad. The canonical labels are shown only as unverified source metadata; the packet does not silently correct either record or infer a person, event, place, destination, relationship or duplicate.
+
+Wave 8 records route and content intent only. No title, route, merge, destination or content decision is preselected. The `identityProtected: false` matrix classification is not proof that gallery media contains no child or that consent or rights exist. The packet does not retrieve or display underlying gallery content, and does not import, copy, approve, activate, transform or publish image or video bytes, captions, identities, consent records, rights evidence, asset metadata, derivatives or archival copy. Legacy event claims remain unverified. Every underlying asset remains subject to independent source clarification, inspection, consent, privacy, rights, retention, accessibility, metadata, derivative-binding and publication gates.
+
+Wave 8 cumulatively declares and binds Waves 1 through 7. Its master input must contain all 58 earlier decisions. A successful browser-only merge carries 60 decisions in the 115-row master, leaving 55 content decisions, 55 route decisions and 11 event-gallery records for later waves. Those eleven records remain deferred because they involve institutional-model and evidence gates, pupil or result claims, named visitors or child health. Recording, media approval, implementation and publication remain unchanged.
+
 ## Decision contract
 
 For every record, the owner must choose:
@@ -121,9 +129,10 @@ The structural audit runs before the composite release audit. Migration completi
 8. Use the Wave 4 combined master as the required input for Wave 5; complete route and content decisions for its five rows and download the 41-decision combined master.
 9. Use the Wave 5 combined master as the required input for Wave 6; complete route and content decisions for its twelve rows and download the 53-decision combined master.
 10. Use the Wave 6 combined master as the required input for Wave 7; complete route and content decisions for its five rows and download the 58-decision combined master.
-11. Complete route and content decisions for the remaining 57 records until all 115 are decided.
-12. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
-13. Implement each destination, redirect, archive or retirement.
-14. Verify implementation and complete the separate approval pipelines.
-15. Run the migration release audit and composite public-release audit.
-16. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.
+11. Use the Wave 7 combined master as the required input for Wave 8; clarify and complete route and content decisions for its two ambiguous rows and download the 60-decision combined master.
+12. Complete route and content decisions for the remaining 55 records until all 115 are decided.
+13. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
+14. Implement each destination, redirect, archive or retirement.
+15. Verify implementation and complete the separate approval pipelines.
+16. Run the migration release audit and composite public-release audit.
+17. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.
