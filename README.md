@@ -20,7 +20,7 @@ npm test
 
 `npm test` intentionally exercises the complete private-review prototype. A
 normal `npm run build` is the public-release path and remains blocked until all
-six release gates pass. Use
+seven release gates pass. Use
 `npm run build:review` only for an access-controlled private review; it also
 emits `noindex, nofollow` metadata. Search-engine directives are not access
 control.
@@ -39,8 +39,8 @@ stores an approver identity. See `docs/approval-manifest.md`.
 
 Run `npm run release:audit` for the authoritative launch decision across
 approvals, exact campus-media bindings, exact Appendix IX document bindings,
-homepage transfer budgets, legacy-route implementation and removal of
-review-only source treatment. A public build requires all six gates; private
+homepage transfer budgets, legacy-route cutover, legacy-content migration and
+review-only treatment. A public build requires all seven gates; private
 review reports the same blockers without treating them as approval. The model
 and operating sequence are documented in
 [`docs/public-release-readiness.md`](docs/public-release-readiness.md).
