@@ -24,6 +24,7 @@ export default async function LegacyMigrationWave8Page() {
     introduction="Review two public gallery-index records whose route treatments and content futures remain undecided. ‘Bondla Activity’ does not establish the activity, venue, participants, date or purpose. The commemoration label appears to conflate A. P. J. Abdul Kalam with Abul Kalam Azad, so this packet preserves the canonical wording only as unverified legacy metadata and does not correct or identify the person. No title, destination, merge or content decision is preselected. The matrix classification identityProtected: false does not prove that an image contains no child or that consent and rights exist. This packet does not retrieve or display underlying gallery content, and does not import, copy, approve, activate, transform or publish image or video bytes, captions, identities, consent, rights evidence, asset metadata, derivatives or archived copy; it cannot validate event claims or permit public release."
     relatedWaves={[
       { href: "/publication-review/migration-wave-7", label: "Return to Wave 7" },
+      { href: "/publication-review/migration-wave-9", label: "Continue to Wave 9" },
     ]}
     routeBase="/publication-review/migration-wave-8"
     routeSummaryNote="Both routes require explicit treatments, clarified source context and content decisions."

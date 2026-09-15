@@ -1,0 +1,28 @@
+{
+  "$schema": "./legacy-migration-wave.schema.json",
+  "schemaVersion": 1,
+  "waveId": "legacy-institutional-evidence-galleries-wave-9",
+  "label": "Institutional-model and evidence gallery routes",
+  "matrixId": "sskem-legacy-content-migration",
+  "matrixBuiltOn": "2026-09-07",
+  "prerequisiteWaveIds": [
+    "legacy-core-information-wave-1",
+    "legacy-leadership-services-wave-2",
+    "legacy-academic-compliance-wave-3",
+    "legacy-media-gallery-index-wave-4",
+    "legacy-unresolved-media-routes-wave-5",
+    "legacy-celebration-galleries-wave-6",
+    "legacy-community-galleries-wave-7",
+    "legacy-ambiguous-gallery-routes-wave-8"
+  ],
+  "recordIds": [
+    "migration-f610c63003c281a7",
+    "migration-c02a4b2c599fc7a2"
+  ],
+  "policy": {
+    "sourceContentIncluded": false,
+    "decisionsPreselected": false,
+    "repositoryWritePerformed": false,
+    "publicationAuthorized": false
+  }
+}

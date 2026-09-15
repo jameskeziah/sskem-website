@@ -91,6 +91,14 @@ Wave 8 records route and content intent only. No title, route, merge, destinatio
 
 Wave 8 cumulatively declares and binds Waves 1 through 7. Its master input must contain all 58 earlier decisions. A successful browser-only merge carries 60 decisions in the 115-row master, leaving 55 content decisions, 55 route decisions and 11 event-gallery records for later waves. Those eleven records remain deferred because they involve institutional-model and evidence gates, pupil or result claims, named visitors or child health. Recording, media approval, implementation and publication remain unchanged.
 
+### Wave 9: institutional-model and evidence-sensitive galleries
+
+`/publication-review/migration-wave-9` is the authenticated, noindex ninth decision packet. It contains two public `sk_igallery` index records: `5th Foundation day Celebration at SSKEMS` and `Institute`. Both require the standard eight media reviews plus explicit institutional-model and evidence review. The first label does not establish which regulatory entity the anniversary concerns, its basis, event date or organiser. The second does not establish a legal operator, programme scope, enrolment or fee relationship, awarding authority, or a relationship with the CBSE School or Maharashtra Junior College.
+
+Wave 9 records route and content intent only. Institutional-model and evidence review happen in the controlled system; completing or merging this worksheet does not perform, approve or replace those checks. No claim, identity, title, route, merge, destination or content decision is preselected. The packet contains no source documents or private evidence locations, does not retrieve or display underlying gallery content, and does not import, copy, approve, activate, transform or publish media, captions, identities, evidence, consent records, rights metadata, derivatives or archival copy. The `identityProtected: false` matrix classification is not proof that gallery media contains no child or that consent or rights exist. Institutional and event claims remain unverified, and every underlying asset remains subject to independent inspection and the full publication pipeline.
+
+Wave 9 cumulatively declares and binds Waves 1 through 8. Its master input must contain all 60 earlier decisions. A successful browser-only merge carries 62 decisions in the 115-row master, leaving 53 content decisions, 53 route decisions and nine event-gallery records for later waves. Those nine records remain deferred because they involve pupil or result claims, named visitors or child health. Recording, evidence verification, media approval, implementation and publication remain unchanged.
+
 ## Decision contract
 
 For every record, the owner must choose:
@@ -130,9 +138,10 @@ The structural audit runs before the composite release audit. Migration completi
 9. Use the Wave 5 combined master as the required input for Wave 6; complete route and content decisions for its twelve rows and download the 53-decision combined master.
 10. Use the Wave 6 combined master as the required input for Wave 7; complete route and content decisions for its five rows and download the 58-decision combined master.
 11. Use the Wave 7 combined master as the required input for Wave 8; clarify and complete route and content decisions for its two ambiguous rows and download the 60-decision combined master.
-12. Complete route and content decisions for the remaining 55 records until all 115 are decided.
-13. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
-14. Implement each destination, redirect, archive or retirement.
-15. Verify implementation and complete the separate approval pipelines.
-16. Run the migration release audit and composite public-release audit.
-17. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.
+12. Use the Wave 8 combined master as the required input for Wave 9; complete route and content decisions for its two institutional-model records only after consulting controlled evidence, then download the 62-decision combined master.
+13. Complete route and content decisions for the remaining 53 records until all 115 are decided.
+14. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
+15. Implement each destination, redirect, archive or retirement.
+16. Verify implementation and complete the separate approval pipelines.
+17. Run the migration release audit and composite public-release audit.
+18. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.
