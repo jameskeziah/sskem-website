@@ -1,0 +1,33 @@
+{
+  "$schema": "./legacy-migration-wave.schema.json",
+  "schemaVersion": 1,
+  "waveId": "legacy-pupil-achievement-galleries-wave-11",
+  "label": "Pupil achievement and result gallery routes",
+  "matrixId": "sskem-legacy-content-migration",
+  "matrixBuiltOn": "2026-09-07",
+  "prerequisiteWaveIds": [
+    "legacy-core-information-wave-1",
+    "legacy-leadership-services-wave-2",
+    "legacy-academic-compliance-wave-3",
+    "legacy-media-gallery-index-wave-4",
+    "legacy-unresolved-media-routes-wave-5",
+    "legacy-celebration-galleries-wave-6",
+    "legacy-community-galleries-wave-7",
+    "legacy-ambiguous-gallery-routes-wave-8",
+    "legacy-institutional-evidence-galleries-wave-9",
+    "legacy-named-visitor-galleries-wave-10"
+  ],
+  "recordIds": [
+    "migration-451aa3a00981e822",
+    "migration-623cb73099e23e2b",
+    "migration-ff4442710c786ba9",
+    "migration-e05e308e89b5f8dc",
+    "migration-6e4f9569b06409ff"
+  ],
+  "policy": {
+    "sourceContentIncluded": false,
+    "decisionsPreselected": false,
+    "repositoryWritePerformed": false,
+    "publicationAuthorized": false
+  }
+}

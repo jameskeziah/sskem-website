@@ -107,6 +107,14 @@ Wave 10 records route and content intent only. A past visit does not establish a
 
 Wave 10 cumulatively declares and binds Waves 1 through 9. Its master input must contain all 62 earlier decisions. A successful browser-only merge carries 64 decisions in the 115-row master, leaving 51 content decisions, 51 route decisions and seven event-gallery records for later waves. The remaining event galleries involve pupil or result claims and child health. Recording, identity or role verification, media approval, implementation and publication remain unchanged.
 
+### Wave 11: pupil achievement and result galleries
+
+`/publication-review/migration-wave-11` is the authenticated, noindex eleventh decision packet. It contains five public `sk_igallery` index records concerning achievements, pupil felicitation, Olympiad participation or a named result claim. Legacy labels are unverified index metadata, not publishable result evidence. They do not prove a pupil's identity or spelling, class or academic year, exam or award body, stage or level, rank or score, outcome, institutional attribution, endorsement, current standing or continuing permission to publish. Immutable legacy wording is preserved only as bound source metadata; any corrected public copy requires a later evidence-backed rewrite.
+
+Wave 11 records route and content intent only. Earlier public availability, a poster or a certificate is not evidence of current guardian consent. Authoritative result proof, purpose-specific guardian or data-subject consent, pupil assent where appropriate, media rights, approved public fields and captions, withdrawal handling, and retention end dates must be verified in the controlled system. No claim, title, route, destination, merge or content decision is preselected. The packet contains no marksheets, certificates, pupil-level marks, roll numbers, guardian details, consent records, supporting evidence, private locations or source media, and it does not retrieve, display, import, copy, approve, activate, transform or publish them. The `identityProtected: false` matrix classification is not proof that gallery media contains no child or personal data, or that consent and rights exist. Every eventual asset and caption still requires separate evidence and media approval, exact-byte binding and activation.
+
+Wave 11 cumulatively declares and binds Waves 1 through 10. Its master input must contain all 64 earlier decisions. A successful browser-only merge carries 69 decisions in the 115-row master, leaving 46 content decisions, 46 route decisions and two child-health event galleries for a later wave. Recording, evidence and consent verification, media approval, implementation and publication remain unchanged.
+
 ## Decision contract
 
 For every record, the owner must choose:
@@ -148,9 +156,10 @@ The structural audit runs before the composite release audit. Migration completi
 11. Use the Wave 7 combined master as the required input for Wave 8; clarify and complete route and content decisions for its two ambiguous rows and download the 60-decision combined master.
 12. Use the Wave 8 combined master as the required input for Wave 9; complete route and content decisions for its two institutional-model records only after consulting controlled evidence, then download the 62-decision combined master.
 13. Use the Wave 9 combined master as the required input for Wave 10; verify the two visitors' identity, role at the event and event context in the controlled system, complete their route and content decisions, then download the 64-decision combined master.
-14. Complete route and content decisions for the remaining 51 records until all 115 are decided.
-15. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
-16. Implement each destination, redirect, archive or retirement.
-17. Verify implementation and complete the separate approval pipelines.
-18. Run the migration release audit and composite public-release audit.
-19. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.
+14. Use the Wave 10 combined master as the required input for Wave 11; verify result evidence and purpose-specific consent in the controlled system, complete the five pupil achievement and result route and content decisions, then download the 69-decision combined master.
+15. Complete route and content decisions for the remaining 46 records until all 115 are decided.
+16. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
+17. Implement each destination, redirect, archive or retirement.
+18. Verify implementation and complete the separate approval pipelines.
+19. Run the migration release audit and composite public-release audit.
+20. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.

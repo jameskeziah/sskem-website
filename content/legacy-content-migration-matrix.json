@@ -2747,7 +2747,9 @@
         "privacy",
         "rights",
         "retention",
-        "accessibility"
+        "accessibility",
+        "evidence",
+        "data-protection"
       ],
       "contentDecision": {
         "decision": "unselected",
@@ -3069,7 +3071,9 @@
         "privacy",
         "rights",
         "retention",
-        "accessibility"
+        "accessibility",
+        "evidence",
+        "data-protection"
       ],
       "contentDecision": {
         "decision": "unselected",
@@ -3109,7 +3113,9 @@
         "privacy",
         "rights",
         "retention",
-        "accessibility"
+        "accessibility",
+        "evidence",
+        "data-protection"
       ],
       "contentDecision": {
         "decision": "unselected",
@@ -3351,7 +3357,9 @@
         "privacy",
         "rights",
         "retention",
-        "accessibility"
+        "accessibility",
+        "evidence",
+        "data-protection"
       ],
       "contentDecision": {
         "decision": "unselected",
@@ -3631,7 +3639,9 @@
         "privacy",
         "rights",
         "retention",
-        "accessibility"
+        "accessibility",
+        "evidence",
+        "data-protection"
       ],
       "contentDecision": {
         "decision": "unselected",
