@@ -75,6 +75,14 @@ Wave 6 records route and content intent only. No destination is preselected. The
 
 Wave 6 cumulatively declares and binds Waves 1 through 5. Its master input must contain all 41 earlier decisions. A successful browser-only merge carries 53 decisions in the 115-row master, leaving 62 content decisions, 62 route decisions and 18 event-gallery records for later waves. Recording, media approval, implementation and publication remain unchanged.
 
+### Wave 7: repeated cultural and community gallery routes
+
+`/publication-review/migration-wave-7` is the authenticated, noindex seventh decision packet. It contains five public `sk_igallery` index records: two similarly titled Matru-Pitru records, two similarly titled Shiv Jayanti records and one tree-plantation record. They share the same eight-review contract and avoid records involving pupil or result claims, child health, named visitors, institutional-model claims or the structurally ambiguous A. P. J. Abdul Kalam title.
+
+Wave 7 records route and content intent only. Similar titles do not establish that the underlying events or assets are duplicates, so no merge, redirect or destination is preselected. The `identityProtected: false` matrix classification is not proof that gallery media contains no child, that consent or rights exist, or that cultural participation establishes an individual's beliefs. The packet displays only unverified legacy index metadata. It does not retrieve or display underlying gallery content, and does not import, copy, approve, activate, transform or publish image or video bytes, captions, identities, consent records, rights evidence, asset metadata, derivatives or archival copy. Legacy event titles remain unverified and the packet cannot validate event claims. Every underlying asset remains subject to independent inspection, consent, privacy, rights, retention, accessibility, metadata, derivative-binding and publication gates.
+
+Wave 7 cumulatively declares and binds Waves 1 through 6. Its master input must contain all 53 earlier decisions. A successful browser-only merge carries 58 decisions in the 115-row master, leaving 57 content decisions, 57 route decisions and 13 event-gallery records for later waves. Recording, media approval, implementation and publication remain unchanged.
+
 ## Decision contract
 
 For every record, the owner must choose:
@@ -112,9 +120,10 @@ The structural audit runs before the composite release audit. Migration completi
 7. Use the Wave 3 combined master as the required input for Wave 4; complete its ten rows and download the 36-decision combined master.
 8. Use the Wave 4 combined master as the required input for Wave 5; complete route and content decisions for its five rows and download the 41-decision combined master.
 9. Use the Wave 5 combined master as the required input for Wave 6; complete route and content decisions for its twelve rows and download the 53-decision combined master.
-10. Complete route and content decisions for the remaining 62 records until all 115 are decided.
-11. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
-12. Implement each destination, redirect, archive or retirement.
-13. Verify implementation and complete the separate approval pipelines.
-14. Run the migration release audit and composite public-release audit.
-15. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.
+10. Use the Wave 6 combined master as the required input for Wave 7; complete route and content decisions for its five rows and download the 58-decision combined master.
+11. Complete route and content decisions for the remaining 57 records until all 115 are decided.
+12. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
+13. Implement each destination, redirect, archive or retirement.
+14. Verify implementation and complete the separate approval pipelines.
+15. Run the migration release audit and composite public-release audit.
+16. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.

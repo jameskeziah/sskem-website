@@ -24,6 +24,7 @@ export default async function LegacyMigrationWave6Page() {
     introduction="Review twelve public gallery-index records whose route treatments and content futures remain undecided. No destination is preselected. The matrix classification identityProtected: false does not prove that an image contains no child or that consent and rights exist. This packet displays only unverified legacy index metadata. It does not retrieve or display underlying gallery content, and does not import, copy, approve, activate, transform or publish image or video bytes, captions, identities, consent, rights evidence, asset metadata, derivatives or archived copy; it cannot validate event claims, infer an individual's beliefs or permit public release."
     relatedWaves={[
       { href: "/publication-review/migration-wave-5", label: "Return to Wave 5" },
+      { href: "/publication-review/migration-wave-7", label: "Continue to Wave 7" },
     ]}
     routeBase="/publication-review/migration-wave-6"
     routeSummaryNote="All twelve routes require explicit treatments and content decisions."

@@ -1,0 +1,29 @@
+{
+  "$schema": "./legacy-migration-wave.schema.json",
+  "schemaVersion": 1,
+  "waveId": "legacy-community-galleries-wave-7",
+  "label": "Repeated cultural and community gallery routes",
+  "matrixId": "sskem-legacy-content-migration",
+  "matrixBuiltOn": "2026-09-07",
+  "prerequisiteWaveIds": [
+    "legacy-core-information-wave-1",
+    "legacy-leadership-services-wave-2",
+    "legacy-academic-compliance-wave-3",
+    "legacy-media-gallery-index-wave-4",
+    "legacy-unresolved-media-routes-wave-5",
+    "legacy-celebration-galleries-wave-6"
+  ],
+  "recordIds": [
+    "migration-b4cbdbf9d0e4125f",
+    "migration-189802806708627d",
+    "migration-b09532cf17017503",
+    "migration-65bae85f8140735f",
+    "migration-60255bd6e88d446b"
+  ],
+  "policy": {
+    "sourceContentIncluded": false,
+    "decisionsPreselected": false,
+    "repositoryWritePerformed": false,
+    "publicationAuthorized": false
+  }
+}
