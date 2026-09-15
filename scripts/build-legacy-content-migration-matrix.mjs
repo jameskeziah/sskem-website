@@ -122,6 +122,9 @@ function requiredReviews(row, area) {
     reviews.add("institutional-model");
     reviews.add("evidence");
   }
+  if (/\bvisit\b/.test(searchable)) {
+    reviews.add("evidence");
+  }
   if (area === "admissions" || /admission|registration|certificate|enrol/.test(searchable)) {
     reviews.add("data-protection");
   }
