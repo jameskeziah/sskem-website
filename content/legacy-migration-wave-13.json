@@ -1,0 +1,35 @@
+{
+  "$schema": "./legacy-migration-wave.schema.json",
+  "schemaVersion": 1,
+  "waveId": "legacy-taxonomy-cleanup-wave-13",
+  "label": "Legacy taxonomy archive routes",
+  "matrixId": "sskem-legacy-content-migration",
+  "matrixBuiltOn": "2026-09-07",
+  "prerequisiteWaveIds": [
+    "legacy-core-information-wave-1",
+    "legacy-leadership-services-wave-2",
+    "legacy-academic-compliance-wave-3",
+    "legacy-media-gallery-index-wave-4",
+    "legacy-unresolved-media-routes-wave-5",
+    "legacy-celebration-galleries-wave-6",
+    "legacy-community-galleries-wave-7",
+    "legacy-ambiguous-gallery-routes-wave-8",
+    "legacy-institutional-evidence-galleries-wave-9",
+    "legacy-named-visitor-galleries-wave-10",
+    "legacy-pupil-achievement-galleries-wave-11",
+    "legacy-student-health-galleries-wave-12"
+  ],
+  "recordIds": [
+    "migration-732d9eec031f3e31",
+    "migration-32c060053d25e1b5",
+    "migration-ad5ee72ea935364d",
+    "migration-4806caba914dfeaa",
+    "migration-4e4ca7fcedc88a05"
+  ],
+  "policy": {
+    "sourceContentIncluded": false,
+    "decisionsPreselected": false,
+    "repositoryWritePerformed": false,
+    "publicationAuthorized": false
+  }
+}
