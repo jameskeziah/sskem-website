@@ -125,6 +125,13 @@ function requiredReviews(row, area) {
     reviews.add("evidence");
     reviews.add("data-protection");
   }
+  if (
+    row.route_type === "sk_igallery"
+    && /health[\s-]*check|vaccination/.test(searchable)
+  ) {
+    reviews.add("evidence");
+    reviews.add("data-protection");
+  }
   if (area === "academics" || /college|institute|competitive|foundation|jee|neet|curriculum/.test(searchable)) {
     reviews.add("institutional-model");
     reviews.add("evidence");

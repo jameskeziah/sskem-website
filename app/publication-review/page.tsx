@@ -276,6 +276,7 @@ export default async function PublicationReviewPage({ searchParams }: { searchPa
                 <Link className="button button--primary" href="/publication-review/migration-wave-9">Review institutional gallery routes Wave 9</Link>
                 <Link className="button button--primary" href="/publication-review/migration-wave-10">Review named-visitor gallery routes Wave 10</Link>
                 <Link className="button button--primary" href="/publication-review/migration-wave-11">Review pupil achievement and result gallery routes Wave 11</Link>
+                <Link className="button button--primary" href="/publication-review/migration-wave-12">Review student-health gallery routes Wave 12</Link>
                 <Link className="button button--primary" href="/publication-review/migration-matrix">Open migration matrix</Link>
                 <Link className="button button--quiet" href="/publication-review/migration-matrix-export">Download safe worksheet</Link>
                 <Link className="button button--quiet" href="/publication-review/migration-decision-intake">Validate completed worksheet</Link>
