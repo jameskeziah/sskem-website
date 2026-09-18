@@ -131,6 +131,14 @@ Wave 13 records route and content intent for the five structural index records o
 
 Wave 13 cumulatively declares and binds Waves 1 through 12. Its master input must contain all 71 earlier decisions. A successful browser-only merge carries 76 decisions in the 115-row master, leaving 39 content decisions and 39 route decisions. All five taxonomy-index records are then represented in bounded packets, but packetization does not record a decision, approve a taxonomy, implement a route, migrate a child post or authorize publication.
 
+### Wave 14: meal-themed legacy news posts
+
+`/publication-review/migration-wave-14` is the authenticated, noindex fourteenth decision packet. It contains three public 2017 WordPress post records with meal-themed labels. Their labels and slugs are observed archive metadata, not proof that the school authored the material, served the named food, operated a meal or nutrition programme, published a menu, or made a current dietary, ingredient, allergen, nutrition, health or food-safety claim. The posts may be old theme or demonstration content; archive presence alone does not establish school relevance, provenance, accuracy, ownership or publication rights.
+
+Wave 14 records route and content intent only. The record labelled `Lunch with Sandwich` uses a cinnamon-pancakes legacy slug, and `Sesame butterflied Chicken` is retained as immutable source metadata. Verify the controlled source before treating any record as distinct, duplicated, related or suitable for a corrected public rewrite. Do not silently correct, merge or redirect records from labels or slugs alone. The Wave 13 `/category/lunch` decision does not decide, approve or publish these posts, and the post decisions do not decide the category route or its membership. No route, destination, merge, corrected title, school attribution, meal claim, canonical or noindex treatment, or content decision is preselected. The packet contains no post bodies, excerpts, author or user records, recipes, ingredient or allergen details, nutrition information, comments, embedded links, media, captions, supporting evidence, private locations or archived copy, and it does not retrieve, display, import, copy, approve, activate, transform or publish them.
+
+Wave 14 cumulatively declares and binds Waves 1 through 13. Its master input must contain all 76 earlier decisions. A successful browser-only merge carries 79 decisions in the 115-row master, leaving 36 content decisions and 36 route decisions. Packetization does not record a decision, establish school authorship, approve a food-related claim, implement a route or authorize publication.
+
 ## Decision contract
 
 For every record, the owner must choose:
@@ -175,9 +183,10 @@ The structural audit runs before the composite release audit. Migration completi
 14. Use the Wave 10 combined master as the required input for Wave 11; verify result evidence and purpose-specific consent in the controlled system, complete the five pupil achievement and result route and content decisions, then download the 69-decision combined master.
 15. Use the Wave 11 combined master as the required input for Wave 12; verify health-event evidence, minimisation, consent, rights and retention in the controlled system, complete the two route and content decisions, then download the 71-decision combined master.
 16. Use the Wave 12 combined master as the required input for Wave 13; verify archive membership, current taxonomy intent, route evidence and exact semantic equivalence, complete the five structural index route and content decisions, then download the 76-decision combined master.
-17. Complete route and content decisions for the remaining 39 records until all 115 are decided.
-18. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
-19. Implement each destination, redirect, archive or retirement.
-20. Verify implementation and complete the separate approval pipelines.
-21. Run the migration release audit and composite public-release audit.
-22. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.
+17. Use the Wave 13 combined master as the required input for Wave 14; verify source provenance, school relevance, the title-to-slug mismatch and any exact semantic equivalence, complete the three route and content decisions, then download the 79-decision combined master.
+18. Complete route and content decisions for the remaining 36 records until all 115 are decided.
+19. Validate the completed worksheet in the private intake, then independently reproduce its read-only CLI plan.
+20. Implement each destination, redirect, archive or retirement.
+21. Verify implementation and complete the separate approval pipelines.
+22. Run the migration release audit and composite public-release audit.
+23. Deploy publicly only after every independent gate passes and rollback ownership is confirmed.

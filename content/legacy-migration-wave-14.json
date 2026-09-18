@@ -1,0 +1,34 @@
+{
+  "$schema": "./legacy-migration-wave.schema.json",
+  "schemaVersion": 1,
+  "waveId": "legacy-meal-themed-posts-wave-14",
+  "label": "Legacy meal-themed post routes",
+  "matrixId": "sskem-legacy-content-migration",
+  "matrixBuiltOn": "2026-09-07",
+  "prerequisiteWaveIds": [
+    "legacy-core-information-wave-1",
+    "legacy-leadership-services-wave-2",
+    "legacy-academic-compliance-wave-3",
+    "legacy-media-gallery-index-wave-4",
+    "legacy-unresolved-media-routes-wave-5",
+    "legacy-celebration-galleries-wave-6",
+    "legacy-community-galleries-wave-7",
+    "legacy-ambiguous-gallery-routes-wave-8",
+    "legacy-institutional-evidence-galleries-wave-9",
+    "legacy-named-visitor-galleries-wave-10",
+    "legacy-pupil-achievement-galleries-wave-11",
+    "legacy-student-health-galleries-wave-12",
+    "legacy-taxonomy-cleanup-wave-13"
+  ],
+  "recordIds": [
+    "migration-4689dcb558446b24",
+    "migration-8bf75cee176a56a6",
+    "migration-2af317ff60b9a55e"
+  ],
+  "policy": {
+    "sourceContentIncluded": false,
+    "decisionsPreselected": false,
+    "repositoryWritePerformed": false,
+    "publicationAuthorized": false
+  }
+}
