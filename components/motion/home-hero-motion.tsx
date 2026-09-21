@@ -63,12 +63,14 @@ export function HomeHeroMotion({
             heroMedia,
             {
               scale: motionScale.imageMaskMaximum,
+              clipPath: "inset(8% 7% 8% 7% round 2rem)",
               transformOrigin: "50% 50%",
-              willChange: "transform",
+              willChange: "transform, clip-path",
             },
             {
               scale: 1,
-              duration: motionDurationSeconds.slow,
+              clipPath: "inset(0% 0% 0% 0% round 0rem)",
+              duration: motionDurationSeconds.ceremonial,
               ease: motionEase.emphasised,
               clearProps: "all",
             },
@@ -91,17 +93,42 @@ export function HomeHeroMotion({
           );
         }
 
+        const cinematicHeadingReveal = privatePrototype && !conditions.mobile;
+
         timeline.fromTo(
           headings,
-          { opacity: 0, y: distance, willChange: "transform, opacity" },
-          {
-            opacity: 1,
-            y: 0,
-            duration: motionDurationSeconds.slow,
-            ease: motionEase.emphasised,
-            stagger: conditions.mobile ? motionStaggerSeconds.mobile : motionStaggerSeconds.heading,
-            clearProps: "all",
-          },
+          cinematicHeadingReveal
+            ? {
+                opacity: 0,
+                yPercent: 108,
+                rotateX: 8,
+                transformOrigin: "50% 100%",
+                transformPerspective: 800,
+                willChange: "transform, opacity",
+              }
+            : {
+                opacity: 0,
+                y: distance,
+                willChange: "transform, opacity",
+              },
+          cinematicHeadingReveal
+            ? {
+                opacity: 1,
+                yPercent: 0,
+                rotateX: 0,
+                duration: motionDurationSeconds.ceremonial,
+                ease: motionEase.emphasised,
+                stagger: motionStaggerSeconds.heading,
+                clearProps: "all",
+              }
+            : {
+                opacity: 1,
+                y: 0,
+                duration: motionDurationSeconds.slow,
+                ease: motionEase.emphasised,
+                stagger: conditions.mobile ? motionStaggerSeconds.mobile : motionStaggerSeconds.heading,
+                clearProps: "all",
+              },
           0,
         );
       });
