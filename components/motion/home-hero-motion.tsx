@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 
 import {
+  homeArrivalSignal,
   motionDistancePixels,
   motionDurationSeconds,
   motionEase,
@@ -56,7 +57,7 @@ export function HomeHeroMotion({
           : conditions.tablet
             ? motionDistancePixels.revealTablet
             : motionDistancePixels.revealDesktop;
-        const timeline = gsap.timeline();
+        const timeline = gsap.timeline({ paused: privatePrototype });
 
         if (privatePrototype && heroMedia && !conditions.mobile) {
           timeline.fromTo(
@@ -65,6 +66,7 @@ export function HomeHeroMotion({
               scale: motionScale.imageMaskMaximum,
               transformOrigin: "50% 50%",
               willChange: "transform",
+              immediateRender: false,
             },
             {
               scale: 1,
@@ -79,7 +81,7 @@ export function HomeHeroMotion({
         if (intro) {
           timeline.fromTo(
             intro,
-            { opacity: 0, y: distance, willChange: "transform, opacity" },
+            { opacity: 0, y: distance, willChange: "transform, opacity", immediateRender: !privatePrototype },
             {
               opacity: 1,
               y: 0,
@@ -93,7 +95,7 @@ export function HomeHeroMotion({
 
         timeline.fromTo(
           headings,
-          { opacity: 0, y: distance, willChange: "transform, opacity" },
+          { opacity: 0, y: distance, willChange: "transform, opacity", immediateRender: !privatePrototype },
           {
             opacity: 1,
             y: 0,
@@ -104,6 +106,17 @@ export function HomeHeroMotion({
           },
           0,
         );
+
+        if (privatePrototype) {
+          const playArrival = () => timeline.play(0);
+          if (document.documentElement.dataset[homeArrivalSignal.datasetKey] === "true") {
+            playArrival();
+          } else {
+            window.addEventListener(homeArrivalSignal.event, playArrival, { once: true });
+          }
+
+          return () => window.removeEventListener(homeArrivalSignal.event, playArrival);
+        }
       });
 
       return () => media.revert();

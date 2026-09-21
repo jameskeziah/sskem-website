@@ -103,6 +103,8 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
     "home-achievements-motion.tsx",
     "home-campus-motion.tsx",
     "home-hero-motion.tsx",
+    "home-hero-video-transition.tsx",
+    "home-preloader-motion.tsx",
     "programmes-grid-motion.tsx",
     "programmes-hero-motion.tsx",
   ]);
@@ -118,11 +120,13 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
     assert.doesNotMatch(code, /duration:\s*[\d.]|stagger:\s*[\d.]|delay:\s*[\d.]/);
   }
 
-  const [hero, timeline, admissions, homeHero, homeCampus, homeAchievements, programmesHero, programmesGrid, programmesPreview, homepage, homepageStyles] = await Promise.all([
+  const [hero, timeline, admissions, homeHero, homeHeroVideo, homePreloader, homeCampus, homeAchievements, programmesHero, programmesGrid, programmesPreview, homepage, homepageStyles] = await Promise.all([
     source("components/motion/admissions-hero-motion.tsx"),
     source("components/motion/admissions-timeline-motion.tsx"),
     source("components/admissions.tsx"),
     source("components/motion/home-hero-motion.tsx"),
+    source("components/motion/home-hero-video-transition.tsx"),
+    source("components/motion/home-preloader-motion.tsx"),
     source("components/motion/home-campus-motion.tsx"),
     source("components/motion/home-achievements-motion.tsx"),
     source("components/motion/programmes-hero-motion.tsx"),
@@ -145,6 +149,33 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(homeHero, /conditions\.reduce \|\| !animateLiveHero/);
   assert.match(homeHero, /data-motion-home-hero-media/);
   assert.match(homeHero, /motionScale\.imageMaskMaximum/);
+  assert.match(homeHero, /homeArrivalSignal/);
+  assert.match(homeHeroVideo, /data-motion-component="home-hero-video-transition"/);
+  assert.match(homeHeroVideo, /asset:\s*HomeHeroVideoAsset \| null/);
+  assert.match(homeHeroVideo, /preload="none"/);
+  assert.match(homeHeroVideo, /kind="captions"/);
+  assert.match(homeHeroVideo, /data-home-hero-video-source/);
+  assert.match(homeHeroVideo, /data-home-hero-video-captions/);
+  assert.match(homeHeroVideo, /attachMedia\(\)/);
+  assert.match(homeHeroVideo, /conditions\.reduce/);
+  assert.match(homeHeroVideo, /video\.muted = true/);
+  assert.match(homeHeroVideo, /launch\.hidden = false/);
+  assert.match(homeHeroVideo, /controls\.hidden = true/);
+  assert.match(homeHeroVideo, /element\.dataset\.homeHeroVideoState = "preview"/);
+  assert.match(homeHeroVideo, /gsap\.killTweensOf\(\[frame, video\]\)/);
+  assert.doesNotMatch(homeHeroVideo, /autoPlay|\bloop\b/);
+  assert.match(homePreloader, /document\.fonts\?\.ready/);
+  assert.match(homePreloader, /data-motion-home-hero-media/);
+  assert.match(homePreloader, /motionDurationSeconds\.ceremonial/);
+  assert.match(homePreloader, /element\.dataset\.state = "loading"/);
+  assert.match(homePreloader, /element\.dataset\.state = "exit-reveal"/);
+  assert.match(homePreloader, /onStart:\s*\(\) => \{[\s\S]*?announceHomeArrivalReady\(\)/);
+  assert.match(homePreloader, /sessionStorage\.getItem\(homeEntrySessionKey\)/);
+  assert.match(homePreloader, /get\("replayPreloader"\) === "1"/);
+  assert.match(homePreloader, /scale: 1 \/ motionScale\.imageMaskMaximum/);
+  assert.match(homePreloader, /data-motion-component="home-preloader"/);
+  assert.match(homePreloader, /aria-hidden="true"[\s\S]*?hidden/);
+  assert.doesNotMatch(homePreloader, /setInterval|loader-number|percentage|progress/i);
   assert.match(homeCampus, /data-motion-component="home-campus"/);
   assert.match(homeCampus, /ScrollTrigger/);
   assert.match(homeAchievements, /data-motion-component="home-achievements"/);
@@ -158,8 +189,10 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(programmesPreview, /<ProgrammesGridMotion>/);
   assert.match(programmesPreview, /data-motion-programme-card/);
   assert.match(homepage, /<HomeHeroMotion reviewMode=/);
+  assert.match(homepage, /privateHomepageReview \? <HomePreloaderMotion \/> : null/);
   assert.match(homepage, /data-home-hero-art/);
   assert.match(homepage, /data-motion-home-hero-media/);
+  assert.match(homepage, /<HomeHeroVideoTransition asset=\{null\}>/);
   assert.match(homepageStyles, /background-image:\s*url\(["']\/og\.png["']\)/);
   assert.match(homepage, /<HomeCampusMotion>/);
   assert.match(homepage, /<HomeAchievementsMotion\b/);
@@ -201,7 +234,7 @@ test("keeps the homepage P0 prototype publication-aware and readable", async () 
 });
 
 test("rejects prohibited, unbounded and layout-changing motion patterns", async () => {
-  const [globals, admissions, compliance, homepage, hero, timeline, homeHero, homeCampus, homeAchievements, programmesHero, programmesGrid] = await Promise.all([
+  const [globals, admissions, compliance, homepage, hero, timeline, homeHero, homeHeroVideo, homePreloader, homeCampus, homeAchievements, programmesHero, programmesGrid] = await Promise.all([
     source("app/globals.css"),
     source("app/admissions.css"),
     source("app/compliance.css"),
@@ -209,13 +242,15 @@ test("rejects prohibited, unbounded and layout-changing motion patterns", async 
     source("components/motion/admissions-hero-motion.tsx"),
     source("components/motion/admissions-timeline-motion.tsx"),
     source("components/motion/home-hero-motion.tsx"),
+    source("components/motion/home-hero-video-transition.tsx"),
+    source("components/motion/home-preloader-motion.tsx"),
     source("components/motion/home-campus-motion.tsx"),
     source("components/motion/home-achievements-motion.tsx"),
     source("components/motion/programmes-hero-motion.tsx"),
     source("components/motion/programmes-grid-motion.tsx"),
   ]);
   const cssFiles = { globals, admissions, compliance, homepage };
-  const combined = `${globals}\n${admissions}\n${compliance}\n${homepage}\n${hero}\n${timeline}\n${homeHero}\n${homeCampus}\n${homeAchievements}\n${programmesHero}\n${programmesGrid}`;
+  const combined = `${globals}\n${admissions}\n${compliance}\n${homepage}\n${hero}\n${timeline}\n${homeHero}\n${homeHeroVideo}\n${homePreloader}\n${homeCampus}\n${homeAchievements}\n${programmesHero}\n${programmesGrid}`;
 
   assert.doesNotMatch(combined, /motion-duration-normal|motion-easing-standard/);
   assert.doesNotMatch(combined, /animation\s*:[^;]*(?:infinite|linear\s+infinite)/i);
@@ -253,6 +288,8 @@ test("keeps essential navigation and content available without JavaScript", asyn
   assert.match(homepage, /Here,/);
   assert.match(homepage, /href="\/admissions\/enquire"/);
   assert.match(homepage, /Mandatory Public Disclosure/);
+  assert.match(homepage, /privateHomepageReview \? <HomePreloaderMotion \/> : null/);
+  assert.match(homepage, /<HomeHeroVideoTransition asset=\{null\}>/);
   assert.doesNotMatch(homepage, /style=\{\{[^}]*opacity:\s*0/);
   assert.match(globals, /site-header:not\(\[data-navigation-enhanced="true"\]\) \.mobile-menu-button/);
   assert.match(globals, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);

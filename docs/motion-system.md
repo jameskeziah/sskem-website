@@ -12,6 +12,9 @@ timings.
 
 | Component | Level | Trigger | Initial state | Final state | Duration and ease | Delay or stagger | Replay | Mobile | Reduced motion | Owner |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Private homepage loading stage | 4 | Initial homepage entry only | Hidden in server HTML, then a fixed SSKEMS layer after hydration while the critical font and poster settle | Hero remains rendered and readable underneath; bounded fail-safe prevents a stuck overlay | No artificial hold or percentage | None | Once per tab session when storage is available | Same asset wait | Never displayed | DOM readiness + GSAP island |
+| Private homepage exit reveal | 4 | Critical assets settle or bounded fail-safe fires | Loader detail fades and the overlay scales slightly | Clip-path opens; hero media and copy begin their separate arrival sequence at the clip start | `standard` through `ceremonial`, `exit`, `move` and `emphasised` | Hero signal starts with the clip reveal | Once per initial homepage entry | Same bounded sequence | Instant final state; hero remains static and readable | GSAP |
+| Guarded homepage film transition | 4 | Explicitly selecting an available, approved campus film preview | Small clipped preview over the existing poster | Film expands within the hero frame; the poster remains the no-JavaScript fallback | `slow` through `ceremonial`, `move` and `emphasised` | None | User controlled; Escape returns to poster | Wider preview mask inside the authored mobile frame | Opens without tween and remains paused until the user presses Play | GSAP + HTML video |
 | Admissions hero heading | 4 | Initial page entry | `opacity: 0`, `y: 20px` desktop or `16px` tablet | Fully visible at authored position | `deliberate`, `enter` | None | Once | Combined intro group, `y: 10px` | Static final state | GSAP |
 | Admissions hero support | 4 | Initial page entry | `opacity: 0`, same bounded vertical travel | Fully visible at authored position | `deliberate`, `enter` | `60ms` after heading start | Once | Combined with heading | Static final state | GSAP |
 | Admissions architectural mask | 4 | Initial page entry | Bottom-to-top clipped decorative layer | Authored static mask | `slow`, `emphasised` | None | Once | Static mask, no travel | Static final state | GSAP |
@@ -51,8 +54,19 @@ prototype does not grant approval or activate any public route.
 - Keyboard focus uses an immediate outline and never a spatial transform.
 - Submenus, the mobile sheet, search dialog, and application progress use
   bounded CSS transitions. Progress animates `transform: scaleX()`, not width.
-- The loading state is static; the system contains no continuous automatic
-  animation.
+- Site-wide route loading remains static. The private homepage prototype has one
+  asset-aware arrival layer with separate loading and exit-reveal stages, no
+  fake progress counter or continuous loop. With session storage available, it
+  runs once per tab session, not on every homepage revisit or route navigation.
+  Private reviewers can reopen `/?replayPreloader=1` to replay the real
+  asset-aware sequence without clearing storage. The query has no effect on
+  the public homepage, where the preloader is not mounted.
+- The homepage film transition is fail-closed. With no complete approved film,
+  poster and caption bundle, the component emits no video element or controls.
+  Playback is user initiated, starts muted, never loops, and always provides
+  pause/play, sound and return-to-poster controls when a bundle is present.
+  Video and caption URLs are attached only after that user action; `preload`
+  remains `none` and neither asset participates in the homepage preloader.
 
 ## Progressive enhancement and cleanup
 
@@ -66,6 +80,17 @@ The static navigation fallback remains available until the interactive header
 has actually hydrated. It therefore covers disabled JavaScript and failed or
 slow client bundles without introducing layout shift.
 
+The private homepage preloader is hidden in server HTML and therefore does not
+add a no-JavaScript blocker. A separate existing issue remains: with JavaScript
+fully disabled, the local production preview renderer leaves the root `loading.tsx`
+streaming shell visible instead of replacing it with the homepage. That route
+rendering limitation must be resolved before claiming full no-JavaScript
+homepage support; it is not caused by either preloader stage.
+
+The film preview and its controls are also hidden until their client island has
+hydrated. Without JavaScript, the same critical campus poster remains visible;
+no inert video control replaces essential content.
+
 The floating treatment begins only after the original primary navigation has
 left the viewport. The notice and utility bars keep their authored position;
 open desktop menus, the mobile drawer, search and keyboard focus force the
@@ -75,7 +100,8 @@ bar without automatic hide/reveal movement.
 ## Deliberate exclusions
 
 The approved homepage prototype uses the supplied campus photography for a
-bounded Level 4 arrival, one campus chapter, and one publication-review group.
+bounded Level 4 arrival, one asset-aware private preloader, one campus chapter,
+and one publication-review group.
 Student-result artwork remains behind a visible approval gate until accuracy,
 institutional status, and publication consent are confirmed. Crest motion and
 scroll-linked parallax remain deferred. Pinning, scrubbing on content,

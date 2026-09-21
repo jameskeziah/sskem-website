@@ -106,6 +106,13 @@ notes. Do not store consent evidence in the public web repository.
   the sole source of a fact, instruction or call to action.
 - No autoplay sound. If muted autoplay is later approved, provide pause/play,
   captions for meaningful speech and a static fallback.
+- The implemented hero-film transition does not autoplay. It activates only
+  when one complete typed bundle supplies an authentic poster, at least one
+  optimized MP4/WebM source, a caption track and a descriptive title. Until
+  that approved bundle is bound, the homepage renders the campus poster only.
+- An activated film starts muted after an explicit user action and provides
+  play/pause, sound and return-to-poster controls. Escape also returns to the
+  poster. No video source or control is emitted when the bundle is absent.
 - Avoid drone footage unless permissions, operator compliance, privacy and a
   genuinely useful establishing view are confirmed.
 - Reduced-motion mode is zero-duration and uses the same final readable layout.

@@ -94,6 +94,79 @@
   color: var(--home-ink);
 }
 
+/* Private-review arrival */
+body[data-home-preloader="active"] {
+  overflow: hidden;
+}
+
+.home-preloader {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  overflow: hidden;
+  clip-path: inset(0);
+  background:
+    radial-gradient(circle at 78% 20%, color-mix(in srgb, var(--color-blue) 24%, transparent), transparent 30rem),
+    var(--color-neutral-950);
+  color: var(--text-on-brand);
+  touch-action: none;
+}
+
+.home-preloader[hidden] {
+  display: none;
+}
+
+.home-preloader__inner {
+  display: grid;
+  width: min(calc(100% - (var(--space-24) * 2)), 42rem);
+  gap: var(--space-16);
+  padding-inline: var(--space-16);
+}
+
+.home-preloader__eyebrow,
+.home-preloader__meta,
+.home-preloader__wordmark {
+  margin: 0;
+}
+
+.home-preloader__eyebrow,
+.home-preloader__meta {
+  color: var(--color-neutral-300);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.home-preloader__wordmark {
+  overflow: hidden;
+  color: var(--color-neutral-50);
+  font-family: "Bahnschrift Condensed", "Arial Narrow", "Aptos Display", sans-serif;
+  font-size: clamp(4.75rem, 19vw, 9rem);
+  font-stretch: condensed;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+}
+
+.home-preloader__wordmark span {
+  color: var(--color-brand-300);
+}
+
+.home-preloader__rule {
+  display: block;
+  width: 100%;
+  height: var(--border-width-strong);
+  background: linear-gradient(90deg, var(--color-brand-300), var(--color-blue));
+}
+
+.home-preloader__meta {
+  justify-self: end;
+}
+
 /* Arrival */
 .home-hero {
   position: relative;
@@ -176,6 +249,100 @@
   height: clamp(18rem, 78vw, 24rem);
   overflow: visible;
   background: var(--color-neutral-900);
+}
+
+.home-hero-video,
+.home-hero-video__poster {
+  width: 100%;
+  height: 100%;
+}
+
+.home-hero-video {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-neutral-900);
+}
+
+.home-hero-video__poster {
+  position: absolute;
+  inset: 0;
+}
+
+.home-hero-video__frame,
+.home-hero-video__launch,
+.home-hero-video__controls {
+  display: none;
+}
+
+.home-hero-video[data-home-hero-video-enhanced="true"] .home-hero-video__frame {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  clip-path: inset(52% 5% 5% 5% round 1rem);
+  background: var(--color-neutral-950);
+}
+
+.home-hero-video__player {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--color-neutral-950);
+  object-fit: cover;
+}
+
+.home-hero-video[data-home-hero-video-enhanced="true"] .home-hero-video__launch {
+  position: absolute;
+  z-index: 3;
+  right: var(--space-16);
+  bottom: var(--space-16);
+  display: grid;
+  min-width: min(15rem, calc(100% - (var(--space-16) * 2)));
+  gap: var(--space-4);
+  padding: var(--space-12) var(--space-16);
+  border: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 52%, transparent);
+  border-radius: var(--radius-16);
+  background: color-mix(in srgb, var(--color-neutral-950) 82%, transparent);
+  color: var(--text-on-brand);
+  cursor: pointer;
+  text-align: left;
+}
+
+.home-hero-video__launch span {
+  color: var(--color-brand-300);
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-hero-video__launch strong {
+  font-size: var(--font-size-200);
+}
+
+.home-hero-video[data-home-hero-video-enhanced="true"] .home-hero-video__controls:not([hidden]) {
+  position: absolute;
+  z-index: 4;
+  right: var(--space-16);
+  bottom: var(--space-16);
+  left: var(--space-16);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.home-hero-video__controls button {
+  min-height: 2.75rem;
+  padding: var(--space-8) var(--space-16);
+  border: var(--border-width-default) solid color-mix(in srgb, var(--text-on-brand) 44%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-neutral-950) 88%, transparent);
+  color: var(--text-on-brand);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
 }
 
 .home-hero__mobile-media::before {
@@ -1456,6 +1623,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .home-preloader {
+    display: none !important;
+  }
+
   .home-page,
   .home-page *,
   .home-page *::before,

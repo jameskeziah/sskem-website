@@ -26,3 +26,8 @@ export const motionScrollTrigger = {
   toggleActions: "play none none none",
   once: true,
 } as const;
+
+export const homeArrivalSignal = {
+  event: "sskem:home-arrival-ready",
+  datasetKey: "homeArrivalReady",
+} as const;

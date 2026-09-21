@@ -11,6 +11,8 @@ import { HomepageInstitutionPathways } from "@/components/home/homepage-institut
 import { HomeAchievementsMotion } from "@/components/motion/home-achievements-motion";
 import { HomeCampusMotion } from "@/components/motion/home-campus-motion";
 import { HomeHeroMotion } from "@/components/motion/home-hero-motion";
+import { HomeHeroVideoTransition } from "@/components/motion/home-hero-video-transition";
+import { HomePreloaderMotion } from "@/components/motion/home-preloader-motion";
 import { siteFacts } from "@/app/data/site";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 import { selectHomepageAchievementArtwork } from "@/lib/homepage-achievement-publication";
@@ -79,6 +81,7 @@ export default async function Home() {
           },
         }}
       />
+      {privateHomepageReview ? <HomePreloaderMotion /> : null}
       <main id="main-content" tabIndex={-1} className="home-page">
         <HomeHeroMotion reviewMode={privateHomepageReview ? "private-review" : "public"}>
           <div className="home-hero__desktop-poster" data-home-hero-art aria-hidden="true" />
@@ -108,13 +111,15 @@ export default async function Home() {
           </div>
 
           <div className="home-hero__mobile-media" data-motion-home-hero-media>
-            <CampusPicture
-              recordId="media-campus-main"
-              fallbackSrc="/media/home/campus-main.jpeg"
-              alt="The pink and white SSKEMS school building in Veral."
-              sizes="(max-width: 63.999rem) 100vw, 1px"
-              priority
-            />
+            <HomeHeroVideoTransition asset={null}>
+              <CampusPicture
+                recordId="media-campus-main"
+                fallbackSrc="/media/home/campus-main.jpeg"
+                alt="The pink and white SSKEMS school building in Veral."
+                sizes="(max-width: 63.999rem) 100vw, 1px"
+                priority
+              />
+            </HomeHeroVideoTransition>
           </div>
 
           <div className="home-hero__dock">

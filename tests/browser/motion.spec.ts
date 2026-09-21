@@ -42,6 +42,11 @@ test("keeps the homepage narrative readable when hydration scripts fail", async 
   await expect(page.getByRole("link", { name: /Enquire now/i }).first()).toBeVisible();
   await expect(page.getByRole("link", { name: "Mandatory Public Disclosure", exact: true }).first()).toBeVisible();
   await expect(page.locator(".mobile-menu-button")).toBeHidden();
+  await expect(page.locator("[data-motion-component='home-preloader']")).toBeHidden();
+  const heroVideo = page.locator("[data-motion-component='home-hero-video-transition']");
+  await expect(heroVideo).toHaveAttribute("data-home-hero-video-state", "poster-only");
+  await expect(heroVideo.locator("video")).toHaveCount(0);
+  await expect(heroVideo.locator("[data-home-hero-video-launch]")).toHaveCount(0);
 
   const fallback = page.locator(".static-navigation-fallback");
   await expect(fallback).toBeVisible();
@@ -55,6 +60,53 @@ test("keeps the homepage narrative readable when hydration scripts fail", async 
     }),
   );
   expect(finalStates.every((state) => state.opacity === "1" && state.transform === "none" && state.clipPath === "none")).toBe(true);
+});
+
+test("private homepage preloader waits for the critical hero image and releases the hero", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.addEventListener("sskem:home-arrival-ready", () => {
+      document.documentElement.dataset.homeArrivalSignalState =
+        document.querySelector<HTMLElement>("[data-motion-component='home-preloader']")?.dataset.state ?? "missing";
+    });
+  });
+  await page.route("**/media/home/campus-main.jpeg", async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    await route.continue();
+  });
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+
+  const preloader = page.locator("[data-motion-component='home-preloader']");
+  await expect(preloader).toBeVisible();
+  await expect(preloader).toHaveAttribute("data-state", "loading");
+  await expect.poll(() => page.evaluate(() => document.documentElement.dataset.homeArrivalReady ?? null)).toBeNull();
+  await expect(preloader).toHaveAttribute("data-state", "exit-reveal", { timeout: 5_000 });
+  await expect(preloader).toBeHidden({ timeout: 5_000 });
+  await expect.poll(() => page.evaluate(() => document.documentElement.dataset.homeArrivalReady)).toBe("true");
+  await expect.poll(() => page.evaluate(() => document.documentElement.dataset.homeArrivalSignalState)).toBe("exit-reveal");
+  await expect.poll(() => page.evaluate(() => document.body.dataset.homePreloader ?? null)).toBeNull();
+  await expect(page.locator("[data-motion-component='home-hero-video-transition']")).toHaveAttribute(
+    "data-home-hero-video-state",
+    "poster-only",
+  );
+
+  const headingsReady = await page.locator("[data-motion-home-hero-heading]").evaluateAll((elements) =>
+    elements.every((element) => {
+      const style = getComputedStyle(element);
+      return style.opacity === "1" && style.transform === "none" && style.willChange === "auto";
+    }),
+  );
+  expect(headingsReady).toBe(true);
+
+  await page.goto("/admissions");
+  await page.goto("/");
+  await expect(preloader).toBeHidden();
+  await expect(preloader).toHaveAttribute("data-state", "complete");
+  await expect(page.getByRole("heading", { level: 1, name: /Here, possibility begins/i })).toBeVisible();
+
+  await page.goto("/?replayPreloader=1", { waitUntil: "domcontentloaded" });
+  await expect(preloader).toBeVisible();
+  await expect(preloader).toHaveAttribute("data-state", "loading");
+  await expect(preloader).toBeHidden({ timeout: 5_000 });
 });
 
 test("provides the static navigation fallback when JavaScript is disabled", async ({ browser }) => {
@@ -109,11 +161,14 @@ test("reduced motion leaves every motion target in its final static state", asyn
 
 test("reduced motion leaves the homepage story in its final static state", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/?replayPreloader=1");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page.locator("[data-motion-component='home-preloader']")).toBeHidden();
+  await expect(page.locator("[data-motion-component='home-hero-video-transition'] video")).toHaveCount(0);
 
   await page.locator("[data-motion-component='home-campus']").scrollIntoViewIfNeeded();
-  await page.locator("[data-motion-component='home-achievements']").scrollIntoViewIfNeeded();
+  const achievements = page.locator("[data-motion-component='home-achievements']");
+  if (await achievements.count()) await achievements.scrollIntoViewIfNeeded();
   const states = await page.locator("[data-motion-home-hero-heading], [data-motion-home-hero-accent], [data-motion-home-campus-copy], [data-motion-home-campus-frame], [data-motion-home-achievement]").evaluateAll((elements) =>
     elements.map((element) => {
       const style = getComputedStyle(element);
