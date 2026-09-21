@@ -147,17 +147,18 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
   assert.match(readableText, /Owner-only publication control/i);
   assert.match(readableText, /Approval queue/i);
-  assert.match(readableText, /Public release Blocked 4 of 6 launch gates remain blocked\./i);
+  assert.match(readableText, /Public release Blocked 5 of 7 launch gates remain blocked\./i);
   assert.match(readableText, /Composite launch gate/i);
   assert.match(readableText, /One result across every release dependency\./i);
-  assert.match(readableText, /Publication approvals Blocked 0 of 33/i);
+  assert.match(readableText, /Publication approvals Blocked 10 of 37/i);
   assert.match(readableText, /Campus media Blocked 0 of 4/i);
   assert.match(readableText, /Appendix IX documents Blocked 0 of 12/i);
   assert.match(readableText, /Homepage media budget Blocked 4 of 5/i);
   assert.match(readableText, /Legacy route cutover Ready 35 of 35/i);
+  assert.match(readableText, /Legacy content migration Blocked 0 of 115/i);
   assert.match(readableText, /Review-only treatment Ready 1 of 1/i);
   assert.match(readableText, /Achievement activation 0 of 4 bound 0 approval pair/i);
-  assert.match(readableText, /33 governed records/i);
+  assert.match(readableText, /37 governed records/i);
   assert.match(readableText, /Approve the four campus photographs first\./i);
   assert.match(readableText, /Guarded update: after independent review, generate the unfilled request/i);
   assert.match(readableText, /Template generation does not approve the record\./i);
@@ -180,7 +181,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /2 media performance blocker\(s\) remain\./i);
   assert.match(readableText, /Exact activation 0 of 12 bound/i);
   assert.match(readableText, /Only a receipt-matched, hash-verified PDF becomes downloadable\./i);
-  assert.match(readableText, /Showing 5 of 33 records\./i);
+  assert.match(readableText, /Showing 5 of 37 records\./i);
   assert.match(html, /media-campus-main/);
   assert.match(html, /media-campus-grounds/);
   assert.match(html, /media-campus-entrance/);
@@ -430,7 +431,7 @@ test("serves exact unfilled approval requests only to authenticated private revi
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^application\/json\b/i);
   assert.match(response.headers.get("cache-control") ?? "", /private, no-store/i);
-  assert.match(response.headers.get("content-disposition") ?? "", /sskem-approval-request-media-campus-main-2026-08-10\.json/i);
+  assert.match(response.headers.get("content-disposition") ?? "", /sskem-approval-request-media-campus-main-2026-09-09\.json/i);
   assert.equal(response.headers.get("content-security-policy"), "default-src 'none'; sandbox");
 
   const request = JSON.parse(await response.text());
@@ -474,7 +475,7 @@ test("exports the owner-only approval worksheet without private evidence", async
 
   const csv = await response.text();
   const rows = csv.trim().split(/\r?\n/);
-  assert.equal(rows.length, 34, "Worksheet must contain one header and 33 manifest rows");
+  assert.equal(rows.length, 34, "Worksheet must contain one header and 37 manifest rows");
   assert.match(rows[0], /^record_id,kind,title,decision,check_profile/);
   assert.match(csv, /media-campus-main,media,Main campus exterior,review-required/);
   assert.match(csv, /document-mpd-c-4,document,Parent Teacher Association list,blocked/);
@@ -500,7 +501,16 @@ test("serves every inventoried legacy route without redirect chains", async () =
     assert.equal(destination.pathname.replace(/\/$/, "") || "/", record.targetPath);
 
     if (!destinationStatuses.has(record.targetPath)) {
-      destinationStatuses.set(record.targetPath, (await render(record.targetPath)).status);
+      destinationStatuses.set(
+  record.targetPath,
+  (
+    await render(record.targetPath, {
+      accept: "text/html",
+      "oai-authenticated-user-id": "reviewer-test-id",
+      "oai-authenticated-user-email": "reviewer@example.test",
+    })
+  ).status,
+);
     }
     assert.equal(destinationStatuses.get(record.targetPath), 200, `${record.targetPath} must resolve directly`);
   }
