@@ -81,6 +81,28 @@ export default async function Home() {
       />
       <main id="main-content" tabIndex={-1} className="home-page">
         <HomeHeroMotion reviewMode={privateHomepageReview ? "private-review" : "public"}>
+          {privateHomepageReview ? (
+            <div className="home-preloader" data-motion-home-preloader aria-hidden="true">
+              <div className="home-preloader__inner">
+                <span className="home-preloader__mark" data-motion-home-preloader-item>
+                  <SiteImage
+                    src="/sskem-logo.png"
+                    alt=""
+                    width={120}
+                    height={120}
+                    sizes="120px"
+                    priority
+                  />
+                </span>
+                <p className="home-preloader__identity" data-motion-home-preloader-item>
+                  <strong>SSKEMS</strong>
+                  <span>Veral · Khed · Ratnagiri</span>
+                </p>
+                <span className="home-preloader__rule" data-motion-home-preloader-rule />
+              </div>
+            </div>
+          ) : null}
+
           <div className="home-hero__desktop-poster" data-home-hero-art aria-hidden="true" />
 
           <div className="home-hero__live-copy">

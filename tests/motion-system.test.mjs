@@ -144,6 +144,8 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(homeHero, /reviewMode === "private-review"/);
   assert.match(homeHero, /conditions\.reduce \|\| !animateLiveHero/);
   assert.match(homeHero, /data-motion-home-hero-media/);
+  assert.match(homeHero, /data-motion-home-preloader/);
+  assert.match(homeHero, /heroMedia\.complete/);
   assert.match(homeHero, /motionScale\.imageMaskMaximum/);
   assert.match(homeCampus, /data-motion-component="home-campus"/);
   assert.match(homeCampus, /ScrollTrigger/);
@@ -160,6 +162,8 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(homepage, /<HomeHeroMotion reviewMode=/);
   assert.match(homepage, /data-home-hero-art/);
   assert.match(homepage, /data-motion-home-hero-media/);
+  assert.match(homepage, /data-motion-home-preloader/);
+  assert.match(homepageStyles, /\.home-preloader\s*\{[\s\S]*display:\s*none/);
   assert.match(homepageStyles, /background-image:\s*url\(["']\/og\.png["']\)/);
   assert.match(homepage, /<HomeCampusMotion>/);
   assert.match(homepage, /<HomeAchievementsMotion\b/);
