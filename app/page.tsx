@@ -53,6 +53,8 @@ const eventDateFormatter = new Intl.DateTimeFormat("en-IN", {
   timeZone: "Asia/Kolkata",
 });
 
+const campusHeading = "A closer look at where the day begins.";
+
 export default async function Home() {
   const editorial = await getHomepageEditorialContent();
   const privateHomepageReview = process.env.HOMEPAGE_REVIEW_MODE === "private";
@@ -170,14 +172,43 @@ export default async function Home() {
           </div>
         </section>
 
-        <HomeCampusMotion>
+        <HomeCampusMotion privateReview={privateHomepageReview}>
           <div className="home-shell">
             <div className="home-campus__heading" data-motion-home-campus-copy>
               <p className="home-chapter-label home-chapter-label--light"><span>02</span> The campus</p>
-              <h2 id="campus-title">A closer look at where the day begins.</h2>
+              <h2 id="campus-title">
+                {privateHomepageReview ? (
+                  <>
+                    <span className="visually-hidden">{campusHeading}</span>
+                    <span className="home-campus__title-words" aria-hidden="true">
+                      {campusHeading.split(" ").map((word, index) => (
+                        <span className="home-campus__title-word" data-motion-home-campus-word key={`${word}-${index}`}>
+                          {word}
+                        </span>
+                      ))}
+                    </span>
+                  </>
+                ) : campusHeading}
+              </h2>
               <p>Three views of the SSKEMS campus and grounds in Veral.</p>
             </div>
+          </div>
 
+          {privateHomepageReview ? (
+            <figure className="home-campus__feature" data-motion-home-campus-feature>
+              <div className="home-campus__feature-media" data-motion-home-campus-feature-media>
+                <CampusPicture
+                  recordId="media-campus-main"
+                  fallbackSrc="/media/home/campus-main.jpeg"
+                  alt="The pink and white SSKEMS school building in Veral."
+                  sizes="100vw"
+                />
+              </div>
+              <figcaption className="home-shell">The SSKEMS campus in Veral</figcaption>
+            </figure>
+          ) : null}
+
+          <div className="home-shell">
             <div className="home-campus__gallery">
               <figure className="home-campus__frame home-campus__frame--grounds" data-motion-home-campus-frame>
                 <CampusPicture

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.sskemschool.com/schemas/homepage-hero-video-binding.schema.json",
+  "title": "SSKEMS homepage hero video private-review binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "registryId", "policy", "binding"],
+  "properties": {
+    "$schema": { "const": "./homepage-hero-video-binding.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "registryId": { "const": "sskem-homepage-hero-video-binding" },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "privateReviewOnly",
+        "publicActivationAllowed",
+        "currentApprovalsRequired",
+        "exactPublicFileSha256Required",
+        "posterRequired",
+        "captionsRequired",
+        "maximumVideoBytes",
+        "maximumPosterBytes",
+        "maximumCaptionsBytes",
+        "initialVideoPreload",
+        "notes"
+      ],
+      "properties": {
+        "privateReviewOnly": { "const": true },
+        "publicActivationAllowed": { "const": false },
+        "currentApprovalsRequired": { "const": true },
+        "exactPublicFileSha256Required": { "const": true },
+        "posterRequired": { "const": true },
+        "captionsRequired": { "const": true },
+        "maximumVideoBytes": { "const": 3000000 },
+        "maximumPosterBytes": { "const": 250000 },
+        "maximumCaptionsBytes": { "const": 100000 },
+        "initialVideoPreload": { "const": "none" },
+        "notes": { "type": "string", "minLength": 20 }
+      }
+    },
+    "binding": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/binding" }
+      ]
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "video": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recordId", "publicPath", "type", "sha256", "bytes", "width", "height", "durationMs"],
+      "properties": {
+        "recordId": { "const": "media-homepage-hero-video" },
+        "publicPath": {
+          "type": "string",
+          "pattern": "^/media/home/production/homepage-hero-video/[a-z0-9][a-z0-9._-]*\\.(mp4|webm)$"
+        },
+        "type": { "enum": ["video/mp4", "video/webm"] },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 1, "maximum": 3000000 },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "durationMs": { "type": "integer", "minimum": 1000, "maximum": 30000 }
+      }
+    },
+    "poster": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recordId", "publicPath", "format", "sha256", "bytes", "width", "height"],
+      "properties": {
+        "recordId": { "const": "media-homepage-hero-video-poster" },
+        "publicPath": {
+          "type": "string",
+          "pattern": "^/media/home/production/homepage-hero-video/[a-z0-9][a-z0-9._-]*\\.(avif|jpe?g|png|webp)$"
+        },
+        "format": { "enum": ["avif", "jpeg", "png", "webp"] },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 1, "maximum": 250000 },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "captions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recordId", "publicPath", "sha256", "bytes", "srcLang", "label"],
+      "properties": {
+        "recordId": { "const": "media-homepage-hero-video-captions" },
+        "publicPath": {
+          "type": "string",
+          "pattern": "^/media/home/production/homepage-hero-video/[a-z0-9][a-z0-9._-]*\\.vtt$"
+        },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 1, "maximum": 100000 },
+        "srcLang": {
+          "type": "string",
+          "pattern": "^[a-z]{2,3}(-[A-Z]{2})?$"
+        },
+        "label": { "type": "string", "minLength": 2, "maxLength": 40 }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bindingId", "title", "activatedOn", "video", "poster", "captions"],
+      "properties": {
+        "bindingId": {
+          "type": "string",
+          "pattern": "^homepage-hero-video-[a-f0-9]{12}$"
+        },
+        "title": { "type": "string", "minLength": 12, "maxLength": 120 },
+        "activatedOn": { "type": "string", "format": "date-time" },
+        "video": { "$ref": "#/$defs/video" },
+        "poster": { "$ref": "#/$defs/poster" },
+        "captions": { "$ref": "#/$defs/captions" }
+      }
+    }
+  }
+}

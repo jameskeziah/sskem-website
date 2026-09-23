@@ -1,0 +1,19 @@
+{
+  "$schema": "./homepage-hero-video-binding.schema.json",
+  "schemaVersion": 1,
+  "registryId": "sskem-homepage-hero-video-binding",
+  "policy": {
+    "privateReviewOnly": true,
+    "publicActivationAllowed": false,
+    "currentApprovalsRequired": true,
+    "exactPublicFileSha256Required": true,
+    "posterRequired": true,
+    "captionsRequired": true,
+    "maximumVideoBytes": 3000000,
+    "maximumPosterBytes": 250000,
+    "maximumCaptionsBytes": 100000,
+    "initialVideoPreload": "none",
+    "notes": "The private-review transition remains poster-only unless one exact video, poster and captions bundle has current approvals and matches every bound public-file hash. This registry cannot authorize public activation."
+  },
+  "binding": null
+}

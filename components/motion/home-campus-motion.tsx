@@ -26,7 +26,13 @@ type MotionConditions = {
   desktop?: boolean;
 };
 
-export function HomeCampusMotion({ children }: { children: ReactNode }) {
+export function HomeCampusMotion({
+  children,
+  privateReview = false,
+}: {
+  children: ReactNode;
+  privateReview?: boolean;
+}) {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -40,7 +46,10 @@ export function HomeCampusMotion({ children }: { children: ReactNode }) {
         const conditions = context.conditions as MotionConditions;
         const copy = gsap.utils.toArray<HTMLElement>("[data-motion-home-campus-copy]", element);
         const frames = gsap.utils.toArray<HTMLElement>("[data-motion-home-campus-frame]", element);
-        const targets = [...copy, ...frames];
+        const words = gsap.utils.toArray<HTMLElement>("[data-motion-home-campus-word]", element);
+        const feature = element.querySelector<HTMLElement>("[data-motion-home-campus-feature]");
+        const featureMedia = element.querySelector<HTMLElement>("[data-motion-home-campus-feature-media]");
+        const targets = [...copy, ...frames, ...words, ...(featureMedia ? [featureMedia] : [])];
 
         if (conditions.reduce) {
           gsap.set(targets, { clearProps: "all" });
@@ -72,6 +81,29 @@ export function HomeCampusMotion({ children }: { children: ReactNode }) {
           },
         );
 
+        if (privateReview && conditions.desktop && words.length) {
+          timeline.fromTo(
+            words,
+            {
+              opacity: 0,
+              y: motionDistancePixels.revealDesktop,
+              rotationX: -30,
+              transformOrigin: "50% 100%",
+              willChange: "transform, opacity",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              rotationX: 0,
+              duration: motionDurationSeconds.slow,
+              ease: motionEase.emphasised,
+              stagger: motionStaggerSeconds.heading,
+              clearProps: "all",
+            },
+            0,
+          );
+        }
+
         if (!conditions.mobile) {
           timeline.fromTo(
             frames,
@@ -90,6 +122,29 @@ export function HomeCampusMotion({ children }: { children: ReactNode }) {
               clearProps: "all",
             },
             "<",
+          );
+        }
+
+        if (privateReview && conditions.desktop && feature && featureMedia) {
+          gsap.fromTo(
+            featureMedia,
+            {
+              clipPath: "inset(17% 27% round 1.5rem)",
+              scale: motionScale.imageMaskMaximum,
+              transformOrigin: "50% 50%",
+            },
+            {
+              clipPath: "inset(0% 0% round 0rem)",
+              scale: 1,
+              duration: motionDurationSeconds.ceremonial,
+              ease: motionEase.emphasised,
+              clearProps: "all",
+              scrollTrigger: {
+                trigger: feature,
+                ...motionScrollTrigger,
+                start: "top 82%",
+              },
+            },
           );
         }
       });
@@ -113,6 +168,7 @@ export function HomeCampusMotion({ children }: { children: ReactNode }) {
       aria-labelledby="campus-title"
       data-motion-component="home-campus"
       data-motion-level="4"
+      data-private-review={privateReview ? "true" : "false"}
     >
       {children}
     </section>
