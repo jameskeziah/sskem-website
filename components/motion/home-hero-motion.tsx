@@ -45,7 +45,7 @@ export function HomeHeroMotion({
         const heroMedia = element.querySelector<HTMLElement>("[data-motion-home-hero-media] img");
         const targets = [intro, ...headings, heroMedia].filter(Boolean) as HTMLElement[];
         const privatePrototype = reviewMode === "private-review";
-        const animateLiveHero = conditions.mobile || privatePrototype;
+        const animateLiveHero = conditions.mobile || (privatePrototype && conditions.tablet);
 
         if (conditions.reduce || !animateLiveHero) {
           gsap.set(targets, { clearProps: "all" });

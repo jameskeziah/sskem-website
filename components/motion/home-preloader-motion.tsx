@@ -97,7 +97,9 @@ export function HomePreloaderMotion() {
         let finished = false;
         let timeout = 0;
         let timeline: gsap.core.Timeline | null = null;
-        const image = document.querySelector<HTMLImageElement>("[data-motion-home-hero-media] img");
+        const image = window.matchMedia("(min-width: 64rem)").matches
+          ? Object.assign(new Image(), { src: "/og.png" })
+          : document.querySelector<HTMLImageElement>("[data-motion-home-hero-media] img");
         const imageReadiness = waitForImage(image);
         const fontReadiness = document.fonts?.ready
           .then(() => undefined, () => undefined) ?? Promise.resolve();

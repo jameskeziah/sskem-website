@@ -502,61 +502,6 @@ body[data-home-preloader="active"] {
     display: none;
   }
 
-  .home-hero--private-review .home-hero__desktop-poster {
-    display: none;
-  }
-
-  .home-hero--private-review .home-hero__live-copy {
-    position: absolute !important;
-    z-index: 2;
-    inset: 0 0 auto;
-    display: grid;
-    width: 100% !important;
-    height: clamp(36rem, 52.5vw, 46rem) !important;
-    align-content: center;
-    gap: var(--space-16);
-    padding: clamp(var(--space-48), 7vw, 7rem) max(var(--space-32), calc((100vw - var(--layout-wide)) / 2)) !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-    clip: auto !important;
-    clip-path: none !important;
-    white-space: normal !important;
-    background:
-      linear-gradient(90deg, color-mix(in srgb, var(--color-neutral-950) 94%, transparent) 0%, color-mix(in srgb, var(--color-neutral-950) 74%, transparent) 39%, color-mix(in srgb, var(--color-neutral-950) 15%, transparent) 72%, transparent 100%),
-      linear-gradient(180deg, color-mix(in srgb, var(--color-neutral-950) 28%, transparent), color-mix(in srgb, var(--color-neutral-950) 60%, transparent));
-    border: 0 !important;
-    pointer-events: none;
-  }
-
-  .home-hero--private-review .home-hero__live-copy > * {
-    pointer-events: auto;
-  }
-
-  .home-hero--private-review .home-hero__title {
-    max-width: 54rem;
-    font-size: clamp(6rem, 10.4vw, 10.5rem);
-    line-height: 0.78;
-  }
-
-  .home-hero--private-review .home-hero__mobile-media {
-    display: block;
-    height: clamp(36rem, 52.5vw, 46rem);
-    overflow: hidden;
-  }
-
-  .home-hero--private-review .home-hero__mobile-media::before {
-    top: auto;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: var(--space-8);
-    transform: none;
-  }
-
-  .home-hero--private-review .home-hero__mobile-media img {
-    object-position: 50% 50%;
-  }
-
   .home-hero__dock-inner {
     grid-template-columns: minmax(17rem, 0.8fr) minmax(20rem, 0.9fr) auto;
     gap: clamp(var(--space-24), 4vw, var(--space-48));

@@ -228,7 +228,7 @@ test("keeps the homepage P0 prototype publication-aware and readable", async () 
   assert.match(admissions, /admissionsProcess\.slice\(0, 4\)/);
   assert.doesNotMatch(admissions, /Admissions Open|fee amount|result statistic/i);
 
-  assert.match(styles, /\.home-hero--private-review \.home-hero__live-copy/);
+  assert.doesNotMatch(styles, /\.home-hero--private-review \.home-hero__(?:desktop-poster|live-copy|mobile-media)/);
   assert.match(styles, /\.home-identity-strip/);
   assert.match(styles, /\.home-admissions-feature/);
 });

@@ -9,6 +9,21 @@ async function computedTranslateY(locator: import("@playwright/test").Locator) {
   });
 }
 
+async function expectDesktopPosterHero(page: import("@playwright/test").Page) {
+  await expect(page.locator(".home-hero__desktop-poster")).toBeVisible();
+  await expect(page.locator(".home-hero__mobile-media")).toBeHidden();
+  await expect(page.locator("#home-title")).toBeAttached();
+
+  await expect.poll(() => page.locator(".home-hero__live-copy").evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      width: style.width,
+      height: style.height,
+      clipPath: style.clipPath,
+    };
+  })).toEqual({ width: "1px", height: "1px", clipPath: "inset(50%)" });
+}
+
 test("keeps admissions readable and navigable when hydration scripts fail", async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 740 });
   await page.route("**/*.js", (route) => route.abort());
@@ -62,14 +77,15 @@ test("keeps the homepage narrative readable when hydration scripts fail", async 
   expect(finalStates.every((state) => state.opacity === "1" && state.transform === "none" && state.clipPath === "none")).toBe(true);
 });
 
-test("private homepage preloader waits for the critical hero image and releases the hero", async ({ page }) => {
+test("private homepage preloader waits for the critical hero poster and releases the hero", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
   await page.addInitScript(() => {
     window.addEventListener("sskem:home-arrival-ready", () => {
       document.documentElement.dataset.homeArrivalSignalState =
         document.querySelector<HTMLElement>("[data-motion-component='home-preloader']")?.dataset.state ?? "missing";
     });
   });
-  await page.route("**/media/home/campus-main.jpeg", async (route) => {
+  await page.route("**/og.png", async (route) => {
     await new Promise((resolve) => setTimeout(resolve, 600));
     await route.continue();
   });
@@ -101,7 +117,7 @@ test("private homepage preloader waits for the critical hero image and releases 
   await page.goto("/");
   await expect(preloader).toBeHidden();
   await expect(preloader).toHaveAttribute("data-state", "complete");
-  await expect(page.getByRole("heading", { level: 1, name: /Here, possibility begins/i })).toBeVisible();
+  await expectDesktopPosterHero(page);
 
   await page.goto("/?replayPreloader=1", { waitUntil: "domcontentloaded" });
   await expect(preloader).toBeVisible();
@@ -160,9 +176,10 @@ test("reduced motion leaves every motion target in its final static state", asyn
 });
 
 test("reduced motion leaves the homepage story in its final static state", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/?replayPreloader=1");
-  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expectDesktopPosterHero(page);
   await expect(page.locator("[data-motion-component='home-preloader']")).toBeHidden();
   await expect(page.locator("[data-motion-component='home-hero-video-transition'] video")).toHaveCount(0);
 
