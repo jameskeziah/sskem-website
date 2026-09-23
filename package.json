@@ -78,7 +78,7 @@
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern studio/dist",
     "db:generate": "drizzle-kit generate",
     "prebuild:vercel": "npm run tokens:build && npm run editorial:bindings:audit && npm run editorial:site-settings:audit && npm run editorial:announcement:audit && npm run migration:matrix:audit && npm run achievements:bindings:audit && npm run media:bindings:audit && npm run poster:decision-bindings:audit && npm run programmes:performance:audit && npm run programmes:profiles:audit",
-    "build:vercel": "next build"
+    "build:vercel": "cross-env NITRO_PRESET=vercel vite build --config vite.vercel.config.ts"
   },
   "dependencies": {
     "@gsap/react": "2.1.2",
@@ -109,7 +109,8 @@
     "typescript": "5.9.3",
     "vinext": "0.0.50",
     "vite": "8.0.13",
-    "wrangler": "4.92.0"
+    "wrangler": "4.92.0",
+    "nitro": "3.0.260903-beta"
   },
   "type": "module"
 }
