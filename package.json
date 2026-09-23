@@ -110,7 +110,8 @@
     "vinext": "0.0.50",
     "vite": "8.0.13",
     "wrangler": "4.92.0",
-    "nitro": "3.0.260903-beta"
+    "nitro": "3.0.260903-beta",
+    "@tailwindcss/vite": "4.2.1"
   },
   "type": "module"
 }
