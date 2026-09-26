@@ -198,7 +198,7 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(homepage, /data-motion-home-hero-media/);
   assert.match(homepage, /<HomeHeroVideoTransition asset=\{null\}>/);
   assert.match(homepageStyles, /background-image:\s*url\(["']\/og\.png["']\)/);
-  assert.match(homepage, /<HomeCampusMotion>/);
+  assert.match(homepage, /<HomeCampusMotion\b/);
   assert.match(homepage, /<HomeAchievementsMotion\b/);
 });
 
