@@ -18,11 +18,18 @@ type MotionConditions = {
   reduce?: boolean;
 };
 
-const homeEntrySessionKey = "sskem:private-home-entry-seen";
-// A minimum brand hold applies only to the opt-in private-review arrival.
-const privateReviewMinimumVisibleMs = 1_500;
+type HomePreloaderMode = "private-review" | "public";
 
-function hasSeenHomeEntry() {
+const homeEntrySessionKeys: Record<HomePreloaderMode, string> = {
+  "private-review": "sskem:private-home-entry-seen",
+  public: "sskem:public-home-entry-seen",
+};
+
+// Keep the brand visible on fast or cached connections, without a fixed wait
+// for visitors who request reduced motion or for returning session visitors.
+const homePreloaderMinimumVisibleMs = 1_500;
+
+function hasSeenHomeEntry(homeEntrySessionKey: string) {
   try {
     return window.sessionStorage.getItem(homeEntrySessionKey) === "true";
   } catch {
@@ -30,7 +37,7 @@ function hasSeenHomeEntry() {
   }
 }
 
-function rememberHomeEntry() {
+function rememberHomeEntry(homeEntrySessionKey: string) {
   try {
     window.sessionStorage.setItem(homeEntrySessionKey, "true");
   } catch {
@@ -73,8 +80,9 @@ function waitForImage(image: HTMLImageElement | null) {
   };
 }
 
-export function HomePreloaderMotion() {
+export function HomePreloaderMotion({ mode = "private-review" }: { mode?: HomePreloaderMode }) {
   const root = useRef<HTMLDivElement>(null);
+  const homeEntrySessionKey = homeEntrySessionKeys[mode];
 
   useGSAP(
     () => {
@@ -88,7 +96,7 @@ export function HomePreloaderMotion() {
         const conditions = context.conditions as MotionConditions;
         const replayRequested = new URLSearchParams(window.location.search).get("replayPreloader") === "1";
         if (document.documentElement.dataset[homeArrivalSignal.datasetKey] === "true"
-          || (!replayRequested && hasSeenHomeEntry())) {
+          || (!replayRequested && hasSeenHomeEntry(homeEntrySessionKey))) {
           element.hidden = true;
           element.dataset.state = "complete";
           announceHomeArrivalReady();
@@ -117,10 +125,9 @@ export function HomePreloaderMotion() {
         const startExitReveal = () => {
           if (!active || finished) return;
           // Cached media may resolve before the first painted frame. Give the
-          // private-review wordmark enough time to be perceived and leave the
-          // production homepage and reduced-motion experience unaffected.
+          // branded preloader enough time to be perceived in either mode.
           if (!conditions.reduce) {
-            const remaining = privateReviewMinimumVisibleMs - (performance.now() - visibleAt);
+            const remaining = homePreloaderMinimumVisibleMs - (performance.now() - visibleAt);
             if (remaining > 0) {
               if (!minimumHoldTimer) {
                 minimumHoldTimer = window.setTimeout(() => {
@@ -141,7 +148,7 @@ export function HomePreloaderMotion() {
             element.hidden = true;
             element.dataset.state = "complete";
             releasePage();
-            rememberHomeEntry();
+            rememberHomeEntry(homeEntrySessionKey);
             announceHomeArrivalReady();
             return;
           }
@@ -184,7 +191,7 @@ export function HomePreloaderMotion() {
             ease: motionEase.emphasised,
             clearProps: "clip-path,transform",
             onStart: () => {
-              rememberHomeEntry();
+              rememberHomeEntry(homeEntrySessionKey);
               announceHomeArrivalReady();
             },
           });
@@ -219,7 +226,7 @@ export function HomePreloaderMotion() {
 
       return () => media.revert();
     },
-    { scope: root },
+    { scope: root, dependencies: [mode], revertOnUpdate: true },
   );
 
   return (
@@ -241,7 +248,7 @@ export function HomePreloaderMotion() {
         </p>
         <span className="home-preloader__rule" data-home-preloader-rule />
         <p className="home-preloader__meta" data-home-preloader-detail>
-          Veral <span aria-hidden="true">·</span> Private review
+          Veral <span aria-hidden="true">·</span> {mode === "public" ? "Welcome" : "Private review"}
         </p>
       </div>
     </div>
