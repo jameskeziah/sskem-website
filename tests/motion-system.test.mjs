@@ -178,6 +178,10 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.doesNotMatch(homePreloader, /setInterval|loader-number|percentage|progress/i);
   assert.match(homeCampus, /data-motion-component="home-campus"/);
   assert.match(homeCampus, /ScrollTrigger/);
+  assert.match(homeCampus, /for \(const block of copy\)/);
+  assert.match(homeCampus, /trigger: block/);
+  assert.match(homeCampus, /for \(const frame of frames\)/);
+  assert.match(homeCampus, /trigger: frame/);
   assert.match(homeAchievements, /data-motion-component="home-achievements"/);
   assert.match(homeAchievements, /motionStaggerSeconds\.cards/);
   assert.match(programmesHero, /data-motion-component="programmes-hero"/);
@@ -194,7 +198,7 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(homepage, /data-motion-home-hero-media/);
   assert.match(homepage, /<HomeHeroVideoTransition asset=\{null\}>/);
   assert.match(homepageStyles, /background-image:\s*url\(["']\/og\.png["']\)/);
-  assert.match(homepage, /<HomeCampusMotion>/);
+  assert.match(homepage, /<HomeCampusMotion\b/);
   assert.match(homepage, /<HomeAchievementsMotion\b/);
 });
 
@@ -257,6 +261,8 @@ test("rejects prohibited, unbounded and layout-changing motion patterns", async 
   assert.doesNotMatch(combined, /transition\s*:\s*(?:width|height|top|left)\b/i);
   assert.doesNotMatch(combined, /\b(?:bounce|elastic|back\.|ScrollSmoother|Lenis|Locomotive)\b/i);
   assert.doesNotMatch(combined, /\bpin\s*:\s*true|\bscrub\s*:/i);
+  assert.doesNotMatch(homepage, /\.home-services__links a:hover\s*\{[^}]*padding-inline/s);
+  assert.match(homepage, /\.home-services__links a:hover i\s*\{\s*transform: translateX/);
   assert.doesNotMatch(combined, /repeat\s*:\s*-?1|cursor-follow|gyroscope|autoplay\s+sound/i);
   assert.doesNotMatch(`${globals}\n${admissions}\n${homepage}`, /(?:phase|admissions|home)-hero[^{}]*\{[^{}]*animation\s*:/s);
   assert.doesNotMatch(`${globals}\n${admissions}\n${compliance}\n${homepage}`, /\b(?:[1-9]\d*)ms\b/);

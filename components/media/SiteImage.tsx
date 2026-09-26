@@ -54,14 +54,12 @@ const sizesByVariant: Record<ImageVariant, string> = {
 export function SiteImage({
   variant = "full",
   sizes,
-  priority = false,
+  priority,
   preload,
   ...props
 }: SiteImageProps) {
-  const shouldPreload =
-    preload ??
-    priority ??
-    variant === "hero";
+  // An explicit choice wins; otherwise hero variants preload by default.
+  const shouldPreload = preload ?? priority ?? (variant === "hero");
 
   return (
   <Image
