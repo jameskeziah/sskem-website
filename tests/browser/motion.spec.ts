@@ -84,6 +84,18 @@ test("private homepage preloader waits for the critical hero poster and releases
       document.documentElement.dataset.homeArrivalSignalState =
         document.querySelector<HTMLElement>("[data-motion-component='home-preloader']")?.dataset.state ?? "missing";
     });
+
+    // Record visibility from the first client-side state change, even when
+    // the hero poster and fonts are already in the browser cache.
+    const observedStates = new Set<string>();
+    const observer = new MutationObserver(() => {
+      const state = document.querySelector<HTMLElement>("[data-motion-component='home-preloader']")?.dataset.state;
+      if ((state === "loading" || state === "exit-reveal") && !observedStates.has(state)) {
+        observedStates.add(state);
+        performance.mark(`sskem-preloader-${state}`);
+      }
+    });
+    observer.observe(document, { attributes: true, subtree: true, attributeFilter: ["data-state"] });
   });
   await page.route("**/og.png", async (route) => {
     await new Promise((resolve) => setTimeout(resolve, 600));
@@ -96,6 +108,13 @@ test("private homepage preloader waits for the critical hero poster and releases
   await expect(preloader).toHaveAttribute("data-state", "loading");
   await expect.poll(() => page.evaluate(() => document.documentElement.dataset.homeArrivalReady ?? null)).toBeNull();
   await expect(preloader).toHaveAttribute("data-state", "exit-reveal", { timeout: 5_000 });
+  const minimumVisibility = await page.evaluate(() => {
+    const loading = performance.getEntriesByName("sskem-preloader-loading", "mark")[0];
+    const exiting = performance.getEntriesByName("sskem-preloader-exit-reveal", "mark")[0];
+    return loading && exiting ? exiting.startTime - loading.startTime : null;
+  });
+  expect(minimumVisibility).not.toBeNull();
+  expect(minimumVisibility!).toBeGreaterThanOrEqual(1_400);
   await expect(preloader).toBeHidden({ timeout: 5_000 });
   await expect.poll(() => page.evaluate(() => document.documentElement.dataset.homeArrivalReady)).toBe("true");
   await expect.poll(() => page.evaluate(() => document.documentElement.dataset.homeArrivalSignalState)).toBe("exit-reveal");
