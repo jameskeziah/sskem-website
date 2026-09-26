@@ -58,6 +58,10 @@ const campusHeading = "A closer look at where the day begins.";
 export default async function Home() {
   const editorial = await getHomepageEditorialContent();
   const privateHomepageReview = process.env.HOMEPAGE_REVIEW_MODE === "private";
+  // The public preloader is opt-in and must not activate private-review media
+  // or publication-preview content on the live school homepage.
+  const publicHomepagePreloader = process.env.HOMEPAGE_PUBLIC_PRELOADER === "true";
+  const showHomePreloader = privateHomepageReview || publicHomepagePreloader;
   const privateAchievementReview = privateHomepageReview;
   const achievementArtwork = selectHomepageAchievementArtwork({
     mode: privateAchievementReview ? "private-review" : "public",
@@ -83,9 +87,14 @@ export default async function Home() {
           },
         }}
       />
-      {privateHomepageReview ? <HomePreloaderMotion /> : null}
+      {showHomePreloader ? (
+        <HomePreloaderMotion mode={privateHomepageReview ? "private-review" : "public"} />
+      ) : null}
       <main id="main-content" tabIndex={-1} className="home-page">
-        <HomeHeroMotion reviewMode={privateHomepageReview ? "private-review" : "public"}>
+        <HomeHeroMotion
+          reviewMode={privateHomepageReview ? "private-review" : "public"}
+          preloaderEnabled={showHomePreloader}
+        >
           <div className="home-hero__desktop-poster" data-home-hero-art aria-hidden="true" />
 
           <div className="home-hero__live-copy">

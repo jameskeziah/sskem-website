@@ -18,23 +18,10 @@ type MotionConditions = {
   reduce?: boolean;
 };
 
-const homeEntrySessionKey = "sskem:private-home-entry-seen";
+type HomePreloaderMode = "private-review" | "public";
 
-function hasSeenHomeEntry() {
-  try {
-    return window.sessionStorage.getItem(homeEntrySessionKey) === "true";
-  } catch {
-    return false;
-  }
-}
-
-function rememberHomeEntry() {
-  try {
-    window.sessionStorage.setItem(homeEntrySessionKey, "true");
-  } catch {
-    // A denied storage API must never block the visible page.
-  }
-}
+// Keep the brand visible on cached loads; reduced-motion visitors bypass it.
+const homePreloaderMinimumVisibleMs = 1_500;
 
 function announceHomeArrivalReady() {
   document.documentElement.dataset[homeArrivalSignal.datasetKey] = "true";
@@ -71,7 +58,7 @@ function waitForImage(image: HTMLImageElement | null) {
   };
 }
 
-export function HomePreloaderMotion() {
+export function HomePreloaderMotion({ mode = "private-review" }: { mode?: HomePreloaderMode }) {
   const root = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -84,9 +71,9 @@ export function HomePreloaderMotion() {
 
       media.add(motionMedia, (context) => {
         const conditions = context.conditions as MotionConditions;
-        const replayRequested = new URLSearchParams(window.location.search).get("replayPreloader") === "1";
-        if (document.documentElement.dataset[homeArrivalSignal.datasetKey] === "true"
-          || (!replayRequested && hasSeenHomeEntry())) {
+        // Skip duplicate GSAP media callbacks in this mount, but every
+        // new homepage load starts a fresh branded introduction.
+        if (document.documentElement.dataset[homeArrivalSignal.datasetKey] === "true") {
           element.hidden = true;
           element.dataset.state = "complete";
           announceHomeArrivalReady();
@@ -96,6 +83,8 @@ export function HomePreloaderMotion() {
         let active = true;
         let finished = false;
         let timeout = 0;
+        let minimumHoldTimer = 0;
+        let visibleAt = 0;
         let timeline: gsap.core.Timeline | null = null;
         const image = window.matchMedia("(min-width: 64rem)").matches
           ? Object.assign(new Image(), { src: "/og.png" })
@@ -112,7 +101,23 @@ export function HomePreloaderMotion() {
 
         const startExitReveal = () => {
           if (!active || finished) return;
+          // Cached media may resolve before the first painted frame. Give the
+          // branded preloader enough time to be perceived in either mode.
+          if (!conditions.reduce) {
+            const remaining = homePreloaderMinimumVisibleMs - (performance.now() - visibleAt);
+            if (remaining > 0) {
+              if (!minimumHoldTimer) {
+                minimumHoldTimer = window.setTimeout(() => {
+                  minimumHoldTimer = 0;
+                  startExitReveal();
+                }, remaining);
+              }
+              return;
+            }
+          }
+
           finished = true;
+          window.clearTimeout(minimumHoldTimer);
           window.clearTimeout(timeout);
           imageReadiness.cancel();
 
@@ -120,7 +125,6 @@ export function HomePreloaderMotion() {
             element.hidden = true;
             element.dataset.state = "complete";
             releasePage();
-            rememberHomeEntry();
             announceHomeArrivalReady();
             return;
           }
@@ -163,13 +167,13 @@ export function HomePreloaderMotion() {
             ease: motionEase.emphasised,
             clearProps: "clip-path,transform",
             onStart: () => {
-              rememberHomeEntry();
               announceHomeArrivalReady();
             },
           });
         };
 
         element.hidden = false;
+        visibleAt = performance.now();
         element.dataset.state = "loading";
         document.body.dataset.homePreloader = "active";
 
@@ -187,6 +191,7 @@ export function HomePreloaderMotion() {
         return () => {
           active = false;
           window.clearTimeout(timeout);
+          window.clearTimeout(minimumHoldTimer);
           imageReadiness.cancel();
           timeline?.kill();
           gsap.set(element, { clearProps: "clip-path,transform" });
@@ -196,7 +201,7 @@ export function HomePreloaderMotion() {
 
       return () => media.revert();
     },
-    { scope: root },
+    { scope: root, dependencies: [mode], revertOnUpdate: true },
   );
 
   return (
@@ -218,7 +223,7 @@ export function HomePreloaderMotion() {
         </p>
         <span className="home-preloader__rule" data-home-preloader-rule />
         <p className="home-preloader__meta" data-home-preloader-detail>
-          Veral <span aria-hidden="true">·</span> Private review
+          Veral <span aria-hidden="true">·</span> {mode === "public" ? "Welcome" : "Private review"}
         </p>
       </div>
     </div>
