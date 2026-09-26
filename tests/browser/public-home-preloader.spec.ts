@@ -77,3 +77,8 @@ test("public homepage stays readable without JavaScript", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: /Here, possibility begins/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Enquire now/i }).first()).toBeVisible();
 });
+
+test("public preloader flag does not unlock private-review routes", async ({ request }) => {
+  const response = await request.get("/publication-review");
+  expect(response.status()).toBe(404);
+});
