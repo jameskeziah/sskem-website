@@ -61,68 +61,78 @@ export function HomeCampusMotion({
           : conditions.tablet
             ? motionDistancePixels.revealTablet
             : motionDistancePixels.revealDesktop;
-        const timeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: element,
-            ...motionScrollTrigger,
-          },
-        });
-
-        timeline.fromTo(
-          copy,
-          { opacity: 0, y: distance, willChange: "transform, opacity" },
-          {
-            opacity: 1,
-            y: 0,
-            duration: motionDurationSeconds.deliberate,
-            ease: motionEase.enter,
-            stagger: conditions.mobile ? motionStaggerSeconds.mobile : motionStaggerSeconds.interface,
-            clearProps: "all",
-          },
-        );
-
-        if (privateReview && conditions.desktop && words.length) {
-          timeline.fromTo(
-            words,
-            {
-              opacity: 0,
-              y: motionDistancePixels.revealDesktop,
-              rotationX: -30,
-              transformOrigin: "50% 100%",
-              willChange: "transform, opacity",
+        // Each copy block has its own trigger: the closing call-to-action should
+        // not finish animating before visitors reach the end of this chapter.
+        for (const block of copy) {
+          const timeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: block,
+              ...motionScrollTrigger,
             },
+          });
+
+          timeline.fromTo(
+            block,
+            { opacity: 0, y: distance, willChange: "transform, opacity" },
             {
               opacity: 1,
               y: 0,
-              rotationX: 0,
-              duration: motionDurationSeconds.slow,
-              ease: motionEase.emphasised,
-              stagger: motionStaggerSeconds.heading,
+              duration: motionDurationSeconds.deliberate,
+              ease: motionEase.enter,
               clearProps: "all",
             },
-            0,
           );
+
+          if (block.classList.contains("home-campus__heading")
+            && privateReview && conditions.desktop && words.length) {
+            timeline.fromTo(
+              words,
+              {
+                opacity: 0,
+                y: motionDistancePixels.revealDesktop,
+                rotationX: -30,
+                transformOrigin: "50% 100%",
+                willChange: "transform, opacity",
+              },
+              {
+                opacity: 1,
+                y: 0,
+                rotationX: 0,
+                duration: motionDurationSeconds.slow,
+                ease: motionEase.emphasised,
+                stagger: motionStaggerSeconds.heading,
+                clearProps: "all",
+              },
+              0,
+            );
+          }
         }
 
+        // Independently reveal gallery frames as they enter the viewport.
+        // On mobile they remain static to avoid unnecessary clip-path work.
         if (!conditions.mobile) {
-          timeline.fromTo(
-            frames,
-            {
-              clipPath: "inset(12% 0 0 0)",
-              scale: motionScale.imageMaskMaximum,
-              transformOrigin: "50% 50%",
-              willChange: "transform, clip-path",
-            },
-            {
-              clipPath: "inset(0% 0 0 0)",
-              scale: 1,
-              duration: motionDurationSeconds.slow,
-              ease: motionEase.emphasised,
-              stagger: motionStaggerSeconds.cards,
-              clearProps: "all",
-            },
-            "<",
-          );
+          for (const frame of frames) {
+            gsap.fromTo(
+              frame,
+              {
+                clipPath: "inset(12% 0 0 0)",
+                scale: motionScale.imageMaskMaximum,
+                transformOrigin: "50% 50%",
+                willChange: "transform, clip-path",
+              },
+              {
+                clipPath: "inset(0% 0 0 0)",
+                scale: 1,
+                duration: motionDurationSeconds.slow,
+                ease: motionEase.emphasised,
+                clearProps: "all",
+                scrollTrigger: {
+                  trigger: frame,
+                  ...motionScrollTrigger,
+                },
+              },
+            );
+          }
         }
 
         if (privateReview && conditions.desktop && feature && featureMedia) {
