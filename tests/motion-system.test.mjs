@@ -173,10 +173,9 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(homePreloader, /element\.dataset\.state = "loading"/);
   assert.match(homePreloader, /element\.dataset\.state = "exit-reveal"/);
   assert.match(homePreloader, /onStart:\s*\(\) => \{[\s\S]*?announceHomeArrivalReady\(\)/);
-  assert.match(homePreloader, /sessionStorage\.getItem\(homeEntrySessionKey\)/);
-  assert.match(homePreloader, /public: "sskem:public-home-entry-seen"/);
   assert.match(homePreloader, /mode === "public" \? "Welcome" : "Private review"/);
-  assert.match(homePreloader, /get\("replayPreloader"\) === "1"/);
+  assert.doesNotMatch(homePreloader, /sessionStorage|hasSeenHomeEntry|rememberHomeEntry/);
+  assert.match(homePreloader, /new homepage load starts a fresh branded introduction/);
   assert.match(homePreloader, /scale: 1 \/ motionScale\.imageMaskMaximum/);
   assert.match(homePreloader, /data-motion-component="home-preloader"/);
   assert.match(homePreloader, /aria-hidden="true"[\s\S]*?hidden/);
