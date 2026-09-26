@@ -193,7 +193,7 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(programmesPreview, /<ProgrammesHeroMotion>/);
   assert.match(programmesPreview, /<ProgrammesGridMotion>/);
   assert.match(programmesPreview, /data-motion-programme-card/);
-  assert.match(homepage, /<HomeHeroMotion reviewMode=/);
+  assert.match(homepage, /<HomeHeroMotion\s+reviewMode=/);
   assert.match(homepage, /process\.env\.HOMEPAGE_PUBLIC_PRELOADER === "true"/);
   assert.match(homepage, /showHomePreloader = privateHomepageReview \|\| publicHomepagePreloader/);
   assert.match(homepage, /<HomePreloaderMotion mode=\{privateHomepageReview \? "private-review" : "public"\} \/>/);
