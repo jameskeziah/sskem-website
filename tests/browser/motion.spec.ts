@@ -132,10 +132,10 @@ test("private homepage preloader waits for the critical hero poster and releases
   );
   expect(headingsReady).toBe(true);
 
-  await page.goto("/admissions");
-  await page.goto("/");
-  await expect(preloader).toBeHidden();
-  await expect(preloader).toHaveAttribute("data-state", "complete");
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(preloader).toBeVisible();
+  await expect(preloader).toHaveAttribute("data-state", "loading");
+  await expect(preloader).toBeHidden({ timeout: 5_000 });
   await expectDesktopPosterHero(page);
 
   await page.goto("/?replayPreloader=1", { waitUntil: "domcontentloaded" });
