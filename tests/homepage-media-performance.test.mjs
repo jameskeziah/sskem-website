@@ -17,6 +17,13 @@ async function sha256(path) {
   return createHash("sha256").update(await readFile(new URL(path, import.meta.url))).digest("hex");
 }
 
+test("preloads hero images by default while respecting explicit image choices", async () => {
+  const imageSource = await readFile(new URL("../components/media/SiteImage.tsx", import.meta.url), "utf8");
+
+  assert.match(imageSource, /const shouldPreload = preload \\?\\? priority \\?\\? \\(variant === "hero"\\)/);
+  assert.doesNotMatch(imageSource, /priority\\s*=\\s*false/);
+});
+
 test("tracks the exact homepage poster and private campus prototype assets", () => {
   assert.deepEqual(validateHomepageMediaPerformanceBudget(), []);
   const summary = homepageMediaPerformanceSummary({
