@@ -48,14 +48,23 @@ test("public visitors see the branded preloader and a synchronized hero handoff"
     () => document.body.dataset.homePreloader ?? null,
   )).toBeNull();
 
-  // Re-entry must not replay automatically; visitors can request it explicitly.
-  await page.goto("/admissions");
-  await page.goto("/");
-  await expect(preloader).toHaveAttribute("data-state", "complete");
-  await expect(preloader).toBeHidden();
-  await page.goto("/?replayPreloader=1", { waitUntil: "domcontentloaded" });
+  // Refreshing the homepage must replay even in the same browser session.
+  await page.reload({ waitUntil: "domcontentloaded" });
   await expect(preloader).toBeVisible();
   await expect(preloader).toHaveAttribute("data-state", "loading");
+  await expect(preloader).toHaveAttribute("data-state", "exit-reveal", { timeout: 6_000 });
+  const refreshVisibility = await page.evaluate(() => {
+    const started = performance.getEntriesByName("sskem-public-preloader-loading", "mark")[0];
+    const exiting = performance.getEntriesByName("sskem-public-preloader-exit-reveal", "mark")[0];
+    return started && exiting ? exiting.startTime - started.startTime : null;
+  });
+  expect(refreshVisibility).not.toBeNull();
+  expect(refreshVisibility!).toBeGreaterThanOrEqual(1_400);
+  await expect(preloader).toBeHidden({ timeout: 6_000 });
+
+  // Historical replay links still work but the query parameter is unnecessary.
+  await page.goto("/?replayPreloader=1", { waitUntil: "domcontentloaded" });
+  await expect(preloader).toBeVisible();
   await expect(preloader).toBeHidden({ timeout: 6_000 });
 });
 
