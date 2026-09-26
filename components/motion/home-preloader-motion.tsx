@@ -19,6 +19,8 @@ type MotionConditions = {
 };
 
 const homeEntrySessionKey = "sskem:private-home-entry-seen";
+// A minimum brand hold applies only to the opt-in private-review arrival.
+const privateReviewMinimumVisibleMs = 1_500;
 
 function hasSeenHomeEntry() {
   try {
@@ -96,6 +98,8 @@ export function HomePreloaderMotion() {
         let active = true;
         let finished = false;
         let timeout = 0;
+        let minimumHoldTimer = 0;
+        let visibleAt = 0;
         let timeline: gsap.core.Timeline | null = null;
         const image = window.matchMedia("(min-width: 64rem)").matches
           ? Object.assign(new Image(), { src: "/og.png" })
@@ -112,7 +116,24 @@ export function HomePreloaderMotion() {
 
         const startExitReveal = () => {
           if (!active || finished) return;
+          // Cached media may resolve before the first painted frame. Give the
+          // private-review wordmark enough time to be perceived and leave the
+          // production homepage and reduced-motion experience unaffected.
+          if (!conditions.reduce) {
+            const remaining = privateReviewMinimumVisibleMs - (performance.now() - visibleAt);
+            if (remaining > 0) {
+              if (!minimumHoldTimer) {
+                minimumHoldTimer = window.setTimeout(() => {
+                  minimumHoldTimer = 0;
+                  startExitReveal();
+                }, remaining);
+              }
+              return;
+            }
+          }
+
           finished = true;
+          window.clearTimeout(minimumHoldTimer);
           window.clearTimeout(timeout);
           imageReadiness.cancel();
 
@@ -170,6 +191,7 @@ export function HomePreloaderMotion() {
         };
 
         element.hidden = false;
+        visibleAt = performance.now();
         element.dataset.state = "loading";
         document.body.dataset.homePreloader = "active";
 
@@ -187,6 +209,7 @@ export function HomePreloaderMotion() {
         return () => {
           active = false;
           window.clearTimeout(timeout);
+          window.clearTimeout(minimumHoldTimer);
           imageReadiness.cancel();
           timeline?.kill();
           gsap.set(element, { clearProps: "clip-path,transform" });
