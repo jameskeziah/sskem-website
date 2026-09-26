@@ -20,30 +20,8 @@ type MotionConditions = {
 
 type HomePreloaderMode = "private-review" | "public";
 
-const homeEntrySessionKeys: Record<HomePreloaderMode, string> = {
-  "private-review": "sskem:private-home-entry-seen",
-  public: "sskem:public-home-entry-seen",
-};
-
-// Keep the brand visible on fast or cached connections, without a fixed wait
-// for visitors who request reduced motion or for returning session visitors.
+// Keep the brand visible on cached loads; reduced-motion visitors bypass it.
 const homePreloaderMinimumVisibleMs = 1_500;
-
-function hasSeenHomeEntry(homeEntrySessionKey: string) {
-  try {
-    return window.sessionStorage.getItem(homeEntrySessionKey) === "true";
-  } catch {
-    return false;
-  }
-}
-
-function rememberHomeEntry(homeEntrySessionKey: string) {
-  try {
-    window.sessionStorage.setItem(homeEntrySessionKey, "true");
-  } catch {
-    // A denied storage API must never block the visible page.
-  }
-}
 
 function announceHomeArrivalReady() {
   document.documentElement.dataset[homeArrivalSignal.datasetKey] = "true";
@@ -82,7 +60,6 @@ function waitForImage(image: HTMLImageElement | null) {
 
 export function HomePreloaderMotion({ mode = "private-review" }: { mode?: HomePreloaderMode }) {
   const root = useRef<HTMLDivElement>(null);
-  const homeEntrySessionKey = homeEntrySessionKeys[mode];
 
   useGSAP(
     () => {
@@ -94,9 +71,9 @@ export function HomePreloaderMotion({ mode = "private-review" }: { mode?: HomePr
 
       media.add(motionMedia, (context) => {
         const conditions = context.conditions as MotionConditions;
-        const replayRequested = new URLSearchParams(window.location.search).get("replayPreloader") === "1";
-        if (document.documentElement.dataset[homeArrivalSignal.datasetKey] === "true"
-          || (!replayRequested && hasSeenHomeEntry(homeEntrySessionKey))) {
+        // Skip duplicate GSAP media callbacks in this mount, but every
+        // new homepage load starts a fresh branded introduction.
+        if (document.documentElement.dataset[homeArrivalSignal.datasetKey] === "true") {
           element.hidden = true;
           element.dataset.state = "complete";
           announceHomeArrivalReady();
@@ -148,7 +125,6 @@ export function HomePreloaderMotion({ mode = "private-review" }: { mode?: HomePr
             element.hidden = true;
             element.dataset.state = "complete";
             releasePage();
-            rememberHomeEntry(homeEntrySessionKey);
             announceHomeArrivalReady();
             return;
           }
@@ -191,7 +167,6 @@ export function HomePreloaderMotion({ mode = "private-review" }: { mode?: HomePr
             ease: motionEase.emphasised,
             clearProps: "clip-path,transform",
             onStart: () => {
-              rememberHomeEntry(homeEntrySessionKey);
               announceHomeArrivalReady();
             },
           });
