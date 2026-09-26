@@ -166,8 +166,8 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.doesNotMatch(homeHeroVideo, /autoPlay|\bloop\b/);
   assert.match(homePreloader, /document\.fonts\?\.ready/);
   assert.match(homePreloader, /privateReviewMinimumVisibleMs = 1_500/);
-  assert.match(homePreloader, /privateReviewMinimumVisibleMs - \\(performance\\.now\\(\\) - visibleAt\\)/);
-  assert.match(homePreloader, /window\\.clearTimeout\\(minimumHoldTimer\\)/);
+  assert.ok(homePreloader.includes("privateReviewMinimumVisibleMs - (performance.now() - visibleAt)"));
+  assert.ok(homePreloader.includes("window.clearTimeout(minimumHoldTimer)"));
   assert.match(homePreloader, /data-motion-home-hero-media/);
   assert.match(homePreloader, /motionDurationSeconds\.ceremonial/);
   assert.match(homePreloader, /element\.dataset\.state = "loading"/);
