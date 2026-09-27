@@ -54,19 +54,22 @@ test("all seven V2 compositions keep meaningful navigation and decorative motifs
   await page.goto("/");
   const hero = page.locator("[data-motion-component='home-zentry-hero']");
   const scenes = [
-    ["01", "campus", "slash", "architecture", "architectural"],
-    ["02", "entrance", "curve", "pathway", "architectural"],
-    ["03", "science", "frame", "science", "editorial"],
-    ["04", "skating", "chevron", "motion", "kinetic"],
-    ["05", "digital", "grid", "digital", "editorial"],
-    ["06", "culture", "ribbon", "culture", "showcase"],
-    ["07", "sports", "sport", "sport", "kinetic"],
+    ["01", "campus", "slash", "architecture", "architectural", "vibrant", "centre-right"],
+    ["02", "entrance", "curve", "pathway", "architectural", "warm", "upper-right"],
+    ["03", "science", "frame", "science", "editorial", "clean", "lower-right"],
+    ["04", "skating", "chevron", "motion", "kinetic", "warm", "upper-right"],
+    ["05", "digital", "grid", "digital", "editorial", "clean", "lower-right"],
+    ["06", "culture", "ribbon", "culture", "showcase", "vibrant", "upper-right"],
+    ["07", "sports", "sport", "sport", "kinetic", "warm", "upper-right"],
   ] as const;
-  for (const [chapter, id, layout, motif, family] of scenes) {
+  for (const [chapter, id, layout, motif, family, treatment, preview] of scenes) {
     await hero.getByRole("button", { name: new RegExp(`Show slide ${chapter}:`) }).click();
     await expect(hero).toHaveAttribute("data-active-slide", id);
     await expect(hero).toHaveAttribute("data-visual-layout", layout);
     await expect(hero).toHaveAttribute("data-composition-family", family);
+    await expect(hero).toHaveAttribute("data-photo-treatment", treatment);
+    await expect(hero.locator(".zhero__preview-wrap")).toHaveAttribute("data-preview-position", preview);
+    await expect(hero).toHaveAttribute("data-visual-review", "pending");
     await expect(hero.locator(`.zhero__motif--${motif}`)).toHaveCount(1);
     await expect(hero.getByRole("link", { name: /Apply for Admission/i })).toHaveAttribute("href", "/admissions/enquire");
     await expect(hero.locator(".zhero__transition-layer")).toHaveCount(0);
