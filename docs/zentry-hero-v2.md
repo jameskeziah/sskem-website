@@ -1,4 +1,4 @@
-# SSKEMS Hero V2 — Part 1: Art direction and implementation
+# SSKEMS Hero V2 — Art direction and technical implementation
 
 **Status:** private-review implementation. Do not merge into the public homepage or publish student photography until existing approvals and release gates pass.
 
@@ -11,10 +11,10 @@ The current Zentry-inspired hero's expansion controller remains intact. V2 adds 
 | 01 Campus | `slash` | `architecture` | ~2/3 unobstructed bright campus image; narrow navy panel and thin translucent coral slash | Left; middle-right preview |
 | 02 Entrance | `curve` | `pathway` | Real curved warm-navy panel ~30% wide, welcoming coral | Bottom-left; upper-right preview |
 | 03 Science | `frame` | `science` | Localized left-side contrast, translucent cyan laboratory frame | Left; lower-right preview |
-| 04 Skating | `chevron` | `motion` | Full-bleed action photograph, lower-left radial contrast only | Bottom-left; upper-right preview |
+| 04 Movement | `chevron` | `motion` | Full-bleed outdoor team-game photograph, lower-left radial contrast only | Bottom-left; lower-right preview |
 | 05 Computer lab | `grid` | `digital` | Floating cyan interface panel and restrained grid; real computers visible | Upper-left; lower-right preview |
 | 06 Culture | `ribbon` | `culture` | Narrow editorial gradient, slim cream-and-coral stage ribbon | Left; upper-right preview |
-| 07 Sports | `sport` | `sport` | Near-full-bleed photo; local negative-space scrim, scoreboard chapter count | Bottom-left; upper-right preview |
+| 07 Sports | `sport` | `sport` | Near-full-bleed photo; local negative-space scrim, scoreboard chapter count | Bottom-left; lower-right preview |
 
 ## Typed chapter settings (current Part 2)
 
@@ -25,21 +25,35 @@ Every existing `HomeZentrySlide` now extends `HeroVisualSettings` with `focalMob
 | Campus | architecture | vibrant | centre-right |
 | Entrance | pathway | warm | upper-right |
 | Science | science | clean | lower-right |
-| Skating | motion | warm | upper-right |
+| Skating* | motion | warm | lower-right |
 | Digital | digital | clean | lower-right |
 | Culture | culture | vibrant | upper-right |
-| Sports | sport | warm | upper-right |
+| Sports | sport | warm | lower-right |
 
-The existing per-slide `palette.accent` and `imageCrop.mobile` values were **copied, not recalculated** into `accentColor` and `focalMobile`. Preview enums describe the existing provisional desktop positions. They **do not constitute an inspection of the original photographs**: all seven entries have `visualReviewStatus: "pending"`. Keep the compatibility aliases equal until old fields can safely be retired. Four photo treatments share restrained natural light/colour adjustments with the GSAP expanding image to avoid a colour jump.
+The existing per-slide `palette.accent` values were copied into `accentColor`. Initially, `focalMobile` and `previewPosition` were provisional aliases of the prototype; subsequently the seven photographs in the private `sskem-zentry-hero-assets.zip` media kit were inspected at an equivalent **390×742 mobile cover crop** and the mobile focal candidates adjusted below. The desktop skating/sports preview positions were changed to avoid covering the groups of children in the current images. None of these source-photo-only adjustments replace a real browser overlay check: all seven entries retain `visualReviewStatus: "pending"`. Keep compatibility aliases `imageCrop.mobile` and `focalMobile` equal. Four photo treatments share restrained natural light/colour adjustments with the GSAP expanding image to avoid a colour jump.
 
-The desktop semantic preview presets and existing per-slide pixel/percentage refinements are both configurable. Tablet/mobile preview placement remains fixed in CSS until subject-safe positions are signed off using the actual photography.
+The desktop semantic preview presets and existing per-slide pixel/percentage refinements are both configurable. Tablet/mobile preview placement remains conservatively top-right in CSS for all seven scenes: in the inspected mobile source-photo mockups, this is the least intrusive shared region. Any per-scene responsive preview position changes still require a browser review at the actual school website viewport sizes.
+
+| Chapter | Mobile `focalMobile` source-photo candidate | Desktop `previewPosition` |
+|---|---|---|
+| Campus | `34% 50%` | `centre-right` |
+| Entrance | `75% 50%` | `upper-right` |
+| Science | `43% 46%` | `lower-right` |
+| Movement (internal id `skating`) | `42% 44%` | `lower-right` |
+| Digital | `43% 47%` | `lower-right` |
+| Culture | `52% 48%` | `upper-right` |
+| Sports | `53% 48%` | `lower-right` |
+
+**Accuracy flag:** The file currently named `skating.webp` visibly shows children participating in an outdoor team game, **not identifiable roller skating**. Its alternate text has been corrected. Retain the internal ID only for compatibility; obtain an actual skating photograph before making a public claim that the scene documents inline skating.
+
+**Outstanding visual-layout risk:** The existing mobile lower text scrim intersects subjects or activity in some of the science, digital, culture and sports photographs. A focal-point adjustment alone cannot solve that; inspect the actual browser hero and adapt its mobile text layout or source aspect ratio before approving those scenes. The extreme panoramic campus original cannot show its full building façade in a narrow portrait crop; consider a separately authorized portrait source if that coverage is essential.
 
 ### Local photographic inspection and sign-off
 
 1. Keep the 14 original/private hero files in the gitignored `public/media/home/hero-drafts/` folder; do not publish them.
 2. Run `npm run hero:v2:assets`. Start the local server with `HOMEPAGE_REVIEW_MODE=private` and `HOMEPAGE_ZENTRY_HERO=preview` (PowerShell example below).
 3. In another terminal, run `npm run hero:v2:mobile-review`. This captures seven real browser hero screenshots at **360×740** and **390×844** in `test-results/hero-v2-mobile-review/` (gitignored). It fails if any configured full-resolution photo is unavailable and will not connect to an external review server.
-4. Inspect faces, hands, experiment equipment, signage, performers and sports action on each screenshot. Update **only then** the affected slide's `focalMobile` and `previewPosition` (plus CSS responsive positioning if required), keep the old compatibility `imageCrop.mobile` in sync, rerun screenshots and mark `visualReviewStatus` approved only following permission/rights and visual review.
+4. Inspect faces, hands, experiment equipment, signage, performers and sports action on each screenshot. Confirm or adjust the source-photo candidates in `focalMobile` and `previewPosition` (plus CSS responsive positioning if required), keep `imageCrop.mobile` in sync, rerun screenshots and mark `visualReviewStatus` approved only following permission/rights and complete page-layout visual review.
 
 Do not claim the provisional position values are measured or authoritatively approved.
 
@@ -47,7 +61,7 @@ Do not claim the provisional position values are measured or authoritatively app
 
 The original local student/campus photos are at `public/media/home/hero-drafts/` and intentionally ignored by Git. The reference images linked in the art-direction brief are *composition references only* and must not be downloaded or substituted for actual school photographs. The existing fallback campus image is just an error fallback, **not proof that all seven photos are present** on a deployment.
 
-Responsive `imageCrop` values in `lib/home-zentry-slides.ts` are art-director starting points, **not measured crops**. Desktop, tablet and mobile crops are declared separately, and the expanding image uses the incoming slide's active breakpoint crop. Finalize the seven crops using the actual local photos at these viewports: 1440×820, 1024×768, 768×1024, 390×844, and 360×740. Inspect the actual school name and gateway, building façade, laboratory faces and hands, skaters and their equipment, computer screens, central performers, and sports participants. Use image-specific mobile source assets if a single focal point cannot protect the subjects at every viewport.
+The mobile `focalMobile` values were compared visually against the real private WebP sources, not inferred from the concept posters. Desktop/tablet focal settings remain art-director starting points, and no crop should be treated as final until checked in the actual rendered hero. The expanding image uses the incoming slide's active breakpoint crop. Finalize the seven crops using the actual local photos at these viewports: 1440×820, 1024×768, 768×1024, 390×844, and 360×740. Inspect the actual school name and gateway, building façade, laboratory faces and hands, skaters and their equipment, computer screens, central performers, and sports participants. Use image-specific mobile source assets if a single focal point cannot protect the subjects at every viewport.
 
 Do not commit draft media or disable Git ignore to make the remote demo look complete. A remote review environment needs separately authorized/private image delivery. Final crop acceptance is impossible without access to those source photos.
 
