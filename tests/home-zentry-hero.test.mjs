@@ -35,8 +35,9 @@ test("transition is a single expansion and reduced-motion/mobile autoplay is gat
   const hero = await read("components/motion/home-zentry-hero.tsx");
   const styles = await read("app/zentry-hero.css");
   assert.match(hero, /gsap\.timeline/);
-  assert.match(hero, /left: origin \?/);
-  assert.match(hero, /width: frame\.width/);
+  assert.match(hero, /x: origin \?/);
+  assert.match(hero, /scaleX: origin \?/);
+  assert.match(hero, /scaleX: 1/);
   assert.match(hero, /flushSync/);
   assert.match(hero, /prefers-reduced-motion: reduce/);
   assert.match(hero, /min-width: 64rem\) and \(prefers-reduced-motion: no-preference/);
