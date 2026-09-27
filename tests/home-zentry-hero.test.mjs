@@ -83,7 +83,7 @@ test("V2 has seven distinct scene illustrations", async () => {
   assert.ok(hero.includes("data-visual-layout={slide.layout}"));
   assert.ok(hero.includes("data-composition-family={slide.compositionFamily}"));
   assert.ok(hero.includes("style={sceneStyles(slide)}"));
-  assert.ok(hero.includes("style={previewStyles(slide.previewPlacement.desktop)}"));
+  assert.ok(hero.includes("style={previewStyles(slide)}"));
   assert.ok(css.includes("z-index: 9;"), "expanded photo must cover outgoing art");
   assert.ok(css.includes('data-active-slide="sports"] .zhero__count'));
 });
@@ -120,6 +120,9 @@ test("V2 slide configuration defines usable layout, palette, art, crop and previ
     layouts.add(slide.layout);
     motifs.add(slide.motif);
     assert.ok(slide.headline && slide.image && slide.preview);
+    assert.equal(slide.focalMobile, slide.imageCrop.mobile, `mobile crop alias drifted: ${slide.id}`);
+    assert.equal(slide.accentColor, slide.palette.accent, `accent alias drifted: ${slide.id}`);
+    assert.equal(slide.visualReviewStatus, "pending", `photo approval must remain pending: ${slide.id}`);
     assert.ok(slide.image.startsWith("/media/home/hero-drafts/"));
     for (const value of Object.values(slide.palette)) {
       assert.match(value, validColor, `invalid palette in ${slide.id}`);
@@ -137,4 +140,39 @@ test("V2 slide configuration defines usable layout, palette, art, crop and previ
   assert.equal(families.size, 4);
   assert.equal(layouts.size, 7);
   assert.equal(motifs.size, 7);
+});
+
+test("requested semantic visual settings match the seven chapter assignments", async () => {
+  const { homeZentrySlides } = await import("../lib/home-zentry-slides.ts");
+  const expected = {
+    campus:   ["slash", "architecture", "vibrant", "centre-right"],
+    entrance: ["curve", "pathway", "warm", "upper-right"],
+    science:  ["frame", "science", "clean", "lower-right"],
+    skating:  ["chevron", "motion", "warm", "upper-right"],
+    digital:  ["grid", "digital", "clean", "lower-right"],
+    culture:  ["ribbon", "culture", "vibrant", "upper-right"],
+    sports:   ["sport", "sport", "warm", "upper-right"],
+  };
+  for (const slide of homeZentrySlides) {
+    assert.deepEqual(
+      [slide.layout, slide.motif, slide.photoTreatment, slide.previewPosition],
+      expected[slide.id],
+      `incorrect settings for ${slide.id}`,
+    );
+  }
+
+  const slides = await read("lib/home-zentry-slides.ts");
+  const hero = await read("components/motion/home-zentry-hero.tsx");
+  const css = await read("app/zentry-hero.css");
+  for (const type of ["HeroMotif", "HeroPreviewPosition", "HeroPhotoTreatment", "HeroVisualSettings"]) {
+    assert.ok(slides.includes(`export type ${type}`), `missing public type ${type}`);
+  }
+  assert.ok(hero.includes("slide.focalMobile"));
+  assert.ok(hero.includes("slide.accentColor"));
+  assert.ok(hero.includes("slide.previewPosition"));
+  assert.ok(hero.includes("slide.photoTreatment"));
+  assert.ok(hero.includes("layer.dataset.photoTreatment = target.photoTreatment"));
+  for (const treatment of ["natural", "warm", "clean", "vibrant"]) {
+    assert.ok(css.includes(`data-photo-treatment="${treatment}"`));
+  }
 });
