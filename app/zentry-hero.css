@@ -472,6 +472,32 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Typed photo treatments from HomeZentrySlide.
+   Apply the identical treatment to the expanding layer to avoid a visible
+   colour jump as the incoming photograph replaces the transition overlay. */
+.zhero[data-photo-treatment="natural"] .zhero__photograph,
+.zhero__transition-layer[data-photo-treatment="natural"] img {
+  filter: none;
+}
+.zhero[data-photo-treatment="warm"] .zhero__photograph,
+.zhero__transition-layer[data-photo-treatment="warm"] img {
+  filter: brightness(1.02) saturate(1.045) sepia(.018);
+}
+.zhero[data-photo-treatment="clean"] .zhero__photograph,
+.zhero__transition-layer[data-photo-treatment="clean"] img {
+  filter: brightness(1.035) contrast(1.012) saturate(1.015);
+}
+.zhero[data-photo-treatment="vibrant"] .zhero__photograph,
+.zhero__transition-layer[data-photo-treatment="vibrant"] img {
+  filter: brightness(1.025) contrast(1.015) saturate(1.09);
+}
+/* The semantic position is also available to automated crop-review checks.
+   Existing per-scene desktop fine-tuning remains in previewPlacement.desktop;
+   mobile placement stays deliberately conservative until photo review. */
+.zhero__preview-wrap[data-preview-position="centre-right"] { transform-origin: 50% 50%; }
+.zhero__preview-wrap[data-preview-position="lower-right"],
+.zhero__preview-wrap[data-preview-position="upper-right"] { transform-origin: 100% 50%; }
+
 /* Lightweight SVG microinteraction. Illustration never obscures the photo. */
 @keyframes zhero-trace { to { stroke-dashoffset: -42; } }
 @keyframes zhero-sun { to { transform: rotate(16deg); } }
