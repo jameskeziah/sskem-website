@@ -59,7 +59,7 @@ test("unapproved student media remains ignored by Git", async () => {
 
 test("V2 has seven distinct scene illustrations", async () => {
   const slides = await read("lib/home-zentry-slides.ts");
-  const motifs = await read("components/hero/zentry-motifs.tsx");
+  const motifs = await read("components/motion/home-zentry-motifs.tsx");
   const css = await read("app/zentry-hero.css");
   const hero = await read("components/motion/home-zentry-hero.tsx");
   const scenePairs = [
@@ -81,6 +81,9 @@ test("V2 has seven distinct scene illustrations", async () => {
   }
   assert.ok(hero.includes("<ZentryMotif kind={slide.motif} />"));
   assert.ok(hero.includes("data-visual-layout={slide.layout}"));
+  assert.ok(hero.includes("data-composition-family={slide.compositionFamily}"));
+  assert.ok(hero.includes("style={sceneStyles(slide)}"));
+  assert.ok(hero.includes("style={previewStyles(slide.previewPlacement.desktop)}"));
   assert.ok(css.includes("z-index: 9;"), "expanded photo must cover outgoing art");
   assert.ok(css.includes('data-active-slide="sports"] .zhero__count'));
 });
@@ -90,8 +93,8 @@ test("V2 maintains privacy, motion preferences and truthful image sources", asyn
   const hero = await read("components/motion/home-zentry-hero.tsx");
   const css = await read("app/zentry-hero.css");
   const page = await read("app/page.tsx");
-  const motifs = await read("components/hero/zentry-motifs.tsx");
-  assert.ok(slides.includes("Focal positions are starting values, NOT measured crops"));
+  const motifs = await read("components/motion/home-zentry-motifs.tsx");
+  assert.ok(slides.includes("Crop and preview positions are provisional art-direction settings"));
   assert.ok(!slides.includes("images.openai.com"));
   assert.ok(motifs.includes('aria-hidden="true"'));
   assert.ok(motifs.includes('focusable="false"'));
@@ -101,4 +104,37 @@ test("V2 maintains privacy, motion preferences and truthful image sources", asyn
   assert.ok(css.includes("@media (prefers-reduced-motion: reduce)"));
   assert.ok(css.includes("clip-path: ellipse("));
   assert.ok(page.includes('privateHomepageReview && process.env.HOMEPAGE_ZENTRY_HERO === "preview"'));
+});
+
+test("V2 slide configuration defines usable layout, palette, art, crop and preview geometry", async () => {
+  const { homeZentrySlides } = await import("../lib/home-zentry-slides.ts");
+  const families = new Set();
+  const layouts = new Set();
+  const motifs = new Set();
+  assert.equal(homeZentrySlides.length, 7);
+
+  const validColor = /^#[a-f\d]{6}$/i;
+  const validCrop = /^(?:\d{1,3})% (?:\d{1,3})%$/;
+  for (const slide of homeZentrySlides) {
+    families.add(slide.compositionFamily);
+    layouts.add(slide.layout);
+    motifs.add(slide.motif);
+    assert.ok(slide.headline && slide.image && slide.preview);
+    assert.ok(slide.image.startsWith("/media/home/hero-drafts/"));
+    for (const value of Object.values(slide.palette)) {
+      assert.match(value, validColor, `invalid palette in ${slide.id}`);
+    }
+    for (const [size, crop] of Object.entries(slide.imageCrop)) {
+      assert.match(crop, validCrop, `invalid ${size} crop in ${slide.id}`);
+      const [x, y] = crop.split(" ").map((part) => Number.parseInt(part, 10));
+      assert.ok(x >= 0 && x <= 100 && y >= 0 && y <= 100);
+    }
+    const pos = slide.previewPlacement.desktop;
+    assert.equal(Number(Boolean(pos.left)) + Number(Boolean(pos.right)), 1, `preview horizontal placement: ${slide.id}`);
+    assert.equal(Number(Boolean(pos.top)) + Number(Boolean(pos.bottom)), 1, `preview vertical placement: ${slide.id}`);
+    assert.ok(pos.transform);
+  }
+  assert.equal(families.size, 4);
+  assert.equal(layouts.size, 7);
+  assert.equal(motifs.size, 7);
 });
