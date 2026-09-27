@@ -94,7 +94,7 @@ test("V2 maintains privacy, motion preferences and truthful image sources", asyn
   const css = await read("app/zentry-hero.css");
   const page = await read("app/page.tsx");
   const motifs = await read("components/motion/home-zentry-motifs.tsx");
-  assert.ok(slides.includes("Crop and preview positions are provisional art-direction settings"));
+  assert.ok(slides.includes("Mobile focal candidates were selected from the privately supplied actual"));
   assert.ok(!slides.includes("images.openai.com"));
   assert.ok(motifs.includes('aria-hidden="true"'));
   assert.ok(motifs.includes('focusable="false"'));
@@ -148,12 +148,22 @@ test("requested semantic visual settings match the seven chapter assignments", a
     campus:   ["slash", "architecture", "vibrant", "centre-right"],
     entrance: ["curve", "pathway", "warm", "upper-right"],
     science:  ["frame", "science", "clean", "lower-right"],
-    skating:  ["chevron", "motion", "warm", "upper-right"],
+    skating:  ["chevron", "motion", "warm", "lower-right"],
     digital:  ["grid", "digital", "clean", "lower-right"],
     culture:  ["ribbon", "culture", "vibrant", "upper-right"],
-    sports:   ["sport", "sport", "warm", "upper-right"],
+    sports:   ["sport", "sport", "warm", "lower-right"],
+  };
+  const reviewedMobile = {
+    campus: "34% 50%",
+    entrance: "75% 50%",
+    science: "43% 46%",
+    skating: "42% 44%",
+    digital: "43% 47%",
+    culture: "52% 48%",
+    sports: "53% 48%",
   };
   for (const slide of homeZentrySlides) {
+    assert.equal(slide.focalMobile, reviewedMobile[slide.id], `private source photo crop ${slide.id}`);
     assert.deepEqual(
       [slide.layout, slide.motif, slide.photoTreatment, slide.previewPosition],
       expected[slide.id],
