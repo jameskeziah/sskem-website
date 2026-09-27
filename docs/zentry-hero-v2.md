@@ -52,12 +52,15 @@ From a checkout of this branch, with appropriately authorized local photography 
 ```powershell
 git switch feature/zentry-hero-v2-art-direction
 npm install
+npm run hero:v2:assets
 npm run test:hero
 npm run lint
 $env:HOMEPAGE_REVIEW_MODE="private"
 $env:HOMEPAGE_ZENTRY_HERO="preview"
 npm run dev
 ```
+
+The source-image audit checks all seven full-size WebPs and seven thumbnails, dimensions, file sizes and duplicate/missing paths. It is deliberately *not* part of the public build, because draft media remain ignored by Git.
 
 When the local publication audits/build prerequisites permit, run `npm run build:review` and `npm run test:browser:zentry`. Those commands can reveal unrelated baseline audit blockers; never bypass approval checks merely to pass the preview.
 
