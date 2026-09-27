@@ -306,19 +306,20 @@
   clip-path: polygon(33.1% 0, 34.8% 0, 30.5% 100%, 28.8% 100%);
 }
 .zhero[data-active-slide="campus"] .zhero__editorial { width: min(32%, 28rem); }
-.zhero[data-active-slide="campus"] .zhero__scene-art { left: 3%; bottom: 12%; opacity: .53; }
+.zhero[data-active-slide="campus"] .zhero__heading { font-size: clamp(2.45rem, 4.15vw, 5.6rem); }
+.zhero[data-active-slide="campus"] .zhero__scene-art { top: 7%; left: 3%; opacity: .53; }
 .zhero[data-active-slide="campus"] .zhero__preview-wrap { top: 45%; left: 66%; }
 
 /* 02 — ENTRANCE. A genuinely curved warm panel, not another diagonal. */
 .zhero[data-visual-layout="curve"] .zhero__shade {
   inset: 0 auto 0 0;
-  width: 37%;
+  width: 30%;
   background: linear-gradient(150deg, #14314bea, #683b4cdd 74%, #da596a91);
   clip-path: ellipse(100% 98% at 0% 50%);
 }
 .zhero[data-visual-layout="curve"] .zhero__brand-accent {
   inset: auto auto 0 0;
-  width: 35%;
+  width: 29%;
   height: 17%;
   background: linear-gradient(100deg, #ff806fba, #f8c9a436 83%, transparent);
   clip-path: ellipse(90% 100% at 0 100%);
@@ -326,7 +327,7 @@
 .zhero[data-active-slide="entrance"] .zhero__editorial {
   top: auto;
   bottom: 7.5rem;
-  width: min(31%, 27rem);
+  width: min(27%, 25rem);
   transform: none;
 }
 .zhero[data-active-slide="entrance"] .zhero__heading { font-size: clamp(2.65rem, 4.45vw, 5.4rem); }
@@ -391,7 +392,7 @@
 /* 05 — COMPUTER LAB. Floating interface panel; photo keeps real facilities. */
 .zhero[data-visual-layout="grid"] .zhero__shade {
   inset: 6% auto auto 3.6%;
-  width: 35%;
+  width: 31%;
   height: 70%;
   border: 1px solid #8ce7e6ad;
   border-radius: 1.3rem;
@@ -401,7 +402,7 @@
 }
 .zhero[data-visual-layout="grid"] .zhero__brand-accent {
   inset: 7.3% auto auto 4.3%;
-  width: 33.6%;
+  width: 29.6%;
   height: 67.4%;
   border: 1px dashed #74e7ec6d;
   border-radius: .9rem;
@@ -411,7 +412,7 @@
 .zhero[data-active-slide="digital"] .zhero__editorial {
   top: 12%;
   left: 6%;
-  width: min(29%, 26rem);
+  width: min(26%, 25rem);
   transform: none;
 }
 .zhero[data-active-slide="digital"] .zhero__heading { font-size: clamp(2.35rem, 3.85vw, 5.1rem); }
@@ -444,7 +445,7 @@
 }
 .zhero[data-active-slide="culture"] .zhero__editorial { width: min(31%, 27rem); }
 .zhero[data-active-slide="culture"] .zhero__heading { font-size: clamp(2.6rem, 4.35vw, 5.6rem); }
-.zhero[data-active-slide="culture"] .zhero__scene-art { left: 3%; bottom: 12%; color: #ffceaa; }
+.zhero[data-active-slide="culture"] .zhero__scene-art { top: 10%; left: 3%; color: #ffceaa; }
 .zhero[data-active-slide="culture"] .zhero__preview-wrap {
   top: 14%;
   right: 5%;
