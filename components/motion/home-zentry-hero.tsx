@@ -143,7 +143,10 @@ export function HomeZentryHero() {
         busyRef.current = false;
         setIsBusy(false);
         const updated = rootRef.current?.querySelector<HTMLElement>(".zhero__editorial");
-        if (updated) revealCopy(updated);
+        if (updated) {
+          gsap.set(updated, { clearProps: "transform,opacity,visibility" });
+          revealCopy(updated);
+        }
       },
     });
     transitionRef.current = timeline;
@@ -235,7 +238,6 @@ export function HomeZentryHero() {
       data-visual-layout={slide.layout}
       aria-roledescription="carousel"
       aria-label="SSKEMS school highlights"
-      onMouseEnter={() => undefined}
     >
       <div ref={viewportRef} className="zhero__viewport">
         <div className="zhero__media" aria-hidden="true">
