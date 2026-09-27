@@ -47,3 +47,27 @@ test("reduced motion changes images without a blocking expansion", async ({ page
   await expect(hero).toHaveAttribute("data-active-slide", "entrance");
   await expect(hero.locator(".zhero__transition-layer")).toHaveCount(0);
 });
+
+test("all seven V2 compositions keep meaningful navigation and decorative motifs", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.setViewportSize({ width: 1440, height: 820 });
+  await page.goto("/");
+  const hero = page.locator("[data-motion-component='home-zentry-hero']");
+  const scenes = [
+    ["01", "campus", "slash", "architecture"],
+    ["02", "entrance", "curve", "pathway"],
+    ["03", "science", "frame", "science"],
+    ["04", "skating", "chevron", "motion"],
+    ["05", "digital", "grid", "digital"],
+    ["06", "culture", "ribbon", "culture"],
+    ["07", "sports", "sport", "sport"],
+  ] as const;
+  for (const [chapter, id, layout, motif] of scenes) {
+    await hero.getByRole("button", { name: new RegExp(`Show slide ${chapter}:`) }).click();
+    await expect(hero).toHaveAttribute("data-active-slide", id);
+    await expect(hero).toHaveAttribute("data-visual-layout", layout);
+    await expect(hero.locator(`.zhero__motif--${motif}`)).toHaveCount(1);
+    await expect(hero.getByRole("link", { name: /Apply for Admission/i })).toHaveAttribute("href", "/admissions/enquire");
+    await expect(hero.locator(".zhero__transition-layer")).toHaveCount(0);
+  }
+});
