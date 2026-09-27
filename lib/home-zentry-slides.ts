@@ -1,5 +1,7 @@
 // Private-review-only photographic hero. Keep the exact images in the local
 // hero-drafts folder until source, guardian-consent and management approval.
+// Focal positions are starting values, NOT measured crops: confirm in local
+// preview with actual source images before final acceptance.
 export type HomeZentrySlide = Readonly<{
   id: string;
   chapter: string;
@@ -11,7 +13,10 @@ export type HomeZentrySlide = Readonly<{
   image: string;
   preview: string;
   alt: string;
+  /** Initial art-director crop; verify against local approved source photography. */
   focal: string;
+  motif: "architecture" | "pathway" | "science" | "motion" | "digital" | "culture" | "sport";
+  entrance: "standard" | "energetic" | "graceful";
   layout: "slash" | "curve" | "frame" | "chevron" | "grid" | "ribbon" | "sport";
 }>;
 
@@ -29,8 +34,10 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     image: `${path}campus.webp`,
     preview: `${path}campus-preview.webp`,
     alt: "Exterior of the SSKEMS campus, with the pink school building and open ground.",
-    focal: "53% 50%",
+    focal: "58% 48%",
     layout: "slash",
+    motif: "architecture",
+    entrance: "standard",
   },
   {
     id: "entrance",
@@ -43,8 +50,10 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     image: `${path}entrance.webp`,
     preview: `${path}entrance-preview.webp`,
     alt: "Front entrance of Shree Samarth Krupa English Medium School in Veral.",
-    focal: "63% 46%",
+    focal: "62% 48%",
     layout: "curve",
+    motif: "pathway",
+    entrance: "standard",
   },
   {
     id: "science",
@@ -57,8 +66,10 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     image: `${path}science.webp`,
     preview: `${path}science-preview.webp`,
     alt: "SSKEMS students working together on experiments in a science laboratory.",
-    focal: "66% 45%",
+    focal: "65% 45%",
     layout: "frame",
+    motif: "science",
+    entrance: "standard",
   },
   {
     id: "skating",
@@ -71,8 +82,10 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     image: `${path}skating.webp`,
     preview: `${path}skating-preview.webp`,
     alt: "Students practising inline skating outdoors on school grounds.",
-    focal: "62% 40%",
+    focal: "63% 42%",
     layout: "chevron",
+    motif: "motion",
+    entrance: "energetic",
   },
   {
     id: "digital",
@@ -85,8 +98,10 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     image: `${path}digital.webp`,
     preview: `${path}digital-preview.webp`,
     alt: "SSKEMS students using desktop computers during a computer laboratory session.",
-    focal: "67% 46%",
+    focal: "66% 45%",
     layout: "grid",
+    motif: "digital",
+    entrance: "standard",
   },
   {
     id: "culture",
@@ -99,8 +114,10 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     image: `${path}culture.webp`,
     preview: `${path}culture-preview.webp`,
     alt: "Students performing a traditional cultural programme in the school hall.",
-    focal: "61% 49%",
+    focal: "61% 47%",
     layout: "ribbon",
+    motif: "culture",
+    entrance: "graceful",
   },
   {
     id: "sports",
@@ -113,8 +130,10 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     image: `${path}sports.webp`,
     preview: `${path}sports-preview.webp`,
     alt: "SSKEMS students taking part in an outdoor sports activity.",
-    focal: "66% 48%",
+    focal: "64% 48%",
     layout: "sport",
+    motif: "sport",
+    entrance: "energetic",
   },
 ]);
 
