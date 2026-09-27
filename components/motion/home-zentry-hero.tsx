@@ -240,7 +240,7 @@ export function HomeZentryHero() {
       aria-label="SSKEMS school highlights"
     >
       <div ref={viewportRef} className="zhero__viewport">
-        <div className="zhero__media" aria-hidden="true">
+        <div className="zhero__media" data-motion-home-hero-media aria-hidden="true">
           <Image
             key={slide.image}
             src={picture(slide.image)}
