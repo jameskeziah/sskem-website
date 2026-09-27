@@ -5,6 +5,11 @@
   --zhero-paper: #fffaf2;
   --zhero-coral: #ff697d;
   --zhero-sky: #a2e4ed;
+  --zhero-highlight: #ff8d9c;
+  --zhero-motif-color: #ffbdac;
+  --zhero-crop-desktop: center;
+  --zhero-crop-tablet: center;
+  --zhero-crop-mobile: center;
   position: relative;
   width: 100%;
   overflow: clip;
@@ -35,7 +40,27 @@
   display: block;
   object-fit: cover;
 }
-.zhero__photograph { filter: none; }
+.zhero__photograph {
+  filter: none;
+  object-position: var(--zhero-crop-desktop, center);
+}
+/* These four families share principles without forcing the same composition. */
+.zhero[data-composition-family="architectural"] .zhero__photograph {
+  filter: saturate(1.025);
+}
+.zhero[data-composition-family="editorial"] .zhero__photograph {
+  filter: brightness(1.03) contrast(1.01);
+}
+.zhero[data-composition-family="kinetic"] .zhero__photograph {
+  filter: saturate(1.07);
+}
+.zhero[data-composition-family="showcase"] .zhero__photograph {
+  filter: saturate(1.02);
+}
+.zhero[data-composition-family="architectural"] .zhero__kicker { letter-spacing: .21em; }
+.zhero[data-composition-family="editorial"] .zhero__kicker { letter-spacing: .18em; }
+.zhero[data-composition-family="kinetic"] .zhero__kicker { letter-spacing: .23em; }
+.zhero[data-composition-family="showcase"] .zhero__kicker { letter-spacing: .15em; }
 /* The overlay must cover the outgoing scene's text, graphics and nav while
    expanding. It is removed after flushSync commits the incoming scene. */
 .zhero__transition-layer {
@@ -58,7 +83,7 @@
   z-index: 3;
   width: clamp(5rem, 12vw, 10rem);
   aspect-ratio: 1;
-  color: #ffbdac;
+  color: var(--zhero-motif-color);
   opacity: .9;
 }
 .zhero__motif { display: block; width: 100%; height: 100%; overflow: visible; }
@@ -106,7 +131,7 @@
   color: var(--zhero-paper);
   white-space: nowrap;
 }
-.zhero__heading-line[data-accent="true"] { color: #ff8d9c; }
+.zhero__heading-line[data-accent="true"] { color: var(--zhero-highlight); }
 .zhero__summary {
   max-width: 23rem;
   margin: clamp(.75rem, 1.5vw, 1.5rem) 0 0;
@@ -129,7 +154,7 @@
   min-height: 3.15rem;
   padding: .35rem .4rem .35rem 1.17rem;
   border-radius: 99px;
-  background: linear-gradient(110deg, #ff697e, #ec4c64);
+  background: linear-gradient(110deg, var(--zhero-coral), #ec4c64);
   color: #fff;
   text-decoration: none;
   text-shadow: none;
@@ -308,15 +333,7 @@
 .zhero[data-active-slide="campus"] .zhero__editorial { width: min(32%, 28rem); }
 .zhero[data-active-slide="campus"] .zhero__heading { font-size: clamp(2.45rem, 4.15vw, 5.6rem); }
 .zhero[data-active-slide="campus"] .zhero__scene-art { top: 7%; left: 3%; opacity: .53; }
-.zhero[data-active-slide="campus"] .zhero__preview-wrap { top: 45%; left: 66%; }
-
-/* 02 — ENTRANCE. A genuinely curved warm panel, not another diagonal. */
-.zhero[data-visual-layout="curve"] .zhero__shade {
-  inset: 0 auto 0 0;
-  width: 30%;
-  background: linear-gradient(150deg, #14314bea, #683b4cdd 74%, #da596a91);
-  clip-path: ellipse(100% 98% at 0% 50%);
-}
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
 .zhero[data-visual-layout="curve"] .zhero__brand-accent {
   inset: auto auto 0 0;
   width: 29%;
@@ -331,13 +348,8 @@
   transform: none;
 }
 .zhero[data-active-slide="entrance"] .zhero__heading { font-size: clamp(2.65rem, 4.45vw, 5.4rem); }
-.zhero[data-active-slide="entrance"] .zhero__scene-art { top: 8%; left: 6%; color: #ffe0be; }
-.zhero[data-active-slide="entrance"] .zhero__preview-wrap {
-  top: 20%;
-  right: 5.5%;
-  left: auto;
-  transform: none;
-}
+.zhero[data-active-slide="entrance"] .zhero__scene-art { top: 8%; left: 6%; color: var(--zhero-motif-color); }
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
 
 /* 03 — SCIENCE. Localized text scrim, translucent lab frame and orbit. */
 .zhero[data-visual-layout="frame"] .zhero__shade {
@@ -351,14 +363,8 @@
   background: transparent;
 }
 .zhero[data-active-slide="science"] .zhero__editorial { width: min(30%, 26rem); }
-.zhero[data-active-slide="science"] .zhero__scene-art { top: 9%; left: 3%; color: #a7eaf0; }
-.zhero[data-active-slide="science"] .zhero__preview-wrap {
-  top: auto;
-  right: 5.5%;
-  bottom: 15%;
-  left: auto;
-  transform: none;
-}
+.zhero[data-active-slide="science"] .zhero__scene-art { top: 9%; left: 3%; color: var(--zhero-motif-color); }
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
 .zhero[data-active-slide="science"] .zhero__photograph { filter: brightness(1.035) contrast(1.015); }
 
 /* 04 — SKATING. Truly full-bleed; contrast only behind the small headline. */
@@ -380,13 +386,8 @@
   transform: none;
 }
 .zhero[data-active-slide="skating"] .zhero__heading { font-size: clamp(2.8rem, 5vw, 6.45rem); }
-.zhero[data-active-slide="skating"] .zhero__scene-art { top: 10%; left: 4.5%; color: #ff846b; }
-.zhero[data-active-slide="skating"] .zhero__preview-wrap {
-  top: 14%;
-  right: 5.5%;
-  left: auto;
-  transform: none;
-}
+.zhero[data-active-slide="skating"] .zhero__scene-art { top: 10%; left: 4.5%; color: var(--zhero-motif-color); }
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
 .zhero[data-active-slide="skating"] .zhero__photograph { filter: saturate(1.075); }
 
 /* 05 — COMPUTER LAB. Floating interface panel; photo keeps real facilities. */
@@ -416,20 +417,14 @@
   transform: none;
 }
 .zhero[data-active-slide="digital"] .zhero__heading { font-size: clamp(2.35rem, 3.85vw, 5.1rem); }
-.zhero[data-active-slide="digital"] .zhero__heading-line[data-accent="true"] { color: #9cebf0; }
+.zhero[data-active-slide="digital"] .zhero__heading-line[data-accent="true"] { color: var(--zhero-highlight); }
 .zhero[data-active-slide="digital"] .zhero__scene-art {
   right: 6%;
   bottom: 10%;
-  color: #9ae4ed;
+  color: var(--zhero-motif-color);
   opacity: .75;
 }
-.zhero[data-active-slide="digital"] .zhero__preview-wrap {
-  top: auto;
-  right: 23%;
-  bottom: 14%;
-  left: auto;
-  transform: none;
-}
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
 .zhero[data-active-slide="digital"] .zhero__photograph { filter: brightness(1.04) contrast(1.02); }
 
 /* 06 — CULTURE. Curved decorative ribbon and narrow editorial edge. */
@@ -445,13 +440,8 @@
 }
 .zhero[data-active-slide="culture"] .zhero__editorial { width: min(31%, 27rem); }
 .zhero[data-active-slide="culture"] .zhero__heading { font-size: clamp(2.6rem, 4.35vw, 5.6rem); }
-.zhero[data-active-slide="culture"] .zhero__scene-art { top: 10%; left: 3%; color: #ffceaa; }
-.zhero[data-active-slide="culture"] .zhero__preview-wrap {
-  top: 14%;
-  right: 5%;
-  left: auto;
-  transform: none;
-}
+.zhero[data-active-slide="culture"] .zhero__scene-art { top: 10%; left: 3%; color: var(--zhero-motif-color); }
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
 
 /* 07 — SPORTS. Near-total photo with small negative-space headline scrim. */
 .zhero[data-visual-layout="sport"] .zhero__shade {
@@ -472,13 +462,8 @@
   transform: none;
 }
 .zhero[data-active-slide="sports"] .zhero__heading { font-size: clamp(2.9rem, 5.25vw, 7rem); }
-.zhero[data-active-slide="sports"] .zhero__scene-art { top: 10%; left: 4.5%; color: #fff0aa; }
-.zhero[data-active-slide="sports"] .zhero__preview-wrap {
-  top: 16%;
-  right: 5%;
-  left: auto;
-  transform: none;
-}
+.zhero[data-active-slide="sports"] .zhero__scene-art { top: 10%; left: 4.5%; color: var(--zhero-motif-color); }
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
 .zhero[data-active-slide="sports"] .zhero__count {
   padding: .38rem .6rem;
   border: 1px solid #ffffffa8;
@@ -502,6 +487,7 @@
 /* Tablet/mobile: one controlled photo-preserving layout; no giant opaque navy
    screen, all seven controls remain operable, and the preview moves above copy. */
 @media (max-width: 63.999rem) {
+  .zhero__photograph { object-position: var(--zhero-crop-tablet, center); }
   .zhero__viewport { height: clamp(42rem, 91svh, 51rem); min-height: 42rem; }
   .zhero .zhero__shade {
     inset: auto 0 0 !important;
@@ -551,6 +537,7 @@
   .zhero__controls { bottom: 1.65rem; right: 1.75rem; left: 1.75rem; }
 }
 @media (max-width: 40rem) {
+  .zhero__photograph { object-position: var(--zhero-crop-mobile, center); }
   .zhero__viewport { min-height: 44rem; height: 88svh; max-height: 49rem; }
   .zhero .zhero__editorial {
     bottom: 9.7rem !important;
