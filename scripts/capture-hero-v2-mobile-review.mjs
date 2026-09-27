@@ -9,7 +9,6 @@ import { resolve } from "node:path";
 import { chromium, expect } from "@playwright/test";
 import { homeZentrySlides } from "../lib/home-zentry-slides.ts";
 
-const root = new URL("../", import.meta.url);
 const url = new URL(process.env.HERO_REVIEW_URL ?? "http://127.0.0.1:3000/");
 if (!["localhost", "127.0.0.1", "::1", "[::1]"].includes(url.hostname) || !["http:", "https:"].includes(url.protocol)) {
   throw new Error("Mobile review captures must run against a locally hosted private preview.");
