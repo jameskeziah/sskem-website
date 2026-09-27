@@ -16,6 +16,33 @@ The current Zentry-inspired hero's expansion controller remains intact. V2 adds 
 | 06 Culture | `ribbon` | `culture` | Narrow editorial gradient, slim cream-and-coral stage ribbon | Left; upper-right preview |
 | 07 Sports | `sport` | `sport` | Near-full-bleed photo; local negative-space scrim, scoreboard chapter count | Bottom-left; upper-right preview |
 
+## Typed chapter settings (current Part 2)
+
+Every existing `HomeZentrySlide` now extends `HeroVisualSettings` with `focalMobile`, `motif`, `previewPosition`, `photoTreatment`, and `accentColor`. Values flow through the existing React hero, with no separate slide components:
+
+| Chapter | Motif | Photo treatment | Provisional preview position |
+|---|---|---|---|
+| Campus | architecture | vibrant | centre-right |
+| Entrance | pathway | warm | upper-right |
+| Science | science | clean | lower-right |
+| Skating | motion | warm | upper-right |
+| Digital | digital | clean | lower-right |
+| Culture | culture | vibrant | upper-right |
+| Sports | sport | warm | upper-right |
+
+The existing per-slide `palette.accent` and `imageCrop.mobile` values were **copied, not recalculated** into `accentColor` and `focalMobile`. Preview enums describe the existing provisional desktop positions. They **do not constitute an inspection of the original photographs**: all seven entries have `visualReviewStatus: "pending"`. Keep the compatibility aliases equal until old fields can safely be retired. Four photo treatments share restrained natural light/colour adjustments with the GSAP expanding image to avoid a colour jump.
+
+The desktop semantic preview presets and existing per-slide pixel/percentage refinements are both configurable. Tablet/mobile preview placement remains fixed in CSS until subject-safe positions are signed off using the actual photography.
+
+### Local photographic inspection and sign-off
+
+1. Keep the 14 original/private hero files in the gitignored `public/media/home/hero-drafts/` folder; do not publish them.
+2. Run `npm run hero:v2:assets`. Start the local server with `HOMEPAGE_REVIEW_MODE=private` and `HOMEPAGE_ZENTRY_HERO=preview` (PowerShell example below).
+3. In another terminal, run `npm run hero:v2:mobile-review`. This captures seven real browser hero screenshots at **360×740** and **390×844** in `test-results/hero-v2-mobile-review/` (gitignored). It fails if any configured full-resolution photo is unavailable and will not connect to an external review server.
+4. Inspect faces, hands, experiment equipment, signage, performers and sports action on each screenshot. Update **only then** the affected slide's `focalMobile` and `previewPosition` (plus CSS responsive positioning if required), keep the old compatibility `imageCrop.mobile` in sync, rerun screenshots and mark `visualReviewStatus` approved only following permission/rights and visual review.
+
+Do not claim the provisional position values are measured or authoritatively approved.
+
 ## Assets and crop sign-off
 
 The original local student/campus photos are at `public/media/home/hero-drafts/` and intentionally ignored by Git. The reference images linked in the art-direction brief are *composition references only* and must not be downloaded or substituted for actual school photographs. The existing fallback campus image is just an error fallback, **not proof that all seven photos are present** on a deployment.
@@ -50,7 +77,7 @@ All SVG motifs are decorative (`aria-hidden` and non-focusable), do not alter th
 From a checkout of this branch, with appropriately authorized local photography in the ignored folder:
 
 ```powershell
-git switch feature/zentry-hero-v2-art-direction
+git switch feature/zentry-inspired-school-hero
 npm install
 npm run hero:v2:assets
 npm run test:hero
@@ -59,6 +86,8 @@ $env:HOMEPAGE_REVIEW_MODE="private"
 $env:HOMEPAGE_ZENTRY_HERO="preview"
 npm run dev
 ```
+
+With that private local server running, open another PowerShell window and run `npm run hero:v2:mobile-review` to capture subject-safe crop evidence before signing off the seven `focalMobile` and `previewPosition` values.
 
 The source-image audit checks all seven full-size WebPs and seven thumbnails, dimensions, file sizes and duplicate/missing paths. It is deliberately *not* part of the public build, because draft media remain ignored by Git.
 
