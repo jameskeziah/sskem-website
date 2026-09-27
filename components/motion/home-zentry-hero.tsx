@@ -3,16 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { flushSync } from "react-dom";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { homeArrivalSignal } from "@/lib/motion";
-import { ZentryMotif } from "@/components/hero/zentry-motifs";
+import { ZentryMotif } from "@/components/motion/home-zentry-motifs";
 import {
   homeZentryFallbackPhoto,
   homeZentrySlides,
+  type HomeZentrySlide,
 } from "@/lib/home-zentry-slides";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -20,6 +21,37 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const slideCount = homeZentrySlides.length;
 const nextIndex = (index: number) => (index + 1) % slideCount;
 const previousIndex = (index: number) => (index + slideCount - 1) % slideCount;
+
+/** Match the hero CSS breakpoint contract for source-safe responsive crops. */
+function imageCropForCurrentViewport(crop: HomeZentrySlide["imageCrop"]) {
+  if (window.matchMedia("(max-width: 40rem)").matches) return crop.mobile;
+  if (window.matchMedia("(max-width: 63.999rem)").matches) return crop.tablet;
+  return crop.desktop;
+}
+
+/** Keep colour and crop art direction in the slide configuration, not the JSX. */
+function sceneStyles(slide: HomeZentrySlide): CSSProperties {
+  return {
+    "--zhero-ink": slide.palette.ink,
+    "--zhero-paper": slide.palette.paper,
+    "--zhero-coral": slide.palette.accent,
+    "--zhero-highlight": slide.palette.highlight,
+    "--zhero-motif-color": slide.palette.motif,
+    "--zhero-crop-desktop": slide.imageCrop.desktop,
+    "--zhero-crop-tablet": slide.imageCrop.tablet,
+    "--zhero-crop-mobile": slide.imageCrop.mobile,
+  } as CSSProperties;
+}
+
+function previewStyles(position: HomeZentrySlide["previewPlacement"]["desktop"]): CSSProperties {
+  return {
+    top: position.top ?? "auto",
+    right: position.right ?? "auto",
+    bottom: position.bottom ?? "auto",
+    left: position.left ?? "auto",
+    transform: position.transform ?? "none",
+  };
+}
 
 export function HomeZentryHero() {
   const rootRef = useRef<HTMLElement>(null);
@@ -122,7 +154,7 @@ export function HomeZentryHero() {
     const image = document.createElement("img");
     image.alt = "";
     image.src = actualImage;
-    image.style.objectPosition = target.focal;
+    image.style.objectPosition = imageCropForCurrentViewport(target.imageCrop);
     layer.appendChild(image);
     viewport.appendChild(layer);
     transitionLayerRef.current = layer;
@@ -248,7 +280,9 @@ export function HomeZentryHero() {
       data-motion-component="home-zentry-hero"
       data-active-slide={slide.id}
       data-visual-layout={slide.layout}
+      data-composition-family={slide.compositionFamily}
       data-entrance={slide.entrance}
+      style={sceneStyles(slide)}
       aria-roledescription="carousel"
       aria-label="SSKEMS school highlights"
     >
@@ -263,7 +297,6 @@ export function HomeZentryHero() {
             sizes="100vw"
             alt=""
             className="zhero__photograph"
-            style={{ objectPosition: slide.focal }}
             onError={() => assetFailed(slide.image)}
           />
         </div>
@@ -293,7 +326,7 @@ export function HomeZentryHero() {
           </div>
         </div>
 
-        <div className="zhero__preview-wrap">
+        <div className="zhero__preview-wrap" style={previewStyles(slide.previewPlacement.desktop)}>
           <p className="zhero__preview-label">UP NEXT <span>{next.chapter} / {String(slideCount).padStart(2, "0")}</span></p>
           <button
             ref={previewRef}
