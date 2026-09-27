@@ -54,3 +54,49 @@ test("unapproved student media remains ignored by Git", async () => {
   const ignore = await read(".gitignore");
   assert.match(ignore, /\/public\/media\/home\/hero-drafts\//);
 });
+
+
+test("V2 has seven distinct scene illustrations and four photographic composition families", async () => {
+  const slides = await read("lib/home-zentry-slides.ts");
+  const motifs = await read("components/hero/zentry-motifs.tsx");
+  const css = await read("app/zentry-hero.css");
+  const hero = await read("components/motion/home-zentry-hero.tsx");
+
+  const scenePairs = [
+    ["campus", "slash", "architecture"],
+    ["entrance", "curve", "pathway"],
+    ["science", "frame", "science"],
+    ["skating", "chevron", "motion"],
+    ["digital", "grid", "digital"],
+    ["culture", "ribbon", "culture"],
+    ["sports", "sport", "sport"],
+  ];
+
+  for (const [id, layout, motif] of scenePairs) {
+    assert.match(slides, new RegExp(`id: "${id}"[\\s\\S]*?layout: "${layout}",\\s*motif: "${motif}"`));
+    assert.match(motifs, new RegExp(`\\b${motif}: \\\\(`));
+    assert.match(css, new RegExp(`\\.zhero\\[data-visual-layout="${layout}"\\]`));
+  }
+  assert.match(hero, /<ZentryMotif kind=\\{slide\\.motif\\} \\/>/);
+  assert.match(hero, /data-visual-layout=\\{slide\\.layout\\}/);
+  assert.match(css, /zhero__transition-layer\\s*\\{[^}]*z-index: 9/);
+  assert.match(css, /data-active-slide="sports"\\] \\.zhero__count/);
+});
+
+test("V2 preserves real photography and keeps transitions and illustrations accessible", async () => {
+  const slides = await read("lib/home-zentry-slides.ts");
+  const hero = await read("components/motion/home-zentry-hero.tsx");
+  const css = await read("app/zentry-hero.css");
+  const page = await read("app/page.tsx");
+  const motifs = await read("components/hero/zentry-motifs.tsx");
+  assert.match(slides, /Focal positions are starting values, NOT measured crops/);
+  assert.doesNotMatch(slides, /images\\.openai\\.com|Unsplash/);
+  assert.match(motifs, /aria-hidden="true"/);
+  assert.match(motifs, /focusable="false"/);
+  assert.match(hero, /target\\.entrance === "energetic" \\? 0\\.76/);
+  assert.match(hero, /profile === "graceful" \\? 0\\.13/);
+  assert.match(hero, /prefers-reduced-motion: reduce/);
+  assert.match(css, /@media \\(prefers-reduced-motion: reduce\\)/);
+  assert.match(css, /\.zhero\\[data-visual-layout="curve"\\] \\.zhero__shade[\\s\\S]*?clip-path: ellipse/);
+  assert.match(page, /privateHomepageReview && process\\.env\\.HOMEPAGE_ZENTRY_HERO === "preview"/);
+});
