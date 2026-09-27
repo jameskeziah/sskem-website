@@ -14,6 +14,7 @@ import {
   homeZentryFallbackPhoto,
   homeZentrySlides,
   type HomeZentrySlide,
+  type HeroPreviewPosition,
 } from "@/lib/home-zentry-slides";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -23,10 +24,10 @@ const nextIndex = (index: number) => (index + 1) % slideCount;
 const previousIndex = (index: number) => (index + slideCount - 1) % slideCount;
 
 /** Match the hero CSS breakpoint contract for source-safe responsive crops. */
-function imageCropForCurrentViewport(crop: HomeZentrySlide["imageCrop"]) {
-  if (window.matchMedia("(max-width: 40rem)").matches) return crop.mobile;
-  if (window.matchMedia("(max-width: 63.999rem)").matches) return crop.tablet;
-  return crop.desktop;
+function imageCropForCurrentViewport(slide: HomeZentrySlide) {
+  if (window.matchMedia("(max-width: 40rem)").matches) return slide.focalMobile;
+  if (window.matchMedia("(max-width: 63.999rem)").matches) return slide.imageCrop.tablet;
+  return slide.imageCrop.desktop;
 }
 
 /** Keep colour and crop art direction in the slide configuration, not the JSX. */
@@ -34,22 +35,31 @@ function sceneStyles(slide: HomeZentrySlide): CSSProperties {
   return {
     "--zhero-ink": slide.palette.ink,
     "--zhero-paper": slide.palette.paper,
-    "--zhero-coral": slide.palette.accent,
+    "--zhero-coral": slide.accentColor,
     "--zhero-highlight": slide.palette.highlight,
     "--zhero-motif-color": slide.palette.motif,
     "--zhero-crop-desktop": slide.imageCrop.desktop,
     "--zhero-crop-tablet": slide.imageCrop.tablet,
-    "--zhero-crop-mobile": slide.imageCrop.mobile,
+    "--zhero-crop-mobile": slide.focalMobile,
   } as CSSProperties;
 }
 
-function previewStyles(position: HomeZentrySlide["previewPlacement"]["desktop"]): CSSProperties {
+/** Semantic preview presets, refined by existing scene-specific placement. */
+const previewPresets: Record<HeroPreviewPosition, CSSProperties> = {
+  "centre-right": { top: "45%", left: "66%", transform: "translate(-50%, -50%)" },
+  "lower-right": { bottom: "15%", right: "5.5%", transform: "none" },
+  "upper-right": { top: "16%", right: "5.5%", transform: "none" },
+};
+
+function previewStyles(slide: HomeZentrySlide): CSSProperties {
+  const fallback = previewPresets[slide.previewPosition];
+  const position = slide.previewPlacement.desktop;
   return {
-    top: position.top ?? "auto",
-    right: position.right ?? "auto",
-    bottom: position.bottom ?? "auto",
-    left: position.left ?? "auto",
-    transform: position.transform ?? "none",
+    top: position.top ?? fallback.top ?? "auto",
+    right: position.right ?? fallback.right ?? "auto",
+    bottom: position.bottom ?? fallback.bottom ?? "auto",
+    left: position.left ?? fallback.left ?? "auto",
+    transform: position.transform ?? fallback.transform ?? "none",
   };
 }
 
@@ -151,10 +161,11 @@ export function HomeZentryHero() {
     const layer = document.createElement("div");
     layer.className = "zhero__transition-layer";
     layer.setAttribute("aria-hidden", "true");
+    layer.dataset.photoTreatment = target.photoTreatment;
     const image = document.createElement("img");
     image.alt = "";
     image.src = actualImage;
-    image.style.objectPosition = imageCropForCurrentViewport(target.imageCrop);
+    image.style.objectPosition = imageCropForCurrentViewport(target);
     layer.appendChild(image);
     viewport.appendChild(layer);
     transitionLayerRef.current = layer;
@@ -282,6 +293,8 @@ export function HomeZentryHero() {
       data-visual-layout={slide.layout}
       data-composition-family={slide.compositionFamily}
       data-entrance={slide.entrance}
+      data-photo-treatment={slide.photoTreatment}
+      data-visual-review={slide.visualReviewStatus}
       style={sceneStyles(slide)}
       aria-roledescription="carousel"
       aria-label="SSKEMS school highlights"
@@ -326,7 +339,7 @@ export function HomeZentryHero() {
           </div>
         </div>
 
-        <div className="zhero__preview-wrap" style={previewStyles(slide.previewPlacement.desktop)}>
+        <div className="zhero__preview-wrap" data-preview-position={slide.previewPosition} style={previewStyles(slide)}>
           <p className="zhero__preview-label">UP NEXT <span>{next.chapter} / {String(slideCount).padStart(2, "0")}</span></p>
           <button
             ref={previewRef}
