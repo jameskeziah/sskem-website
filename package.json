@@ -70,6 +70,7 @@
     "test:browser:public-preloader": "cross-env HOMEPAGE_REVIEW_MODE=public HOMEPAGE_PUBLIC_PRELOADER=true npm run test:browser:public-preloader:enabled",
     "test:browser:public-preloader:enabled": "npm run build && node scripts/run-browser-tests.mjs tests/browser/public-home-preloader.spec.ts",
     "hero:v2:assets": "node --experimental-strip-types scripts/audit-hero-v2-assets.mjs",
+    "hero:v2:mobile-review": "node --experimental-strip-types scripts/capture-hero-v2-mobile-review.mjs",
     "test:hero": "node --experimental-strip-types --test tests/home-zentry-hero.test.mjs",
     "test:browser:zentry": "cross-env HOMEPAGE_REVIEW_MODE=private HOMEPAGE_ZENTRY_HERO=preview npm run test:browser:zentry:enabled",
     "test:browser:zentry:enabled": "npm run build && node scripts/run-browser-tests.mjs tests/browser/zentry-hero.spec.ts",
