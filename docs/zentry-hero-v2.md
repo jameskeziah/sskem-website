@@ -4,7 +4,7 @@
 
 ## What changed
 
-The current Zentry-inspired hero's expansion controller remains intact. V2 adds seven individually art-directed compositions and seven SVG illustration motifs. Instead of one dark diagonal reused throughout, each scene has its own image-first photographic treatment, text position, accent, illustration and thumbnail position. The source photographs are never replaced with another school's reference photography or AI-altered documentary imagery.
+The current Zentry-inspired hero's expansion controller remains intact. V2 adds seven individually art-directed compositions and seven SVG illustration motifs. Each scene declares its palette, responsive image crops, and desktop preview placement in `lib/home-zentry-slides.ts`, and all seven are grouped into four `compositionFamily` variants (`architectural`, `editorial`, `kinetic`, `showcase`). Instead of one dark diagonal reused throughout, each scene has its own image-first photographic treatment, text position, accent, illustration and thumbnail position. The source photographs are never replaced with another school's reference photography or AI-altered documentary imagery.
 
 | Scene | Layout token | Motif | Photo treatment | Desktop editorial / thumbnail placement |
 |---|---|---|---|---|
@@ -20,13 +20,13 @@ The current Zentry-inspired hero's expansion controller remains intact. V2 adds 
 
 The original local student/campus photos are at `public/media/home/hero-drafts/` and intentionally ignored by Git. The reference images linked in the art-direction brief are *composition references only* and must not be downloaded or substituted for actual school photographs. The existing fallback campus image is just an error fallback, **not proof that all seven photos are present** on a deployment.
 
-Initial `focal` percentages in `lib/home-zentry-slides.ts` are art-director starting points, **not measured crops**. Finalize the seven crops using the actual local photos at these viewports: 1440×820, 1024×768, 768×1024, 390×844, and 360×740. Inspect the actual school name and gateway, building façade, laboratory faces and hands, skaters and their equipment, computer screens, central performers, and sports participants. Use image-specific mobile source assets if a single focal point cannot protect the subjects at every viewport.
+Responsive `imageCrop` values in `lib/home-zentry-slides.ts` are art-director starting points, **not measured crops**. Desktop, tablet and mobile crops are declared separately, and the expanding image uses the incoming slide's active breakpoint crop. Finalize the seven crops using the actual local photos at these viewports: 1440×820, 1024×768, 768×1024, 390×844, and 360×740. Inspect the actual school name and gateway, building façade, laboratory faces and hands, skaters and their equipment, computer screens, central performers, and sports participants. Use image-specific mobile source assets if a single focal point cannot protect the subjects at every viewport.
 
 Do not commit draft media or disable Git ignore to make the remote demo look complete. A remote review environment needs separately authorized/private image delivery. Final crop acceptance is impossible without access to those source photos.
 
 ## Illustration layer
 
-`components/hero/zentry-motifs.tsx` provides individually controlled decorative SVGs:
+`components/motion/home-zentry-motifs.tsx` provides individually controlled decorative SVGs:
 
 - **Architecture:** blueprint construction grid, compass sunburst, corner markings.
 - **Pathway:** dotted route, arrows, entrance approval-stamp geometry.
