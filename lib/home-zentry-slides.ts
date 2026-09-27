@@ -2,6 +2,27 @@
 // hero-drafts folder until source, guardian-consent and management approval.
 // Crop and preview positions are provisional art-direction settings, NOT measured
 // against the unpublished source photographs. Confirm on local private review.
+export type HeroMotif =
+  | "architecture"
+  | "pathway"
+  | "science"
+  | "motion"
+  | "digital"
+  | "culture"
+  | "sport";
+
+export type HeroPreviewPosition = "centre-right" | "lower-right" | "upper-right";
+export type HeroPhotoTreatment = "natural" | "warm" | "clean" | "vibrant";
+
+export type HeroVisualSettings = Readonly<{
+  /** Existing provisional mobile crop, pending review against the real photograph. */
+  focalMobile: string;
+  motif: HeroMotif;
+  previewPosition: HeroPreviewPosition;
+  photoTreatment: HeroPhotoTreatment;
+  accentColor: string;
+}>;
+
 export type HomeZentrySlide = Readonly<{
   id: string;
   chapter: string;
@@ -17,10 +38,11 @@ export type HomeZentrySlide = Readonly<{
   palette: Readonly<{ ink: string; paper: string; accent: string; highlight: string; motif: string }>;
   imageCrop: Readonly<{ desktop: string; tablet: string; mobile: string }>;
   previewPlacement: Readonly<{ desktop: Readonly<{ top?: string; right?: string; bottom?: string; left?: string; transform?: string }> }>;
-  motif: "architecture" | "pathway" | "science" | "motion" | "digital" | "culture" | "sport";
   entrance: "standard" | "energetic" | "graceful";
   layout: "slash" | "curve" | "frame" | "chevron" | "grid" | "ribbon" | "sport";
-}>;
+  /** Do not treat mobile focal and preview placement as visually signed off. */
+  visualReviewStatus: "pending" | "approved";
+} & HeroVisualSettings>;
 
 const path = "/media/home/hero-drafts/";
 
@@ -42,6 +64,11 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     previewPlacement: { desktop: {"top":"45%","left":"66%","transform":"translate(-50%, -50%)"} },
     layout: "slash",
     motif: "architecture",
+    focalMobile: "62% 50%",
+    previewPosition: "centre-right",
+    photoTreatment: "vibrant",
+    accentColor: "#ff697d",
+    visualReviewStatus: "pending",
     entrance: "standard",
   },
   {
@@ -61,6 +88,11 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     previewPlacement: { desktop: {"top":"20%","right":"5.5%","transform":"none"} },
     layout: "curve",
     motif: "pathway",
+    focalMobile: "61% 50%",
+    previewPosition: "upper-right",
+    photoTreatment: "warm",
+    accentColor: "#ff806f",
+    visualReviewStatus: "pending",
     entrance: "standard",
   },
   {
@@ -80,6 +112,11 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     previewPlacement: { desktop: {"bottom":"15%","right":"5.5%","transform":"none"} },
     layout: "frame",
     motif: "science",
+    focalMobile: "65% 46%",
+    previewPosition: "lower-right",
+    photoTreatment: "clean",
+    accentColor: "#74d9df",
+    visualReviewStatus: "pending",
     entrance: "standard",
   },
   {
@@ -99,6 +136,11 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     previewPlacement: { desktop: {"top":"14%","right":"5.5%","transform":"none"} },
     layout: "chevron",
     motif: "motion",
+    focalMobile: "63% 44%",
+    previewPosition: "upper-right",
+    photoTreatment: "warm",
+    accentColor: "#ff778b",
+    visualReviewStatus: "pending",
     entrance: "energetic",
   },
   {
@@ -118,6 +160,11 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     previewPlacement: { desktop: {"bottom":"14%","right":"23%","transform":"none"} },
     layout: "grid",
     motif: "digital",
+    focalMobile: "65% 47%",
+    previewPosition: "lower-right",
+    photoTreatment: "clean",
+    accentColor: "#74d8df",
+    visualReviewStatus: "pending",
     entrance: "standard",
   },
   {
@@ -137,6 +184,11 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     previewPlacement: { desktop: {"top":"14%","right":"5%","transform":"none"} },
     layout: "ribbon",
     motif: "culture",
+    focalMobile: "60% 48%",
+    previewPosition: "upper-right",
+    photoTreatment: "vibrant",
+    accentColor: "#fa8d87",
+    visualReviewStatus: "pending",
     entrance: "graceful",
   },
   {
@@ -156,6 +208,11 @@ export const homeZentrySlides: readonly HomeZentrySlide[] = Object.freeze([
     previewPlacement: { desktop: {"top":"16%","right":"5%","transform":"none"} },
     layout: "sport",
     motif: "sport",
+    focalMobile: "63% 48%",
+    previewPosition: "upper-right",
+    photoTreatment: "warm",
+    accentColor: "#ff8b6b",
+    visualReviewStatus: "pending",
     entrance: "energetic",
   },
 ]);
