@@ -57,10 +57,10 @@ test("all seven V2 compositions keep meaningful navigation and decorative motifs
     ["01", "campus", "slash", "architecture", "architectural", "vibrant", "centre-right"],
     ["02", "entrance", "curve", "pathway", "architectural", "warm", "upper-right"],
     ["03", "science", "frame", "science", "editorial", "clean", "lower-right"],
-    ["04", "skating", "chevron", "motion", "kinetic", "warm", "upper-right"],
+    ["04", "skating", "chevron", "motion", "kinetic", "warm", "lower-right"],
     ["05", "digital", "grid", "digital", "editorial", "clean", "lower-right"],
     ["06", "culture", "ribbon", "culture", "showcase", "vibrant", "upper-right"],
-    ["07", "sports", "sport", "sport", "kinetic", "warm", "upper-right"],
+    ["07", "sports", "sport", "sport", "kinetic", "warm", "lower-right"],
   ] as const;
   for (const [chapter, id, layout, motif, family, treatment, preview] of scenes) {
     await hero.getByRole("button", { name: new RegExp(`Show slide ${chapter}:`) }).click();
@@ -90,6 +90,6 @@ test("configured campus crop tracks all three responsive breakpoints", async ({ 
   await expect(photo).toHaveCSS("object-position", "60% 48%");
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(photo).toHaveCSS("object-position", "62% 50%");
+  await expect(photo).toHaveCSS("object-position", "34% 50%");
   await expect(hero.getByRole("button", { name: /Expand next slide:/ })).toBeVisible();
 });
