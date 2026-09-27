@@ -54,20 +54,39 @@ test("all seven V2 compositions keep meaningful navigation and decorative motifs
   await page.goto("/");
   const hero = page.locator("[data-motion-component='home-zentry-hero']");
   const scenes = [
-    ["01", "campus", "slash", "architecture"],
-    ["02", "entrance", "curve", "pathway"],
-    ["03", "science", "frame", "science"],
-    ["04", "skating", "chevron", "motion"],
-    ["05", "digital", "grid", "digital"],
-    ["06", "culture", "ribbon", "culture"],
-    ["07", "sports", "sport", "sport"],
+    ["01", "campus", "slash", "architecture", "architectural"],
+    ["02", "entrance", "curve", "pathway", "architectural"],
+    ["03", "science", "frame", "science", "editorial"],
+    ["04", "skating", "chevron", "motion", "kinetic"],
+    ["05", "digital", "grid", "digital", "editorial"],
+    ["06", "culture", "ribbon", "culture", "showcase"],
+    ["07", "sports", "sport", "sport", "kinetic"],
   ] as const;
-  for (const [chapter, id, layout, motif] of scenes) {
+  for (const [chapter, id, layout, motif, family] of scenes) {
     await hero.getByRole("button", { name: new RegExp(`Show slide ${chapter}:`) }).click();
     await expect(hero).toHaveAttribute("data-active-slide", id);
     await expect(hero).toHaveAttribute("data-visual-layout", layout);
+    await expect(hero).toHaveAttribute("data-composition-family", family);
     await expect(hero.locator(`.zhero__motif--${motif}`)).toHaveCount(1);
     await expect(hero.getByRole("link", { name: /Apply for Admission/i })).toHaveAttribute("href", "/admissions/enquire");
     await expect(hero.locator(".zhero__transition-layer")).toHaveCount(0);
   }
+});
+
+test("configured campus crop tracks all three responsive breakpoints", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.setViewportSize({ width: 1440, height: 820 });
+  await page.goto("/");
+  const hero = page.locator("[data-motion-component='home-zentry-hero']");
+  const photo = hero.locator(".zhero__photograph");
+  await expect(hero).toHaveAttribute("data-active-slide", "campus");
+  await expect(photo).toHaveCSS("object-position", "58% 48%");
+  await expect(hero.locator(".zhero__preview-wrap")).toHaveAttribute("style", /left: 66%/);
+
+  await page.setViewportSize({ width: 768, height: 1024 });
+  await expect(photo).toHaveCSS("object-position", "60% 48%");
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(photo).toHaveCSS("object-position", "62% 50%");
+  await expect(hero.getByRole("button", { name: /Expand next slide:/ })).toBeVisible();
 });
