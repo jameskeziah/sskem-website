@@ -118,11 +118,14 @@ export function HomeZentryHero() {
     viewport.appendChild(layer);
     transitionLayerRef.current = layer;
 
+    // FLIP-like geometry: expand the full-size overlay using composited
+    // transforms rather than animating left/width/height on every frame.
     gsap.set(layer, {
-      left: origin ? start.left - frame.left : 0,
-      top: origin ? start.top - frame.top : 0,
-      width: origin ? start.width : frame.width,
-      height: origin ? start.height : frame.height,
+      x: origin ? start.left - frame.left : 0,
+      y: origin ? start.top - frame.top : 0,
+      scaleX: origin ? start.width / frame.width : 1,
+      scaleY: origin ? start.height / frame.height : 1,
+      transformOrigin: "top left",
       borderRadius: origin ? 18 : 0,
       opacity: origin ? 1 : 0,
     });
@@ -152,10 +155,10 @@ export function HomeZentryHero() {
     transitionRef.current = timeline;
     if (text) timeline.to(text, { y: -15, opacity: 0, duration: 0.22, ease: "power2.in" }, 0);
     timeline.to(layer, {
-      left: 0,
-      top: 0,
-      width: frame.width,
-      height: frame.height,
+      x: 0,
+      y: 0,
+      scaleX: 1,
+      scaleY: 1,
       opacity: 1,
       borderRadius: 0,
       duration: 0.92,
