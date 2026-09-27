@@ -9,6 +9,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { homeArrivalSignal } from "@/lib/motion";
+import { ZentryMotif } from "@/components/hero/zentry-motifs";
 import {
   homeZentryFallbackPhoto,
   homeZentrySlides,
@@ -51,10 +52,18 @@ export function HomeZentryHero() {
       gsap.set(targets, { clearProps: "all" });
       return;
     }
+    const profile = homeZentrySlides[activeIndexRef.current]?.entrance;
     gsap.fromTo(
       targets,
-      { y: 26, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.72, stagger: 0.085, ease: "power3.out", clearProps: "all" },
+      { y: profile === "energetic" ? 36 : 26, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: profile === "energetic" ? 0.55 : profile === "graceful" ? 0.84 : 0.72,
+        stagger: profile === "graceful" ? 0.13 : profile === "energetic" ? 0.06 : 0.085,
+        ease: profile === "energetic" ? "power4.out" : "power3.out",
+        clearProps: "all",
+      },
     );
   };
 
@@ -161,8 +170,8 @@ export function HomeZentryHero() {
       scaleY: 1,
       opacity: 1,
       borderRadius: 0,
-      duration: 0.92,
-      ease: "power3.inOut",
+      duration: target.entrance === "energetic" ? 0.76 : target.entrance === "graceful" ? 0.98 : 0.92,
+      ease: target.entrance === "energetic" ? "power4.inOut" : "power3.inOut",
     }, 0);
   }, [failedAssets]);
 
@@ -239,6 +248,7 @@ export function HomeZentryHero() {
       data-motion-component="home-zentry-hero"
       data-active-slide={slide.id}
       data-visual-layout={slide.layout}
+      data-entrance={slide.entrance}
       aria-roledescription="carousel"
       aria-label="SSKEMS school highlights"
     >
@@ -259,6 +269,9 @@ export function HomeZentryHero() {
         </div>
         <div className="zhero__shade" aria-hidden="true" />
         <div className="zhero__brand-accent" aria-hidden="true" />
+        <div className="zhero__scene-art" aria-hidden="true">
+          <ZentryMotif kind={slide.motif} />
+        </div>
         <div className="zhero__editorial">
           <p className="zhero__kicker" data-zhero-intro>
             <span className="zhero__rule" /> {slide.eyebrow}
@@ -286,6 +299,7 @@ export function HomeZentryHero() {
             ref={previewRef}
             type="button"
             className="zhero__preview"
+            data-next-slide={next.id}
             disabled={isBusy}
             aria-label={`Expand next slide: ${next.headline}`}
             onClick={() => void goTo(nextIndex(activeIndexRef.current), previewRef.current)}
@@ -317,7 +331,7 @@ export function HomeZentryHero() {
                 disabled={isBusy}
                 className="zhero__progress-item"
                 data-current={index === activeIndex ? "true" : "false"}
-                onClick={(event) => void goTo(index, event.currentTarget)}
+                onClick={() => void goTo(index)}
               />
             ))}
           </div>
