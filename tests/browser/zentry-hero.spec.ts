@@ -16,7 +16,16 @@ test("Zentry preview expands the centre thumbnail and keeps admissions interacti
   // Hovering inside the hero pauses autoplay while the visitor considers a
   // click; the expansion is the intended primary action.
   const next = hero.getByRole("button", { name: /Expand next slide:/ });
+  const photo = next.locator("img");
   await expect(next).toBeVisible();
+  // Only the small UP NEXT arrow stays visible before hover.
+  await expect(photo).toHaveCSS("opacity", "0");
+  await next.hover();
+  await expect(photo).toHaveCSS("opacity", "1");
+  await page.mouse.move(1, 1);
+  await expect(photo).toHaveCSS("opacity", "0");
+  // Hover again to preserve the original thumbnail-to-fullscreen expansion.
+  await next.hover();
   await next.click();
   await expect(hero).toHaveAttribute("data-active-slide", "entrance", { timeout: 8_000 });
   await expect(hero.getByRole("heading", { level: 1 })).toHaveAccessibleName("Where journeys begin.");
