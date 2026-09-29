@@ -157,13 +157,18 @@ test("requested semantic visual settings match the seven chapter assignments", a
     campus: "34% 50%",
     entrance: "75% 50%",
     science: "43% 46%",
-    skating: "42% 44%",
+    skating: "28% 44%",
     digital: "43% 47%",
     culture: "52% 48%",
     sports: "53% 48%",
   };
   for (const slide of homeZentrySlides) {
     assert.equal(slide.focalMobile, reviewedMobile[slide.id], `private source photo crop ${slide.id}`);
+    if (slide.id === "skating") {
+      assert.deepEqual(slide.imageCrop, { desktop: "50% 28%", tablet: "8% 44%", mobile: "28% 44%" });
+      assert.match(slide.alt, /practising inline skating/);
+      assert.equal(slide.visualReviewStatus, "pending");
+    }
     assert.deepEqual(
       [slide.layout, slide.motif, slide.photoTreatment, slide.previewPosition],
       expected[slide.id],
