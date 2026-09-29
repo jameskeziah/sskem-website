@@ -157,7 +157,15 @@ export function HomeZentryHero() {
     }
 
     const frame = viewport.getBoundingClientRect();
-    const start = origin?.getBoundingClientRect() ?? frame;
+    // Only expand from the thumbnail when its photograph has actually been
+    // revealed. Arrows, autoplay and touch screens use the full-frame fade,
+    // never an expansion from an invisible preview card.
+    const previewOrigin = origin &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+      (origin.closest(".zhero__preview-wrap")?.matches(":hover") || origin.matches(":focus-visible"))
+      ? origin
+      : null;
+    const start = previewOrigin?.getBoundingClientRect() ?? frame;
     const layer = document.createElement("div");
     layer.className = "zhero__transition-layer";
     layer.setAttribute("aria-hidden", "true");
@@ -173,13 +181,13 @@ export function HomeZentryHero() {
     // FLIP-like geometry: expand the full-size overlay using composited
     // transforms rather than animating left/width/height on every frame.
     gsap.set(layer, {
-      x: origin ? start.left - frame.left : 0,
-      y: origin ? start.top - frame.top : 0,
-      scaleX: origin ? start.width / frame.width : 1,
-      scaleY: origin ? start.height / frame.height : 1,
+      x: previewOrigin ? start.left - frame.left : 0,
+      y: previewOrigin ? start.top - frame.top : 0,
+      scaleX: previewOrigin ? start.width / frame.width : 1,
+      scaleY: previewOrigin ? start.height / frame.height : 1,
       transformOrigin: "top left",
-      borderRadius: origin ? 18 : 0,
-      opacity: origin ? 1 : 0,
+      borderRadius: previewOrigin ? 18 : 0,
+      opacity: previewOrigin ? 1 : 0,
     });
 
     const text = root.querySelector<HTMLElement>(".zhero__editorial");
