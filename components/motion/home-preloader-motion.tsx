@@ -86,9 +86,15 @@ export function HomePreloaderMotion({ mode = "private-review" }: { mode?: HomePr
         let minimumHoldTimer = 0;
         let visibleAt = 0;
         let timeline: gsap.core.Timeline | null = null;
-        const image = window.matchMedia("(min-width: 64rem)").matches
+        // The Zentry prototype has its own critical full-bleed photograph;
+        // wait for that image when present, without changing the legacy
+        // desktop poster fallback or the public preloader's configuration.
+        const zentryImage = document.querySelector<HTMLImageElement>(
+          "[data-motion-component='home-zentry-hero'] [data-motion-home-hero-media] img",
+        );
+        const image = zentryImage ?? (window.matchMedia("(min-width: 64rem)").matches
           ? Object.assign(new Image(), { src: "/og.png" })
-          : document.querySelector<HTMLImageElement>("[data-motion-home-hero-media] img");
+          : document.querySelector<HTMLImageElement>("[data-motion-home-hero-media] img"));
         const imageReadiness = waitForImage(image);
         const fontReadiness = document.fonts?.ready
           .then(() => undefined, () => undefined) ?? Promise.resolve();

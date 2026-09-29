@@ -13,11 +13,13 @@ import { HomeCampusMotion } from "@/components/motion/home-campus-motion";
 import { HomeHeroMotion } from "@/components/motion/home-hero-motion";
 import { HomeHeroVideoTransition } from "@/components/motion/home-hero-video-transition";
 import { HomePreloaderMotion } from "@/components/motion/home-preloader-motion";
+import { HomeZentryHero } from "@/components/motion/home-zentry-hero";
 import { siteFacts } from "@/app/data/site";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 import { selectHomepageAchievementArtwork } from "@/lib/homepage-achievement-publication";
 
 import "./homepage.css";
+import "./zentry-hero.css";
 
 export const metadata: Metadata = {
   title: "Shree Samarth Krupa English Medium School, Veral",
@@ -62,6 +64,9 @@ export default async function Home() {
   // or publication-preview content on the live school homepage.
   const publicHomepagePreloader = process.env.HOMEPAGE_PUBLIC_PRELOADER === "true";
   const showHomePreloader = privateHomepageReview || publicHomepagePreloader;
+  // Unapproved student photos and experimental interactions must never enter
+  // the public homepage just because the public preloader was enabled.
+  const zentryHeroPreview = privateHomepageReview && process.env.HOMEPAGE_ZENTRY_HERO === "preview";
   const privateAchievementReview = privateHomepageReview;
   const achievementArtwork = selectHomepageAchievementArtwork({
     mode: privateAchievementReview ? "private-review" : "public",
@@ -91,6 +96,9 @@ export default async function Home() {
         <HomePreloaderMotion mode={privateHomepageReview ? "private-review" : "public"} />
       ) : null}
       <main id="main-content" tabIndex={-1} className="home-page">
+        {zentryHeroPreview ? (
+          <HomeZentryHero />
+        ) : (
         <HomeHeroMotion
           reviewMode={privateHomepageReview ? "private-review" : "public"}
           preloaderEnabled={showHomePreloader}
@@ -159,6 +167,7 @@ export default async function Home() {
             </div>
           </div>
         </HomeHeroMotion>
+        )}
 
         <HomepageIdentityStrip />
 
