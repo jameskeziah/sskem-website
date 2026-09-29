@@ -18,8 +18,10 @@ import { siteFacts } from "@/app/data/site";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 import { selectHomepageAchievementArtwork } from "@/lib/homepage-achievement-publication";
 
+
 import "./homepage.css";
 import "./zentry-hero.css";
+import { HomeFoundationMotion } from "@/components/home/home-foundation-motion";
 
 export const metadata: Metadata = {
   title: "Shree Samarth Krupa English Medium School, Veral",
@@ -169,16 +171,81 @@ export default async function Home() {
         </HomeHeroMotion>
         )}
 
+<HomeFoundationMotion>
         <HomepageIdentityStrip />
-
-        <section className="home-manifesto" aria-labelledby="manifesto-title">
+       
+        <section className="home-manifesto home-manifesto--hybrid">
           <div className="home-shell home-manifesto__grid">
-            <p className="home-chapter-label"><span>01</span> Our foundation</p>
+            
+<div className="home-manifesto__rail">
+  <p className="home-chapter-label">
+    <span>01</span> Our foundation
+  </p>
+
+  <div
+    className="home-manifesto__sunburst"
+    data-foundation-sunburst
+    aria-hidden="true"
+  >
+    <svg viewBox="0 0 120 120" focusable="false">
+      <circle
+        cx="60"
+        cy="60"
+        r="24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+
+      <circle
+        cx="60"
+        cy="60"
+        r="38"
+        fill="none"
+        stroke="currentColor"
+        strokeDasharray="3 7"
+      />
+
+      {Array.from({ length: 12 }, (_, index) => (
+        <path
+          key={index}
+          d="M60 5 V16"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          transform={`rotate(${index * 30} 60 60)`}
+        />
+      ))}
+
+      <path
+        d="M52 60h16M60 52v16"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+
+    <span>✦ A little wonder in every day.</span>
+  </div>
+</div>
+
             <div>
-              <h2 id="manifesto-title">
-                Knowledge for today.
-                <span>Character for every tomorrow.</span>
-              </h2>
+              
+<h2 id="manifesto-title">
+  <span
+    className="home-manifesto__first-line"
+    data-foundation-title
+  >
+    Knowledge for today.
+  </span>
+
+  <span
+    className="home-manifesto__accent-line"
+    data-foundation-title
+  >
+    Character for every tomorrow.
+  </span>
+</h2>
+
               <p className="home-manifesto__lead">
                 Education should help every learner understand the world, find their voice and move through life with confidence.
               </p>
@@ -189,6 +256,7 @@ export default async function Home() {
             </div>
           </div>
         </section>
+        </HomeFoundationMotion>
 
         <HomeCampusMotion privateReview={privateHomepageReview}>
           <div className="home-shell">

@@ -1868,3 +1868,213 @@ body[data-home-preloader="active"] {
     transition: none;
   }
 }
+
+
+/* PHASE 2 — Actual hybrid colours and interactions */
+
+.home-identity-strip--hybrid {
+  --hybrid-navy: #112c46;
+  --hybrid-coral: #ef8585;
+
+  background: var(--hybrid-navy);
+  border-bottom: 2px solid var(--hybrid-coral);
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure::after {
+  background: var(--hybrid-coral);
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure i {
+  color: var(--hybrid-coral);
+}
+
+.home-identity-strip__easter-egg {
+  position: absolute;
+  bottom: 0.35rem;
+  left: 2rem;
+
+  color: #ffc9c0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+
+  opacity: 0;
+  transform: translateY(5px);
+  pointer-events: none;
+
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+}
+
+.home-identity-strip__disclosure:hover
+.home-identity-strip__easter-egg,
+.home-identity-strip__disclosure:focus-visible
+.home-identity-strip__easter-egg {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-identity-strip__easter-egg {
+    transition: none;
+  }
+}
+
+
+/* PHASE 2 — Foundation editorial treatment */
+
+.home-manifesto--hybrid {
+  background:
+    radial-gradient(
+      circle at 82% 68%,
+      #f8d6ca 0,
+      transparent 37%
+    ),
+    #fff1e6;
+
+  color: #112c46;
+}
+
+.home-manifesto--hybrid
+.home-manifesto__rail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3rem;
+}
+
+.home-manifesto--hybrid
+.home-manifesto__grid h2 {
+  font-size: clamp(3rem, 6.7vw, 7rem);
+}
+
+.home-manifesto--hybrid
+.home-manifesto__first-line {
+  display: block;
+  color: #112c46;
+  font-family: var(--home-display);
+  font-weight: 800;
+  font-style: normal;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+}
+
+.home-manifesto--hybrid
+.home-manifesto__accent-line {
+  display: block;
+  margin-top: 1rem;
+  color: #cb6073;
+  font-size: 0.76em;
+  line-height: 1;
+}
+
+.home-manifesto__sunburst {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+
+  width: min(100%, 11rem);
+  color: #db747a;
+  cursor: crosshair;
+}
+
+.home-manifesto__sunburst svg {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  transition:
+    transform 700ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.home-manifesto__sunburst span {
+  color: #914657;
+  font-size: 0.78rem;
+  text-align: center;
+
+  opacity: 0;
+  transform: translateY(8px);
+
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+}
+
+@media (hover: hover) {
+  .home-manifesto__sunburst:hover svg {
+    transform: rotate(30deg);
+  }
+
+  .home-manifesto__sunburst:hover span {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 48rem) {
+  .home-manifesto--hybrid
+  .home-manifesto__rail {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .home-manifesto__sunburst {
+    width: 4.5rem;
+  }
+
+  .home-manifesto--hybrid
+  .home-manifesto__grid h2 {
+    font-size: clamp(2.7rem, 10vw, 4.8rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-manifesto__sunburst svg,
+  .home-manifesto__sunburst span {
+    transition: none;
+  }
+}
+
+
+/* Phase 2 — Foundation final spacing refinement */
+
+.home-manifesto--hybrid {
+  padding-block: clamp(3.5rem, 6vw, 6rem);
+}
+
+.home-manifesto--hybrid
+.home-manifesto__grid h2 {
+  font-size: clamp(3rem, 5.6vw, 6rem);
+  line-height: 0.96;
+}
+
+.home-manifesto--hybrid
+.home-manifesto__lead {
+  max-width: 42rem;
+  margin: 2.5rem 0 0;
+  line-height: 1.55;
+}
+
+.home-manifesto--hybrid
+.home-language-lines {
+  max-width: 42rem;
+  margin: 2rem 0 0;
+}
+
+@media (max-width: 48rem) {
+  .home-manifesto--hybrid
+  .home-manifesto__grid h2 {
+    font-size: clamp(2.7rem, 10vw, 4.8rem);
+  }
+
+  .home-manifesto--hybrid
+  .home-manifesto__lead {
+    margin-top: 2rem;
+  }
+}

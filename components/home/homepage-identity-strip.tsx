@@ -46,6 +46,11 @@ export function HomepageIdentityStrip() {
           </strong>
 
           <i aria-hidden="true">↗</i>
+          <small
+            className="home-identity-strip__easter-egg"
+            aria-hidden="true"
+            > ✦ Psst... curiosity starts here.
+          </small>
         </Link>
       </div>
     </section>
