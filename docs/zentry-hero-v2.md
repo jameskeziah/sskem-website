@@ -11,7 +11,7 @@ The current Zentry-inspired hero's expansion controller remains intact. V2 adds 
 | 01 Campus | `slash` | `architecture` | ~2/3 unobstructed bright campus image; narrow navy panel and thin translucent coral slash | Left; middle-right preview |
 | 02 Entrance | `curve` | `pathway` | Real curved warm-navy panel ~30% wide, welcoming coral | Bottom-left; upper-right preview |
 | 03 Science | `frame` | `science` | Localized left-side contrast, translucent cyan laboratory frame | Left; lower-right preview |
-| 04 Movement | `chevron` | `motion` | Full-bleed outdoor team-game photograph, lower-left radial contrast only | Bottom-left; lower-right preview |
+| 04 Skating | `chevron` | `motion` | Full-bleed authentic inline-skating photograph; protect the two foreground skaters | Bottom-left; lower-right preview |
 | 05 Computer lab | `grid` | `digital` | Floating cyan interface panel and restrained grid; real computers visible | Upper-left; lower-right preview |
 | 06 Culture | `ribbon` | `culture` | Narrow editorial gradient, slim cream-and-coral stage ribbon | Left; upper-right preview |
 | 07 Sports | `sport` | `sport` | Near-full-bleed photo; local negative-space scrim, scoreboard chapter count | Bottom-left; lower-right preview |
@@ -25,12 +25,12 @@ Every existing `HomeZentrySlide` now extends `HeroVisualSettings` with `focalMob
 | Campus | architecture | vibrant | centre-right |
 | Entrance | pathway | warm | upper-right |
 | Science | science | clean | lower-right |
-| Skating* | motion | warm | lower-right |
+| Skating | motion | warm | lower-right |
 | Digital | digital | clean | lower-right |
 | Culture | culture | vibrant | upper-right |
 | Sports | sport | warm | lower-right |
 
-The existing per-slide `palette.accent` values were copied into `accentColor`. Initially, `focalMobile` and `previewPosition` were provisional aliases of the prototype; subsequently the seven photographs in the private `sskem-zentry-hero-assets.zip` media kit were inspected at an equivalent **390×742 mobile cover crop** and the mobile focal candidates adjusted below. The desktop skating/sports preview positions were changed to avoid covering the groups of children in the current images. None of these source-photo-only adjustments replace a real browser overlay check: all seven entries retain `visualReviewStatus: "pending"`. Keep compatibility aliases `imageCrop.mobile` and `focalMobile` equal. Four photo treatments share restrained natural light/colour adjustments with the GSAP expanding image to avoid a colour jump.
+The existing per-slide `palette.accent` values were copied into `accentColor`. The Skating media kit was subsequently replaced with a genuine user-supplied inline-skating photograph, and its mobile focal point was re-evaluated against that new source.  Initially, `focalMobile` and `previewPosition` were provisional aliases of the prototype; subsequently the seven photographs in the private `sskem-zentry-hero-assets.zip` media kit were inspected at an equivalent **390×742 mobile cover crop** and the mobile focal candidates adjusted below. The desktop skating/sports preview positions were changed to avoid covering the groups of children in the current images. None of these source-photo-only adjustments replace a real browser overlay check: all seven entries retain `visualReviewStatus: "pending"`. Keep compatibility aliases `imageCrop.mobile` and `focalMobile` equal. Four photo treatments share restrained natural light/colour adjustments with the GSAP expanding image to avoid a colour jump.
 
 The desktop semantic preview presets and existing per-slide pixel/percentage refinements are both configurable. Tablet/mobile preview placement remains conservatively top-right in CSS for all seven scenes: in the inspected mobile source-photo mockups, this is the least intrusive shared region. Any per-scene responsive preview position changes still require a browser review at the actual school website viewport sizes.
 
@@ -39,12 +39,12 @@ The desktop semantic preview presets and existing per-slide pixel/percentage ref
 | Campus | `34% 50%` | `centre-right` |
 | Entrance | `75% 50%` | `upper-right` |
 | Science | `43% 46%` | `lower-right` |
-| Movement (internal id `skating`) | `42% 44%` | `lower-right` |
+| Skating | `28% 44%` | `lower-right` |
 | Digital | `43% 47%` | `lower-right` |
 | Culture | `52% 48%` | `upper-right` |
 | Sports | `53% 48%` | `lower-right` |
 
-**Accuracy flag:** The file currently named `skating.webp` visibly shows children participating in an outdoor team game, **not identifiable roller skating**. Its alternate text has been corrected. Retain the internal ID only for compatibility; obtain an actual skating photograph before making a public claim that the scene documents inline skating.
+**Replacement photo available:** The user has supplied an original photograph showing students on inline skates (2048×1365 JPG). A format-only local WebP kit supplies `skating.webp` and `skating-preview.webp` without committing identifiable student photographs. The new source is **not** included in GitHub or production. Its new proposed responsive focal settings are desktop `50% 28%`, tablet `8% 44%`, mobile `28% 44%`; they prioritize the main two skaters when the existing full-bleed mobile layout is used. The narrow portrait crop cannot also show every background skater. Check the actual rendered hero against heading and thumbnail overlays before approval.
 
 **Outstanding visual-layout risk:** The existing mobile lower text scrim intersects subjects or activity in some of the science, digital, culture and sports photographs. A focal-point adjustment alone cannot solve that; inspect the actual browser hero and adapt its mobile text layout or source aspect ratio before approving those scenes. The extreme panoramic campus original cannot show its full building façade in a narrow portrait crop; consider a separately authorized portrait source if that coverage is essential.
 
@@ -64,6 +64,20 @@ The original local student/campus photos are at `public/media/home/hero-drafts/`
 The mobile `focalMobile` values were compared visually against the real private WebP sources, not inferred from the concept posters. Desktop/tablet focal settings remain art-director starting points, and no crop should be treated as final until checked in the actual rendered hero. The expanding image uses the incoming slide's active breakpoint crop. Finalize the seven crops using the actual local photos at these viewports: 1440×820, 1024×768, 768×1024, 390×844, and 360×740. Inspect the actual school name and gateway, building façade, laboratory faces and hands, skaters and their equipment, computer screens, central performers, and sports participants. Use image-specific mobile source assets if a single focal point cannot protect the subjects at every viewport.
 
 Do not commit draft media or disable Git ignore to make the remote demo look complete. A remote review environment needs separately authorized/private image delivery. Final crop acceptance is impossible without access to those source photos.
+
+
+### Installing the replacement Skating image locally
+
+Download the private replacement archive `sskem-skating-local-assets.zip` supplied in this conversation. From the root of the local repository on Windows PowerShell:
+
+```powershell
+git switch feature/zentry-inspired-school-hero
+git pull --ff-only origin feature/zentry-inspired-school-hero
+Expand-Archive "$HOME\\Downloads\\sskem-skating-local-assets.zip" -DestinationPath . -Force
+npm run hero:v2:assets
+```
+
+The archive contains both `public/media/home/hero-drafts/skating.webp` and `skating-preview.webp` with no AI edits, just WebP compression and a smaller preview. These original school media files remain gitignored; do not `git add -f` or deploy publicly until authorizations are complete. Since the new source has different geometry from the previous media kit, regenerate the local mobile browser screenshots after installing it. Desktop and mobile layout overlap remains a manual acceptance gate.
 
 ## Illustration layer
 
