@@ -93,6 +93,12 @@ The archive contains both `public/media/home/hero-drafts/skating.webp` and `skat
 
 All SVG motifs are decorative (`aria-hidden` and non-focusable), do not alter the photographic source, and have subtle CSS-only animation disabled by `prefers-reduced-motion`. Their positions are provisional until the actual images can be inspected. If the exact cartoon Easter eggs from the earlier promotional artwork are needed, replace the corresponding motif paths from the original source art without baking them into the photos.
 
+## Hover-only thumbnail reveal
+
+The central next-slide preview now starts with its photograph **hidden**, leaving a compact visible UP NEXT label and ↗ indicator as the discoverable hover target. Hovering over that region reveals the thumbnail with a short opacity/scale transition; leaving hides the photo again. Keyboard-visible focus also reveals the image without losing the native button or its screen-reader label. Touch devices do not rely on hover: the compact arrow remains a tappable next-slide control while the photograph stays hidden.
+
+The original GSAP photo-to-fullscreen expansion is preserved **only when the thumbnail is actually revealed**. Arrow navigation, autoplay, and touch use the existing full-viewport crossfade fallback instead of visibly expanding an invisible thumbnail rectangle. Reduced-motion support, pause-on-hover behaviour and public/private feature gating are unchanged.
+
 ## Interaction contract
 
 - Click the thumbnail to expand the **next full-resolution slide image** via the existing GSAP FLIP-style overlay. Keep the overlay above outgoing type and ornaments until React commits the new scene.
