@@ -1649,3 +1649,222 @@ body[data-home-preloader="active"] {
     break-inside: avoid;
   }
 }
+
+
+
+/* =========================================
+   PHASE 2 — HYBRID IDENTITY STRIP
+   ========================================= */
+
+.home-identity-strip--hybrid {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  background: var(--color-brand-950);
+  color: var(--text-on-brand);
+}
+
+/* Restrained architectural line illustration */
+
+.home-identity-strip--hybrid::before {
+  position: absolute;
+  inset: 0;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 119px,
+      color-mix(
+        in srgb,
+        var(--text-on-brand) 8%,
+        transparent
+      ) 120px
+    );
+
+  opacity: 0.35;
+  pointer-events: none;
+  content: "";
+}
+
+/* Three visual information columns */
+
+.home-identity-strip--hybrid
+.home-identity-strip__inner {
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 2fr)
+    minmax(19rem, 1fr);
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__facts {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+}
+
+/* Individual information cells */
+
+.home-identity-strip--hybrid
+.home-identity-strip__facts > div,
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure {
+  min-height: 8rem;
+  align-content: center;
+  padding-block: 1.6rem;
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__facts > div {
+  border-inline-end:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--text-on-brand) 20%,
+      transparent
+    );
+}
+
+/* Information typography */
+
+.home-identity-strip--hybrid dt {
+  margin-bottom: 0.45rem;
+  letter-spacing: 0.12em;
+}
+
+.home-identity-strip--hybrid dd {
+  font-size: clamp(1.15rem, 2vw, 2rem);
+  line-height: 1.15;
+}
+
+/* Public disclosure interaction */
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure {
+  position: relative;
+  transition:
+    background-color
+    var(--motion-duration-standard)
+    var(--motion-ease-enter);
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure::after {
+  position: absolute;
+  right: 2rem;
+  bottom: 1.1rem;
+  left: 2rem;
+
+  height: 2px;
+  background: var(--action-primary);
+
+  transform: scaleX(0);
+  transform-origin: left;
+
+  transition:
+    transform
+    var(--motion-duration-standard)
+    var(--motion-ease-enter);
+
+  content: "";
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure i {
+  transition:
+    transform
+    var(--motion-duration-standard)
+    var(--motion-ease-enter);
+}
+
+/* Desktop hover effects */
+
+@media (hover: hover) and (pointer: fine) {
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure:hover {
+    background:
+      color-mix(
+        in srgb,
+        var(--text-on-brand) 7%,
+        transparent
+      );
+  }
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure:hover::after {
+    transform: scaleX(1);
+  }
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure:hover i {
+    transform: translate(3px, -3px);
+  }
+}
+
+/* Accessible keyboard interaction */
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: -5px;
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Tablet and mobile layouts */
+
+@media (max-width: 48rem) {
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__inner,
+  .home-identity-strip--hybrid
+  .home-identity-strip__facts {
+    grid-template-columns: 1fr;
+  }
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__facts > div,
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure {
+    min-height: 6rem;
+    padding-block: 1.25rem;
+
+    border-inline-end: 0;
+  }
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__facts > div {
+    border-bottom:
+      1px solid
+      color-mix(
+        in srgb,
+        var(--text-on-brand) 20%,
+        transparent
+      );
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure,
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure::after,
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure i {
+    transition: none;
+  }
+}
