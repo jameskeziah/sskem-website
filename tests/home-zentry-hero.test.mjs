@@ -35,8 +35,8 @@ test("transition is a single expansion and reduced-motion/mobile autoplay is gat
   const hero = await read("components/motion/home-zentry-hero.tsx");
   const styles = await read("app/zentry-hero.css");
   assert.match(hero, /gsap\.timeline/);
-  assert.match(hero, /x: origin \?/);
-  assert.match(hero, /scaleX: origin \?/);
+  assert.match(hero, /x: previewOrigin \?/);
+  assert.match(hero, /scaleX: previewOrigin \?/);
   assert.match(hero, /scaleX: 1/);
   assert.match(hero, /flushSync/);
   assert.match(hero, /prefers-reduced-motion: reduce/);
@@ -190,4 +190,20 @@ test("requested semantic visual settings match the seven chapter assignments", a
   for (const treatment of ["natural", "warm", "clean", "vibrant"]) {
     assert.ok(css.includes(`data-photo-treatment="${treatment}"`));
   }
+});
+
+test("preview photo is hidden until hover or visible keyboard focus, with touch fallback", async () => {
+  const hero = await read("components/motion/home-zentry-hero.tsx");
+  const css = await read("app/zentry-hero.css");
+  assert.match(css, /\.zhero__preview img\s*\{[^}]*opacity:\s*0;/s);
+  assert.match(css, /\.zhero__preview-wrap:hover \.zhero__preview img,/);
+  assert.match(css, /\.zhero__preview:focus-visible img\s*\{[^}]*opacity:\s*1;/s);
+  assert.match(css, /@media \(hover: none\)/);
+  assert.match(css, /\.zhero__preview-symbol\s*\{[^}]*z-index:\s*1;/s);
+  assert.match(hero, /const previewOrigin = origin/);
+  assert.match(hero, /\(hover: hover\) and \(pointer: fine\)/);
+  assert.match(hero, /origin\.matches\(":focus-visible"\)/);
+  assert.match(hero, /const start = previewOrigin\?\.getBoundingClientRect\(\) \?\? frame;/);
+  // Existing pointer/keyboard click and mobile tap still invoke the same controller.
+  assert.match(hero, /onClick=\{\(\) => void goTo\(nextIndex\(activeIndexRef\.current\), previewRef\.current\)\}/);
 });
