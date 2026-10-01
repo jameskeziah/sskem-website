@@ -75,6 +75,8 @@ export default async function Home() {
   if (publicHeroRequested && (!publicHomepagePreloader || !publishedHero?.ready)) {
     throw new Error("Public Zentry hero requires the public preloader and seven individually approved media records, assets and captions.");
   }
+  // Full public composition is unlocked separately from private review features.
+  const upgradedCampus = privateHomepageReview || Boolean(publishedHero?.ready);
   const privateAchievementReview = privateHomepageReview;
   const achievementArtwork = selectHomepageAchievementArtwork({
     mode: privateAchievementReview ? "private-review" : "public",
@@ -266,12 +268,12 @@ export default async function Home() {
         </section>
         </HomeFoundationMotion>
 
-        <HomeCampusMotion privateReview={privateHomepageReview}>
+        <HomeCampusMotion privateReview={privateHomepageReview} publicEnhanced={Boolean(publishedHero?.ready)}>
           <div className="home-shell">
             <div className="home-campus__heading" data-motion-home-campus-copy>
               <p className="home-chapter-label home-chapter-label--light"><span>02</span> The campus</p>
               <h2 id="campus-title">
-                {privateHomepageReview ? (
+                {upgradedCampus ? (
                   <>
                     <span className="visually-hidden">{campusHeading}</span>
                     <span className="home-campus__title-words" aria-hidden="true">
@@ -285,7 +287,7 @@ export default async function Home() {
                 ) : campusHeading}
               </h2>
 
-{privateHomepageReview ? (
+{upgradedCampus ? (
   <div
     className="home-campus__orbit"
     aria-hidden="true"
@@ -306,7 +308,7 @@ export default async function Home() {
             </div>
           </div>
 
-          {privateHomepageReview ? (
+          {upgradedCampus ? (
             <figure className="home-campus__feature" data-motion-home-campus-feature>
               <div className="home-campus__feature-media" data-motion-home-campus-feature-media>
 
