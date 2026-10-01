@@ -22,11 +22,11 @@ export const generalInformation: DisclosureFact[] = [
   { label: "Affiliation validity", value: "1 April 2022–31 March 2027", state: "verified", note: "The current period is recorded separately from the CBSE SARAS renewal period beginning 1 April 2027." },
   { label: "School code", value: "30780", state: "verified", note: "Checked against the CBSE-issued upgradation letter." },
   { label: "Complete address", value: siteFacts.location, state: "verified", note: "Approved for the verified public school profile on 9 September 2026." },
-  { label: "Principal", value: "Official name reconciliation required", state: "approval-required", note: "The legacy school page and SARAS use different forms of the name." },
+  { label: "Principal", value: "SYED SHAHED ALI MUJAHED ALI", state: "verified", note: "Full official name in CBSE SARAS affiliation record 1130851; legacy school site uses a shortened form." },
   { label: "Principal’s qualification", value: "M.Sc., M.Ed., Ph.D.", state: "verified", note: "Checked against the current CBSE SARAS record." },
   { label: "Official email", value: siteFacts.principalEmail, state: "verified" },
   { label: "Landline", value: siteFacts.phone, state: "verified" },
-  { label: "Authorised public mobile", value: "Verification required", state: "approval-required" },
+  { label: "Authorised public mobile", value: siteFacts.mobile, state: "verified", note: "Already published on the school’s Mandatory Public Disclosure / SARAS page; retain as school contact only." },
 ];
 
 export const academicLinks = [
