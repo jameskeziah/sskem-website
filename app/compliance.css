@@ -914,8 +914,8 @@
 }
 
 @media print {
-  .site-header,
-  .site-footer,
+  /* Retain the official school identity header/footer from globals.css while
+     suppressing interactive controls in the printed disclosure. */
   .skip-link,
   .print-action,
   .compliance-hero__actions,
