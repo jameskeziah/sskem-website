@@ -2,7 +2,7 @@
   "$schema": "./approval-manifest.schema.json",
   "schemaVersion": 1,
   "manifestId": "sskem-publication-approvals",
-  "updatedOn": "2026-09-09",
+  "updatedOn": "2026-10-01",
   "evidencePolicy": {
     "privateEvidenceStoredInRepository": false,
     "referencePattern": "^[A-Z0-9][A-Z0-9._/-]{2,79}$",
@@ -49,6 +49,12 @@
       "malware-scan",
       "privacy",
       "accessibility",
+      "management-approval"
+    ],
+    "hero-campus-media": [
+      "accuracy",
+      "rights",
+      "privacy",
       "management-approval"
     ]
   },
@@ -950,6 +956,170 @@
       "approvedAt": null,
       "expiresAt": null,
       "notes": "The current approved public list has not been supplied."
+    },
+    {
+      "id": "media-hero-campus",
+      "kind": "media",
+      "title": "Homepage hero: campus",
+      "sourcePointer": "public/media/home/production/hero/campus/full-beb9887ea1a6.webp",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "hero-campus-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "privacy": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
+      "notes": "Alt text: Main campus building and front grounds at SSKEMS in daylight. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+    },
+    {
+      "id": "media-hero-entrance",
+      "kind": "media",
+      "title": "Homepage hero: entrance",
+      "sourcePointer": "public/media/home/production/hero/entrance/full-b172a3bfbd93.webp",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "hero-campus-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "privacy": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
+      "notes": "Alt text: Main entrance and school sign at SSKEMS, Veral. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+    },
+    {
+      "id": "media-hero-science",
+      "kind": "media",
+      "title": "Homepage hero: science",
+      "sourcePointer": "public/media/home/production/hero/science/full-327ad60b2ebd.webp",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "pupil-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
+      "notes": "Alt text: Students performing a science practical in the laboratory. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+    },
+    {
+      "id": "media-hero-skating",
+      "kind": "media",
+      "title": "Homepage hero: skating",
+      "sourcePointer": "public/media/home/production/hero/skating/full-a82330728a0a.webp",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "pupil-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
+      "notes": "Alt text: Students practicing roller skating on the school grounds. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+    },
+    {
+      "id": "media-hero-digital",
+      "kind": "media",
+      "title": "Homepage hero: digital",
+      "sourcePointer": "public/media/home/production/hero/digital/full-8f4172a51fd4.webp",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "pupil-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
+      "notes": "Alt text: Students working at desktop computers in the computer lab. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+    },
+    {
+      "id": "media-hero-culture",
+      "kind": "media",
+      "title": "Homepage hero: culture",
+      "sourcePointer": "public/media/home/production/hero/culture/full-cbb0354780ba.webp",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "pupil-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
+      "notes": "Alt text: Students presenting a cultural performance inside the school foyer. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+    },
+    {
+      "id": "media-hero-sports",
+      "kind": "media",
+      "title": "Homepage hero: sports",
+      "sourcePointer": "public/media/home/production/hero/sports/full-e045296ddf5f.webp",
+      "publicTargets": [
+        "/"
+      ],
+      "checkProfile": "pupil-media",
+      "checks": {
+        "accuracy": "pending",
+        "rights": "pending",
+        "guardian-consent": "pending",
+        "privacy": "pending",
+        "institutional-status": "pending",
+        "management-approval": "pending"
+      },
+      "decision": "review-required",
+      "evidenceReferences": [],
+      "approvedByRole": null,
+      "approvedAt": null,
+      "expiresAt": null,
+      "notes": "Alt text: Students playing an outdoor team sport under teacher supervision. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
     }
   ]
 }
