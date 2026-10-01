@@ -22,6 +22,7 @@ jobs:
     env:
       CI: 'true'
       HOMEPAGE_REVIEW_MODE: private
+      VERCEL_ENV: preview
       HOMEPAGE_ZENTRY_HERO: preview
       HOMEPAGE_PUBLIC_ZENTRY_HERO: 'false'
     steps:
