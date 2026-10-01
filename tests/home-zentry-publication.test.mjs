@@ -43,12 +43,12 @@ function fixture() {
   return { config, approvals };
 }
 
-test("current publication manifest fails closed; private photos cannot become public by flag alone", () => {
+test("current authorized public manifest contains seven exact approved production scenes", () => {
   const result = getPublicHeroPublication();
   assert.equal(heroPublicationConfig.slides.length, 7);
-  assert.equal(result.ready, false);
-  assert.equal(result.slides.length, 0);
-  assert.ok(result.issues.length > 0);
+  assert.equal(result.ready, true, result.issues.join("; "));
+  assert.deepEqual(result.slides.map((slide) => slide.id), ids);
+  assert.ok(result.slides.every((slide) => slide.image.startsWith("/media/home/production/hero/")));
 });
 
 test("publishes exactly seven ordered scenes only with individually approved records and paths", () => {
@@ -92,7 +92,7 @@ test("public activation is separately gated and Vercel audits actual production 
   const script = await readFile(new URL("../scripts/audit-home-zentry-publication.mjs", import.meta.url), "utf8");
   const ignore = await readFile(new URL("../.gitignore", import.meta.url), "utf8");
   const packageJson = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
-  assert.match(page, /!privateHomepageReview && process.env.HOMEPAGE_PUBLIC_ZENTRY_HERO === "true"/);
+  assert.match(page, /!privateHomepageReview \? getPublicHeroPublication\(\) : null/);
   assert.match(page, /getPublicHeroPublication\(\)/);
   assert.match(page, /publishedHero\?\.ready/);
   assert.match(script, /createHash\("sha256"\)/);
