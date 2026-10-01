@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "policy": {
+    "note": "No student photograph is public until its exact full-size and preview derivatives, visual crops, captions, guardian consent where relevant, media rights, and management approval have been independently recorded. Private source photos remain excluded from Git."
+  },
+  "slides": [
+    {
+      "id": "campus",
+      "recordId": "media-hero-campus",
+      "decision": "pending",
+      "visualReviewStatus": "pending",
+      "full": "",
+      "preview": "",
+      "sourceSha256": "",
+      "fullSha256": "",
+      "previewSha256": "",
+      "receiptRef": "",
+      "approvedAlt": false
+    },
+    {
+      "id": "entrance",
+      "recordId": "media-hero-entrance",
+      "decision": "pending",
+      "visualReviewStatus": "pending",
+      "full": "",
+      "preview": "",
+      "sourceSha256": "",
+      "fullSha256": "",
+      "previewSha256": "",
+      "receiptRef": "",
+      "approvedAlt": false
+    },
+    {
+      "id": "science",
+      "recordId": "media-hero-science",
+      "decision": "pending",
+      "visualReviewStatus": "pending",
+      "full": "",
+      "preview": "",
+      "sourceSha256": "",
+      "fullSha256": "",
+      "previewSha256": "",
+      "receiptRef": "",
+      "approvedAlt": false
+    },
+    {
+      "id": "skating",
+      "recordId": "media-hero-skating",
+      "decision": "pending",
+      "visualReviewStatus": "pending",
+      "full": "",
+      "preview": "",
+      "sourceSha256": "",
+      "fullSha256": "",
+      "previewSha256": "",
+      "receiptRef": "",
+      "approvedAlt": false
+    },
+    {
+      "id": "digital",
+      "recordId": "media-hero-digital",
+      "decision": "pending",
+      "visualReviewStatus": "pending",
+      "full": "",
+      "preview": "",
+      "sourceSha256": "",
+      "fullSha256": "",
+      "previewSha256": "",
+      "receiptRef": "",
+      "approvedAlt": false
+    },
+    {
+      "id": "culture",
+      "recordId": "media-hero-culture",
+      "decision": "pending",
+      "visualReviewStatus": "pending",
+      "full": "",
+      "preview": "",
+      "sourceSha256": "",
+      "fullSha256": "",
+      "previewSha256": "",
+      "receiptRef": "",
+      "approvedAlt": false
+    },
+    {
+      "id": "sports",
+      "recordId": "media-hero-sports",
+      "decision": "pending",
+      "visualReviewStatus": "pending",
+      "full": "",
+      "preview": "",
+      "sourceSha256": "",
+      "fullSha256": "",
+      "previewSha256": "",
+      "receiptRef": "",
+      "approvedAlt": false
+    }
+  ]
+}
