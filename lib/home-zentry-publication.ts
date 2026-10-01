@@ -31,6 +31,10 @@ export type MediaApproval = {
   kind: string;
   decision: string;
   publicTargets?: string[];
+  checks?: Record<string, string>;
+  evidenceReferences?: string[];
+  approvedByRole?: string | null;
+  approvedAt?: string | null;
   expiresAt?: string | null;
 };
 
@@ -73,6 +77,20 @@ export function assessHeroPublication(
       !approval.publicTargets?.includes("/")
     ) {
       issues.push(`Scene ${id}: exact media record is not approved for the homepage.`);
+    }
+    // An approval flag is insufficient: verify all checklist items, management
+    // sign-off and the exact derivative receipt in the controlled manifest.
+    if (approval) {
+      const states = Object.values(approval.checks ?? {});
+      if (
+        states.length === 0 ||
+        !states.every((state) => state === "verified" || state === "not-applicable") ||
+        !approval.evidenceReferences?.includes(entry.receiptRef) ||
+        !approval.approvedByRole?.trim() ||
+        !approval.approvedAt || !Number.isFinite(Date.parse(approval.approvedAt))
+      ) {
+        issues.push(`Scene ${id}: mandatory review, receipt evidence or approval signature is missing.`);
+      }
     }
     if (approval?.expiresAt) {
       const expiry = Date.parse(`${approval.expiresAt}T23:59:59.999Z`);
