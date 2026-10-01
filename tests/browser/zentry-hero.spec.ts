@@ -98,7 +98,7 @@ test("configured campus crop tracks all three responsive breakpoints", async ({ 
   const photo = hero.locator(".zhero__photograph");
   await expect(hero).toHaveAttribute("data-active-slide", "campus");
   await expect(photo).toHaveCSS("object-position", "58% 48%");
-  await expect(hero.locator(".zhero__preview-wrap")).toHaveAttribute("style", /left:\\s*66%/);
+  await expect.poll(() => hero.locator(".zhero__preview-wrap").evaluate((el) => el.style.left)).toBe("66%");
 
   await page.setViewportSize({ width: 768, height: 1024 });
   await expect(photo).toHaveCSS("object-position", "60% 48%");
