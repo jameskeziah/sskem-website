@@ -29,10 +29,13 @@ type MotionConditions = {
 export function HomeCampusMotion({
   children,
   privateReview = false,
+  publicEnhanced = false,
 }: {
   children: ReactNode;
   privateReview?: boolean;
+  publicEnhanced?: boolean;
 }) {
+  const enhanced = privateReview || publicEnhanced;
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -81,7 +84,7 @@ export function HomeCampusMotion({
           },
         );
 
-        if (privateReview && conditions.desktop && words.length) {
+        if (enhanced && conditions.desktop && words.length) {
           timeline.fromTo(
             words,
             {
@@ -105,7 +108,7 @@ export function HomeCampusMotion({
         }
 
 
-if (privateReview) {
+if (enhanced) {
   // Each photograph reveals when it enters the viewport.
   // This creates three separate photographic moments.
 
@@ -263,7 +266,7 @@ if (
     <section
       ref={root}
       className={
-  privateReview
+  enhanced
     ? "home-campus home-campus--hybrid"
     : "home-campus"
 }
