@@ -1,0 +1,49 @@
+name: SSKEMS private hero browser smoke
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - app/**
+      - components/**
+      - lib/**
+      - tests/browser/zentry-hero.spec.ts
+      - scripts/generate-hero-ci-fixtures.mjs
+      - .github/workflows/private-hero-browser.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-private-interaction-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      CI: 'true'
+      HOMEPAGE_REVIEW_MODE: private
+      HOMEPAGE_ZENTRY_HERO: preview
+      HOMEPAGE_PUBLIC_ZENTRY_HERO: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Generate fourteen unmistakably synthetic, private test fixtures
+        run: node --experimental-strip-types scripts/generate-hero-ci-fixtures.mjs
+      - name: Check seven-scene private image contract
+        run: npm run hero:v2:assets
+      - name: Test seven-slide interactions, keyboard, mobile tap and reduced motion
+        run: npm run test:browser:zentry
+      - name: Attach failed screenshots or traces (synthetic media only)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-private-hero-browser-debug
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
