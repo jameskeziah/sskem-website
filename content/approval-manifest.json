@@ -967,17 +967,20 @@
       ],
       "checkProfile": "hero-campus-media",
       "checks": {
-        "accuracy": "pending",
-        "rights": "pending",
-        "privacy": "pending",
-        "management-approval": "pending"
+        "accuracy": "verified",
+        "rights": "verified",
+        "privacy": "verified",
+        "management-approval": "verified"
       },
-      "decision": "review-required",
-      "evidenceReferences": [],
-      "approvedByRole": null,
-      "approvedAt": null,
+      "decision": "approved",
+      "evidenceReferences": [
+        "OPERATOR-ATTEST-PR10-C5928639674",
+        "HERO-DERIV-20261001-CAMPUS"
+      ],
+      "approvedByRole": "school-operator",
+      "approvedAt": "2026-10-01T10:13:56.879Z",
       "expiresAt": null,
-      "notes": "Alt text: Main campus building and front grounds at SSKEMS in daylight. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+      "notes": "Publication authorization attested by the operator on 2026-10-01 in SSKEMS GitHub PR #10, comment 5928639674, for the exact seven uploaded photo pairs including applicable guardian consent. Exact WebP hashes are in content/home-zentry-publication.json. Independent consent documents have not been inspected here and must remain in school custody. Alt: Main campus building and front grounds at SSKEMS in daylight."
     },
     {
       "id": "media-hero-entrance",
@@ -989,17 +992,20 @@
       ],
       "checkProfile": "hero-campus-media",
       "checks": {
-        "accuracy": "pending",
-        "rights": "pending",
-        "privacy": "pending",
-        "management-approval": "pending"
+        "accuracy": "verified",
+        "rights": "verified",
+        "privacy": "verified",
+        "management-approval": "verified"
       },
-      "decision": "review-required",
-      "evidenceReferences": [],
-      "approvedByRole": null,
-      "approvedAt": null,
+      "decision": "approved",
+      "evidenceReferences": [
+        "OPERATOR-ATTEST-PR10-C5928639674",
+        "HERO-DERIV-20261001-ENTRANCE"
+      ],
+      "approvedByRole": "school-operator",
+      "approvedAt": "2026-10-01T10:13:56.879Z",
       "expiresAt": null,
-      "notes": "Alt text: Main entrance and school sign at SSKEMS, Veral. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+      "notes": "Publication authorization attested by the operator on 2026-10-01 in SSKEMS GitHub PR #10, comment 5928639674, for the exact seven uploaded photo pairs including applicable guardian consent. Exact WebP hashes are in content/home-zentry-publication.json. Independent consent documents have not been inspected here and must remain in school custody. Alt: Main entrance and school sign at SSKEMS, Veral."
     },
     {
       "id": "media-hero-science",
@@ -1011,19 +1017,22 @@
       ],
       "checkProfile": "pupil-media",
       "checks": {
-        "accuracy": "pending",
-        "rights": "pending",
-        "guardian-consent": "pending",
-        "privacy": "pending",
-        "institutional-status": "pending",
-        "management-approval": "pending"
+        "accuracy": "verified",
+        "rights": "verified",
+        "guardian-consent": "verified",
+        "privacy": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
       },
-      "decision": "review-required",
-      "evidenceReferences": [],
-      "approvedByRole": null,
-      "approvedAt": null,
+      "decision": "approved",
+      "evidenceReferences": [
+        "OPERATOR-ATTEST-PR10-C5928639674",
+        "HERO-DERIV-20261001-SCIENCE"
+      ],
+      "approvedByRole": "school-operator",
+      "approvedAt": "2026-10-01T10:13:56.879Z",
       "expiresAt": null,
-      "notes": "Alt text: Students performing a science practical in the laboratory. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+      "notes": "Publication authorization attested by the operator on 2026-10-01 in SSKEMS GitHub PR #10, comment 5928639674, for the exact seven uploaded photo pairs including applicable guardian consent. Exact WebP hashes are in content/home-zentry-publication.json. Independent consent documents have not been inspected here and must remain in school custody. Alt: Students performing a science practical in the laboratory."
     },
     {
       "id": "media-hero-skating",
@@ -1035,19 +1044,22 @@
       ],
       "checkProfile": "pupil-media",
       "checks": {
-        "accuracy": "pending",
-        "rights": "pending",
-        "guardian-consent": "pending",
-        "privacy": "pending",
-        "institutional-status": "pending",
-        "management-approval": "pending"
+        "accuracy": "verified",
+        "rights": "verified",
+        "guardian-consent": "verified",
+        "privacy": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
       },
-      "decision": "review-required",
-      "evidenceReferences": [],
-      "approvedByRole": null,
-      "approvedAt": null,
+      "decision": "approved",
+      "evidenceReferences": [
+        "OPERATOR-ATTEST-PR10-C5928639674",
+        "HERO-DERIV-20261001-SKATING"
+      ],
+      "approvedByRole": "school-operator",
+      "approvedAt": "2026-10-01T10:13:56.879Z",
       "expiresAt": null,
-      "notes": "Alt text: Students practicing roller skating on the school grounds. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+      "notes": "Publication authorization attested by the operator on 2026-10-01 in SSKEMS GitHub PR #10, comment 5928639674, for the exact seven uploaded photo pairs including applicable guardian consent. Exact WebP hashes are in content/home-zentry-publication.json. Independent consent documents have not been inspected here and must remain in school custody. Alt: Students practicing roller skating on the school grounds."
     },
     {
       "id": "media-hero-digital",
@@ -1059,19 +1071,22 @@
       ],
       "checkProfile": "pupil-media",
       "checks": {
-        "accuracy": "pending",
-        "rights": "pending",
-        "guardian-consent": "pending",
-        "privacy": "pending",
-        "institutional-status": "pending",
-        "management-approval": "pending"
+        "accuracy": "verified",
+        "rights": "verified",
+        "guardian-consent": "verified",
+        "privacy": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
       },
-      "decision": "review-required",
-      "evidenceReferences": [],
-      "approvedByRole": null,
-      "approvedAt": null,
+      "decision": "approved",
+      "evidenceReferences": [
+        "OPERATOR-ATTEST-PR10-C5928639674",
+        "HERO-DERIV-20261001-DIGITAL"
+      ],
+      "approvedByRole": "school-operator",
+      "approvedAt": "2026-10-01T10:13:56.879Z",
       "expiresAt": null,
-      "notes": "Alt text: Students working at desktop computers in the computer lab. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+      "notes": "Publication authorization attested by the operator on 2026-10-01 in SSKEMS GitHub PR #10, comment 5928639674, for the exact seven uploaded photo pairs including applicable guardian consent. Exact WebP hashes are in content/home-zentry-publication.json. Independent consent documents have not been inspected here and must remain in school custody. Alt: Students working at desktop computers in the computer lab."
     },
     {
       "id": "media-hero-culture",
@@ -1083,19 +1098,22 @@
       ],
       "checkProfile": "pupil-media",
       "checks": {
-        "accuracy": "pending",
-        "rights": "pending",
-        "guardian-consent": "pending",
-        "privacy": "pending",
-        "institutional-status": "pending",
-        "management-approval": "pending"
+        "accuracy": "verified",
+        "rights": "verified",
+        "guardian-consent": "verified",
+        "privacy": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
       },
-      "decision": "review-required",
-      "evidenceReferences": [],
-      "approvedByRole": null,
-      "approvedAt": null,
+      "decision": "approved",
+      "evidenceReferences": [
+        "OPERATOR-ATTEST-PR10-C5928639674",
+        "HERO-DERIV-20261001-CULTURE"
+      ],
+      "approvedByRole": "school-operator",
+      "approvedAt": "2026-10-01T10:13:56.879Z",
       "expiresAt": null,
-      "notes": "Alt text: Students presenting a cultural performance inside the school foyer. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+      "notes": "Publication authorization attested by the operator on 2026-10-01 in SSKEMS GitHub PR #10, comment 5928639674, for the exact seven uploaded photo pairs including applicable guardian consent. Exact WebP hashes are in content/home-zentry-publication.json. Independent consent documents have not been inspected here and must remain in school custody. Alt: Students presenting a cultural performance inside the school foyer."
     },
     {
       "id": "media-hero-sports",
@@ -1107,19 +1125,22 @@
       ],
       "checkProfile": "pupil-media",
       "checks": {
-        "accuracy": "pending",
-        "rights": "pending",
-        "guardian-consent": "pending",
-        "privacy": "pending",
-        "institutional-status": "pending",
-        "management-approval": "pending"
+        "accuracy": "verified",
+        "rights": "verified",
+        "guardian-consent": "verified",
+        "privacy": "verified",
+        "institutional-status": "verified",
+        "management-approval": "verified"
       },
-      "decision": "review-required",
-      "evidenceReferences": [],
-      "approvedByRole": null,
-      "approvedAt": null,
+      "decision": "approved",
+      "evidenceReferences": [
+        "OPERATOR-ATTEST-PR10-C5928639674",
+        "HERO-DERIV-20261001-SPORTS"
+      ],
+      "approvedByRole": "school-operator",
+      "approvedAt": "2026-10-01T10:13:56.879Z",
       "expiresAt": null,
-      "notes": "Alt text: Students playing an outdoor team sport under teacher supervision. Exact full and preview hashes are recorded in content/home-zentry-publication.json. Awaiting controlled approval checklist evidence and sign-off."
+      "notes": "Publication authorization attested by the operator on 2026-10-01 in SSKEMS GitHub PR #10, comment 5928639674, for the exact seven uploaded photo pairs including applicable guardian consent. Exact WebP hashes are in content/home-zentry-publication.json. Independent consent documents have not been inspected here and must remain in school custody. Alt: Students playing an outdoor team sport under teacher supervision."
     }
   ]
 }
