@@ -22,18 +22,18 @@ test("embeds the approval manifest without a worker-unsafe import.meta URL", asy
   assert.doesNotMatch(updateSource, /new URL\([^\n]+import\.meta\.url/);
 });
 
-test("validates the 37-record media, claim, and document approval inventory", async () => {
+test("validates the 44-record media, claim, and document approval inventory", async () => {
   const manifest = await loadApprovalManifest();
   const issues = validateApprovalManifest(manifest);
   const summary = approvalSummary(manifest);
 
   assert.deepEqual(issues, []);
-  assert.equal(summary.total, 37);
-  assert.deepEqual(summary.byKind, { media: 9, claim: 16, document: 12 });
-  assert.deepEqual(summary.byDecision, { blocked: 22, "review-required": 5, approved: 10, withdrawn: 0 });
-  assert.deepEqual(summary.blockingByKind, { media: 9, claim: 6, document: 12 });
+  assert.equal(summary.total, 44);
+  assert.deepEqual(summary.byKind, { media: 16, claim: 16, document: 12 });
+  assert.deepEqual(summary.byDecision, { blocked: 22, "review-required": 12, approved: 10, withdrawn: 0 });
+  assert.deepEqual(summary.blockingByKind, { media: 16, claim: 6, document: 12 });
   assert.equal(summary.releaseReady, false);
-  assert.equal(summary.blockingRecords.length, 27);
+  assert.equal(summary.blockingRecords.length, 34);
 });
 
 test("publishes the JSON schema and keeps its evidence policy aligned with the validator", async () => {
