@@ -1,0 +1,46 @@
+name: Patch release-candidate production dependencies
+
+on:
+  push:
+    branches:
+      - release/complete-homepage-approval-gated-20261001
+    paths:
+      - .github/workflows/release-security-upgrade.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.ref == 'refs/heads/release/complete-homepage-approval-gated-20261001'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release/complete-homepage-approval-gated-20261001
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install existing locked graph
+        run: npm ci
+      - name: Update known affected dependencies (release branch only)
+        run: |
+          npm install --save-exact next@16.3.8
+          npm install --save-dev --save-exact sharp@0.35.5
+          git diff --check
+          node -e 'const p=require("./package.json"); if(p.dependencies.next!=="16.3.8"||p.devDependencies.sharp!=="0.35.5")process.exit(1)'
+      - name: Commit reviewable manifest and lockfile changes, never production
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          if git diff --cached --quiet; then
+            echo "Versions already updated."
+            exit 0
+          fi
+          git commit -m "fix(deps): patch audited Next.js and Sharp vulnerabilities"
+          git push origin HEAD:release/complete-homepage-approval-gated-20261001
