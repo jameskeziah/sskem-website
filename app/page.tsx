@@ -17,6 +17,7 @@ import { HomeZentryHero } from "@/components/motion/home-zentry-hero";
 import { siteFacts } from "@/app/data/site";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 import { selectHomepageAchievementArtwork } from "@/lib/homepage-achievement-publication";
+import { getPublicHeroPublication } from "@/lib/home-zentry-publication";
 
 
 import "./homepage.css";
@@ -69,6 +70,11 @@ export default async function Home() {
   // Unapproved student photos and experimental interactions must never enter
   // the public homepage just because the public preloader was enabled.
   const zentryHeroPreview = privateHomepageReview && process.env.HOMEPAGE_ZENTRY_HERO === "preview";
+  const publicHeroRequested = !privateHomepageReview && process.env.HOMEPAGE_PUBLIC_ZENTRY_HERO === "true";
+  const publishedHero = publicHeroRequested ? getPublicHeroPublication() : null;
+  if (publicHeroRequested && (!publicHomepagePreloader || !publishedHero?.ready)) {
+    throw new Error("Public Zentry hero requires the public preloader and seven individually approved media records, assets and captions.");
+  }
   const privateAchievementReview = privateHomepageReview;
   const achievementArtwork = selectHomepageAchievementArtwork({
     mode: privateAchievementReview ? "private-review" : "public",
@@ -100,6 +106,8 @@ export default async function Home() {
       <main id="main-content" tabIndex={-1} className="home-page">
         {zentryHeroPreview ? (
           <HomeZentryHero />
+        ) : publishedHero?.ready ? (
+          <HomeZentryHero slides={publishedHero.slides} fallbackPhoto={publishedHero.slides[0].image} />
         ) : (
         <HomeHeroMotion
           reviewMode={privateHomepageReview ? "private-review" : "public"}
