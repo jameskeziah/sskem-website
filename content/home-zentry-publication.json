@@ -14,7 +14,7 @@
       "sourceSha256": "beb9887ea1a6b3945943d40cb2f28c7d7e956fe905e9d374a1123821c42bda80",
       "fullSha256": "beb9887ea1a6b3945943d40cb2f28c7d7e956fe905e9d374a1123821c42bda80",
       "previewSha256": "2ae8d719e58b2180e6a65c41d5930154c1bfaae1d4a7352fe245dc5315b7a53a",
-      "receiptRef": "operator-approved-2026-10-01-campus",
+      "receiptRef": "HERO-DERIV-20261001-CAMPUS",
       "approvedAlt": true
     },
     {
@@ -27,7 +27,7 @@
       "sourceSha256": "b172a3bfbd9301a8d416a4269d17746c2731ad0eb6cc2c45be4c70c1a2838805",
       "fullSha256": "b172a3bfbd9301a8d416a4269d17746c2731ad0eb6cc2c45be4c70c1a2838805",
       "previewSha256": "b918e9e2389d379b42ccb163b7ad70f6be26990f4192fdcb73ddfa5f39532a12",
-      "receiptRef": "operator-approved-2026-10-01-entrance",
+      "receiptRef": "HERO-DERIV-20261001-ENTRANCE",
       "approvedAlt": true
     },
     {
@@ -40,7 +40,7 @@
       "sourceSha256": "327ad60b2ebdbd14beab08d3c122d0af99433e35a2a61fab09a717fde5dd3a31",
       "fullSha256": "327ad60b2ebdbd14beab08d3c122d0af99433e35a2a61fab09a717fde5dd3a31",
       "previewSha256": "1f7547f42345ffa7fd10efd66d8b3eca059e85896563d6a2a32be2c24c579e53",
-      "receiptRef": "operator-approved-2026-10-01-science",
+      "receiptRef": "HERO-DERIV-20261001-SCIENCE",
       "approvedAlt": true
     },
     {
@@ -53,7 +53,7 @@
       "sourceSha256": "a82330728a0aea4cf9b5f7ee5b862f76f3d7f3630652de8fc1f4a17e6f73eb49",
       "fullSha256": "a82330728a0aea4cf9b5f7ee5b862f76f3d7f3630652de8fc1f4a17e6f73eb49",
       "previewSha256": "ec54e8dec76ebedd1bc08d4e3e43e9585ec4dc62e1aa16a581445edfcc3f4fab",
-      "receiptRef": "operator-approved-2026-10-01-skating",
+      "receiptRef": "HERO-DERIV-20261001-SKATING",
       "approvedAlt": true
     },
     {
@@ -66,7 +66,7 @@
       "sourceSha256": "8f4172a51fd4fac1f76b6ac6d379cecc9af2c2bc61ab48bf1948530a1360f1aa",
       "fullSha256": "8f4172a51fd4fac1f76b6ac6d379cecc9af2c2bc61ab48bf1948530a1360f1aa",
       "previewSha256": "e80fc01a4e3aeb37278b4c8dfc1633af4cb0a55423f8e1dfb58f1e62ab856a4e",
-      "receiptRef": "operator-approved-2026-10-01-digital",
+      "receiptRef": "HERO-DERIV-20261001-DIGITAL",
       "approvedAlt": true
     },
     {
@@ -79,7 +79,7 @@
       "sourceSha256": "cbb0354780ba7e166b278ff7c4b65c90a72e51826d9d8559fd8985ee87ba2609",
       "fullSha256": "cbb0354780ba7e166b278ff7c4b65c90a72e51826d9d8559fd8985ee87ba2609",
       "previewSha256": "2b6aa11fc1d4ae5782203499d1c828fa5c672f334446298f0cc915092798f4e2",
-      "receiptRef": "operator-approved-2026-10-01-culture",
+      "receiptRef": "HERO-DERIV-20261001-CULTURE",
       "approvedAlt": true
     },
     {
@@ -92,7 +92,7 @@
       "sourceSha256": "e045296ddf5f9ab53743ecf4792c19c807356f9d1ed68607ef2c4040b2a7becf",
       "fullSha256": "e045296ddf5f9ab53743ecf4792c19c807356f9d1ed68607ef2c4040b2a7becf",
       "previewSha256": "bdd481be53ba9f2ee35298f8456828211fcb9034997dbf96ccf23af6c8513db5",
-      "receiptRef": "operator-approved-2026-10-01-sports",
+      "receiptRef": "HERO-DERIV-20261001-SPORTS",
       "approvedAlt": true
     }
   ]
