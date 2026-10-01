@@ -42,7 +42,7 @@ export type HeroPublicationAssessment = {
 const sha256 = /^[a-f0-9]{64}$/;
 
 function publicationPath(id: string, role: "full" | "preview", digest: string) {
-  return `/media/home/production/hero/${id}/${role}-${digest.slice(0, 12)}.webp`;
+  return `/media/home/production/hero/${id}/${role}-${String(digest ?? "").slice(0, 12)}.webp`;
 }
 
 /** Pure validator, so publication failures can be tested without private photos. */
@@ -76,7 +76,7 @@ export function assessHeroPublication(
     for (const field of ["sourceSha256", "fullSha256", "previewSha256"] as const) {
       if (!sha256.test(entry[field])) issues.push(`Scene ${id}: invalid or absent ${field}.`);
     }
-    if (entry.receiptRef.trim().length < 8 || /[\\\r\n]/.test(entry.receiptRef)) {
+    if (typeof entry.receiptRef !== "string" || entry.receiptRef.trim().length < 8 || /[\\\r\n]/.test(entry.receiptRef)) {
       issues.push(`Scene ${id}: controlled derivative receipt reference is required.`);
     }
     for (const [role, path, digest] of [
