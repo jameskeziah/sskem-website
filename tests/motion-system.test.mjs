@@ -129,13 +129,13 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   const zentry = await source("components/motion/home-zentry-hero.tsx");
   const motifs = await source("components/motion/home-zentry-motifs.tsx");
   assert.match(zentry, /^"use client";/);
-  assert.match(zentry, /useGSAP\\s*\\(/);
-  assert.match(zentry, /scope:\\s*rootRef/);
+  assert.match(zentry, /useGSAP\s*\(/);
+  assert.match(zentry, /scope:\s*rootRef/);
   assert.match(zentry, /prefers-reduced-motion: reduce/);
-  assert.match(zentry, /min-width: 64rem\\) and \\(prefers-reduced-motion: no-preference/);
-  assert.match(zentry, /observer\\.disconnect\\(\\)/);
-  assert.match(zentry, /transitionRef\\.current\\?\\.kill\\(\\)/);
-  assert.doesNotMatch(zentry, /pin:\\s*true|video\\.play\\(/);
+  assert.match(zentry, /min-width: 64rem\) and \(prefers-reduced-motion: no-preference/);
+  assert.match(zentry, /observer\.disconnect\(\)/);
+  assert.match(zentry, /transitionRef\.current\?\.kill\(\)/);
+  assert.doesNotMatch(zentry, /pin:\s*true|video\.play\(/);
   assert.match(motifs, /aria-hidden="true"/);
   assert.match(motifs, /focusable="false"/);
 
