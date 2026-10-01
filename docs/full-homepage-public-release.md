@@ -39,9 +39,9 @@ npm run lint
 npx tsc --noEmit --incremental false
 npm run test:hero
 node --experimental-strip-types --test tests/motion-system.test.mjs
-npm run test:release-contract
-# The historical test:contract additionally includes archived dist/server tests,
-# which require an older, now-absent Express build; they remain unchanged.
+npm run test:contract
+# Maintained current-framework contracts, with Poppler installed for PDF tests.
+# Separate Playwright checks cover live disclosure/admissions routes.
 npm run approvals:release
 npm run release:audit
 
@@ -60,4 +60,4 @@ The already-open draft PRs #3, #4, #7 and #8 represent different dependencies or
 
 ## Automated contract suite scope
 
-The original `npm run test:contract` remains intact and still includes the archived Stage 2/3 Express prototype tests, which expect `dist/server/index.js`—a file this Next/Vinext repository does not contain. The **release** suite runs every other current repository contract test through `npm run test:release-contract`; it installs Poppler in CI for genuine PDF-ingestion tests. These archived legacy tests remain explicitly outstanding rather than being deleted or reported as passed. The latest seven-scene hero, legacy core motion contract and media approval tests are run independently and as part of the release suite. Production security audit findings also require review before launch.
+`npm run test:contract` now invokes the maintained current-framework `test:release-contract` suite. The archived Stage 2/3 Express worker tests still exist for historical reference but cannot run against the current Vinext stack (`dist/server/index.js` no longer exists); equivalent live-route coverage is provided by `npm run test:browser:disclosure-admissions` and CI Playwright specs. CI installs Poppler for genuine PDF-ingestion tests. This is a test-harness migration, not a claim that the incompatible archived tests individually pass. The latest seven-scene hero, scoped motion and media approval tests run independently and in the current suite. Resolve high/critical production dependency findings before launch.
