@@ -1905,8 +1905,8 @@ body[data-home-preloader="active"] {
   pointer-events: none;
 
   transition:
-    opacity 260ms ease,
-    transform 260ms ease;
+    opacity var(--motion-duration-standard) ease,
+    transform var(--motion-duration-standard) ease;
 }
 
 .home-identity-strip__disclosure:hover
@@ -1988,7 +1988,7 @@ body[data-home-preloader="active"] {
   height: auto;
 
   transition:
-    transform 700ms cubic-bezier(.22, 1, .36, 1);
+    transform var(--motion-duration-ceremonial) cubic-bezier(.22, 1, .36, 1);
 }
 
 .home-manifesto__sunburst span {
@@ -2000,8 +2000,8 @@ body[data-home-preloader="active"] {
   transform: translateY(8px);
 
   transition:
-    opacity 260ms ease,
-    transform 260ms ease;
+    opacity var(--motion-duration-standard) ease,
+    transform var(--motion-duration-standard) ease;
 }
 
 @media (hover: hover) {
@@ -2144,7 +2144,7 @@ body[data-home-preloader="active"] {
   border-radius: 50%;
   content: "";
   transition:
-    transform 700ms cubic-bezier(.22, 1, .36, 1);
+    transform var(--motion-duration-ceremonial) cubic-bezier(.22, 1, .36, 1);
 }
 
 .home-campus__orbit::after {
@@ -2175,8 +2175,8 @@ body[data-home-preloader="active"] {
   transform: translate(-50%, -8px);
 
   transition:
-    opacity 260ms ease,
-    transform 260ms ease;
+    opacity var(--motion-duration-standard) ease,
+    transform var(--motion-duration-standard) ease;
 }
 
 /* Cinematic campus photography */
@@ -2205,7 +2205,7 @@ body[data-home-preloader="active"] {
 .home-campus--hybrid
 .home-campus__frame img {
   transition:
-    transform 520ms cubic-bezier(.22, 1, .36, 1);
+    transform var(--motion-duration-slow) cubic-bezier(.22, 1, .36, 1);
 }
 
 /* Hover interactions */
