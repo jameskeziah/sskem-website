@@ -17,7 +17,8 @@ import { HomeZentryHero } from "@/components/motion/home-zentry-hero";
 import { siteFacts } from "@/app/data/site";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 import { selectHomepageAchievementArtwork } from "@/lib/homepage-achievement-publication";
-import { getPublicHeroPublication } from "@/lib/home-zentry-publication";
+import { getPublicHeroPublication, heroPublicationConfig } from "@/lib/home-zentry-publication";
+import { homeZentrySlides } from "@/lib/home-zentry-slides";
 
 
 import "./homepage.css";
@@ -63,10 +64,20 @@ const campusHeading = "A closer look at where the day begins.";
 export default async function Home() {
   const editorial = await getHomepageEditorialContent();
   const privateHomepageReview = process.env.HOMEPAGE_REVIEW_MODE === "private";
+  // Dedicated demo branch only: render operator-supplied photos in Vercel Preview.
+  // Never use this path in production or to mark school-wide publication gates complete.
+  const visualPreview = process.env.VERCEL_ENV === "preview";
+  const visualPreviewSlides = visualPreview ? homeZentrySlides.map((scene, index) => {
+    const media = heroPublicationConfig.slides[index];
+    if (media?.id !== scene.id || media.decision !== "approved" || !media.full || !media.preview) {
+      throw new Error("Visual demo requires all seven uploaded scene photos.");
+    }
+    return { ...scene, image: media.full, preview: media.preview };
+  }) : null;
   // The public preloader is opt-in and must not activate private-review media
   // or publication-preview content on the live school homepage.
   const publicHomepagePreloader = process.env.HOMEPAGE_PUBLIC_PRELOADER === "true";
-  const showHomePreloader = privateHomepageReview || publicHomepagePreloader;
+  const showHomePreloader = visualPreview || privateHomepageReview || publicHomepagePreloader;
   // Unapproved student photos and experimental interactions must never enter
   // the public homepage just because the public preloader was enabled.
   const zentryHeroPreview = privateHomepageReview && process.env.HOMEPAGE_ZENTRY_HERO === "preview";
@@ -76,7 +87,7 @@ export default async function Home() {
     throw new Error("Public Zentry hero requires the public preloader and seven individually approved media records, assets and captions.");
   }
   // Full public composition is unlocked separately from private review features.
-  const upgradedCampus = privateHomepageReview || Boolean(publishedHero?.ready);
+  const upgradedCampus = visualPreview || privateHomepageReview || Boolean(publishedHero?.ready);
   const privateAchievementReview = privateHomepageReview;
   const achievementArtwork = selectHomepageAchievementArtwork({
     mode: privateAchievementReview ? "private-review" : "public",
@@ -106,7 +117,9 @@ export default async function Home() {
         <HomePreloaderMotion mode={privateHomepageReview ? "private-review" : "public"} />
       ) : null}
       <main id="main-content" tabIndex={-1} className="home-page">
-        {zentryHeroPreview ? (
+        {visualPreviewSlides ? (
+          <HomeZentryHero slides={visualPreviewSlides} fallbackPhoto={visualPreviewSlides[0].image} />
+        ) : zentryHeroPreview ? (
           <HomeZentryHero />
         ) : publishedHero?.ready ? (
           <HomeZentryHero slides={publishedHero.slides} fallbackPhoto={publishedHero.slides[0].image} />
@@ -268,7 +281,7 @@ export default async function Home() {
         </section>
         </HomeFoundationMotion>
 
-        <HomeCampusMotion privateReview={privateHomepageReview} publicEnhanced={Boolean(publishedHero?.ready)}>
+        <HomeCampusMotion privateReview={privateHomepageReview} publicEnhanced={visualPreview || Boolean(publishedHero?.ready)}>
           <div className="home-shell">
             <div className="home-campus__heading" data-motion-home-campus-copy>
               <p className="home-chapter-label home-chapter-label--light"><span>02</span> The campus</p>
@@ -312,7 +325,16 @@ export default async function Home() {
             <figure className="home-campus__feature" data-motion-home-campus-feature>
               <div className="home-campus__feature-media" data-motion-home-campus-feature-media>
 
-{privateHomepageReview ? (
+{visualPreviewSlides ? (
+  <SiteImage
+    src={visualPreviewSlides[0].image}
+    alt="The SSKEMS campus and school building in Veral."
+    width={1916}
+    height={821}
+    sizes="100vw"
+    unoptimized
+  />
+) : privateHomepageReview ? (
   <SiteImage
     src="/media/home/hero-drafts/campus.webp"
     alt="The SSKEMS campus and school building in Veral."
