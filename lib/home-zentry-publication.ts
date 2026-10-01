@@ -126,7 +126,7 @@ export function assessHeroPublication(
 }
 
 export const heroPublicationConfig = heroPublicationData as HeroPublicationConfig;
-export const heroApprovalRecords = (approvalManifestData as { records: MediaApproval[] }).records;
+export const heroApprovalRecords = (approvalManifestData as unknown as { records: MediaApproval[] }).records;
 
 export function getPublicHeroPublication(): HeroPublicationAssessment {
   return assessHeroPublication(heroPublicationConfig, heroApprovalRecords);
