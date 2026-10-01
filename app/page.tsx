@@ -66,15 +66,14 @@ export default async function Home() {
   // The public preloader is opt-in and must not activate private-review media
   // or publication-preview content on the live school homepage.
   const publicHomepagePreloader = process.env.HOMEPAGE_PUBLIC_PRELOADER === "true";
-  const showHomePreloader = privateHomepageReview || publicHomepagePreloader;
-  // Unapproved student photos and experimental interactions must never enter
-  // the public homepage just because the public preloader was enabled.
+  // Public homepage media activates directly from seven individually approved,
+  // exact-asset records. No manually configured Vercel flag is needed on each
+  // deploy. Reverting an approval or failing its media audit disables it.
+  const publishedHero = !privateHomepageReview ? getPublicHeroPublication() : null;
+  const publicHeroRequested = Boolean(publishedHero?.ready);
+  const showHomePreloader = privateHomepageReview || publicHomepagePreloader || publicHeroRequested;
+  // Experimental/private components remain isolated from this public rollout.
   const zentryHeroPreview = privateHomepageReview && process.env.HOMEPAGE_ZENTRY_HERO === "preview";
-  const publicHeroRequested = !privateHomepageReview && process.env.HOMEPAGE_PUBLIC_ZENTRY_HERO === "true";
-  const publishedHero = publicHeroRequested ? getPublicHeroPublication() : null;
-  if (publicHeroRequested && (!publicHomepagePreloader || !publishedHero?.ready)) {
-    throw new Error("Public Zentry hero requires the public preloader and seven individually approved media records, assets and captions.");
-  }
   // Full public composition is unlocked separately from private review features.
   const upgradedCampus = privateHomepageReview || Boolean(publishedHero?.ready);
   const privateAchievementReview = privateHomepageReview;
