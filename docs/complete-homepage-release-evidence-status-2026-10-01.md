@@ -26,22 +26,22 @@ The four existing campus gallery records (`media-campus-main`, `media-campus-gro
 
 ## Document evidence queue: Appendix IX
 
-Source URLs were recorded in the user-provided `SSKEMS_Content_Governance_Master_2026-09-09.xlsx` evidence register. They are leads for ingesting *exact* PDFs, not SHA-256-bound approved archive documents. Direct attempts to retrieve several URLs during this review were rejected with HTTP 403. Obtain original PDFs through the controlled school document handoff, inspect current validity and match authority/signatures; run the repository's guarded `documents:inspect`, `documents:prepare`, `documents:publish`, and `documents:activate` workflows only after authorised review.
+Source URLs were recorded in the user-provided `SSKEMS_Content_Governance_Master_2026-09-09.xlsx` evidence register. An authenticated **read-only** WordPress REST media inventory on 2026-10-01 additionally located plausible attachments for **every** Appendix IX category; attachment IDs, file names and upload dates are listed below. These are leads for ingesting *exact* PDFs, not SHA-256-bound approved archive documents. Direct public-PDF fetches returned HTTP 403, and WordPress REST metadata does not include the underlying PDF bytes or prove current certificate validity. Obtain original PDFs through the controlled school document handoff, inspect dates/issuer/signatures and match authority; run the repository's guarded `documents:inspect`, `documents:prepare`, `documents:publish`, and `documents:activate` workflows only after authorised review.
 
 | Appendix IX record | Source lead or evidence gap | Publication gate |
 |---|---|---|
-| `document-mpd-b-1` affiliation/extension | School's `/wp-content/uploads/2026/08/Affiliation.pdf` | Exact signed PDF, period/current authority and reviewed derivative |
-| `document-mpd-b-2` trust registration/renewal | School's `/wp-content/uploads/2025/05/Societies_Trust_Company-Registration-_-Renewal-Certificate.pdf` | Exact current version and reviewed derivative |
-| `document-mpd-b-3` state NOC | No verified original in supplied evidence register | Applicable authoritative document or approved non-applicable determination |
-| `document-mpd-b-4` RTE certificate | School's `/wp-content/uploads/2026/05/RTE-Act-2009-And-Renewal.pdf` | Exact current version and reviewed derivative |
-| `document-mpd-b-5` building safety | No verified original in supplied evidence register | Valid competent-authority certificate |
-| `document-mpd-b-6` fire safety | No verified original in supplied evidence register | Valid competent-authority certificate |
-| `document-mpd-b-7` DEO certificate/self-certification | School's `/wp-content/uploads/2026/08/self-certification-proforma.pdf` and `Self-certification-proforma-1.pdf` | Designate canonical, check accepted alternative, verify exact PDF |
-| `document-mpd-b-8` water/health/sanitation | No verified original in supplied evidence register | Applicable current certificates |
-| `document-mpd-c-1` fees | School's `/wp-content/uploads/2025/05/Fee-Structure-Of-the-School-1.pdf` | Confirm applicable academic year before activation |
-| `document-mpd-c-2` annual academic calendar | No verified original in supplied evidence register | Current approved academic calendar |
-| `document-mpd-c-3` school management committee | No verified original in supplied evidence register | Current approved SMC list |
-| `document-mpd-c-4` PTA members | No verified original in supplied evidence register | Current approved PTA list |
+| `document-mpd-b-1` affiliation/extension | WordPress media **7761** (Aug 2026), `Affiliation.pdf`; older **7405** | Exact signed PDF, period/current authority and reviewed derivative |
+| `document-mpd-b-2` trust registration/renewal | WordPress media **7413** (May 2025), trust renewal certificate | Exact current version and reviewed derivative |
+| `document-mpd-b-3` state NOC | WordPress media **7409** (May 2025), state NOC candidate | Current, applicable authoritative original or documented non-applicable determination |
+| `document-mpd-b-4` RTE certificate | WordPress media **7628** (May 2026), RTE Act and renewal; older **7411** | Exact current version and reviewed derivative |
+| `document-mpd-b-5` building safety | WordPress media **7585** (Jun 2025), building safety; older **7404** | Validate issue date, expiry and competent-authority certificate |
+| `document-mpd-b-6` fire safety | WordPress media **7602**, **7586** (Jun 2025), fire-safety candidates | Designate signed current version and verify validity |
+| `document-mpd-b-7` DEO certificate/self-certification | WordPress **7765** (Aug 2026), **7758** (Aug 2026), or DEO certificate **7590** (Jun 2025) | Designate accepted canonical document; verify authority and exact PDF |
+| `document-mpd-b-8` water/health/sanitation | WordPress media **7414** (May 2025), combined certificate | Verify applicable current certificates and validity |
+| `document-mpd-c-1` fees | WordPress media **7429** (May 2025) | Confirm 2026–27 applicability/current fee schedule before activation |
+| `document-mpd-c-2` annual academic calendar | WordPress media **7638** (May 2026), academic calendar; older **7443** | Confirm 2026–27 dates and current approved version |
+| `document-mpd-c-3` school management committee | WordPress media **7424**, **7417**, **7412** (May 2025), SMC candidates | Confirm current roster and approved public fields |
+| `document-mpd-c-4` PTA members | WordPress media **7627** (May 2026), PTA candidate; older **7410** | Confirm current roster and approved public fields |
 
 Avoid replacing current school-issued documents with screenshots, index pages or old versions, and do not route the site's public archive to an inaccessible or disappearing legacy-domain asset.
 
