@@ -40,6 +40,12 @@ jobs:
         run: npm run test:release-contract
       - name: Audit hero publication (no bypass)
         run: npm run hero:publication:audit
+      - name: Confirm the stale private flag cannot suppress production hero
+        env:
+          NODE_ENV: production
+          VERCEL_ENV: production
+          HOMEPAGE_REVIEW_MODE: private
+        run: npm run hero:publication:audit
       - name: Build access-controlled review edition (no photo publishing)
         env:
           HOMEPAGE_REVIEW_MODE: private
