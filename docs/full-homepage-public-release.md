@@ -38,7 +38,9 @@ npm run tokens:build
 npm run lint
 npm run test:hero
 node --experimental-strip-types --test tests/motion-system.test.mjs
-npm run test:contract
+npm run test:release-contract
+# The historical test:contract additionally includes archived dist/server tests,
+# which require an older, now-absent Express build; they remain unchanged.
 npm run approvals:release
 npm run release:audit
 
@@ -54,3 +56,7 @@ Before activating the public flags, review the **actual approved** seven-image c
 Only then update Vercel Production variables (`HOMEPAGE_PUBLIC_PRELOADER=true`, `HOMEPAGE_PUBLIC_ZENTRY_HERO=true`, with `HOMEPAGE_REVIEW_MODE` absent), and merge the approved, tested release into the configured Production branch. Verify the final deployment and maintain a rollback deployment. Do not enable the private homepage review flag in production.
 
 The already-open draft PRs #3, #4, #7 and #8 represent different dependencies or incremental styling; coordinate their eventual merge with this branch to avoid duplicate or conflicting commits. This release branch should remain a **draft PR** until all approvals, test runs, and school publication reviews pass.
+
+## Automated contract suite scope
+
+The original `npm run test:contract` remains intact and still includes the archived Stage 2/3 Express prototype tests, which expect `dist/server/index.js`—a file this Next/Vinext repository does not contain. The **release** suite runs every other current repository contract test through `npm run test:release-contract`; it installs Poppler in CI for genuine PDF-ingestion tests. These archived legacy tests remain explicitly outstanding rather than being deleted or reported as passed. The latest seven-scene hero, legacy core motion contract and media approval tests are run independently and as part of the release suite. Production security audit findings also require review before launch.
