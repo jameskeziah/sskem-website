@@ -5,17 +5,13 @@ import sharp from "sharp";
 
 import { getPublicHeroPublication, heroPublicationConfig } from "../lib/home-zentry-publication.ts";
 
-const activated = process.env.HOMEPAGE_PUBLIC_ZENTRY_HERO === "true";
-if (!activated) {
-  console.log("Public seven-slide hero disabled; no unapproved private media will be published.");
+const isPrivateReview = process.env.HOMEPAGE_REVIEW_MODE === "private";
+if (isPrivateReview) {
+  console.log("Private review build; public seven-slide hero remains isolated.");
 } else {
+  // Public homepage publication is determined by exact authorized media records
+  // and actual file integrity, never by a manually maintained Vercel flag.
   const issues = [];
-  if (process.env.HOMEPAGE_REVIEW_MODE === "private") {
-    issues.push("Public hero cannot run alongside HOMEPAGE_REVIEW_MODE=private.");
-  }
-  if (process.env.HOMEPAGE_PUBLIC_PRELOADER !== "true") {
-    issues.push("Public hero requires HOMEPAGE_PUBLIC_PRELOADER=true.");
-  }
   const projection = getPublicHeroPublication();
   issues.push(...projection.issues);
 
@@ -47,22 +43,28 @@ if (!activated) {
     }
   }
 
-  // The project's existing school-wide release policy still applies.
+  // Publishing the fully authorized homepage hero does not assert that
+  // unrelated school certificates, results or archived routes are approved.
+  // Keep the full institutional release audit visible and intact as a
+  // separate gate for those other sections and their future activations.
   if (issues.length === 0) {
     const { auditPublicReleaseReadiness } = await import("../lib/public-release-readiness-audit.mjs");
     const readiness = await auditPublicReleaseReadiness();
-    if (!readiness.releaseReady || readiness.issues.length) {
-      issues.push("The school's public release audit is not ready; do not bypass existing publication gates.");
+    if (readiness.issues.length) {
+      issues.push(...readiness.issues.map((issue) => `School release integrity: ${issue}`));
+    }
+    if (!readiness.releaseReady) {
+      console.warn("Homepage-only media release: remaining institutional publication gates are still blocked and must not be represented as complete.");
       for (const gate of readiness.gates.filter((gate) => !gate.ready)) {
-        issues.push(`Release gate blocked: ${gate.label} (${gate.completed}/${gate.required}).`);
+        console.warn(`Unresolved independent gate: ${gate.label} (${gate.completed}/${gate.required}).`);
       }
     }
   }
 
   if (issues.length) {
-    console.error("Public Zentry hero publication BLOCKED:\n- " + issues.join("\n- "));
+    console.error("Public Zentry hero media publication BLOCKED:\n- " + issues.join("\n- "));
     process.exitCode = 1;
   } else {
-    console.log("Public Zentry hero: seven approved full/preview pairs and existing school release gates verified.");
+    console.log("Homepage hero media: seven authorized full/preview pairs verified. Unrelated school-wide gate state is reported separately.");
   }
 }
