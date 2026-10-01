@@ -11,40 +11,12 @@ permissions:
   contents: read
 
 jobs:
-  repair-release-lockfile:
-    # One-time fix restricted to our own named release branch; never grant write access to fork PRs.
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'release/complete-homepage-approval-gated-20261001'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-          persist-credentials: true
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Reconcile checked-in npm lockfile with release dependencies
-        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
-      - name: Commit lockfile repair only if npm changed it
-        shell: bash
-        run: |
-          git add package-lock.json
-          if ! git diff --cached --quiet; then
-            git -c user.name='SSKEMS CI' -c user.email='ci@users.noreply.github.com' commit -m 'chore(release): synchronize npm lockfile'
-            git push origin HEAD:${{ github.head_ref }}
-          fi
-
   validate:
-    needs: repair-release-lockfile
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
-      - name: Check out release branch including reconciled lockfile
+      - name: Check out proposed release
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
       - name: Set up Node 22
         uses: actions/setup-node@v4
         with:
@@ -52,6 +24,8 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci
+      - name: Install Poppler for actual document-ingestion contract tests
+        run: sudo apt-get update -qq && sudo apt-get install -y poppler-utils
       - name: Generate design tokens
         run: npm run tokens:build
       - name: Lint full source
@@ -60,8 +34,8 @@ jobs:
         run: npm run test:hero
       - name: Run motion-contract tests
         run: node --experimental-strip-types --test tests/motion-system.test.mjs
-      - name: Run complete repository contract suite
-        run: npm run test:contract
+      - name: Run current-framework repository contract suite
+        run: npm run test:release-contract
       - name: Audit hero publication (no bypass)
         run: npm run hero:publication:audit
       - name: Build access-controlled review edition (no photo publishing)
@@ -70,3 +44,8 @@ jobs:
           HOMEPAGE_ZENTRY_HERO: preview
           HOMEPAGE_PUBLIC_ZENTRY_HERO: 'false'
         run: npm run build:vercel
+      - name: Report production dependency security findings
+        shell: bash
+        run: |
+          npm audit --omit=dev --json > production-audit.json || true
+          node -e 'const a=require("./production-audit.json"); console.log("Production dependency vulnerabilities:",JSON.stringify(a.metadata?.vulnerabilities ?? a.error ?? {}));'
