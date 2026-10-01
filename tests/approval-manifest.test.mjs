@@ -30,10 +30,10 @@ test("validates the 44-record media, claim, and document approval inventory", as
   assert.deepEqual(issues, []);
   assert.equal(summary.total, 44);
   assert.deepEqual(summary.byKind, { media: 16, claim: 16, document: 12 });
-  assert.deepEqual(summary.byDecision, { blocked: 22, "review-required": 12, approved: 10, withdrawn: 0 });
-  assert.deepEqual(summary.blockingByKind, { media: 16, claim: 6, document: 12 });
+  assert.deepEqual(summary.byDecision, { blocked: 22, "review-required": 5, approved: 17, withdrawn: 0 });
+  assert.deepEqual(summary.blockingByKind, { media: 9, claim: 6, document: 12 });
   assert.equal(summary.releaseReady, false);
-  assert.equal(summary.blockingRecords.length, 34);
+  assert.equal(summary.blockingRecords.length, 27);
 });
 
 test("publishes the JSON schema and keeps its evidence policy aligned with the validator", async () => {
