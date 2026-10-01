@@ -67,6 +67,7 @@ test("rejects unapproved records, unauthorized paths, missing visual review and 
     ({ config }) => { config.slides.pop(); },
     ({ config }) => { [config.slides[0], config.slides[1]] = [config.slides[1], config.slides[0]]; },
     ({ approvals }) => { approvals[6].decision = "review-required"; },
+    ({ approvals }) => { approvals[0].expiresAt = "2020-01-01"; },
     ({ approvals }) => { approvals[1].publicTargets = ["/private-review"]; },
   ]) {
     const data = fixture();
