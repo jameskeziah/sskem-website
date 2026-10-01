@@ -136,5 +136,5 @@ test("does not expose source paths in the pipeline documentation or receipt cont
   assert.match(guide, /refused unless[\s\S]*?manifest record is approved/i);
   assert.match(packageJson.scripts["media:inspect"], /--inspect/);
   assert.match(packageJson.scripts["media:publish"], /--publish/);
-  assert.equal(packageJson.devDependencies.sharp, "0.34.5");
+  assert.equal(packageJson.devDependencies.sharp, "0.35.5");
 });
