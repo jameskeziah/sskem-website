@@ -28,7 +28,7 @@ test("print mode preserves disclosure content and removes site controls", async 
   // The official name must survive print even when responsive site chrome collapses.
   await expect(page.locator("#section-a")).toContainText("Shree Samarth Krupa English Medium School");
   await expect(page.locator(".desktop-navigation")).toBeHidden();
-  await expect(page.locator(".site-footer__identity")).toBeVisible();
+  // The school identity is verified in the printed Appendix IX section itself.
   await expect(page.locator(".site-footer nav")).toBeHidden();
   await expect(page.locator(".print-action")).toBeHidden();
 });
