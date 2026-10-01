@@ -62,7 +62,8 @@ const campusHeading = "A closer look at where the day begins.";
 
 export default async function Home() {
   const editorial = await getHomepageEditorialContent();
-  const privateHomepageReview = process.env.HOMEPAGE_REVIEW_MODE === "private";
+  const privateHomepageReview = process.env.HOMEPAGE_REVIEW_MODE === "private" &&
+    (process.env.VERCEL_ENV === "preview" || process.env.NODE_ENV === "development");
   // The public preloader is opt-in and must not activate private-review media
   // or publication-preview content on the live school homepage.
   const publicHomepagePreloader = process.env.HOMEPAGE_PUBLIC_PRELOADER === "true";

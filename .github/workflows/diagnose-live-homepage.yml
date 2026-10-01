@@ -1,0 +1,64 @@
+name: Diagnose live SSKEMS homepage output
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check actual public HTML and media at current deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL --max-time 30 -D /tmp/headers -o /tmp/homepage 'https://sskem-website.vercel.app/?test=gh-workflow-20261001-unique'
+          echo 'Response diagnostics:'
+          grep -iE '^(HTTP/|age:|cache-control:|x-vercel|x-matched-path:)' /tmp/headers || true
+          node -e '
+          const fs = require("node:fs");
+          const text = fs.readFileSync("/tmp/homepage", "utf8");
+          const probes = {
+            htmlBytes: text.length,
+            zentryComponentClass: text.includes("zhero__"),
+            zentryClass: text.includes("zhero"),
+            legacyPosterClass: text.includes("home-hero__desktop-poster"),
+            preloaderPresent: text.includes("home-preloader"),
+            publishedHeroImage: text.includes("/media/home/production/hero/campus/full-beb9887ea1a6.webp"),
+            privateHeroImage: text.includes("/media/home/hero-drafts/campus.webp"),
+            institutionNotice: text.includes("Admissions information for 2026"),
+          };
+          console.log(JSON.stringify(probes,null,2));
+          if (text.includes("home-hero__desktop-poster")) console.log("CAUSE: server still serves legacy hero.");
+          '
+          curl -fsSL --max-time 30 -o /dev/null -w 'Production campus image HTTP: %{http_code} (%{size_download} bytes)\n' 'https://sskem-website.vercel.app/media/home/production/hero/campus/full-beb9887ea1a6.webp'
+
+      - name: Assert redesigned production homepage after main deploy
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 24); do
+            sleep 10
+            curl -fsSL --max-time 30 -o /tmp/after "https://sskem-website.vercel.app/?verify=${GITHUB_SHA}-attempt-${attempt}"
+            if node -e '
+              const s=require("node:fs").readFileSync("/tmp/after","utf8");
+              if (!s.includes("zhero__") ||
+                  !s.includes("/media/home/production/hero/campus/full-beb9887ea1a6.webp") ||
+                  s.includes("home-hero__desktop-poster")) process.exit(1);
+              console.log("VERIFIED LIVE: interactive seven-scene hero + approved production photo; legacy poster absent");
+            '; then
+              echo "Production has not switched yet (attempt $attempt)."
+            else
+              exit 0
+            fi
+          done
+          echo 'Production still serves the legacy hero after expected rollout window.' >&2
+          exit 1

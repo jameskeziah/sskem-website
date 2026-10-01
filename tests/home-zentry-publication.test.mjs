@@ -101,3 +101,15 @@ test("public activation is separately gated and Vercel audits actual production 
   assert.match(ignore, /\/public\/media\/home\/hero-drafts\//);
   assert.match(packageJson.scripts["prebuild:vercel"], /audit-home-zentry-publication/);
 });
+
+test("production never activates private-review homepage merely from a stale global flag", async () => {
+  const [page, audit] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/audit-home-zentry-publication.mjs", import.meta.url), "utf8"),
+  ]);
+  // No Vercel environment exposes the live website as an internal preview.
+  for (const code of [page, audit]) {
+    assert.match(code, /process\.env\.HOMEPAGE_REVIEW_MODE === "private"/);
+    assert.match(code, /process\.env\.VERCEL_ENV === "preview" \|\| process\.env\.NODE_ENV === "development"/);
+  }
+});

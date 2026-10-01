@@ -5,7 +5,8 @@ import sharp from "sharp";
 
 import { getPublicHeroPublication, heroPublicationConfig } from "../lib/home-zentry-publication.ts";
 
-const isPrivateReview = process.env.HOMEPAGE_REVIEW_MODE === "private";
+const isPrivateReview = process.env.HOMEPAGE_REVIEW_MODE === "private" &&
+  (process.env.VERCEL_ENV === "preview" || process.env.NODE_ENV === "development");
 if (isPrivateReview) {
   console.log("Private review build; public seven-slide hero remains isolated.");
 } else {
