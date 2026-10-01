@@ -5,7 +5,6 @@ import {
   campusMediaPublicationRoles,
   campusMediaPublicationSummary,
   createCampusMediaPublicationIndex,
-  type CampusMediaApprovalManifestInput,
   type CampusMediaPublicationRegistryInput,
   type CampusRecordId,
 } from "./campus-media-publication.ts";
@@ -21,7 +20,7 @@ type ManifestRecord = {
   evidenceReferences: string[];
   expiresAt: string | null;
 };
-type CaptureManifest = CampusMediaApprovalManifestInput & {
+type CaptureManifest = {
   manifestId: string;
   updatedOn: string;
   checkProfiles: Record<string, string[]>;

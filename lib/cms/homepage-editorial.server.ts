@@ -11,9 +11,9 @@ import {
   type EditorialPublicationBindingsInput,
 } from "./editorial-publication-binding.ts";
 
-// @ts-expect-error Node's native type-stripping test runner requires the explicit TypeScript extension.
+// Explicit .ts extension is supported by the Node test runner and this tsconfig.
 import { admissionsCycle as fallbackAdmissionsCycle } from "../../app/data/admissions.ts";
-// @ts-expect-error Node's native type-stripping test runner requires the explicit TypeScript extension.
+// Explicit .ts extension is supported by the Node test runner and this tsconfig.
 import { siteFacts } from "../../app/data/site.ts";
 
 export type HomepageContact = {

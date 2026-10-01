@@ -1,7 +1,7 @@
 import approvalManifestData from "../../content/approval-manifest.json" with { type: "json" };
 import migrationData from "../../content/editorial-site-settings-migration.json" with { type: "json" };
 
-// @ts-expect-error Node's native type-stripping test runner requires the explicit TypeScript extension.
+// Explicit .ts extension is supported by the Node test runner and this tsconfig.
 import { siteFacts } from "../../app/data/site.ts";
 
 type UnknownRecord = Record<string, unknown>;

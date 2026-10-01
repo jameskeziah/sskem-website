@@ -768,7 +768,7 @@ export function validateProgrammesPublicationPackage(options: ValidationOptions)
       indexable: publicationReady && gates.seo === "pass",
       blockers: issues.filter((issue) => !issue.route || issue.route === route),
     }];
-  })) as Record<ProgrammesPublicationRoute, {
+  })) as unknown as Record<ProgrammesPublicationRoute, {
     route: ProgrammesPublicationRoute;
     gates: Record<string, "pass" | "fail">;
     contentComplete: boolean;
