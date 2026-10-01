@@ -190,6 +190,14 @@ export default async function Home() {
                   </>
                 ) : campusHeading}
               </h2>
+              {!privateHomepageReview ? (
+                <div className="home-campus__orbit" aria-hidden="true">
+                  <span className="home-campus__orbit-symbol">✦</span>
+                  <span className="home-campus__orbit-note">
+                    LOOK CLOSER.<br />THERE&apos;S MORE TO DISCOVER.
+                  </span>
+                </div>
+              ) : null}
               <p>Three views of the SSKEMS campus and grounds in Veral.</p>
             </div>
           </div>
