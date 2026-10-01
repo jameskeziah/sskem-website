@@ -43,6 +43,7 @@ jobs:
       - name: Build access-controlled review edition (no photo publishing)
         env:
           HOMEPAGE_REVIEW_MODE: private
+          VERCEL_ENV: preview
           HOMEPAGE_ZENTRY_HERO: preview
           HOMEPAGE_PUBLIC_ZENTRY_HERO: 'false'
         run: npm run build:vercel
