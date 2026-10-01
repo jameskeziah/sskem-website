@@ -105,11 +105,14 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
     "home-hero-motion.tsx",
     "home-hero-video-transition.tsx",
     "home-preloader-motion.tsx",
+    "home-zentry-hero.tsx",
+    "home-zentry-motifs.tsx",
     "programmes-grid-motion.tsx",
     "programmes-hero-motion.tsx",
   ]);
 
-  for (const file of files) {
+  const specialisedModules = new Set(["home-zentry-hero.tsx", "home-zentry-motifs.tsx"]);
+  for (const file of files.filter((name) => !specialisedModules.has(name))) {
     const code = await readFile(new URL(file, directory), "utf8");
     assert.match(code, /^"use client";/);
     assert.match(code, /useGSAP\s*\(/);
@@ -119,6 +122,22 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
     assert.doesNotMatch(code, /document\.querySelectorAll|useEffect\s*\(/);
     assert.doesNotMatch(code, /duration:\s*[\d.]|stagger:\s*[\d.]|delay:\s*[\d.]/);
   }
+
+  // The multi-slide interactive hero intentionally uses GSAP with React-managed
+  // visibility/autoplay and is not one of the older narrow reveal-only islands.
+  // Validate its equivalent safety constraints instead of exempting it globally.
+  const zentry = await source("components/motion/home-zentry-hero.tsx");
+  const motifs = await source("components/motion/home-zentry-motifs.tsx");
+  assert.match(zentry, /^"use client";/);
+  assert.match(zentry, /useGSAP\s*\(/);
+  assert.match(zentry, /scope:\s*rootRef/);
+  assert.match(zentry, /prefers-reduced-motion: reduce/);
+  assert.match(zentry, /min-width: 64rem\) and \(prefers-reduced-motion: no-preference/);
+  assert.match(zentry, /observer\.disconnect\(\)/);
+  assert.match(zentry, /transitionRef\.current\?\.kill\(\)/);
+  assert.doesNotMatch(zentry, /pin:\s*true|video\.play\(/);
+  assert.match(motifs, /aria-hidden="true"/);
+  assert.match(motifs, /focusable="false"/);
 
   const [hero, timeline, admissions, homeHero, homeHeroVideo, homePreloader, homeCampus, homeAchievements, programmesHero, programmesGrid, programmesPreview, homepage, homepageStyles] = await Promise.all([
     source("components/motion/admissions-hero-motion.tsx"),
@@ -165,13 +184,17 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(homeHeroVideo, /gsap\.killTweensOf\(\[frame, video\]\)/);
   assert.doesNotMatch(homeHeroVideo, /autoPlay|\bloop\b/);
   assert.match(homePreloader, /document\.fonts\?\.ready/);
+  assert.match(homePreloader, /homePreloaderMinimumVisibleMs = 1_500/);
+  assert.ok(homePreloader.includes("homePreloaderMinimumVisibleMs - (performance.now() - visibleAt)"));
+  assert.ok(homePreloader.includes("window.clearTimeout(minimumHoldTimer)"));
   assert.match(homePreloader, /data-motion-home-hero-media/);
   assert.match(homePreloader, /motionDurationSeconds\.ceremonial/);
   assert.match(homePreloader, /element\.dataset\.state = "loading"/);
   assert.match(homePreloader, /element\.dataset\.state = "exit-reveal"/);
   assert.match(homePreloader, /onStart:\s*\(\) => \{[\s\S]*?announceHomeArrivalReady\(\)/);
-  assert.match(homePreloader, /sessionStorage\.getItem\(homeEntrySessionKey\)/);
-  assert.match(homePreloader, /get\("replayPreloader"\) === "1"/);
+  assert.match(homePreloader, /mode === "public" \? "Welcome" : "Private review"/);
+  assert.doesNotMatch(homePreloader, /sessionStorage|hasSeenHomeEntry|rememberHomeEntry/);
+  assert.match(homePreloader, /new homepage load starts a fresh branded introduction/);
   assert.match(homePreloader, /scale: 1 \/ motionScale\.imageMaskMaximum/);
   assert.match(homePreloader, /data-motion-component="home-preloader"/);
   assert.match(homePreloader, /aria-hidden="true"[\s\S]*?hidden/);
@@ -188,13 +211,17 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(programmesPreview, /<ProgrammesHeroMotion>/);
   assert.match(programmesPreview, /<ProgrammesGridMotion>/);
   assert.match(programmesPreview, /data-motion-programme-card/);
-  assert.match(homepage, /<HomeHeroMotion reviewMode=/);
-  assert.match(homepage, /privateHomepageReview \? <HomePreloaderMotion \/> : null/);
+  assert.match(homepage, /<HomeHeroMotion\s+reviewMode=/);
+  assert.match(homepage, /process\.env\.HOMEPAGE_PUBLIC_PRELOADER === "true"/);
+  assert.match(homepage, /showHomePreloader = privateHomepageReview \|\| publicHomepagePreloader/);
+  assert.match(homepage, /<HomePreloaderMotion mode=\{privateHomepageReview \? "private-review" : "public"\} \/>/);
+  assert.match(homepage, /preloaderEnabled=\{showHomePreloader\}/);
+  assert.match(homeHero, /waitForArrival = privatePrototype \|\| preloaderEnabled/);
   assert.match(homepage, /data-home-hero-art/);
   assert.match(homepage, /data-motion-home-hero-media/);
   assert.match(homepage, /<HomeHeroVideoTransition asset=\{null\}>/);
   assert.match(homepageStyles, /background-image:\s*url\(["']\/og\.png["']\)/);
-  assert.match(homepage, /<HomeCampusMotion>/);
+  assert.match(homepage, /<HomeCampusMotion\b/);
   assert.match(homepage, /<HomeAchievementsMotion\b/);
 });
 
@@ -288,7 +315,9 @@ test("keeps essential navigation and content available without JavaScript", asyn
   assert.match(homepage, /Here,/);
   assert.match(homepage, /href="\/admissions\/enquire"/);
   assert.match(homepage, /Mandatory Public Disclosure/);
-  assert.match(homepage, /privateHomepageReview \? <HomePreloaderMotion \/> : null/);
+  assert.match(homepage, /process\.env\.HOMEPAGE_PUBLIC_PRELOADER === "true"/);
+  assert.match(homepage, /showHomePreloader = privateHomepageReview \|\| publicHomepagePreloader/);
+  assert.match(homepage, /<HomePreloaderMotion mode=\{privateHomepageReview \? "private-review" : "public"\} \/>/);
   assert.match(homepage, /<HomeHeroVideoTransition asset=\{null\}>/);
   assert.doesNotMatch(homepage, /style=\{\{[^}]*opacity:\s*0/);
   assert.match(globals, /site-header:not\(\[data-navigation-enhanced="true"\]\) \.mobile-menu-button/);

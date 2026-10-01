@@ -13,11 +13,16 @@ import { HomeCampusMotion } from "@/components/motion/home-campus-motion";
 import { HomeHeroMotion } from "@/components/motion/home-hero-motion";
 import { HomeHeroVideoTransition } from "@/components/motion/home-hero-video-transition";
 import { HomePreloaderMotion } from "@/components/motion/home-preloader-motion";
+import { HomeZentryHero } from "@/components/motion/home-zentry-hero";
 import { siteFacts } from "@/app/data/site";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 import { selectHomepageAchievementArtwork } from "@/lib/homepage-achievement-publication";
+import { getPublicHeroPublication } from "@/lib/home-zentry-publication";
+
 
 import "./homepage.css";
+import "./zentry-hero.css";
+import { HomeFoundationMotion } from "@/components/home/home-foundation-motion";
 
 export const metadata: Metadata = {
   title: "Shree Samarth Krupa English Medium School, Veral",
@@ -58,6 +63,19 @@ const campusHeading = "A closer look at where the day begins.";
 export default async function Home() {
   const editorial = await getHomepageEditorialContent();
   const privateHomepageReview = process.env.HOMEPAGE_REVIEW_MODE === "private";
+  // The public preloader is opt-in and must not activate private-review media
+  // or publication-preview content on the live school homepage.
+  const publicHomepagePreloader = process.env.HOMEPAGE_PUBLIC_PRELOADER === "true";
+  // Public homepage media activates directly from seven individually approved,
+  // exact-asset records. No manually configured Vercel flag is needed on each
+  // deploy. Reverting an approval or failing its media audit disables it.
+  const publishedHero = !privateHomepageReview ? getPublicHeroPublication() : null;
+  const publicHeroRequested = Boolean(publishedHero?.ready);
+  const showHomePreloader = privateHomepageReview || publicHomepagePreloader || publicHeroRequested;
+  // Experimental/private components remain isolated from this public rollout.
+  const zentryHeroPreview = privateHomepageReview && process.env.HOMEPAGE_ZENTRY_HERO === "preview";
+  // Full public composition is unlocked separately from private review features.
+  const upgradedCampus = privateHomepageReview || Boolean(publishedHero?.ready);
   const privateAchievementReview = privateHomepageReview;
   const achievementArtwork = selectHomepageAchievementArtwork({
     mode: privateAchievementReview ? "private-review" : "public",
@@ -83,9 +101,19 @@ export default async function Home() {
           },
         }}
       />
-      {privateHomepageReview ? <HomePreloaderMotion /> : null}
+      {showHomePreloader ? (
+        <HomePreloaderMotion mode={privateHomepageReview ? "private-review" : "public"} />
+      ) : null}
       <main id="main-content" tabIndex={-1} className="home-page">
-        <HomeHeroMotion reviewMode={privateHomepageReview ? "private-review" : "public"}>
+        {zentryHeroPreview ? (
+          <HomeZentryHero />
+        ) : publishedHero?.ready ? (
+          <HomeZentryHero slides={publishedHero.slides} fallbackPhoto={publishedHero.slides[0].image} />
+        ) : (
+        <HomeHeroMotion
+          reviewMode={privateHomepageReview ? "private-review" : "public"}
+          preloaderEnabled={showHomePreloader}
+        >
           <div className="home-hero__desktop-poster" data-home-hero-art aria-hidden="true" />
 
           <div className="home-hero__live-copy">
@@ -150,17 +178,83 @@ export default async function Home() {
             </div>
           </div>
         </HomeHeroMotion>
+        )}
 
+<HomeFoundationMotion>
         <HomepageIdentityStrip />
-
-        <section className="home-manifesto" aria-labelledby="manifesto-title">
+       
+        <section className="home-manifesto home-manifesto--hybrid">
           <div className="home-shell home-manifesto__grid">
-            <p className="home-chapter-label"><span>01</span> Our foundation</p>
+            
+<div className="home-manifesto__rail">
+  <p className="home-chapter-label">
+    <span>01</span> Our foundation
+  </p>
+
+  <div
+    className="home-manifesto__sunburst"
+    data-foundation-sunburst
+    aria-hidden="true"
+  >
+    <svg viewBox="0 0 120 120" focusable="false">
+      <circle
+        cx="60"
+        cy="60"
+        r="24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+
+      <circle
+        cx="60"
+        cy="60"
+        r="38"
+        fill="none"
+        stroke="currentColor"
+        strokeDasharray="3 7"
+      />
+
+      {Array.from({ length: 12 }, (_, index) => (
+        <path
+          key={index}
+          d="M60 5 V16"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          transform={`rotate(${index * 30} 60 60)`}
+        />
+      ))}
+
+      <path
+        d="M52 60h16M60 52v16"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+
+    <span>✦ A little wonder in every day.</span>
+  </div>
+</div>
+
             <div>
-              <h2 id="manifesto-title">
-                Knowledge for today.
-                <span>Character for every tomorrow.</span>
-              </h2>
+              
+<h2 id="manifesto-title">
+  <span
+    className="home-manifesto__first-line"
+    data-foundation-title
+  >
+    Knowledge for today.
+  </span>
+
+  <span
+    className="home-manifesto__accent-line"
+    data-foundation-title
+  >
+    Character for every tomorrow.
+  </span>
+</h2>
+
               <p className="home-manifesto__lead">
                 Education should help every learner understand the world, find their voice and move through life with confidence.
               </p>
@@ -171,13 +265,14 @@ export default async function Home() {
             </div>
           </div>
         </section>
+        </HomeFoundationMotion>
 
-        <HomeCampusMotion privateReview={privateHomepageReview}>
+        <HomeCampusMotion privateReview={privateHomepageReview} publicEnhanced={Boolean(publishedHero?.ready)}>
           <div className="home-shell">
             <div className="home-campus__heading" data-motion-home-campus-copy>
               <p className="home-chapter-label home-chapter-label--light"><span>02</span> The campus</p>
               <h2 id="campus-title">
-                {privateHomepageReview ? (
+                {upgradedCampus ? (
                   <>
                     <span className="visually-hidden">{campusHeading}</span>
                     <span className="home-campus__title-words" aria-hidden="true">
@@ -190,19 +285,50 @@ export default async function Home() {
                   </>
                 ) : campusHeading}
               </h2>
+
+{upgradedCampus ? (
+  <div
+    className="home-campus__orbit"
+    aria-hidden="true"
+  >
+    <span className="home-campus__orbit-symbol">
+      ✦
+    </span>
+
+    <span className="home-campus__orbit-note">
+      LOOK CLOSER.
+      <br />
+      THERE&apos;S MORE TO DISCOVER.
+    </span>
+  </div>
+) : null}
+
               <p>Three views of the SSKEMS campus and grounds in Veral.</p>
             </div>
           </div>
 
-          {privateHomepageReview ? (
+          {upgradedCampus ? (
             <figure className="home-campus__feature" data-motion-home-campus-feature>
               <div className="home-campus__feature-media" data-motion-home-campus-feature-media>
-                <CampusPicture
-                  recordId="media-campus-main"
-                  fallbackSrc="/media/home/campus-main.jpeg"
-                  alt="The pink and white SSKEMS school building in Veral."
-                  sizes="100vw"
-                />
+
+{privateHomepageReview ? (
+  <SiteImage
+    src="/media/home/hero-drafts/campus.webp"
+    alt="The SSKEMS campus and school building in Veral."
+    width={1800}
+    height={1200}
+    sizes="100vw"
+    unoptimized
+  />
+) : (
+  <CampusPicture
+    recordId="media-campus-main"
+    fallbackSrc="/media/home/campus-main.jpeg"
+    alt="The pink and white SSKEMS school building in Veral."
+    sizes="100vw"
+  />
+)}
+
               </div>
               <figcaption className="home-shell">The SSKEMS campus in Veral</figcaption>
             </figure>

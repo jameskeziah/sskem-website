@@ -1649,3 +1649,702 @@ body[data-home-preloader="active"] {
     break-inside: avoid;
   }
 }
+
+
+
+/* =========================================
+   PHASE 2 — HYBRID IDENTITY STRIP
+   ========================================= */
+
+.home-identity-strip--hybrid {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  background: var(--color-brand-950);
+  color: var(--text-on-brand);
+}
+
+/* Restrained architectural line illustration */
+
+.home-identity-strip--hybrid::before {
+  position: absolute;
+  inset: 0;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 119px,
+      color-mix(
+        in srgb,
+        var(--text-on-brand) 8%,
+        transparent
+      ) 120px
+    );
+
+  opacity: 0.35;
+  pointer-events: none;
+  content: "";
+}
+
+/* Three visual information columns */
+
+.home-identity-strip--hybrid
+.home-identity-strip__inner {
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 2fr)
+    minmax(19rem, 1fr);
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__facts {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+}
+
+/* Individual information cells */
+
+.home-identity-strip--hybrid
+.home-identity-strip__facts > div,
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure {
+  min-height: 8rem;
+  align-content: center;
+  padding-block: 1.6rem;
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__facts > div {
+  border-inline-end:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--text-on-brand) 20%,
+      transparent
+    );
+}
+
+/* Information typography */
+
+.home-identity-strip--hybrid dt {
+  margin-bottom: 0.45rem;
+  letter-spacing: 0.12em;
+}
+
+.home-identity-strip--hybrid dd {
+  font-size: clamp(1.15rem, 2vw, 2rem);
+  line-height: 1.15;
+}
+
+/* Public disclosure interaction */
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure {
+  position: relative;
+  transition:
+    background-color
+    var(--motion-duration-standard)
+    var(--motion-ease-enter);
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure::after {
+  position: absolute;
+  right: 2rem;
+  bottom: 1.1rem;
+  left: 2rem;
+
+  height: 2px;
+  background: var(--action-primary);
+
+  transform: scaleX(0);
+  transform-origin: left;
+
+  transition:
+    transform
+    var(--motion-duration-standard)
+    var(--motion-ease-enter);
+
+  content: "";
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure i {
+  transition:
+    transform
+    var(--motion-duration-standard)
+    var(--motion-ease-enter);
+}
+
+/* Desktop hover effects */
+
+@media (hover: hover) and (pointer: fine) {
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure:hover {
+    background:
+      color-mix(
+        in srgb,
+        var(--text-on-brand) 7%,
+        transparent
+      );
+  }
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure:hover::after {
+    transform: scaleX(1);
+  }
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure:hover i {
+    transform: translate(3px, -3px);
+  }
+}
+
+/* Accessible keyboard interaction */
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: -5px;
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Tablet and mobile layouts */
+
+@media (max-width: 48rem) {
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__inner,
+  .home-identity-strip--hybrid
+  .home-identity-strip__facts {
+    grid-template-columns: 1fr;
+  }
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__facts > div,
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure {
+    min-height: 6rem;
+    padding-block: 1.25rem;
+
+    border-inline-end: 0;
+  }
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__facts > div {
+    border-bottom:
+      1px solid
+      color-mix(
+        in srgb,
+        var(--text-on-brand) 20%,
+        transparent
+      );
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure,
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure::after,
+
+  .home-identity-strip--hybrid
+  .home-identity-strip__disclosure i {
+    transition: none;
+  }
+}
+
+
+/* PHASE 2 — Actual hybrid colours and interactions */
+
+.home-identity-strip--hybrid {
+  --hybrid-navy: #112c46;
+  --hybrid-coral: #ef8585;
+
+  background: var(--hybrid-navy);
+  border-bottom: 2px solid var(--hybrid-coral);
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure::after {
+  background: var(--hybrid-coral);
+}
+
+.home-identity-strip--hybrid
+.home-identity-strip__disclosure i {
+  color: var(--hybrid-coral);
+}
+
+.home-identity-strip__easter-egg {
+  position: absolute;
+  bottom: 0.35rem;
+  left: 2rem;
+
+  color: #ffc9c0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+
+  opacity: 0;
+  transform: translateY(5px);
+  pointer-events: none;
+
+  transition:
+    opacity var(--motion-duration-standard) ease,
+    transform var(--motion-duration-standard) ease;
+}
+
+.home-identity-strip__disclosure:hover
+.home-identity-strip__easter-egg,
+.home-identity-strip__disclosure:focus-visible
+.home-identity-strip__easter-egg {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-identity-strip__easter-egg {
+    transition: none;
+  }
+}
+
+
+/* PHASE 2 — Foundation editorial treatment */
+
+.home-manifesto--hybrid {
+  background:
+    radial-gradient(
+      circle at 82% 68%,
+      #f8d6ca 0,
+      transparent 37%
+    ),
+    #fff1e6;
+
+  color: #112c46;
+}
+
+.home-manifesto--hybrid
+.home-manifesto__rail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3rem;
+}
+
+.home-manifesto--hybrid
+.home-manifesto__grid h2 {
+  font-size: clamp(3rem, 6.7vw, 7rem);
+}
+
+.home-manifesto--hybrid
+.home-manifesto__first-line {
+  display: block;
+  color: #112c46;
+  font-family: var(--home-display);
+  font-weight: 800;
+  font-style: normal;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+}
+
+.home-manifesto--hybrid
+.home-manifesto__accent-line {
+  display: block;
+  margin-top: 1rem;
+  color: #cb6073;
+  font-size: 0.76em;
+  line-height: 1;
+}
+
+.home-manifesto__sunburst {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+
+  width: min(100%, 11rem);
+  color: #db747a;
+  cursor: crosshair;
+}
+
+.home-manifesto__sunburst svg {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  transition:
+    transform var(--motion-duration-ceremonial) cubic-bezier(.22, 1, .36, 1);
+}
+
+.home-manifesto__sunburst span {
+  color: #914657;
+  font-size: 0.78rem;
+  text-align: center;
+
+  opacity: 0;
+  transform: translateY(8px);
+
+  transition:
+    opacity var(--motion-duration-standard) ease,
+    transform var(--motion-duration-standard) ease;
+}
+
+@media (hover: hover) {
+  .home-manifesto__sunburst:hover svg {
+    transform: rotate(30deg);
+  }
+
+  .home-manifesto__sunburst:hover span {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 48rem) {
+  .home-manifesto--hybrid
+  .home-manifesto__rail {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .home-manifesto__sunburst {
+    width: 4.5rem;
+  }
+
+  .home-manifesto--hybrid
+  .home-manifesto__grid h2 {
+    font-size: clamp(2.7rem, 10vw, 4.8rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-manifesto__sunburst svg,
+  .home-manifesto__sunburst span {
+    transition: none;
+  }
+}
+
+
+/* Phase 2 — Foundation final spacing refinement */
+
+.home-manifesto--hybrid {
+  padding-block: clamp(3.5rem, 6vw, 6rem);
+}
+
+.home-manifesto--hybrid
+.home-manifesto__grid h2 {
+  font-size: clamp(3rem, 5.6vw, 6rem);
+  line-height: 0.96;
+}
+
+.home-manifesto--hybrid
+.home-manifesto__lead {
+  max-width: 42rem;
+  margin: 2.5rem 0 0;
+  line-height: 1.55;
+}
+
+.home-manifesto--hybrid
+.home-language-lines {
+  max-width: 42rem;
+  margin: 2rem 0 0;
+}
+
+@media (max-width: 48rem) {
+  .home-manifesto--hybrid
+  .home-manifesto__grid h2 {
+    font-size: clamp(2.7rem, 10vw, 4.8rem);
+  }
+
+  .home-manifesto--hybrid
+  .home-manifesto__lead {
+    margin-top: 2rem;
+  }
+}
+
+
+/* =========================================
+   PHASE 3 — HYBRID CAMPUS EXPERIENCE
+   Private review only
+   ========================================= */
+
+.home-campus--hybrid {
+  --campus-accent: #ef8585;
+
+  background:
+    radial-gradient(
+      circle at 12% 14%,
+      color-mix(
+        in srgb,
+        var(--campus-accent) 12%,
+        transparent
+      ),
+      transparent 25rem
+    ),
+    linear-gradient(
+      155deg,
+      var(--color-brand-950),
+      var(--color-neutral-950)
+    );
+}
+
+/* More distinctive editorial heading */
+
+.home-campus--hybrid
+.home-campus__heading h2 {
+  max-width: 62rem;
+  font-size: clamp(3.5rem, 7vw, 7.8rem);
+  letter-spacing: -0.065em;
+  line-height: 0.92;
+}
+
+.home-campus--hybrid
+.home-campus__heading > p:last-child {
+  align-self: start;
+  max-width: 35rem;
+  line-height: 1.6;
+}
+
+/* Interactive decorative emblem */
+
+.home-campus--hybrid
+.home-campus__orbit {
+  position: relative;
+  display: grid;
+  width: 9rem;
+  height: 9rem;
+  grid-column: 1;
+  grid-row: 2;
+  place-items: center;
+  align-self: start;
+  color: var(--campus-accent);
+}
+
+.home-campus__orbit::before {
+  position: absolute;
+  inset: 0.5rem;
+  border: 1px dashed currentColor;
+  border-radius: 50%;
+  content: "";
+  transition:
+    transform var(--motion-duration-ceremonial) cubic-bezier(.22, 1, .36, 1);
+}
+
+.home-campus__orbit::after {
+  position: absolute;
+  inset: 2rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  content: "";
+}
+
+.home-campus__orbit-symbol {
+  font-size: 2.2rem;
+}
+
+.home-campus__orbit-note {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 13rem;
+  color: var(--text-on-brand);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+  text-align: center;
+
+  opacity: 0;
+  transform: translate(-50%, -8px);
+
+  transition:
+    opacity var(--motion-duration-standard) ease,
+    transform var(--motion-duration-standard) ease;
+}
+
+/* Cinematic campus photography */
+
+.home-campus--hybrid
+.home-campus__feature-media {
+  border-radius: 1.5rem;
+}
+
+.home-campus--hybrid
+.home-campus__gallery {
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.home-campus--hybrid
+.home-campus__frame {
+  isolation: isolate;
+  border-radius: 1.2rem;
+}
+
+.home-campus--hybrid
+.home-campus__frame--entrance {
+  border: 4px solid var(--color-neutral-950);
+}
+
+.home-campus--hybrid
+.home-campus__frame img {
+  transition:
+    transform var(--motion-duration-slow) cubic-bezier(.22, 1, .36, 1);
+}
+
+/* Hover interactions */
+
+@media (hover: hover) and (pointer: fine) {
+  .home-campus__orbit:hover::before {
+    transform: rotate(45deg);
+  }
+
+  .home-campus__orbit:hover
+  .home-campus__orbit-note {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .home-campus--hybrid
+  .home-campus__frame:hover img {
+    transform: scale(1.045);
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .home-campus--hybrid
+  .home-campus__heading h2 {
+    font-size: clamp(3rem, 12vw, 5rem);
+  }
+
+  .home-campus--hybrid
+  .home-campus__orbit {
+    width: 5.5rem;
+    height: 5.5rem;
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .home-campus__orbit::after {
+    inset: 1.25rem;
+  }
+
+  .home-campus--hybrid
+  .home-campus__frame--entrance {
+    border: 0;
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .home-campus__orbit::before,
+  .home-campus__orbit-note,
+  .home-campus--hybrid
+  .home-campus__frame img {
+    transition: none;
+  }
+}
+
+
+/* PHASE 3 — Campus composition refinement */
+
+.home-campus--hybrid {
+  padding-top: clamp(4rem, 6vw, 6rem);
+  padding-bottom: clamp(4rem, 6vw, 6rem);
+}
+
+/* Reduce headline size and empty space */
+
+.home-campus--hybrid .home-campus__heading {
+  grid-template-columns:
+    minmax(9rem, 0.23fr)
+    minmax(0, 1fr);
+
+  column-gap: clamp(2rem, 4vw, 5rem);
+  row-gap: 1.5rem;
+
+  align-items: start;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.home-campus--hybrid .home-campus__heading h2 {
+  max-width: 68rem;
+  font-size: clamp(3.25rem, 5.6vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.home-campus--hybrid
+.home-campus__heading > p:last-child {
+  margin: 0;
+  max-width: 40rem;
+  line-height: 1.5;
+}
+
+/* Make the emblem secondary to the heading */
+
+.home-campus--hybrid .home-campus__orbit {
+  width: 6.5rem;
+  height: 6.5rem;
+  margin-top: 0;
+}
+
+/* Bring the photograph closer to the introduction */
+
+.home-campus--hybrid .home-campus__feature {
+  margin-bottom: clamp(2rem, 5vw, 4.5rem);
+}
+
+.home-campus--hybrid .home-campus__feature-media {
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+}
+
+/* Responsive layout */
+
+@media (max-width: 48rem) {
+  .home-campus--hybrid .home-campus__heading {
+    grid-template-columns: 1fr;
+    row-gap: 1.5rem;
+  }
+
+  .home-campus--hybrid .home-campus__heading h2 {
+    font-size: clamp(2.8rem, 10vw, 4.8rem);
+  }
+
+  .home-campus--hybrid
+  .home-campus__heading > p:last-child {
+    grid-column: 1;
+  }
+
+  .home-campus--hybrid .home-campus__orbit {
+    grid-column: 1;
+    grid-row: auto;
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+
+  .home-campus--hybrid .home-campus__feature-media {
+    aspect-ratio: 4 / 3;
+    min-height: 17rem;
+  }
+}

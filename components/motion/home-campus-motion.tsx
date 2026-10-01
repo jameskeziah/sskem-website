@@ -29,10 +29,13 @@ type MotionConditions = {
 export function HomeCampusMotion({
   children,
   privateReview = false,
+  publicEnhanced = false,
 }: {
   children: ReactNode;
   privateReview?: boolean;
+  publicEnhanced?: boolean;
 }) {
+  const enhanced = privateReview || publicEnhanced;
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -81,7 +84,7 @@ export function HomeCampusMotion({
           },
         );
 
-        if (privateReview && conditions.desktop && words.length) {
+        if (enhanced && conditions.desktop && words.length) {
           timeline.fromTo(
             words,
             {
@@ -104,49 +107,147 @@ export function HomeCampusMotion({
           );
         }
 
-        if (!conditions.mobile) {
-          timeline.fromTo(
-            frames,
-            {
-              clipPath: "inset(12% 0 0 0)",
-              scale: motionScale.imageMaskMaximum,
-              transformOrigin: "50% 50%",
-              willChange: "transform, clip-path",
-            },
-            {
-              clipPath: "inset(0% 0 0 0)",
-              scale: 1,
-              duration: motionDurationSeconds.slow,
-              ease: motionEase.emphasised,
-              stagger: motionStaggerSeconds.cards,
-              clearProps: "all",
-            },
-            "<",
-          );
-        }
 
-        if (privateReview && conditions.desktop && feature && featureMedia) {
-          gsap.fromTo(
-            featureMedia,
-            {
-              clipPath: "inset(17% 27% round 1.5rem)",
-              scale: motionScale.imageMaskMaximum,
-              transformOrigin: "50% 50%",
-            },
-            {
-              clipPath: "inset(0% 0% round 0rem)",
-              scale: 1,
-              duration: motionDurationSeconds.ceremonial,
-              ease: motionEase.emphasised,
-              clearProps: "all",
-              scrollTrigger: {
-                trigger: feature,
-                ...motionScrollTrigger,
-                start: "top 82%",
-              },
-            },
-          );
-        }
+if (enhanced) {
+  // Each photograph reveals when it enters the viewport.
+  // This creates three separate photographic moments.
+
+  frames.forEach((frame, index) => {
+    const photograph = frame.querySelector("img");
+
+    const reveal = gsap.timeline({
+      scrollTrigger: {
+        trigger: frame,
+        start: "top 88%",
+        once: true,
+      },
+    });
+
+    // Different reveal directions create variety.
+    const initialMask = conditions.mobile
+      ? "inset(0% 0% 0% 0%)"
+      : index === 1
+        ? "inset(0% 16% 0% 0%)"
+        : "inset(12% 0% 0% 0%)";
+
+    reveal.fromTo(
+      frame,
+      {
+        autoAlpha: 0,
+        y: conditions.mobile ? 12 : 20,
+        clipPath: initialMask,
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: motionDurationSeconds.slow,
+        ease: motionEase.emphasised,
+        clearProps: "opacity,visibility,transform,clipPath",
+      },
+      0,
+    );
+
+    // The image gently settles into its frame.
+    if (photograph && !conditions.mobile) {
+      const restingScale =
+        frame.classList.contains(
+          "home-campus__frame--entrance"
+        )
+          ? motionScale.imageMaskMaximum
+          : 1;
+
+      reveal.fromTo(
+        photograph,
+        {
+          scale: restingScale + 0.04,
+        },
+        {
+          scale: restingScale,
+          duration: motionDurationSeconds.slow,
+          ease: motionEase.emphasised,
+          clearProps: "transform",
+        },
+        0,
+      );
+    }
+  });
+} else if (!conditions.mobile) {
+  // Preserve the original public Campus animation.
+  timeline.fromTo(
+    frames,
+    {
+      clipPath: "inset(12% 0 0 0)",
+      scale: motionScale.imageMaskMaximum,
+      transformOrigin: "50% 50%",
+    },
+    {
+      clipPath: "inset(0% 0 0 0)",
+      scale: 1,
+      duration: motionDurationSeconds.slow,
+      ease: motionEase.emphasised,
+      stagger: motionStaggerSeconds.cards,
+      clearProps: "all",
+    },
+    "<",
+  );
+}
+
+
+
+if (
+  privateReview &&
+  conditions.desktop &&
+  feature &&
+  featureMedia
+) {
+  const photograph = featureMedia.querySelector("img");
+
+  const featureTimeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: feature,
+      start: "top 82%",
+      once: true,
+    },
+  });
+
+  // The photograph opens from a central mask.
+  featureTimeline.fromTo(
+    featureMedia,
+    {
+      clipPath: "inset(16% 23% round 1.5rem)",
+      scale: 1.01,
+      transformOrigin: "50% 50%",
+    },
+    {
+      clipPath: "inset(0% 0% round 1.5rem)",
+      scale: 1,
+      duration: motionDurationSeconds.ceremonial,
+      ease: motionEase.emphasised,
+      clearProps: "transform,clipPath",
+    },
+    0,
+  );
+
+  // Subtle camera pull-back.
+  if (photograph) {
+    featureTimeline.fromTo(
+      photograph,
+      {
+        scale: 1.055,
+        transformOrigin: "50% 50%",
+      },
+      {
+        scale: 1,
+        duration: motionDurationSeconds.ceremonial,
+        ease: motionEase.emphasised,
+        clearProps: "transform",
+      },
+      0,
+    );
+  }
+}
+
       });
 
       void document.fonts?.ready.then(() => {
@@ -164,7 +265,11 @@ export function HomeCampusMotion({
   return (
     <section
       ref={root}
-      className="home-campus"
+      className={
+  enhanced
+    ? "home-campus home-campus--hybrid"
+    : "home-campus"
+}
       aria-labelledby="campus-title"
       data-motion-component="home-campus"
       data-motion-level="4"

@@ -1,0 +1,648 @@
+/* V2 private-review hero: each slide has its own image-first composition.
+   Do not extend these styles to the published home-hero component. */
+.zhero {
+  --zhero-ink: #102b44;
+  --zhero-paper: #fffaf2;
+  --zhero-coral: #ff697d;
+  --zhero-sky: #a2e4ed;
+  --zhero-highlight: #ff8d9c;
+  --zhero-motif-color: #ffbdac;
+  --zhero-crop-desktop: center;
+  --zhero-crop-tablet: center;
+  --zhero-crop-mobile: center;
+  position: relative;
+  width: 100%;
+  overflow: clip;
+  isolation: isolate;
+  background: var(--zhero-ink);
+  color: var(--zhero-paper);
+}
+.zhero *, .zhero *::before, .zhero *::after { box-sizing: border-box; }
+.zhero__viewport {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: clamp(37rem, calc(100svh - 9rem), 53rem);
+  min-height: 37rem;
+  overflow: hidden;
+  background: #102b44;
+  clip-path: inset(0 0 0 0 round 0);
+}
+.zhero__media, .zhero__photograph,
+.zhero__transition-layer, .zhero__transition-layer img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.zhero__media { z-index: 0; }
+.zhero__photograph, .zhero__transition-layer img {
+  display: block;
+  object-fit: cover;
+}
+.zhero__photograph {
+  filter: none;
+  object-position: var(--zhero-crop-desktop, center);
+}
+/* These four families share principles without forcing the same composition. */
+.zhero[data-composition-family="architectural"] .zhero__photograph {
+  filter: saturate(1.025);
+}
+.zhero[data-composition-family="editorial"] .zhero__photograph {
+  filter: brightness(1.03) contrast(1.01);
+}
+.zhero[data-composition-family="kinetic"] .zhero__photograph {
+  filter: saturate(1.07);
+}
+.zhero[data-composition-family="showcase"] .zhero__photograph {
+  filter: saturate(1.02);
+}
+.zhero[data-composition-family="architectural"] .zhero__kicker { letter-spacing: .21em; }
+.zhero[data-composition-family="editorial"] .zhero__kicker { letter-spacing: .18em; }
+.zhero[data-composition-family="kinetic"] .zhero__kicker { letter-spacing: .23em; }
+.zhero[data-composition-family="showcase"] .zhero__kicker { letter-spacing: .15em; }
+/* The overlay must cover the outgoing scene's text, graphics and nav while
+   expanding. It is removed after flushSync commits the incoming scene. */
+.zhero__transition-layer {
+  z-index: 9;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.zhero__shade, .zhero__brand-accent, .zhero__scene-art {
+  position: absolute;
+  pointer-events: none;
+}
+.zhero__shade {
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(90deg, #09223cf0 0%, #09223ce0 25%, transparent 39%);
+}
+.zhero__brand-accent { z-index: 2; inset: 0; }
+.zhero__scene-art {
+  z-index: 3;
+  width: clamp(5rem, 12vw, 10rem);
+  aspect-ratio: 1;
+  color: var(--zhero-motif-color);
+  opacity: .9;
+}
+.zhero__motif { display: block; width: 100%; height: 100%; overflow: visible; }
+.zhero__editorial {
+  position: absolute;
+  z-index: 4;
+  top: 48%;
+  left: clamp(1.5rem, 4.2vw, 5.25rem);
+  width: min(34%, 30rem);
+  transform: translateY(-50%);
+  text-align: left;
+  text-shadow: 0 2px 14px #071d33a6;
+}
+.zhero__kicker {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  margin: 0 0 1.05rem;
+  color: #ffc3bb;
+  font-size: clamp(.67rem, .86vw, .91rem);
+  font-weight: 800;
+  letter-spacing: .18em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+.zhero__rule { flex: 0 0 1.75rem; height: 2px; background: var(--zhero-coral); }
+.zhero__heading {
+  display: flex;
+  flex-direction: column;
+  gap: .035em;
+  max-width: 100%;
+  margin: 0;
+  font-family: Impact, "Bahnschrift Condensed", "Arial Narrow", "Aptos Display", sans-serif;
+  font-size: clamp(2.65rem, 4.8vw, 6.15rem);
+  font-stretch: condensed;
+  font-weight: 900;
+  letter-spacing: -.025em;
+  line-height: .94;
+  text-transform: uppercase;
+}
+.zhero__heading-line {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  color: var(--zhero-paper);
+  white-space: nowrap;
+}
+.zhero__heading-line[data-accent="true"] { color: var(--zhero-highlight); }
+.zhero__summary {
+  max-width: 23rem;
+  margin: clamp(.75rem, 1.5vw, 1.5rem) 0 0;
+  color: #fff9f1;
+  font-size: clamp(.91rem, 1.1vw, 1.13rem);
+  line-height: 1.5;
+}
+.zhero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .85rem;
+  margin-top: clamp(1.2rem, 1.85vw, 1.9rem);
+}
+.zhero__apply {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.15rem;
+  padding: .35rem .4rem .35rem 1.17rem;
+  border-radius: 99px;
+  background: linear-gradient(110deg, var(--zhero-coral), #ec4c64);
+  color: #fff;
+  text-decoration: none;
+  text-shadow: none;
+  font-size: clamp(.82rem, .93vw, .98rem);
+  font-weight: 800;
+  box-shadow: 0 10px 25px #0513233b;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+.zhero__apply:hover { transform: translateY(-2px); box-shadow: 0 16px 30px #05132369; }
+.zhero__apply span {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: #102c45;
+  font-size: 1.3rem;
+}
+.zhero__explore {
+  padding: .4rem;
+  color: #fff9f1;
+  font-size: clamp(.82rem, .89vw, 1rem);
+  font-weight: 700;
+  text-underline-offset: .35rem;
+}
+.zhero__preview-wrap {
+  position: absolute;
+  z-index: 5;
+  top: 48%;
+  left: 58%;
+  width: clamp(8.75rem, 12vw, 12rem);
+  transform: translate(-50%, -50%);
+}
+.zhero__preview-label {
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  margin: 0 0 .55rem;
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 850;
+  letter-spacing: .13em;
+  text-shadow: 0 2px 10px #071d33;
+}
+.zhero__preview-label span { color: #ffcad0; }
+/* The preview has a permanent hit target and a small discoverable arrow.
+   Its PHOTO is hidden until pointer hover or keyboard-visible focus. This
+   keeps the actual school scene visible instead of covering it with a card. */
+.zhero__preview {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.56 / 1;
+  overflow: hidden;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 15px;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  transition: transform 300ms cubic-bezier(.2,.8,.25,1),
+    border-color 240ms ease, background-color 240ms ease,
+    box-shadow 300ms cubic-bezier(.2,.8,.25,1);
+}
+.zhero__preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(.94) translateY(8px);
+  transition: opacity 240ms ease, transform 320ms cubic-bezier(.2,.8,.25,1);
+}
+.zhero__preview-wrap:hover .zhero__preview,
+.zhero__preview:focus-visible {
+  border-color: #fffde8;
+  background: #3c6877;
+  box-shadow: 0 8px 36px #071d3370, 0 0 0 6px #fff3;
+}
+.zhero__preview-wrap:hover .zhero__preview img,
+.zhero__preview:focus-visible img {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+.zhero__preview-wrap:hover .zhero__preview:not(:disabled) {
+  transform: scale(1.055);
+  box-shadow: 0 14px 45px #071d3399, 0 0 0 8px #ff829045;
+}
+.zhero__preview:disabled { cursor: progress; }
+/* The arrow remains visible even when the photo is hidden. */
+.zhero__preview-symbol {
+  position: absolute;
+  z-index: 1;
+  right: .52rem;
+  bottom: .52rem;
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: #fa687b;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+.zhero__controls {
+  position: absolute;
+  z-index: 5;
+  right: clamp(1.5rem, 4.2vw, 5.25rem);
+  bottom: 1.6rem;
+  left: clamp(1.5rem, 4.2vw, 5.25rem);
+  display: flex;
+  align-items: center;
+  gap: clamp(.8rem, 2vw, 2rem);
+  color: white;
+}
+.zhero__count {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-shadow: 0 2px 8px #071d33;
+}
+.zhero__count span { color: #ffa0af; }
+.zhero__progress { display: flex; align-items: center; gap: .38rem; min-width: 7rem; }
+.zhero__progress-item {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(1.45rem, 2.8vw, 2.45rem);
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 1rem;
+  background: transparent;
+  cursor: pointer;
+  transition: width 240ms ease;
+}
+.zhero__progress-item::before {
+  position: absolute;
+  top: calc(50% - .185rem);
+  inset-inline: 0;
+  height: .37rem;
+  border-radius: 1rem;
+  background: #e6eef6b0;
+  content: "";
+}
+.zhero__progress-item[data-current="true"] { width: clamp(1.9rem, 4vw, 3.2rem); }
+.zhero__progress-item[data-current="true"]::before { background: var(--zhero-coral); }
+.zhero__navigation { display: flex; align-items: center; gap: .6rem; margin-left: auto; }
+.zhero__navigation button {
+  display: grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 1px solid #ffffffb9;
+  border-radius: 50%;
+  background: #0d25378f;
+  color: #fff;
+  font: inherit;
+  font-size: 1.3rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+.zhero__navigation button:hover:not(:disabled) { background: #fa697e; }
+.zhero__navigation button:disabled { opacity: .45; cursor: wait; }
+.zhero__navigation .zhero__autoplay {
+  width: auto;
+  min-width: 4.4rem;
+  padding-inline: .8rem;
+  border-radius: 10rem;
+  font-size: .8rem;
+  font-weight: 750;
+}
+.zhero a:focus-visible, .zhero button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+.zhero__status {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* 01 — CAMPUS. Narrow architectural panel and translucent coral slash.
+   The right 65–70% is unobstructed source photography. */
+.zhero[data-visual-layout="slash"] .zhero__shade {
+  background: linear-gradient(102deg, #0b2946f2, #163755ed);
+  clip-path: polygon(0 0, 33% 0, 29% 100%, 0 100%);
+}
+.zhero[data-visual-layout="slash"] .zhero__brand-accent {
+  background: linear-gradient(180deg, #ff8a9899, #fa516caa);
+  clip-path: polygon(33.1% 0, 34.8% 0, 30.5% 100%, 28.8% 100%);
+}
+.zhero[data-active-slide="campus"] .zhero__editorial { width: min(32%, 28rem); }
+.zhero[data-active-slide="campus"] .zhero__heading { font-size: clamp(2.45rem, 4.15vw, 5.6rem); }
+.zhero[data-active-slide="campus"] .zhero__scene-art { top: 7%; left: 3%; opacity: .53; }
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
+.zhero[data-visual-layout="curve"] .zhero__brand-accent {
+  inset: auto auto 0 0;
+  width: 29%;
+  height: 17%;
+  background: linear-gradient(100deg, #ff806fba, #f8c9a436 83%, transparent);
+  clip-path: ellipse(90% 100% at 0 100%);
+}
+.zhero[data-active-slide="entrance"] .zhero__editorial {
+  top: auto;
+  bottom: 7.5rem;
+  width: min(27%, 25rem);
+  transform: none;
+}
+.zhero[data-active-slide="entrance"] .zhero__heading { font-size: clamp(2.65rem, 4.45vw, 5.4rem); }
+.zhero[data-active-slide="entrance"] .zhero__scene-art { top: 8%; left: 6%; color: var(--zhero-motif-color); }
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
+
+/* 03 — SCIENCE. Localized text scrim, translucent lab frame and orbit. */
+.zhero[data-visual-layout="frame"] .zhero__shade {
+  background: linear-gradient(90deg, #0c2944e9 0%, #10344ee5 21%, #12354b8c 30%, transparent 42%);
+}
+.zhero[data-visual-layout="frame"] .zhero__brand-accent {
+  inset: 9% 3.5% 13% 39%;
+  border: 2px solid #abf1eee1;
+  border-radius: 1.4rem;
+  box-shadow: inset 0 0 0 11px #e7fbf40a, 0 0 0 4px #89e8e92a;
+  background: transparent;
+}
+.zhero[data-active-slide="science"] .zhero__editorial { width: min(30%, 26rem); }
+.zhero[data-active-slide="science"] .zhero__scene-art { top: 9%; left: 3%; color: var(--zhero-motif-color); }
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
+.zhero[data-active-slide="science"] .zhero__photograph { filter: brightness(1.035) contrast(1.015); }
+
+/* 04 — SKATING. Truly full-bleed; contrast only behind the small headline. */
+.zhero[data-visual-layout="chevron"] .zhero__shade {
+  background: radial-gradient(ellipse 65% 63% at 8% 92%, #09243ddc 0%, #09243d98 48%, transparent 100%);
+  clip-path: none;
+}
+.zhero[data-visual-layout="chevron"] .zhero__brand-accent {
+  inset: auto auto 6.7rem 5%;
+  width: min(37%, 33rem);
+  height: 3px;
+  background: #ff778bba;
+  transform: rotate(-4deg);
+}
+.zhero[data-active-slide="skating"] .zhero__editorial {
+  top: auto;
+  bottom: 7.8rem;
+  width: min(43%, 37rem);
+  transform: none;
+}
+.zhero[data-active-slide="skating"] .zhero__heading { font-size: clamp(2.8rem, 5vw, 6.45rem); }
+.zhero[data-active-slide="skating"] .zhero__scene-art { top: 10%; left: 4.5%; color: var(--zhero-motif-color); }
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
+.zhero[data-active-slide="skating"] .zhero__photograph { filter: saturate(1.075); }
+
+/* 05 — COMPUTER LAB. Floating interface panel; photo keeps real facilities. */
+.zhero[data-visual-layout="grid"] .zhero__shade {
+  inset: 6% auto auto 3.6%;
+  width: 31%;
+  height: 70%;
+  border: 1px solid #8ce7e6ad;
+  border-radius: 1.3rem;
+  background: linear-gradient(135deg, #102d47e8, #133b52df);
+  box-shadow: 0 14px 45px #102b443d;
+  backdrop-filter: blur(5px);
+}
+.zhero[data-visual-layout="grid"] .zhero__brand-accent {
+  inset: 7.3% auto auto 4.3%;
+  width: 29.6%;
+  height: 67.4%;
+  border: 1px dashed #74e7ec6d;
+  border-radius: .9rem;
+  background: repeating-linear-gradient(0deg, transparent 0 31px, #84dde513 31px 32px),
+    repeating-linear-gradient(90deg, transparent 0 31px, #84dde513 31px 32px);
+}
+.zhero[data-active-slide="digital"] .zhero__editorial {
+  top: 12%;
+  left: 6%;
+  width: min(26%, 25rem);
+  transform: none;
+}
+.zhero[data-active-slide="digital"] .zhero__heading { font-size: clamp(2.35rem, 3.85vw, 5.1rem); }
+.zhero[data-active-slide="digital"] .zhero__heading-line[data-accent="true"] { color: var(--zhero-highlight); }
+.zhero[data-active-slide="digital"] .zhero__scene-art {
+  right: 6%;
+  bottom: 10%;
+  color: var(--zhero-motif-color);
+  opacity: .75;
+}
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
+.zhero[data-active-slide="digital"] .zhero__photograph { filter: brightness(1.04) contrast(1.02); }
+
+/* 06 — CULTURE. Curved decorative ribbon and narrow editorial edge. */
+.zhero[data-visual-layout="ribbon"] .zhero__shade {
+  background: linear-gradient(96deg, #342b3ee8 0%, #57384be1 20%, #57384b70 29%, transparent 39%);
+}
+.zhero[data-visual-layout="ribbon"] .zhero__brand-accent {
+  inset: 0 0 auto 0;
+  height: 4.3%;
+  background: linear-gradient(100deg, #ffe9c5, #fa8d87, #ffcb9f);
+  clip-path: polygon(0 0, 100% 0, 100% 40%, 80% 65%, 52% 58%, 28% 100%, 0 55%);
+  opacity: .85;
+}
+.zhero[data-active-slide="culture"] .zhero__editorial { width: min(31%, 27rem); }
+.zhero[data-active-slide="culture"] .zhero__heading { font-size: clamp(2.6rem, 4.35vw, 5.6rem); }
+.zhero[data-active-slide="culture"] .zhero__scene-art { top: 10%; left: 3%; color: var(--zhero-motif-color); }
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
+
+/* 07 — SPORTS. Near-total photo with small negative-space headline scrim. */
+.zhero[data-visual-layout="sport"] .zhero__shade {
+  background: radial-gradient(ellipse 57% 66% at 7% 68%, #0b333dbd 0%, #092e3a87 48%, transparent 100%);
+  clip-path: none;
+}
+.zhero[data-visual-layout="sport"] .zhero__brand-accent {
+  inset: auto auto 6.6rem 4.2%;
+  width: 35%;
+  height: 4px;
+  background: linear-gradient(90deg, #ff8b6b, #ff8b6b00);
+  transform: rotate(-5deg);
+}
+.zhero[data-active-slide="sports"] .zhero__editorial {
+  top: auto;
+  bottom: 8rem;
+  width: min(39%, 35rem);
+  transform: none;
+}
+.zhero[data-active-slide="sports"] .zhero__heading { font-size: clamp(2.9rem, 5.25vw, 7rem); }
+.zhero[data-active-slide="sports"] .zhero__scene-art { top: 10%; left: 4.5%; color: var(--zhero-motif-color); }
+/* Thumbnail geometry for this scene comes from slide.previewPlacement. */
+.zhero[data-active-slide="sports"] .zhero__count {
+  padding: .38rem .6rem;
+  border: 1px solid #ffffffa8;
+  border-radius: .3rem;
+  background: #0c3643ae;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Typed photo treatments from HomeZentrySlide.
+   Apply the identical treatment to the expanding layer to avoid a visible
+   colour jump as the incoming photograph replaces the transition overlay. */
+.zhero[data-photo-treatment="natural"] .zhero__photograph,
+.zhero__transition-layer[data-photo-treatment="natural"] img {
+  filter: none;
+}
+.zhero[data-photo-treatment="warm"] .zhero__photograph,
+.zhero__transition-layer[data-photo-treatment="warm"] img {
+  filter: brightness(1.02) saturate(1.045) sepia(.018);
+}
+.zhero[data-photo-treatment="clean"] .zhero__photograph,
+.zhero__transition-layer[data-photo-treatment="clean"] img {
+  filter: brightness(1.035) contrast(1.012) saturate(1.015);
+}
+.zhero[data-photo-treatment="vibrant"] .zhero__photograph,
+.zhero__transition-layer[data-photo-treatment="vibrant"] img {
+  filter: brightness(1.025) contrast(1.015) saturate(1.09);
+}
+/* The semantic position is also available to automated crop-review checks.
+   Existing per-scene desktop fine-tuning remains in previewPlacement.desktop;
+   mobile placement stays deliberately conservative until photo review. */
+.zhero__preview-wrap[data-preview-position="centre-right"] { transform-origin: 50% 50%; }
+.zhero__preview-wrap[data-preview-position="lower-right"],
+.zhero__preview-wrap[data-preview-position="upper-right"] { transform-origin: 100% 50%; }
+
+/* Lightweight SVG microinteraction. Illustration never obscures the photo. */
+@keyframes zhero-trace { to { stroke-dashoffset: -42; } }
+@keyframes zhero-sun { to { transform: rotate(16deg); } }
+@keyframes zhero-bob { 50% { transform: translateY(-5px); } }
+@keyframes zhero-glide { 50% { transform: translateX(5px); } }
+.zhero__motif-trace { animation: zhero-trace 11s linear infinite; }
+.zhero__motif-spin { transform-origin: 126px 43px; animation: zhero-sun 9s ease-in-out infinite alternate; }
+.zhero__motif-orbit { stroke-dasharray: 4 5; animation: zhero-trace 6s linear infinite; }
+.zhero__motif-speed { animation: zhero-glide 2.8s ease-in-out infinite; }
+.zhero__motif-cursor { transform-origin: 29px 83px; animation: zhero-sun 3.4s ease-in-out infinite alternate; }
+.zhero__motif-notes { animation: zhero-bob 3.8s ease-in-out infinite; }
+
+/* Tablet/mobile: one controlled photo-preserving layout; no giant opaque navy
+   screen, all seven controls remain operable, and the preview moves above copy. */
+@media (max-width: 63.999rem) {
+  .zhero__photograph { object-position: var(--zhero-crop-tablet, center); }
+  .zhero__viewport { height: clamp(42rem, 91svh, 51rem); min-height: 42rem; }
+  .zhero .zhero__shade {
+    inset: auto 0 0 !important;
+    width: 100% !important;
+    height: 68% !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: linear-gradient(0deg, #09253df5 0%, #0b2c42ca 35%, transparent 100%) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    clip-path: none !important;
+  }
+  .zhero .zhero__brand-accent {
+    inset: auto auto 8.9rem 1.5rem !important;
+    width: 4.3rem !important;
+    height: 3px !important;
+    border: 0 !important;
+    background: var(--zhero-coral) !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+  .zhero .zhero__editorial {
+    top: auto !important;
+    right: 1.75rem !important;
+    bottom: 10rem !important;
+    left: 1.75rem !important;
+    width: min(88%, 39rem) !important;
+    transform: none !important;
+  }
+  .zhero .zhero__heading { font-size: clamp(2.95rem, 8.5vw, 5.6rem) !important; }
+  .zhero .zhero__scene-art {
+    top: 1.5rem !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: 1.7rem !important;
+    width: 5.6rem;
+    opacity: .63;
+  }
+  .zhero .zhero__preview-wrap {
+    top: 2rem !important;
+    right: 2rem !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: clamp(7.4rem, 21vw, 10.4rem);
+    transform: none !important;
+  }
+  .zhero__controls { bottom: 1.65rem; right: 1.75rem; left: 1.75rem; }
+}
+@media (max-width: 40rem) {
+  .zhero__photograph { object-position: var(--zhero-crop-mobile, center); }
+  .zhero__viewport { min-height: 44rem; height: 88svh; max-height: 49rem; }
+  .zhero .zhero__editorial {
+    bottom: 9.7rem !important;
+    right: 1.3rem !important;
+    left: 1.3rem !important;
+    width: calc(100% - 2.6rem) !important;
+  }
+  .zhero .zhero__heading { font-size: clamp(2.9rem, 9.3vw, 4.15rem) !important; }
+  .zhero__summary { max-width: 21rem; font-size: .91rem; }
+  .zhero__kicker { margin-bottom: .7rem; font-size: .66rem; }
+  .zhero__actions { gap: .45rem; margin-top: 1.1rem; }
+  .zhero__apply { min-height: 2.9rem; padding-left: .9rem; gap: .6rem; }
+  .zhero__apply span { width: 2.15rem; height: 2.15rem; }
+  .zhero .zhero__scene-art { top: 1.1rem !important; left: 1rem !important; width: 4rem; }
+  .zhero .zhero__preview-wrap { top: 1.4rem !important; right: 1.35rem !important; width: 7.1rem; }
+  .zhero__preview-label { font-size: .56rem; }
+  .zhero__controls {
+    right: 1.05rem;
+    bottom: 1.2rem;
+    left: 1.05rem;
+    flex-wrap: wrap;
+    gap: 0 .5rem;
+  }
+  .zhero__progress { order: 3; justify-content: center; width: 100%; min-width: 0; gap: .44rem; }
+  .zhero__progress-item { width: 1.45rem; height: 2rem; }
+  .zhero__progress-item[data-current="true"] { width: 1.8rem; }
+  .zhero__navigation { order: 2; gap: .35rem; }
+  .zhero__navigation button { width: 2.65rem; height: 2.65rem; }
+  .zhero__autoplay { display: none !important; }
+  .zhero .zhero__brand-accent { bottom: 8.95rem !important; left: 1.3rem !important; }
+}
+/* Touch screens cannot hover: show the compact UP NEXT / arrow trigger,
+   not a permanently overlaid preview photo. A single tap still advances. */
+@media (hover: none) {
+  .zhero__preview-wrap:hover .zhero__preview {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+  }
+  .zhero__preview-wrap:hover .zhero__preview img {
+    opacity: 0;
+    transform: scale(.94) translateY(8px);
+  }
+  .zhero__preview:focus-visible { border-color: #fffde8; background: #3c6877; }
+  .zhero__preview:focus-visible img { opacity: 1; transform: none; }
+}
+/* When content wraps on compact handsets, prioritise legible copy over ornaments. */
+@media (max-width: 25rem) {
+  .zhero .zhero__heading { font-size: clamp(2.55rem, 9.1vw, 3.5rem) !important; }
+  .zhero__summary { line-height: 1.38; }
+  .zhero .zhero__scene-art { opacity: .33; }
+  .zhero__apply { font-size: .78rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zhero *, .zhero *::before, .zhero *::after { animation: none !important; transition: none !important; }
+  .zhero__viewport { clip-path: none !important; }
+}

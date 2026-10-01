@@ -26,9 +26,11 @@ type MotionConditions = {
 export function HomeHeroMotion({
   children,
   reviewMode = "public",
+  preloaderEnabled = false,
 }: {
   children: ReactNode;
   reviewMode?: "public" | "private-review";
+  preloaderEnabled?: boolean;
 }) {
   const root = useRef<HTMLElement>(null);
 
@@ -45,6 +47,9 @@ export function HomeHeroMotion({
         const heroMedia = element.querySelector<HTMLElement>("[data-motion-home-hero-media] img");
         const targets = [intro, ...headings, heroMedia].filter(Boolean) as HTMLElement[];
         const privatePrototype = reviewMode === "private-review";
+        // Let the public mobile hero begin beneath the same branded curtain,
+        // without enabling any of the private-review-specific hero treatments.
+        const waitForArrival = privatePrototype || preloaderEnabled;
         const animateLiveHero = conditions.mobile || (privatePrototype && conditions.tablet);
 
         if (conditions.reduce || !animateLiveHero) {
@@ -57,7 +62,7 @@ export function HomeHeroMotion({
           : conditions.tablet
             ? motionDistancePixels.revealTablet
             : motionDistancePixels.revealDesktop;
-        const timeline = gsap.timeline({ paused: privatePrototype });
+        const timeline = gsap.timeline({ paused: waitForArrival });
 
         if (privatePrototype && heroMedia && !conditions.mobile) {
           timeline.fromTo(
@@ -81,7 +86,7 @@ export function HomeHeroMotion({
         if (intro) {
           timeline.fromTo(
             intro,
-            { opacity: 0, y: distance, willChange: "transform, opacity", immediateRender: !privatePrototype },
+            { opacity: 0, y: distance, willChange: "transform, opacity", immediateRender: !waitForArrival },
             {
               opacity: 1,
               y: 0,
@@ -95,7 +100,7 @@ export function HomeHeroMotion({
 
         timeline.fromTo(
           headings,
-          { opacity: 0, y: distance, willChange: "transform, opacity", immediateRender: !privatePrototype },
+          { opacity: 0, y: distance, willChange: "transform, opacity", immediateRender: !waitForArrival },
           {
             opacity: 1,
             y: 0,
@@ -107,7 +112,7 @@ export function HomeHeroMotion({
           0,
         );
 
-        if (privatePrototype) {
+        if (waitForArrival) {
           const playArrival = () => timeline.play(0);
           if (document.documentElement.dataset[homeArrivalSignal.datasetKey] === "true") {
             playArrival();

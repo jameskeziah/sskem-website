@@ -1,4 +1,4 @@
-// @ts-expect-error Node's native type-stripping test runner requires the explicit TypeScript extension.
+// Explicit .ts extension is supported by the Node test runner and this tsconfig.
 import { createSiteSettingsMigrationPacket } from "./site-settings-migration.ts";
 
 type UnknownRecord = Record<string, unknown>;

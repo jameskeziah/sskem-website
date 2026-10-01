@@ -45,3 +45,7 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# Draft student/campus photographs remain on the local machine until
+# publication governance verifies consent, rights and management approval.
+/public/media/home/hero-drafts/
