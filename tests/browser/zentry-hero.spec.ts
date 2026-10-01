@@ -12,6 +12,9 @@ test("Zentry preview expands the centre thumbnail and keeps admissions interacti
   await expect(hero.getByRole("heading", { level: 1 })).toHaveAccessibleName("Here, possibility begins.");
   await expect(hero.getByRole("link", { name: /Apply for Admission/i })).toHaveAttribute("href", "/admissions/enquire");
   await expect(hero.locator(".zhero__progress-item")).toHaveCount(7);
+  // Wait for the real preloader handoff before asserting mouse hover states.
+  await expect(page.locator("[data-motion-component='home-preloader']")).toBeHidden({ timeout: 12_000 });
+  await page.mouse.move(2, 2);
 
   // Hovering inside the hero pauses autoplay while the visitor considers a
   // click; the expansion is the intended primary action.
@@ -37,14 +40,16 @@ test("Zentry preview expands the centre thumbnail and keeps admissions interacti
   await expect(hero.getByRole("button", { name: "Resume automatic slides" })).toHaveAttribute("aria-pressed", "true");
 });
 
-test("Zentry preview supports mobile tap with accessible navigation", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+test.describe("mobile touch navigation", () => {
+  test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+  test("Zentry preview supports mobile tap with accessible navigation", async ({ page }) => {
   await page.goto("/");
   const hero = page.locator("[data-motion-component='home-zentry-hero']");
   await expect(hero).toBeVisible();
   await hero.getByRole("button", { name: /Expand next slide:/ }).tap();
   await expect(hero).toHaveAttribute("data-active-slide", "entrance", { timeout: 8_000 });
   await expect(hero.getByRole("link", { name: /Apply for Admission/i })).toBeVisible();
+  });
 });
 
 test("reduced motion changes images without a blocking expansion", async ({ page }) => {
@@ -52,7 +57,7 @@ test("reduced motion changes images without a blocking expansion", async ({ page
   await page.goto("/");
   const hero = page.locator("[data-motion-component='home-zentry-hero']");
   await expect(hero).toBeVisible();
-  await hero.getByRole("button", { name: "Next slide" }).click();
+  await hero.getByRole("button", { name: "Next slide", exact: true }).click();
   await expect(hero).toHaveAttribute("data-active-slide", "entrance");
   await expect(hero.locator(".zhero__transition-layer")).toHaveCount(0);
 });
@@ -93,7 +98,7 @@ test("configured campus crop tracks all three responsive breakpoints", async ({ 
   const photo = hero.locator(".zhero__photograph");
   await expect(hero).toHaveAttribute("data-active-slide", "campus");
   await expect(photo).toHaveCSS("object-position", "58% 48%");
-  await expect(hero.locator(".zhero__preview-wrap")).toHaveAttribute("style", /left: 66%/);
+  await expect(hero.locator(".zhero__preview-wrap")).toHaveAttribute("style", /left:\\s*66%/);
 
   await page.setViewportSize({ width: 768, height: 1024 });
   await expect(photo).toHaveCSS("object-position", "60% 48%");
