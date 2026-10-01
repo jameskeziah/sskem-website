@@ -1,0 +1,44 @@
+name: SSKEMS full homepage release validation
+
+on:
+  pull_request:
+    branches:
+      - main
+      - feature/home-campus-hybrid
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out proposed release
+        uses: actions/checkout@v4
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Generate design tokens
+        run: npm run tokens:build
+      - name: Lint full source
+        run: npm run lint
+      - name: Validate hero scene contracts and publication safety
+        run: npm run test:hero
+      - name: Run motion-contract tests
+        run: node --experimental-strip-types --test tests/motion-system.test.mjs
+      - name: Run complete repository contract suite
+        run: npm run test:contract
+      - name: Audit hero publication (no bypass)
+        run: npm run hero:publication:audit
+      - name: Build access-controlled review edition (no photo publishing)
+        env:
+          HOMEPAGE_REVIEW_MODE: private
+          HOMEPAGE_ZENTRY_HERO: preview
+          HOMEPAGE_PUBLIC_ZENTRY_HERO: "false"
+        run: npm run build:vercel
