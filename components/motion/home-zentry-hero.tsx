@@ -11,15 +11,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { homeArrivalSignal } from "@/lib/motion";
 import { ZentryMotif } from "@/components/motion/home-zentry-motifs";
 import {
-  homeZentryFallbackPhoto,
-  homeZentrySlides,
+  homeZentryFallbackPhoto as privateFallbackPhoto,
+  homeZentrySlides as privateHomeZentrySlides,
   type HomeZentrySlide,
   type HeroPreviewPosition,
 } from "@/lib/home-zentry-slides";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const slideCount = homeZentrySlides.length;
+const slideCount = privateHomeZentrySlides.length;
 const nextIndex = (index: number) => (index + 1) % slideCount;
 const previousIndex = (index: number) => (index + slideCount - 1) % slideCount;
 
@@ -63,7 +63,15 @@ function previewStyles(slide: HomeZentrySlide): CSSProperties {
   };
 }
 
-export function HomeZentryHero() {
+export function HomeZentryHero({
+  slides = privateHomeZentrySlides,
+  fallbackPhoto = privateFallbackPhoto,
+}: {
+  slides?: readonly HomeZentrySlide[];
+  fallbackPhoto?: string;
+} = {}) {
+  const homeZentrySlides = slides;
+  const homeZentryFallbackPhoto = fallbackPhoto;
   const rootRef = useRef<HTMLElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const previewRef = useRef<HTMLButtonElement>(null);
@@ -224,7 +232,7 @@ export function HomeZentryHero() {
       duration: target.entrance === "energetic" ? 0.76 : target.entrance === "graceful" ? 0.98 : 0.92,
       ease: target.entrance === "energetic" ? "power4.inOut" : "power3.inOut",
     }, 0);
-  }, [failedAssets]);
+  }, [failedAssets, homeZentrySlides, homeZentryFallbackPhoto]);
 
   useEffect(() => {
     mountedRef.current = true;
