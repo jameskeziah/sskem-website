@@ -35,6 +35,10 @@ function fixture() {
     kind: "media",
     decision: "approved",
     publicTargets: ["/"],
+    checks: { accuracy: "verified", rights: "verified", privacy: "verified", "management-approval": "verified" },
+    evidenceReferences: [`approved-receipt-${id}`],
+    approvedByRole: "School Management",
+    approvedAt: "2026-09-30T12:00:00Z",
   }));
   return { config, approvals };
 }
@@ -68,6 +72,10 @@ test("rejects unapproved records, unauthorized paths, missing visual review and 
     ({ config }) => { [config.slides[0], config.slides[1]] = [config.slides[1], config.slides[0]]; },
     ({ approvals }) => { approvals[6].decision = "review-required"; },
     ({ approvals }) => { approvals[0].expiresAt = "2020-01-01"; },
+    ({ approvals }) => { approvals[0].checks.rights = "pending"; },
+    ({ approvals }) => { approvals[2].evidenceReferences = []; },
+    ({ approvals }) => { approvals[4].approvedByRole = null; },
+    ({ approvals }) => { approvals[5].approvedAt = null; },
     ({ approvals }) => { approvals[1].publicTargets = ["/private-review"]; },
   ]) {
     const data = fixture();
