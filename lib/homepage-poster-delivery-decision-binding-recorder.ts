@@ -48,8 +48,8 @@ export async function createHomepagePosterDeliveryDecisionBindingPlan(options: {
   replace?: boolean;
   registryPath?: string;
   now?: Date | string | number;
-  manifest?: Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]["manifest"];
-  contract?: Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]["contract"];
+  manifest?: NonNullable<Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]>["manifest"];
+  contract?: NonNullable<Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]>["contract"];
 }) {
   const registryPath = path.resolve(options.registryPath ?? defaultRegistryPath);
   const { text: registryText, value: registryValue } = await readJsonObject(registryPath, "Poster delivery decision binding registry");

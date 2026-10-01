@@ -66,8 +66,8 @@ function resolvedTime(value: Date | string | number | undefined) {
 
 export function validateHomepagePosterDeliveryDecisionBindingRegistry(options: {
   registry?: unknown;
-  manifest?: Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]["manifest"];
-  contract?: Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]["contract"];
+  manifest?: NonNullable<Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]>["manifest"];
+  contract?: NonNullable<Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]>["contract"];
   now?: Date | string | number;
 } = {}) {
   const registry = options.registry ?? registryData;
@@ -145,8 +145,8 @@ export function homepagePosterDeliveryDecisionBindingSummary(options: Parameters
 export function createHomepagePosterDeliveryDecisionBindingProposal(options: {
   request: unknown;
   now?: Date | string | number;
-  manifest?: Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]["manifest"];
-  contract?: Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]["contract"];
+  manifest?: NonNullable<Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]>["manifest"];
+  contract?: NonNullable<Parameters<typeof createHomepagePosterDeliveryDecisionPacket>[0]>["contract"];
 }) {
   const now = resolvedTime(options.now);
   const plan = createHomepagePosterDeliveryDecisionPlan(options);

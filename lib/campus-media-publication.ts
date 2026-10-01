@@ -165,7 +165,7 @@ export function validateCampusMediaPublicationRegistry(options: {
     if (seenRecordIds.has(recordId)) issues.push(`${path}.recordId is duplicated.`);
     else seenRecordIds.add(recordId);
     if (binding.role !== rolesByRecordId[recordId]) issues.push(`${path}.role does not match ${recordId}.`);
-    else if (seenRoles.has(binding.role)) issues.push(`${path}.role is duplicated.`);
+    else if (seenRoles.has(binding.role as string)) issues.push(`${path}.role is duplicated.`);
     else seenRoles.add(binding.role as string);
     if (binding.profile !== "campus-responsive") issues.push(`${path}.profile is invalid.`);
     if (typeof binding.sourceSha256 !== "string" || !sha256Pattern.test(binding.sourceSha256)) issues.push(`${path}.sourceSha256 is invalid.`);

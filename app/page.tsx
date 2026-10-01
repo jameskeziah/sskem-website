@@ -17,6 +17,7 @@ import { HomeZentryHero } from "@/components/motion/home-zentry-hero";
 import { siteFacts } from "@/app/data/site";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 import { selectHomepageAchievementArtwork } from "@/lib/homepage-achievement-publication";
+import { getPublicHeroPublication } from "@/lib/home-zentry-publication";
 
 
 import "./homepage.css";
@@ -65,10 +66,16 @@ export default async function Home() {
   // The public preloader is opt-in and must not activate private-review media
   // or publication-preview content on the live school homepage.
   const publicHomepagePreloader = process.env.HOMEPAGE_PUBLIC_PRELOADER === "true";
-  const showHomePreloader = privateHomepageReview || publicHomepagePreloader;
-  // Unapproved student photos and experimental interactions must never enter
-  // the public homepage just because the public preloader was enabled.
+  // Public homepage media activates directly from seven individually approved,
+  // exact-asset records. No manually configured Vercel flag is needed on each
+  // deploy. Reverting an approval or failing its media audit disables it.
+  const publishedHero = !privateHomepageReview ? getPublicHeroPublication() : null;
+  const publicHeroRequested = Boolean(publishedHero?.ready);
+  const showHomePreloader = privateHomepageReview || publicHomepagePreloader || publicHeroRequested;
+  // Experimental/private components remain isolated from this public rollout.
   const zentryHeroPreview = privateHomepageReview && process.env.HOMEPAGE_ZENTRY_HERO === "preview";
+  // Full public composition is unlocked separately from private review features.
+  const upgradedCampus = privateHomepageReview || Boolean(publishedHero?.ready);
   const privateAchievementReview = privateHomepageReview;
   const achievementArtwork = selectHomepageAchievementArtwork({
     mode: privateAchievementReview ? "private-review" : "public",
@@ -100,6 +107,8 @@ export default async function Home() {
       <main id="main-content" tabIndex={-1} className="home-page">
         {zentryHeroPreview ? (
           <HomeZentryHero />
+        ) : publishedHero?.ready ? (
+          <HomeZentryHero slides={publishedHero.slides} fallbackPhoto={publishedHero.slides[0].image} />
         ) : (
         <HomeHeroMotion
           reviewMode={privateHomepageReview ? "private-review" : "public"}
@@ -258,12 +267,12 @@ export default async function Home() {
         </section>
         </HomeFoundationMotion>
 
-        <HomeCampusMotion privateReview={privateHomepageReview}>
+        <HomeCampusMotion privateReview={privateHomepageReview} publicEnhanced={Boolean(publishedHero?.ready)}>
           <div className="home-shell">
             <div className="home-campus__heading" data-motion-home-campus-copy>
               <p className="home-chapter-label home-chapter-label--light"><span>02</span> The campus</p>
               <h2 id="campus-title">
-                {privateHomepageReview ? (
+                {upgradedCampus ? (
                   <>
                     <span className="visually-hidden">{campusHeading}</span>
                     <span className="home-campus__title-words" aria-hidden="true">
@@ -277,7 +286,7 @@ export default async function Home() {
                 ) : campusHeading}
               </h2>
 
-{privateHomepageReview ? (
+{upgradedCampus ? (
   <div
     className="home-campus__orbit"
     aria-hidden="true"
@@ -298,7 +307,7 @@ export default async function Home() {
             </div>
           </div>
 
-          {privateHomepageReview ? (
+          {upgradedCampus ? (
             <figure className="home-campus__feature" data-motion-home-campus-feature>
               <div className="home-campus__feature-media" data-motion-home-campus-feature-media>
 

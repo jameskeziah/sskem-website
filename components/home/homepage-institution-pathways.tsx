@@ -12,6 +12,14 @@ const pathwayFallbacks: Record<ProgrammesPublicationRoute, { label: string; titl
   "/programmes/jee-neet": { label: "Institute", title: "Entrance-examination preparation" },
 };
 
+type HomepagePathway = {
+  route: ProgrammesPublicationRoute;
+  state: "approved-public-subset" | "private-pending";
+  label: string;
+  title: string;
+  summary: string;
+};
+
 const supportingRoutes = [
   { label: "Admissions", href: "/admissions" },
   { label: "Campus", href: "/school/facilities" },
@@ -25,7 +33,7 @@ export function HomepageInstitutionPathways({
   privateReview?: boolean;
   now?: Date;
 }) {
-  const pathways = PROGRAMMES_PUBLICATION_ROUTES.flatMap((route) => {
+  const pathways = PROGRAMMES_PUBLICATION_ROUTES.flatMap<HomepagePathway>((route) => {
     const profile = getPublicProgrammeProfile(route, now);
     if (profile) {
       return [{

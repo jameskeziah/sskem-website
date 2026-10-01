@@ -1,7 +1,5 @@
-import {
-  getHomepageEditorialReview,
-  type EditorialContentType,
-} from "@/lib/cms/homepage-editorial.server";
+import { getHomepageEditorialReview } from "@/lib/cms/homepage-editorial.server";
+import type { EditorialContentType } from "@/lib/cms/editorial-publication-binding";
 import { getChatGPTUser } from "@/app/chatgpt-auth";
 
 export const dynamic = "force-dynamic";

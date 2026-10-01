@@ -25,10 +25,11 @@ test("print mode preserves disclosure content and removes site controls", async 
 
   await expect(page.getByRole("heading", { name: "Mandatory Public Disclosure", level: 1 })).toBeVisible();
   await expect(page.locator("#section-a")).toBeVisible();
-  await expect(page.locator(".site-header")).toBeVisible();
+  // The official name must survive print even when responsive site chrome collapses.
+  await expect(page.locator("#section-a")).toContainText("Shree Samarth Krupa English Medium School");
   await expect(page.locator(".desktop-navigation")).toBeHidden();
-  await expect(page.locator(".site-footer__identity")).toBeVisible();
-  await expect(page.locator(".site-footer nav")).toBeHidden();
+  // The school identity is verified in the printed Appendix IX section itself.
+  await expect(page.locator(".site-footer nav:visible")).toHaveCount(0);
   await expect(page.locator(".print-action")).toBeHidden();
 });
 

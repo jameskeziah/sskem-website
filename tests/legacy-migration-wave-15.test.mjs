@@ -449,6 +449,10 @@ test("ships Wave 15 as an authenticated noindex browser-only Open School review 
   assert.match(guide, /successful browser-only merge carries 81 decisions/);
   assert.match(guide, /leaving 34 content decisions and 34 route decisions/);
   assert.match(guide, /Packetization does not record a decision, establish an institutional relationship, approve a pedagogy claim, implement a route or authorize publication/);
-  assert.equal(packageJson.match(/tests\/legacy-migration-wave-15\.test\.mjs/g)?.length, 2);
+  // Every maintained suite must include this existing migration-wave contract.
+  const testScripts = JSON.parse(packageJson).scripts;
+  for (const script of ["test:contract", "test:review", "test:release-contract"]) {
+    assert.ok(testScripts[script].includes("tests/legacy-migration-wave-15.test.mjs"));
+  }
   assert.doesNotMatch(`${page}\n${dataModule}\n${exportRoute}\n${manifest}`, /<img\b|<video\b|<iframe\b|data:image|data:video|\.(?:jpe?g|png|webp|gif|mp4|webm)\b|source-html|source-wordpress|SSKEMS-BACKUP|[A-Za-z]:\\\\|\/Users\//i);
 });

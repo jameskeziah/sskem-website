@@ -2,9 +2,12 @@
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
 
+type AssetFetcher = { fetch(request: Request): Promise<Response> };
+type WorkerDatabase = Parameters<typeof import("drizzle-orm/d1").drizzle>[0];
+
 interface Env {
-  ASSETS: Fetcher;
-  DB: D1Database;
+  ASSETS: AssetFetcher;
+  DB: WorkerDatabase;
   IMAGES: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {

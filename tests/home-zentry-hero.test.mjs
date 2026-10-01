@@ -4,13 +4,13 @@ import test from "node:test";
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
-test("Zentry hero is preview-only and does not change public preloader or fallback", async () => {
+test("Zentry private preview is isolated and approved public media activates without an environment flag", async () => {
   const page = await read("app/page.tsx");
   assert.match(page, /privateHomepageReview && process\.env\.HOMEPAGE_ZENTRY_HERO === "preview"/);
   assert.match(page, /zentryHeroPreview \? \(/);
   assert.match(page, /<HomeZentryHero \/>/);
   assert.match(page, /<HomeHeroMotion\s+reviewMode=/);
-  assert.match(page, /showHomePreloader = privateHomepageReview \|\| publicHomepagePreloader/);
+  assert.match(page, /showHomePreloader = privateHomepageReview \|\| publicHomepagePreloader \|\| publicHeroRequested/);
 });
 
 test("editorial content remains live DOM and concept-poster text is not baked into navigation", async () => {
