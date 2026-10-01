@@ -18,8 +18,10 @@ import { siteFacts } from "@/app/data/site";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 import { selectHomepageAchievementArtwork } from "@/lib/homepage-achievement-publication";
 
+
 import "./homepage.css";
 import "./zentry-hero.css";
+import { HomeFoundationMotion } from "@/components/home/home-foundation-motion";
 
 export const metadata: Metadata = {
   title: "Shree Samarth Krupa English Medium School, Veral",
@@ -169,16 +171,81 @@ export default async function Home() {
         </HomeHeroMotion>
         )}
 
+<HomeFoundationMotion>
         <HomepageIdentityStrip />
-
-        <section className="home-manifesto" aria-labelledby="manifesto-title">
+       
+        <section className="home-manifesto home-manifesto--hybrid">
           <div className="home-shell home-manifesto__grid">
-            <p className="home-chapter-label"><span>01</span> Our foundation</p>
+            
+<div className="home-manifesto__rail">
+  <p className="home-chapter-label">
+    <span>01</span> Our foundation
+  </p>
+
+  <div
+    className="home-manifesto__sunburst"
+    data-foundation-sunburst
+    aria-hidden="true"
+  >
+    <svg viewBox="0 0 120 120" focusable="false">
+      <circle
+        cx="60"
+        cy="60"
+        r="24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+
+      <circle
+        cx="60"
+        cy="60"
+        r="38"
+        fill="none"
+        stroke="currentColor"
+        strokeDasharray="3 7"
+      />
+
+      {Array.from({ length: 12 }, (_, index) => (
+        <path
+          key={index}
+          d="M60 5 V16"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          transform={`rotate(${index * 30} 60 60)`}
+        />
+      ))}
+
+      <path
+        d="M52 60h16M60 52v16"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+
+    <span>✦ A little wonder in every day.</span>
+  </div>
+</div>
+
             <div>
-              <h2 id="manifesto-title">
-                Knowledge for today.
-                <span>Character for every tomorrow.</span>
-              </h2>
+              
+<h2 id="manifesto-title">
+  <span
+    className="home-manifesto__first-line"
+    data-foundation-title
+  >
+    Knowledge for today.
+  </span>
+
+  <span
+    className="home-manifesto__accent-line"
+    data-foundation-title
+  >
+    Character for every tomorrow.
+  </span>
+</h2>
+
               <p className="home-manifesto__lead">
                 Education should help every learner understand the world, find their voice and move through life with confidence.
               </p>
@@ -189,6 +256,7 @@ export default async function Home() {
             </div>
           </div>
         </section>
+        </HomeFoundationMotion>
 
         <HomeCampusMotion privateReview={privateHomepageReview}>
           <div className="home-shell">
@@ -208,6 +276,24 @@ export default async function Home() {
                   </>
                 ) : campusHeading}
               </h2>
+
+{privateHomepageReview ? (
+  <div
+    className="home-campus__orbit"
+    aria-hidden="true"
+  >
+    <span className="home-campus__orbit-symbol">
+      ✦
+    </span>
+
+    <span className="home-campus__orbit-note">
+      LOOK CLOSER.
+      <br />
+      THERE&apos;S MORE TO DISCOVER.
+    </span>
+  </div>
+) : null}
+
               <p>Three views of the SSKEMS campus and grounds in Veral.</p>
             </div>
           </div>
@@ -215,12 +301,25 @@ export default async function Home() {
           {privateHomepageReview ? (
             <figure className="home-campus__feature" data-motion-home-campus-feature>
               <div className="home-campus__feature-media" data-motion-home-campus-feature-media>
-                <CampusPicture
-                  recordId="media-campus-main"
-                  fallbackSrc="/media/home/campus-main.jpeg"
-                  alt="The pink and white SSKEMS school building in Veral."
-                  sizes="100vw"
-                />
+
+{privateHomepageReview ? (
+  <SiteImage
+    src="/media/home/hero-drafts/campus.webp"
+    alt="The SSKEMS campus and school building in Veral."
+    width={1800}
+    height={1200}
+    sizes="100vw"
+    unoptimized
+  />
+) : (
+  <CampusPicture
+    recordId="media-campus-main"
+    fallbackSrc="/media/home/campus-main.jpeg"
+    alt="The pink and white SSKEMS school building in Veral."
+    sizes="100vw"
+  />
+)}
+
               </div>
               <figcaption className="home-shell">The SSKEMS campus in Veral</figcaption>
             </figure>

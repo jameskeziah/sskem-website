@@ -36,6 +36,8 @@ const eslintConfig = defineConfig([
   // Next.js generated files.
   globalIgnores([
     ".next/**",
+    ".vercel/**",
+    ".vinext/**",
     "out/**",
     "build/**",
     "next-env.d.ts",

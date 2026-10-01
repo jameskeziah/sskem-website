@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { SiteImage as Image } from "@/components/media/SiteImage";
 import Link from "next/link";
 import { flushSync } from "react-dom";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
