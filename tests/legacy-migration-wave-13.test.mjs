@@ -427,6 +427,10 @@ test("ships Wave 13 as an authenticated noindex browser-only taxonomy review wor
   assert.match(guide, /successful browser-only merge carries 76 decisions/);
   assert.match(guide, /leaving 39 content decisions and 39 route decisions/);
   assert.match(guide, /packetization does not record a decision, approve a taxonomy, implement a route, migrate a child post or authorize publication/);
-  assert.equal(packageJson.match(/tests\/legacy-migration-wave-13\.test\.mjs/g)?.length, 2);
+  // Every maintained suite must include this existing migration-wave contract.
+  const testScripts = JSON.parse(packageJson).scripts;
+  for (const script of ["test:contract", "test:review", "test:release-contract"]) {
+    assert.ok(testScripts[script].includes("tests/legacy-migration-wave-13.test.mjs"));
+  }
   assert.doesNotMatch(`${page}\n${dataModule}\n${exportRoute}\n${manifest}`, /<img\b|<video\b|<iframe\b|data:image|data:video|\.(?:jpe?g|png|webp|gif|mp4|webm)\b|source-html|source-wordpress|SSKEMS-BACKUP|[A-Za-z]:\\\\|\/Users\//i);
 });
