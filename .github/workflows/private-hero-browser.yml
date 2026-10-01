@@ -38,6 +38,8 @@ jobs:
         run: npm run hero:v2:assets
       - name: Test seven-slide interactions, keyboard, mobile tap and reduced motion
         run: npm run test:browser:zentry
+      - name: Exercise current-framework public disclosure and admissions pages
+        run: node scripts/run-browser-tests.mjs tests/browser/compliance.spec.ts tests/browser/admissions.spec.ts
       - name: Attach failed screenshots or traces (synthetic media only)
         if: failure()
         uses: actions/upload-artifact@v4
