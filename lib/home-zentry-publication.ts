@@ -31,6 +31,7 @@ export type MediaApproval = {
   kind: string;
   decision: string;
   publicTargets?: string[];
+  expiresAt?: string | null;
 };
 
 export type HeroPublicationAssessment = {
@@ -72,6 +73,12 @@ export function assessHeroPublication(
       !approval.publicTargets?.includes("/")
     ) {
       issues.push(`Scene ${id}: exact media record is not approved for the homepage.`);
+    }
+    if (approval?.expiresAt) {
+      const expiry = Date.parse(`${approval.expiresAt}T23:59:59.999Z`);
+      if (!Number.isFinite(expiry) || expiry < Date.now()) {
+        issues.push(`Scene ${id}: media publication permission has expired.`);
+      }
     }
     for (const field of ["sourceSha256", "fullSha256", "previewSha256"] as const) {
       if (!sha256.test(entry[field])) issues.push(`Scene ${id}: invalid or absent ${field}.`);
