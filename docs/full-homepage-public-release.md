@@ -36,6 +36,7 @@ After all approval records, exact files, and unrelated outstanding release gates
 npm ci
 npm run tokens:build
 npm run lint
+npx tsc --noEmit --incremental false
 npm run test:hero
 node --experimental-strip-types --test tests/motion-system.test.mjs
 npm run test:release-contract
