@@ -276,6 +276,24 @@ export default async function Home() {
                   </>
                 ) : campusHeading}
               </h2>
+
+{privateHomepageReview ? (
+  <div
+    className="home-campus__orbit"
+    aria-hidden="true"
+  >
+    <span className="home-campus__orbit-symbol">
+      ✦
+    </span>
+
+    <span className="home-campus__orbit-note">
+      LOOK CLOSER.
+      <br />
+      THERE&apos;S MORE TO DISCOVER.
+    </span>
+  </div>
+) : null}
+
               <p>Three views of the SSKEMS campus and grounds in Veral.</p>
             </div>
           </div>
@@ -283,12 +301,25 @@ export default async function Home() {
           {privateHomepageReview ? (
             <figure className="home-campus__feature" data-motion-home-campus-feature>
               <div className="home-campus__feature-media" data-motion-home-campus-feature-media>
-                <CampusPicture
-                  recordId="media-campus-main"
-                  fallbackSrc="/media/home/campus-main.jpeg"
-                  alt="The pink and white SSKEMS school building in Veral."
-                  sizes="100vw"
-                />
+
+{privateHomepageReview ? (
+  <SiteImage
+    src="/media/home/hero-drafts/campus.webp"
+    alt="The SSKEMS campus and school building in Veral."
+    width={1800}
+    height={1200}
+    sizes="100vw"
+    unoptimized
+  />
+) : (
+  <CampusPicture
+    recordId="media-campus-main"
+    fallbackSrc="/media/home/campus-main.jpeg"
+    alt="The pink and white SSKEMS school building in Veral."
+    sizes="100vw"
+  />
+)}
+
               </div>
               <figcaption className="home-shell">The SSKEMS campus in Veral</figcaption>
             </figure>
