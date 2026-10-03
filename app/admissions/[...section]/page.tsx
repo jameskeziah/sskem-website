@@ -786,7 +786,290 @@ function DocumentsPage() {
 
 function FeesPage() {
   return (
-    <section className="admissions-band" aria-labelledby="fees-status-title"><PageContainer><SectionHeading eyebrow="2026–27 fee publication" title="No unapproved amount is shown"><p>The document archive contains the controlled fee-schedule record, but its academic year, authority, effective date and approved public file remain required.</p></SectionHeading><div className="fee-status-card" id="fees-status-title"><div><span>Current fee structure</span><strong>Approved public PDF pending</strong><p>Ask the school for current information and request a written, authorised schedule.</p></div><Link className="button button--secondary" href="/documents/current-fee-structure">Open the fee record</Link></div><div className="admissions-policy-grid"><article><span>Before an offer</span><h3>Clear schedule</h3><p>Parents should see authorised charges, what each charge covers, deadlines and any conditions.</p></article><article><span>After payment</span><h3>Recorded and receipted</h3><p>Only the accountant boundary may record authorised payments and issue receipts.</p></article><article><span>RTE</span><h3>No unofficial payment</h3><p>The school must not request unofficial payments for the official RTE process.</p></article></div></PageContainer></section>
+    <>
+      <section
+        id="fee-publication-status"
+        className="admissions-band admissions-fees-v2"
+        aria-labelledby="fees-status-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                2026-27 fee publication
+              </p>
+
+              <h2 id="fees-status-title">
+                No unapproved amount is shown.
+              </h2>
+            </div>
+
+            <p>
+              A fee amount should be published only with the correct
+              academic year, approving authority, effective date and
+              controlled public schedule.
+            </p>
+          </div>
+
+          <div className="admissions-fees-status-card">
+            <div className="admissions-fees-status-card__main">
+              <span>Current publication status</span>
+
+              <strong>
+                Approved public fee schedule pending
+              </strong>
+
+              <p>
+                The controlled fee record exists in the document system,
+                but the public academic-year schedule still requires
+                authorised publication.
+              </p>
+            </div>
+
+            <div className="admissions-fees-status-card__meta">
+              <div>
+                <span>Academic year</span>
+                <strong>2026-27</strong>
+              </div>
+
+              <div>
+                <span>Public amount</span>
+                <strong>Not published</strong>
+              </div>
+
+              <div>
+                <span>Status</span>
+                <strong>Approval required</strong>
+              </div>
+            </div>
+
+            <div className="admissions-fees-status-card__actions">
+              <Link
+                className="button button--secondary"
+                href="/documents/current-fee-structure"
+              >
+                Open controlled fee record
+              </Link>
+
+              <Link
+                className="admissions-fees-status-card__text-link"
+                href="/admissions/enquire"
+              >
+                Ask for current guidance{" "}
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </div>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-fees-publication"
+        aria-labelledby="fees-publication-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Before fees go public
+              </p>
+
+              <h2 id="fees-publication-title">
+                A useful schedule needs more than a number.
+              </h2>
+            </div>
+
+            <p>
+              Parents should be able to identify exactly which year,
+              authority, charge and payment condition a published
+              amount belongs to.
+            </p>
+          </div>
+
+          <div className="admissions-fees-publication-grid">
+            <article>
+              <span>01</span>
+              <p>Academic year</p>
+              <h3>Correct cycle</h3>
+              <small>
+                The fee schedule must clearly identify the year
+                to which every amount applies.
+              </small>
+            </article>
+
+            <article>
+              <span>02</span>
+              <p>Authority</p>
+              <h3>Approved source</h3>
+              <small>
+                Publication should identify the authorised schedule,
+                not an old poster, message or copied amount.
+              </small>
+            </article>
+
+            <article>
+              <span>03</span>
+              <p>Charges</p>
+              <h3>Clear breakdown</h3>
+              <small>
+                Parents should be able to understand what each
+                approved charge represents.
+              </small>
+            </article>
+
+            <article>
+              <span>04</span>
+              <p>Timing</p>
+              <h3>Dates and conditions</h3>
+              <small>
+                Applicable deadlines, instalments and conditions
+                should accompany the published schedule.
+              </small>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-fees-safeguards"
+        aria-labelledby="fees-safeguards-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--light">
+            <p className="eyebrow">
+              Payment safeguards
+            </p>
+
+            <h2 id="fees-safeguards-title">
+              Clear before payment. Recorded after payment.
+            </h2>
+
+            <p>
+              Fee communication, payment recording and official
+              processes should remain distinct and traceable.
+            </p>
+          </div>
+
+          <div className="admissions-fees-safeguard-grid">
+            <article>
+              <span>Before an offer</span>
+
+              <h3>
+                See the authorised schedule
+              </h3>
+
+              <p>
+                Families should be able to review applicable charges,
+                what they cover, deadlines and relevant conditions
+                before completing an authorised payment.
+              </p>
+            </article>
+
+            <article>
+              <span>After payment</span>
+
+              <h3>
+                Record and receipt
+              </h3>
+
+              <p>
+                Authorised payments should be recorded through the
+                correct accounting boundary and accompanied by an
+                appropriate receipt.
+              </p>
+            </article>
+
+            <article>
+              <span>RTE process</span>
+
+              <h3>
+                No unofficial payment
+              </h3>
+
+              <p>
+                The regular school fee process must not be used to
+                request unofficial payment for the official
+                Maharashtra RTE admission process.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-fees-record"
+        aria-labelledby="fee-record-title"
+      >
+        <PageContainer className="admissions-fees-record__layout">
+          <div>
+            <p className="eyebrow">
+              Controlled document
+            </p>
+
+            <h2 id="fee-record-title">
+              One public schedule. One controlled source.
+            </h2>
+
+            <p>
+              When the authorised fee schedule is approved for
+              publication, parents should reach it through the
+              controlled document record rather than duplicated
+              amounts across multiple pages.
+            </p>
+          </div>
+
+          <aside>
+            <span>Current fee structure</span>
+
+            <strong>
+              Public schedule awaiting approval
+            </strong>
+
+            <p>
+              No amount is being inferred from previous academic
+              years or unapproved material.
+            </p>
+
+            <Link
+              className="button button--primary"
+              href="/documents/current-fee-structure"
+            >
+              Open fee record
+            </Link>
+          </aside>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-fees-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Need current fee guidance?
+            </p>
+
+            <h2>
+              Ask for the authorised schedule.
+            </h2>
+          </div>
+
+          <p>
+            Contact admissions for the current position rather than
+            relying on an old fee amount, screenshot or forwarded message.
+          </p>
+
+          <Link
+            className="button button--primary"
+            href="/admissions/enquire"
+          >
+            Make an enquiry
+          </Link>
+        </PageContainer>
+      </section>
+    </>
   );
 }
 
@@ -887,12 +1170,14 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   const processPage = key === "process";
   const agePage = key === "age-criteria";
   const documentsPage = key === "documents-required";
+  const feesPage = key === "fees";
 
   const cinematicPage =
     enquiryPage ||
     processPage ||
     agePage ||
-    documentsPage;
+    documentsPage ||
+    feesPage;
 
   const heroActions = enquiryPage ? (
     <>
@@ -956,6 +1241,22 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         href="/admissions/enquire"
       >
         Ask admissions
+      </Link>
+    </>
+  ) : feesPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#fee-publication-status"
+      >
+        See fee publication status
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions/enquire"
+      >
+        Ask for current guidance
       </Link>
     </>
   ) : undefined;
@@ -1050,6 +1351,29 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         <span aria-hidden="true">&rarr;</span>
       </Link>
     </aside>
+  ) : feesPage ? (
+    <aside
+      className="admissions-cycle-card admissions-fees-hero-card"
+      aria-label="Fee publication status"
+    >
+      <div>
+        <span>2026-27 fee guidance</span>
+        <strong>Approval required</strong>
+      </div>
+
+      <p>No unapproved fee amount is shown</p>
+
+      <small>
+        The authorised public schedule must identify the
+        academic year, authority, effective date and
+        applicable charges before amounts are published.
+      </small>
+
+      <a href="#fee-publication-status">
+        See current status{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
   ) : undefined;
 
   return (
@@ -1066,6 +1390,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
             "application-status",
             "age-criteria",
             "documents-required",
+            "fees",
           ] as PageKey[]
         ).includes(key)
       }

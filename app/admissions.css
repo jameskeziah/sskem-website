@@ -3875,3 +3875,624 @@ article:first-child p {
     width: 100%;
   }
 }
+
+
+/* =========================================
+   ADMISSIONS EXPERIENCE V2 - FEES
+   ========================================= */
+
+.admissions-fees-hero-card {
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.16);
+
+  border-radius: 1.4rem;
+
+  background:
+    rgba(6, 21, 34, 0.54);
+
+  box-shadow:
+    0 2rem 5rem
+    rgba(0, 0, 0, 0.26);
+
+  backdrop-filter: blur(16px);
+}
+
+.admissions-fees-hero-card span,
+.admissions-fees-hero-card > p {
+  color: #ffb4b9;
+}
+
+.admissions-fees-hero-card strong {
+  color: #fff;
+}
+
+.admissions-fees-hero-card small {
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  line-height: 1.6;
+}
+
+.admissions-fees-hero-card a {
+  color: #fff;
+}
+
+
+/* Fees hero */
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-fees-hero-card) {
+  min-height: auto;
+
+  padding-block:
+    clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-fees-hero-card)
+h1 {
+  max-width: 10ch;
+
+  font-size:
+    clamp(4rem, 6.4vw, 6.8rem);
+}
+
+
+/* Current publication */
+
+.admissions-fees-v2 {
+  padding-block:
+    clamp(5rem, 9vw, 8rem);
+
+  background:
+    radial-gradient(
+      circle at 90% 5%,
+      rgba(239, 127, 137, 0.12),
+      transparent 24rem
+    ),
+    #f7f4ee;
+}
+
+.admissions-fees-status-card {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.2fr)
+    minmax(17rem, 0.8fr);
+
+  gap: 2rem;
+
+  padding:
+    clamp(1.75rem, 4vw, 3rem);
+
+  border-radius: 1.4rem;
+
+  background: #0d3049;
+
+  color: #fff;
+}
+
+.admissions-fees-status-card__main {
+  display: grid;
+  align-content: start;
+  gap: 0.8rem;
+}
+
+.admissions-fees-status-card__main > span {
+  color: #ffb4b9;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-fees-status-card__main > strong {
+  max-width: 15ch;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(2.5rem, 4vw, 4.5rem);
+
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+
+.admissions-fees-status-card__main > p {
+  max-width: 42rem;
+
+  color:
+    rgba(255, 255, 255, 0.7);
+
+  line-height: 1.65;
+}
+
+.admissions-fees-status-card__meta {
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  align-content: start;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.15);
+}
+
+.admissions-fees-status-card__meta > div {
+  display: grid;
+  gap: 0.25rem;
+
+  padding:
+    1rem 0;
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.15);
+}
+
+.admissions-fees-status-card__meta span {
+  color:
+    rgba(255, 255, 255, 0.55);
+
+  font-size: 0.7rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.admissions-fees-status-card__meta strong {
+  font-size: 1rem;
+}
+
+.admissions-fees-status-card__actions {
+  display: flex;
+
+  grid-column: 1 / -1;
+
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap:
+    1rem 1.5rem;
+
+  padding-top: 1rem;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.15);
+}
+
+.admissions-fees-status-card
+.button--secondary {
+  border-color:
+    rgba(255, 255, 255, 0.5);
+
+  color: #fff;
+}
+
+.admissions-fees-status-card__text-link {
+  color: #ffb4b9;
+
+  font-weight: 700;
+}
+
+
+/* Publication requirements */
+
+.admissions-fees-publication {
+  background: #fff;
+}
+
+.admissions-fees-publication-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.admissions-fees-publication-grid article {
+  display: flex;
+
+  min-height: 21rem;
+
+  flex-direction: column;
+
+  padding: 1.6rem;
+
+  border-radius: 1.2rem;
+
+  background: #f2f4f5;
+}
+
+.admissions-fees-publication-grid
+article:first-child {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-fees-publication-grid
+article:nth-child(2) {
+  background: #efd8d1;
+}
+
+.admissions-fees-publication-grid
+article:nth-child(4) {
+  background: #f4ede4;
+}
+
+.admissions-fees-publication-grid
+article > span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-fees-publication-grid
+article > p {
+  margin-top: auto;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-fees-publication-grid h3 {
+  margin:
+    0.5rem 0 1rem;
+
+  color: inherit;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(2rem, 2.8vw, 3rem);
+
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.admissions-fees-publication-grid small {
+  color: var(--text-secondary);
+
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.admissions-fees-publication-grid
+article:first-child small {
+  color:
+    rgba(255, 255, 255, 0.7);
+}
+
+
+/* Payment safeguards */
+
+.admissions-fees-safeguards {
+  background: #081a2a;
+  color: #fff;
+}
+
+.admissions-fees-safeguards
+.admissions-section-heading--light
+.eyebrow {
+  color: #ffb4b9;
+}
+
+.admissions-fees-safeguard-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.admissions-fees-safeguard-grid article {
+  min-height: 21rem;
+
+  padding: 2rem;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.13);
+
+  border-radius: 1.2rem;
+
+  background:
+    rgba(255, 255, 255, 0.04);
+}
+
+.admissions-fees-safeguard-grid span {
+  color: #ffb4b9;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-fees-safeguard-grid h3 {
+  max-width: 10ch;
+
+  margin:
+    4rem 0 1rem;
+
+  color: #fff;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(2rem, 3vw, 3.2rem);
+
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.admissions-fees-safeguard-grid p {
+  color:
+    rgba(255, 255, 255, 0.68);
+
+  line-height: 1.6;
+}
+
+
+/* Controlled record */
+
+.admissions-fees-record {
+  background: #f4eee8;
+}
+
+.admissions-fees-record__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(18rem, 0.65fr);
+
+  align-items: center;
+
+  gap:
+    clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-fees-record__layout
+> div:first-child {
+  display: grid;
+  gap: 1rem;
+}
+
+.admissions-fees-record__layout h2 {
+  max-width: 11ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3rem, 5vw, 5.5rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-fees-record__layout
+> div:first-child
+> p:last-child {
+  max-width: 42rem;
+
+  color: var(--text-secondary);
+
+  line-height: 1.65;
+}
+
+.admissions-fees-record__layout aside {
+  display: grid;
+  gap: 1rem;
+
+  padding: 2rem;
+
+  border-radius: 1.2rem;
+
+  background: #fff;
+
+  box-shadow:
+    0 1.25rem 3rem
+    rgba(8, 26, 42, 0.07);
+}
+
+.admissions-fees-record__layout
+aside > span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-fees-record__layout
+aside > strong {
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(1.8rem, 3vw, 2.8rem);
+
+  font-weight: 500;
+  line-height: 1;
+}
+
+.admissions-fees-record__layout
+aside > p {
+  color: var(--text-secondary);
+
+  line-height: 1.55;
+}
+
+
+/* Closing */
+
+.admissions-fees-closing {
+  padding-block:
+    clamp(4.5rem, 8vw, 7rem);
+
+  background: #efb8ad;
+}
+
+.admissions-fees-closing > div {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1fr)
+    auto;
+
+  align-items: end;
+
+  gap:
+    clamp(2rem, 5vw, 5rem);
+}
+
+.admissions-fees-closing h2 {
+  max-width: 10ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3rem, 5vw, 5.5rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-fees-closing
+> div > p {
+  color: #553b3b;
+
+  line-height: 1.65;
+}
+
+
+/* Tablet */
+
+@media (max-width: 70rem) {
+  .admissions-fees-status-card {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-fees-publication-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-fees-safeguard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-fees-safeguard-grid article {
+    min-height: 17rem;
+  }
+
+  .admissions-fees-record__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-fees-closing > div {
+    grid-template-columns:
+      1fr 1fr;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-fees-hero-card) {
+    padding-block:
+      3.25rem 3.75rem;
+  }
+
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-fees-hero-card)
+  h1 {
+    font-size:
+      clamp(3.1rem, 14vw, 4.7rem);
+  }
+
+  .admissions-fees-v2,
+  .admissions-fees-publication,
+  .admissions-fees-safeguards,
+  .admissions-fees-record {
+    padding-block: 3.5rem;
+  }
+
+  .admissions-fees-status-card {
+    padding: 1.5rem;
+  }
+
+  .admissions-fees-status-card__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admissions-fees-status-card__actions
+  .button {
+    width: 100%;
+  }
+
+  .admissions-fees-publication-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-fees-publication-grid article {
+    min-height: 17rem;
+  }
+
+  .admissions-fees-safeguard-grid article {
+    min-height: auto;
+  }
+
+  .admissions-fees-safeguard-grid h3 {
+    margin-top: 2.5rem;
+  }
+
+  .admissions-fees-record__layout h2 {
+    font-size:
+      clamp(2.8rem, 12vw, 4rem);
+  }
+
+  .admissions-fees-closing > div {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-fees-closing
+  .button {
+    width: 100%;
+  }
+}
