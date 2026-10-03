@@ -35,22 +35,56 @@ export function AdmissionsHeroMotion({
       if (!element) return;
 
       const media = gsap.matchMedia();
+
       media.add(motionMedia, (context) => {
         const conditions = context.conditions as MotionConditions;
-        const intro = element.querySelector<HTMLElement>("[data-motion-hero-intro]");
-        const heading = element.querySelector<HTMLElement>("[data-motion-hero-heading]");
-        const support = element.querySelector<HTMLElement>("[data-motion-hero-support]");
-        const mask = element.querySelector<HTMLElement>("[data-motion-hero-mask]");
-        const targets = [intro, heading, support, mask].filter(Boolean) as HTMLElement[];
+
+        const intro = element.querySelector<HTMLElement>(
+          "[data-motion-hero-intro]",
+        );
+
+        const heading = element.querySelector<HTMLElement>(
+          "[data-motion-hero-heading]",
+        );
+
+        const support = element.querySelector<HTMLElement>(
+          "[data-motion-hero-support]",
+        );
+
+        const actions = element.querySelector<HTMLElement>(
+          "[data-motion-hero-actions]",
+        );
+
+        const aside = element.querySelector<HTMLElement>(
+          "[data-motion-hero-aside]",
+        );
+
+        const mask = element.querySelector<HTMLElement>(
+          "[data-motion-hero-mask]",
+        );
+
+        const targets = [
+          intro,
+          heading,
+          support,
+          actions,
+          aside,
+          mask,
+        ].filter(Boolean) as HTMLElement[];
 
         if (conditions.reduce) {
           gsap.set(targets, { clearProps: "all" });
           return;
         }
 
-        if (conditions.mobile && intro) {
-          gsap.fromTo(
+        if (conditions.mobile) {
+          const mobileTargets = [
             intro,
+            aside,
+          ].filter(Boolean) as HTMLElement[];
+
+          gsap.fromTo(
+            mobileTargets,
             {
               opacity: 0,
               y: motionDistancePixels.revealMobile,
@@ -61,21 +95,27 @@ export function AdmissionsHeroMotion({
               y: 0,
               duration: motionDurationSeconds.deliberate,
               ease: motionEase.enter,
+              stagger: motionDurationSeconds.micro / 2,
               clearProps: "all",
             },
           );
+
           return;
         }
 
         const distance = conditions.tablet
           ? motionDistancePixels.revealTablet
           : motionDistancePixels.revealDesktop;
+
         const timeline = gsap.timeline();
 
         if (mask) {
           timeline.fromTo(
             mask,
-            { clipPath: "inset(0 0 100% 0)", willChange: "clip-path" },
+            {
+              clipPath: "inset(0 0 100% 0)",
+              willChange: "clip-path",
+            },
             {
               clipPath: "inset(0 0 0% 0)",
               duration: motionDurationSeconds.slow,
@@ -89,7 +129,11 @@ export function AdmissionsHeroMotion({
         if (heading) {
           timeline.fromTo(
             heading,
-            { opacity: 0, y: distance, willChange: "transform, opacity" },
+            {
+              opacity: 0,
+              y: distance,
+              willChange: "transform, opacity",
+            },
             {
               opacity: 1,
               y: 0,
@@ -104,7 +148,11 @@ export function AdmissionsHeroMotion({
         if (support) {
           timeline.fromTo(
             support,
-            { opacity: 0, y: distance, willChange: "transform, opacity" },
+            {
+              opacity: 0,
+              y: distance,
+              willChange: "transform, opacity",
+            },
             {
               opacity: 1,
               y: 0,
@@ -113,6 +161,43 @@ export function AdmissionsHeroMotion({
               clearProps: "all",
             },
             motionDurationSeconds.micro / 2,
+          );
+        }
+
+        if (actions) {
+          timeline.fromTo(
+            actions,
+            {
+              opacity: 0,
+              y: distance / 2,
+            },
+            {
+              opacity: 1,
+              y: 0,
+              duration: motionDurationSeconds.deliberate,
+              ease: motionEase.enter,
+              clearProps: "all",
+            },
+            motionDurationSeconds.micro,
+          );
+        }
+
+        if (aside) {
+          timeline.fromTo(
+            aside,
+            {
+              opacity: 0,
+              x: Math.max(18, distance / 2),
+              willChange: "transform, opacity",
+            },
+            {
+              opacity: 1,
+              x: 0,
+              duration: motionDurationSeconds.slow,
+              ease: motionEase.emphasised,
+              clearProps: "all",
+            },
+            motionDurationSeconds.micro,
           );
         }
       });
@@ -136,6 +221,7 @@ export function AdmissionsHeroMotion({
         data-motion-item
         aria-hidden="true"
       />
+
       {children}
     </div>
   );

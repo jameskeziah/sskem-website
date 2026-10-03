@@ -64,6 +64,8 @@ export function AdmissionsPageFrame({
   actions = true,
   reviewNotice = false,
   heroAside,
+  heroActions,
+  landing = false,
 }: {
   eyebrow: string;
   title: string;
@@ -72,45 +74,105 @@ export function AdmissionsPageFrame({
   actions?: boolean;
   reviewNotice?: boolean;
   heroAside?: ReactNode;
+  heroActions?: ReactNode;
+  landing?: boolean;
 }) {
   return (
     <>
       <SiteHeader />
       <AdmissionsSectionNav />
-      <main id="main-content" tabIndex={-1} className="admissions-page">
+
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className={`admissions-page${landing ? " admissions-page--landing" : ""}`}
+      >
         <header className="admissions-hero">
           <AdmissionsHeroMotion className="page-container admissions-hero__grid">
             <div className="admissions-hero__copy">
-              <div className="admissions-hero__intro" data-motion-hero-intro>
-                <div className="admissions-hero__heading" data-motion-hero-heading data-motion-group="admissions-hero-heading" data-motion-item>
+              <div
+                className="admissions-hero__intro"
+                data-motion-hero-intro
+              >
+                <div
+                  className="admissions-hero__heading"
+                  data-motion-hero-heading
+                  data-motion-group="admissions-hero-heading"
+                  data-motion-item
+                >
                   <p className="eyebrow">{eyebrow}</p>
                   <h1>{title}</h1>
                 </div>
-                <div className="admissions-hero__support" data-motion-hero-support data-motion-group="admissions-hero-support" data-motion-item>
+
+                <div
+                  className="admissions-hero__support"
+                  data-motion-hero-support
+                  data-motion-group="admissions-hero-support"
+                  data-motion-item
+                >
                   <p className="admissions-hero__marathi" lang="mr">प्रवेश माहिती आणि पालक मार्गदर्शन</p>
+
                   <p className="lead">{summary}</p>
                 </div>
+
+                {heroActions ? (
+                  <div
+                    className="admissions-hero__actions"
+                    data-motion-hero-actions
+                  >
+                    {heroActions}
+                  </div>
+                ) : null}
               </div>
+
               <div className="admissions-cycle-line">
                 <span>{admissionsCycle.academicYear}</span>
                 <strong>{admissionsCycle.publicStatus}</strong>
               </div>
             </div>
-            {heroAside ?? (
-              <aside className="admissions-hero__aside" aria-label="Admissions publication status">
-                <span>Review gate</span>
-                <strong>Policy + privacy</strong>
-                <p>Only verified dates, rules, fees and availability will move from configuration into public guidance.</p>
-                <Link href="/admissions/contact">Ask the school <span aria-hidden="true">→</span></Link>
-              </aside>
-            )}
+
+            <div
+              className="admissions-hero__aside-slot"
+              data-motion-hero-aside
+            >
+              {heroAside ?? (
+                <aside
+                  className="admissions-hero__aside"
+                  aria-label="Current admissions guidance"
+                >
+                  <span>Current guidance</span>
+                  <strong>Checked before publication</strong>
+
+                  <p>
+                    Dates, fees, class availability and eligibility details
+                    appear only after the school confirms them.
+                  </p>
+
+                  <Link href="/admissions/contact">
+                    Ask the school <span aria-hidden="true">&rarr;</span>
+                  </Link>
+                </aside>
+              )}
+            </div>
           </AdmissionsHeroMotion>
         </header>
-        {reviewNotice ? <PageContainer><AdmissionsReviewNotice /></PageContainer> : null}
-        {actions ? <PageContainer className="admissions-actions-wrap"><AdmissionsActions compact /></PageContainer> : null}
+
+        {reviewNotice ? (
+          <PageContainer>
+            <AdmissionsReviewNotice />
+          </PageContainer>
+        ) : null}
+
+        {actions ? (
+          <PageContainer className="admissions-actions-wrap">
+            <AdmissionsActions compact />
+          </PageContainer>
+        ) : null}
+
         {children}
       </main>
-      <SiteFooter />
+
+      <SiteFooter cinematic={landing} />
     </>
   );
 }
