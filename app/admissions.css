@@ -8299,3 +8299,789 @@ h1 {
 .admissions-section-heading > p:last-child {
   color: rgba(255, 255, 255, 0.72);
 }
+
+
+/* =========================================
+   ADMISSIONS EXPERIENCE V2 - APPLY
+   ========================================= */
+
+.admissions-apply-hero-card {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.4rem;
+  background: rgba(6, 21, 34, 0.54);
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(16px);
+}
+
+.admissions-apply-hero-card span,
+.admissions-apply-hero-card > p {
+  color: #ffb4b9;
+}
+
+.admissions-apply-hero-card strong {
+  color: #fff;
+}
+
+.admissions-apply-hero-card small {
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+}
+
+.admissions-apply-hero-card a {
+  color: #fff;
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-apply-hero-card) {
+  min-height: auto;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-apply-hero-card)
+h1 {
+  max-width: 9ch;
+  font-size: clamp(4rem, 6.4vw, 6.8rem);
+}
+
+
+/* Readiness */
+
+.admissions-apply-readiness {
+  padding-block: clamp(5rem, 9vw, 8rem);
+
+  background:
+    radial-gradient(
+      circle at 90% 8%,
+      rgba(239, 127, 137, 0.12),
+      transparent 24rem
+    ),
+    #f7f4ee;
+}
+
+.admissions-apply-readiness-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.admissions-apply-readiness-grid article {
+  display: flex;
+  min-height: 23rem;
+  flex-direction: column;
+
+  padding: 1.8rem;
+
+  border-radius: 1.2rem;
+  background: #fff;
+}
+
+.admissions-apply-readiness-grid article:first-child {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-apply-readiness-grid article:nth-child(2) {
+  background: #efd8d1;
+}
+
+.admissions-apply-readiness-grid span {
+  color: #d95e70;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-apply-readiness-grid article:first-child span {
+  color: #ffb4b9;
+}
+
+.admissions-apply-readiness-grid h3 {
+  margin: auto 0 1rem;
+
+  color: inherit;
+
+  font-family: var(--font-family-heading);
+  font-size: clamp(2.2rem, 3vw, 3.4rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.96;
+}
+
+.admissions-apply-readiness-grid p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.admissions-apply-readiness-grid article:first-child p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.admissions-apply-readiness-grid a {
+  margin-top: 1.4rem;
+  color: inherit;
+  font-weight: 800;
+}
+
+
+/* Blueprint */
+
+.admissions-apply-blueprint {
+  background: #fff;
+}
+
+.application-prototype--v2 {
+  overflow: hidden;
+
+  border-radius: 1.4rem;
+
+  background: #f3f4f4;
+
+  box-shadow:
+    0 1.5rem 4rem
+    rgba(8, 26, 42, 0.08);
+}
+
+.application-prototype--v2
+.application-prototype__progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+
+  padding: 1.6rem 1.8rem;
+
+  background: #0d3049;
+  color: #fff;
+}
+
+.application-prototype--v2
+.application-prototype__progress > div:first-child {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.application-prototype--v2
+.application-prototype__progress span {
+  color: #ffb4b9;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.application-prototype--v2
+.application-prototype__progress strong {
+  font-family: var(--font-family-heading);
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.application-prototype--v2
+.application-prototype__progress small {
+  align-self: center;
+
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.application-prototype--v2
+.application-prototype__progress
+[role="progressbar"] {
+  grid-column: 1 / -1;
+
+  height: 0.3rem;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.application-prototype--v2
+.application-prototype__progress
+[role="progressbar"] > span {
+  display: block;
+
+  width:
+    calc(var(--application-progress) * 100%);
+
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: #ef7f89;
+
+  transition: width 220ms ease;
+}
+
+.application-prototype__workspace {
+  display: grid;
+
+  grid-template-columns:
+    minmax(15rem, 0.38fr)
+    minmax(0, 1fr);
+}
+
+.application-prototype--v2
+.application-prototype__steps {
+  display: grid;
+
+  align-content: start;
+
+  padding: 1rem;
+
+  background: #e9ecec;
+}
+
+.application-prototype--v2
+.application-prototype__steps button {
+  display: grid;
+
+  grid-template-columns:
+    2rem 1fr;
+
+  gap: 0.15rem 0.8rem;
+
+  width: 100%;
+
+  padding: 1rem;
+
+  border: 0;
+  border-bottom: 1px solid rgba(8, 26, 42, 0.08);
+
+  background: transparent;
+
+  color: #081a2a;
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.application-prototype--v2
+.application-prototype__steps
+button[aria-current="step"] {
+  border-radius: 0.8rem;
+
+  background: #fff;
+
+  box-shadow:
+    0 0.75rem 2rem
+    rgba(8, 26, 42, 0.06);
+}
+
+.application-prototype--v2
+.application-prototype__steps
+button > span {
+  grid-row: 1 / 3;
+
+  color: #d95e70;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.application-prototype--v2
+.application-prototype__steps
+button > strong {
+  font-size: 0.88rem;
+}
+
+.application-prototype--v2
+.application-prototype__steps
+button > small {
+  color: var(--text-secondary);
+
+  font-size: 0.68rem;
+}
+
+.application-prototype--v2
+.application-prototype__panel {
+  display: grid;
+
+  grid-template-columns:
+    minmax(5rem, 0.18fr)
+    minmax(0, 1fr);
+
+  min-height: 33rem;
+
+  padding: clamp(2rem, 5vw, 4.5rem);
+}
+
+.application-prototype__panel-number {
+  color: #d95e70;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(4rem, 8vw, 8rem);
+
+  font-weight: 500;
+  line-height: 0.8;
+
+  opacity: 0.3;
+}
+
+.application-prototype__panel-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.application-prototype--v2
+.application-prototype__panel h2 {
+  max-width: 10ch;
+
+  margin: 0.5rem 0 1rem;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(3rem, 5vw, 5rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.application-prototype--v2
+.application-prototype__panel-copy
+> p:not(.eyebrow):not(.application-prototype__guardrail) {
+  max-width: 42rem;
+
+  color: var(--text-secondary);
+
+  line-height: 1.65;
+}
+
+.application-prototype--v2
+.application-prototype__guardrail {
+  max-width: 42rem;
+
+  margin-top: 1.5rem;
+  padding: 1rem 1.2rem;
+
+  border-left: 3px solid #d95e70;
+
+  background: #fff;
+
+  color: #384b58;
+
+  line-height: 1.58;
+}
+
+.application-prototype--v2
+.application-prototype__controls {
+  display: flex;
+  gap: 0.8rem;
+
+  margin-top: auto;
+  padding-top: 2.5rem;
+}
+
+
+/* Security */
+
+.admissions-apply-security {
+  background: #081a2a;
+  color: #fff;
+}
+
+.admissions-apply-security
+.admissions-section-heading
+> p:last-child {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.admissions-apply-security-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.admissions-apply-security-grid article {
+  min-height: 20rem;
+
+  padding: 1.6rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 1.05rem;
+
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.admissions-apply-security-grid span {
+  color: #ffb4b9;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-apply-security-grid h3 {
+  margin: 4rem 0 1rem;
+
+  color: #fff;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2rem, 2.7vw, 3rem);
+
+  font-weight: 500;
+  line-height: 0.98;
+}
+
+.admissions-apply-security-grid p {
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.58;
+}
+
+
+/* Sensitive data */
+
+.admissions-apply-sensitive {
+  background: #efd8d1;
+}
+
+.admissions-apply-sensitive__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(18rem, 0.65fr);
+
+  align-items: center;
+
+  gap: clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-apply-sensitive__layout
+> div {
+  display: grid;
+  gap: 1rem;
+}
+
+.admissions-apply-sensitive h2 {
+  max-width: 11ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(3rem, 5vw, 5.4rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-apply-sensitive
+> div > div > p:last-child {
+  color: #553b3b;
+  line-height: 1.65;
+}
+
+.admissions-apply-sensitive aside {
+  display: grid;
+  gap: 1rem;
+
+  padding: 2rem;
+
+  border-radius: 1.2rem;
+
+  background: #fff;
+}
+
+.admissions-apply-sensitive aside span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-apply-sensitive aside strong {
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2rem, 3vw, 3rem);
+
+  font-weight: 500;
+  line-height: 1;
+}
+
+.admissions-apply-sensitive aside p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+
+/* Routing */
+
+.admissions-apply-routing {
+  background: #f7f4ee;
+}
+
+.admissions-apply-routing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.admissions-apply-routing-grid article {
+  min-height: 21rem;
+
+  padding: 1.8rem;
+
+  border-radius: 1.1rem;
+
+  background: #fff;
+}
+
+.admissions-apply-routing-grid article:nth-child(2) {
+  background: #efd8d1;
+}
+
+.admissions-apply-routing-grid span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-apply-routing-grid h3 {
+  margin: 4rem 0 1rem;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2rem, 2.7vw, 3rem);
+
+  font-weight: 500;
+  line-height: 0.98;
+}
+
+.admissions-apply-routing-grid p {
+  color: var(--text-secondary);
+  line-height: 1.58;
+}
+
+.admissions-apply-routing__link {
+  display: inline-block;
+
+  margin-top: 1.5rem;
+
+  color: #0d3049;
+
+  font-weight: 800;
+}
+
+
+/* Closing */
+
+.admissions-apply-closing {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+
+  background: #efb8ad;
+}
+
+.admissions-apply-closing > div {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1fr)
+    auto;
+
+  align-items: end;
+
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.admissions-apply-closing h2 {
+  max-width: 10ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(3rem, 5vw, 5.4rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-apply-closing > div > p {
+  color: #553b3b;
+  line-height: 1.65;
+}
+
+
+/* Tablet */
+
+@media (max-width: 70rem) {
+  .admissions-apply-security-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-apply-sensitive__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .application-prototype__workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .application-prototype--v2
+  .application-prototype__steps {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-apply-closing > div {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-apply-hero-card) {
+    padding-block: 3.25rem 3.75rem;
+  }
+
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-apply-hero-card)
+  h1 {
+    font-size: clamp(3.1rem, 14vw, 4.6rem);
+  }
+
+  .admissions-apply-readiness,
+  .admissions-apply-blueprint,
+  .admissions-apply-security,
+  .admissions-apply-sensitive,
+  .admissions-apply-routing {
+    padding-block: 3.5rem;
+  }
+
+  .admissions-apply-readiness-grid,
+  .admissions-apply-security-grid,
+  .admissions-apply-routing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-apply-readiness-grid article {
+    min-height: 18rem;
+  }
+
+  .admissions-apply-security-grid article,
+  .admissions-apply-routing-grid article {
+    min-height: auto;
+  }
+
+  .admissions-apply-security-grid h3,
+  .admissions-apply-routing-grid h3 {
+    margin-top: 2.5rem;
+  }
+
+  .application-prototype--v2
+  .application-prototype__progress {
+    grid-template-columns: 1fr;
+  }
+
+  .application-prototype--v2
+  .application-prototype__steps {
+    display: flex;
+
+    overflow-x: auto;
+
+    scroll-snap-type: x mandatory;
+
+    padding: 0.8rem;
+  }
+
+  .application-prototype--v2
+  .application-prototype__steps button {
+    min-width: 12.5rem;
+
+    scroll-snap-align: start;
+  }
+
+  .application-prototype--v2
+  .application-prototype__panel {
+    grid-template-columns: 1fr;
+
+    min-height: 32rem;
+
+    padding: 1.5rem;
+  }
+
+  .application-prototype__panel-number {
+    margin-bottom: 1rem;
+
+    font-size: 4rem;
+  }
+
+  .application-prototype--v2
+  .application-prototype__panel h2 {
+    font-size: clamp(2.8rem, 12vw, 4rem);
+  }
+
+  .application-prototype--v2
+  .application-prototype__controls {
+    flex-direction: column;
+  }
+
+  .application-prototype--v2
+  .application-prototype__controls
+  button {
+    width: 100%;
+  }
+
+  .admissions-apply-sensitive h2 {
+    font-size: clamp(2.8rem, 12vw, 4rem);
+  }
+
+  .admissions-apply-closing > div {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-apply-closing .button {
+    width: 100%;
+  }
+}
+
+/* Batch 14 visual QA: application prototype outer-grid reset */
+.application-prototype.application-prototype--v2 {
+  display: block;
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+}
+
+.application-prototype--v2
+.application-prototype__workspace {
+  width: 100%;
+}
+
+.application-prototype--v2
+.application-prototype__panel-copy {
+  min-width: 0;
+}
+
+@media (max-width: 48rem) {
+  .application-prototype.application-prototype--v2 {
+    max-width: 100%;
+  }
+}

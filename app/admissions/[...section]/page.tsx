@@ -567,16 +567,350 @@ function EnquirePage() {
 function ApplyPage() {
   return (
     <>
-      <PageContainer><AdmissionsReviewNotice>The formal application is an interactive blueprint only. Save, resume, uploads and submission stay off until durable encrypted storage, private files, authentication and staff permissions are ready.</AdmissionsReviewNotice></PageContainer>
-      <section className="admissions-band" aria-label="Application journey prototype"><PageContainer><ApplicationJourneyPrototype /></PageContainer></section>
-      <section className="admissions-band admissions-band--soft" aria-labelledby="application-rules-title">
+      <section
+        id="application-readiness"
+        className="admissions-band admissions-apply-readiness"
+        aria-labelledby="application-readiness-title"
+      >
         <PageContainer>
-          <SectionHeading eyebrow="Routing rules" title="Some classes require special review" />
-          <div className="admissions-policy-grid" id="application-rules-title">
-            <article><span>Class X</span><h3>Not an ordinary direct-entry class</h3><p>Class X requires restricted transfer review, completion of Class IX and the applicable CBSE conditions.</p></article>
-            <article><span>Class XII</span><h3>Not an ordinary direct-entry class</h3><p>Class XII requires restricted transfer review, completion of Class XI and the applicable CBSE conditions.</p></article>
-            <article><span>After 31 August</span><h3>Authority review required</h3><p>Class IX and above cannot be processed as an ordinary late admission where prior permission is required.</p></article>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Before formal application
+              </p>
+
+              <h2 id="application-readiness-title">
+                Confirm the route before entering sensitive information.
+              </h2>
+            </div>
+
+            <p>
+              A formal application should begin only after the intended
+              class, eligibility pathway and current school availability
+              have been reviewed.
+            </p>
           </div>
+
+          <div className="admissions-apply-readiness-grid">
+            <article>
+              <span>01</span>
+
+              <h3>
+                Intended class
+              </h3>
+
+              <p>
+                Make sure the correct class and admission pathway have
+                been identified.
+              </p>
+
+              <Link href="/admissions/school">
+                Classes I to VIII
+                <span aria-hidden="true"> &rarr;</span>
+              </Link>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <h3>
+                Eligibility route
+              </h3>
+
+              <p>
+                Age, previous-class and transfer conditions should be
+                understood before formal submission.
+              </p>
+
+              <Link href="/admissions/age-criteria">
+                Review age guidance
+                <span aria-hidden="true"> &rarr;</span>
+              </Link>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <h3>
+                Availability
+              </h3>
+
+              <p>
+                Eligibility does not itself establish that the requested
+                class or programme currently has a place available.
+              </p>
+
+              <Link href="/admissions/enquire">
+                Ask admissions
+                <span aria-hidden="true"> &rarr;</span>
+              </Link>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        id="application-blueprint"
+        className="admissions-band admissions-apply-blueprint"
+        aria-labelledby="application-blueprint-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading">
+            <p className="eyebrow">
+              Seven-step application
+            </p>
+
+            <h2 id="application-blueprint-title">
+              Preview the full journey before it becomes operational.
+            </h2>
+
+            <p>
+              This interactive prototype shows what the production
+              application is intended to collect. It does not currently
+              save, upload or submit personal information.
+            </p>
+          </div>
+
+          <ApplicationJourneyPrototype />
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-apply-security"
+        aria-labelledby="application-security-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--light">
+            <p className="eyebrow">
+              Activation gates
+            </p>
+
+            <h2 id="application-security-title">
+              The real form stays off until these protections exist.
+            </h2>
+
+            <p>
+              A public admissions form can contain identity, academic,
+              family and private document data. Those records require
+              stronger controls than an ordinary enquiry form.
+            </p>
+          </div>
+
+          <div className="admissions-apply-security-grid">
+            <article>
+              <span>01</span>
+
+              <h3>
+                Secure authentication
+              </h3>
+
+              <p>
+                Parent access and resume functionality require verified
+                identity and protected sessions.
+              </p>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <h3>
+                Encrypted persistence
+              </h3>
+
+              <p>
+                Application information must use durable private storage
+                with appropriate access controls and retention rules.
+              </p>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <h3>
+                Private file handling
+              </h3>
+
+              <p>
+                Certificates and documents must never be placed in public
+                website media folders.
+              </p>
+            </article>
+
+            <article>
+              <span>04</span>
+
+              <h3>
+                Upload validation
+              </h3>
+
+              <p>
+                File type validation, malware scanning and controlled
+                download access are required before uploads activate.
+              </p>
+            </article>
+
+            <article>
+              <span>05</span>
+
+              <h3>
+                Staff permissions
+              </h3>
+
+              <p>
+                Admissions staff need role-based access and an audit trail
+                before private records can be reviewed safely.
+              </p>
+            </article>
+
+            <article>
+              <span>06</span>
+
+              <h3>
+                Approved declarations
+              </h3>
+
+              <p>
+                Privacy notices, consent language and the final submission
+                declaration must be approved before launch.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-apply-sensitive"
+        aria-labelledby="application-sensitive-title"
+      >
+        <PageContainer className="admissions-apply-sensitive__layout">
+          <div>
+            <p className="eyebrow">
+              Data minimisation
+            </p>
+
+            <h2 id="application-sensitive-title">
+              Collect sensitive information only when it is genuinely needed.
+            </h2>
+
+            <p>
+              The formal application should request only the information
+              required for admission and safe planning. Detailed medical
+              records or other highly sensitive material should not be
+              gathered simply because a website form can ask for it.
+            </p>
+          </div>
+
+          <aside>
+            <span>Application principle</span>
+
+            <strong>
+              Minimum necessary information
+            </strong>
+
+            <p>
+              Enquiry first. Formal application second. Restricted
+              post-offer information only where it is actually needed.
+            </p>
+          </aside>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-apply-routing"
+        aria-labelledby="application-routing-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading">
+            <p className="eyebrow">
+              Special routing
+            </p>
+
+            <h2 id="application-routing-title">
+              Some classes should not enter an ordinary application flow.
+            </h2>
+          </div>
+
+          <div className="admissions-apply-routing-grid">
+            <article>
+              <span>Class X</span>
+
+              <h3>
+                Restricted transfer review
+              </h3>
+
+              <p>
+                Class X is not treated as an ordinary open direct-entry
+                route. The applicable CBSE transfer conditions must be
+                reviewed first.
+              </p>
+            </article>
+
+            <article>
+              <span>Class XII</span>
+
+              <h3>
+                Restricted transfer review
+              </h3>
+
+              <p>
+                Class XII likewise requires review of the previous class
+                and applicable transfer conditions before proceeding.
+              </p>
+            </article>
+
+            <article>
+              <span>Class IX and above</span>
+
+              <h3>
+                Timing can change the route
+              </h3>
+
+              <p>
+                Late-admission circumstances may require additional
+                authority review rather than ordinary processing.
+              </p>
+            </article>
+          </div>
+
+          <Link
+            className="admissions-apply-routing__link"
+            href="/admissions/class-9-and-11-transfers"
+          >
+            Review Class IX and XI transfer guidance
+            <span aria-hidden="true"> &rarr;</span>
+          </Link>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-apply-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Ready to take the next step?
+            </p>
+
+            <h2>
+              Start with an admissions enquiry.
+            </h2>
+          </div>
+
+          <p>
+            Until secure formal applications are activated, use the
+            short enquiry route to confirm the correct class and next
+            step without submitting certificates or sensitive records.
+          </p>
+
+          <Link
+            className="button button--primary"
+            href="/admissions/enquire"
+          >
+            Make an enquiry
+          </Link>
         </PageContainer>
       </section>
     </>
@@ -3370,6 +3704,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   const details = pageDetails[key];
 
   const enquiryPage = key === "enquire";
+  const applyPage = key === "apply";
   const processPage = key === "process";
   const agePage = key === "age-criteria";
   const documentsPage = key === "documents-required";
@@ -3384,6 +3719,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
 
   const cinematicPage =
     enquiryPage ||
+    applyPage ||
     processPage ||
     agePage ||
     documentsPage ||
@@ -3588,6 +3924,22 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         href="/admissions/enquire"
       >
         Ask admissions
+      </Link>
+    </>
+  ) : applyPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#application-blueprint"
+      >
+        Preview the 7 steps
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions/enquire"
+      >
+        Enquire before applying
       </Link>
     </>
   ) : undefined;
@@ -3862,6 +4214,29 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
 
       <a href="#senior-school-status">
         See verified school status{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
+  ) : applyPage ? (
+    <aside
+      className="admissions-cycle-card admissions-apply-hero-card"
+      aria-label="Formal application activation status"
+    >
+      <div>
+        <span>Formal application</span>
+        <strong>Preview only</strong>
+      </div>
+
+      <p>Real submission is not active yet</p>
+
+      <small>
+        Save, resume, uploads and final submission remain disabled
+        until secure authentication, storage, file handling and staff
+        permissions are ready.
+      </small>
+
+      <a href="#application-readiness">
+        See application readiness{" "}
         <span aria-hidden="true">&rarr;</span>
       </a>
     </aside>

@@ -294,37 +294,141 @@ export function ApplicationJourneyPrototype() {
   const step = applicationSteps[activeStep];
 
   return (
-    <div className="application-prototype">
-      <div className="application-prototype__progress">
-        <span>Application blueprint</span>
-        <strong>Step {activeStep + 1} of {applicationSteps.length}</strong>
-        <div role="progressbar" aria-label="Application prototype progress" aria-valuemin={1} aria-valuemax={applicationSteps.length} aria-valuenow={activeStep + 1}>
+    <div className="application-prototype application-prototype--v2">
+      <header className="application-prototype__progress">
+        <div>
+          <span>Application blueprint</span>
+
+          <strong>
+            Step {activeStep + 1} of {applicationSteps.length}
+          </strong>
+        </div>
+
+        <small>
+          Preview only. Nothing entered here is saved or submitted.
+        </small>
+
+        <div
+          role="progressbar"
+          aria-label="Application prototype progress"
+          aria-valuemin={1}
+          aria-valuemax={applicationSteps.length}
+          aria-valuenow={activeStep + 1}
+        >
           <span
             style={{
-              "--application-progress": (activeStep + 1) / applicationSteps.length,
+              "--application-progress":
+                (activeStep + 1) / applicationSteps.length,
             } as CSSProperties}
           />
         </div>
+      </header>
+
+      <div className="application-prototype__workspace">
+        <nav
+          aria-label="Application steps"
+          className="application-prototype__steps"
+        >
+          {applicationSteps.map((item, index) => (
+            <button
+              type="button"
+              aria-current={index === activeStep ? "step" : undefined}
+              onClick={() => setActiveStep(index)}
+              key={item.title}
+            >
+              <span>
+                {String(index + 1).padStart(2, "0")}
+              </span>
+
+              <strong>
+                {item.title}
+              </strong>
+
+              <small>
+                {index === activeStep ? "Current step" : "Preview"}
+              </small>
+            </button>
+          ))}
+        </nav>
+
+        <section
+          className="application-prototype__panel"
+          aria-live="polite"
+        >
+          <div className="application-prototype__panel-number">
+            {String(activeStep + 1).padStart(2, "0")}
+          </div>
+
+          <div className="application-prototype__panel-copy">
+            <p className="eyebrow">
+              Application step {activeStep + 1}
+            </p>
+
+            <h2>
+              {step.title}
+            </h2>
+
+            <p>
+              {step.fields}.
+            </p>
+
+            {activeStep === 0 ? (
+              <p className="application-prototype__guardrail">
+                The class and route should already have been reviewed
+                before this stage becomes a real form.
+              </p>
+            ) : null}
+
+            {activeStep === 4 ? (
+              <p className="application-prototype__guardrail">
+                Detailed medical records belong in a separately
+                restricted post-offer process.
+              </p>
+            ) : null}
+
+            {activeStep === 5 ? (
+              <p className="application-prototype__guardrail">
+                Secure private upload, MIME validation, malware scanning
+                and an access audit are required before files can be
+                accepted.
+              </p>
+            ) : null}
+
+            {activeStep === 6 ? (
+              <p className="application-prototype__guardrail">
+                Submission does not guarantee admission. A complete
+                review screen and approved declaration must precede
+                final submission.
+              </p>
+            ) : null}
+
+            <div className="application-prototype__controls">
+              <Button
+                type="button"
+                variant="secondary"
+                disabled={activeStep === 0}
+                onClick={() =>
+                  setActiveStep((value) => Math.max(0, value - 1))
+                }
+              >
+                Previous step
+              </Button>
+
+              <Button
+                type="button"
+                disabled={activeStep === applicationSteps.length - 1}
+                onClick={() =>
+                  setActiveStep((value) =>
+                    Math.min(applicationSteps.length - 1, value + 1)
+                  )
+                }
+              >
+                Next step
+              </Button>
+            </div>
+          </div>
+        </section>
       </div>
-      <nav aria-label="Application steps" className="application-prototype__steps">
-        {applicationSteps.map((item, index) => (
-          <button type="button" aria-current={index === activeStep ? "step" : undefined} onClick={() => setActiveStep(index)} key={item.title}>
-            <span>{String(index + 1).padStart(2, "0")}</span>{item.title}
-          </button>
-        ))}
-      </nav>
-      <section className="application-prototype__panel" aria-live="polite">
-        <p className="eyebrow">Step {activeStep + 1}</p>
-        <h2>{step.title}</h2>
-        <p>{step.fields}.</p>
-        {activeStep === 4 ? <p className="application-prototype__guardrail">Detailed medical records belong in a separately restricted post-offer process.</p> : null}
-        {activeStep === 5 ? <p className="application-prototype__guardrail">Secure private upload, MIME validation, malware scanning and access audit are required before files can be accepted.</p> : null}
-        {activeStep === 6 ? <p className="application-prototype__guardrail">Submission does not guarantee admission. A complete review screen and approved declaration will precede submission.</p> : null}
-        <div className="application-prototype__controls">
-          <Button type="button" variant="secondary" disabled={activeStep === 0} onClick={() => setActiveStep((value) => Math.max(0, value - 1))}>Previous step</Button>
-          <Button type="button" disabled={activeStep === applicationSteps.length - 1} onClick={() => setActiveStep((value) => Math.min(applicationSteps.length - 1, value + 1))}>Next step</Button>
-        </div>
-      </section>
     </div>
   );
 }
