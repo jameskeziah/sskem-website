@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 import {
   admissionStatusExamples,
-  admissionsCycle,
   admissionsFaq,
   ageRule,
   documentChecklist,
@@ -585,7 +584,203 @@ function StatusPage() {
 
 function DocumentsPage() {
   return (
-    <section className="admissions-band" aria-labelledby="documents-list-title"><PageContainer><SectionHeading eyebrow="Conditional checklist" title="Bring only what your route requires"><p>The production service will generate this list from the selected class and category.</p></SectionHeading><div className="document-checklist" id="documents-list-title">{documentChecklist.map((document, index) => <article key={document.title}><span>{String(index + 1).padStart(2, "0")}</span><div><h3>{document.title}</h3><p>{document.note}</p></div><strong>Conditional</strong></article>)}</div><div className="privacy-panel"><strong>Private-document standard</strong><p>Production uploads must use private storage, MIME and extension verification, malware scanning, expiring access links, staff-role checks and a view/download audit. Allowed formats are normally PDF, JPG, JPEG and PNG; approved size limits will be shown before upload.</p></div></PageContainer></section>
+    <>
+      <section
+        id="documents-checklist"
+        className="admissions-band admissions-documents-v2"
+        aria-labelledby="documents-list-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Conditional document checklist
+              </p>
+
+              <h2 id="documents-list-title">
+                Prepare only what your admission route requires.
+              </h2>
+            </div>
+
+            <p>
+              The exact list depends on the class, previous school,
+              board, transfer context and admission category.
+              An initial enquiry does not require these documents.
+            </p>
+          </div>
+
+          <div className="admissions-documents-grid">
+            {documentChecklist.map((document, index) => (
+              <article key={document.title}>
+                <div className="admissions-documents-grid__top">
+                  <span>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <strong>Conditional</strong>
+                </div>
+
+                <h3>{document.title}</h3>
+
+                <p>{document.note}</p>
+              </article>
+            ))}
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-documents-stages"
+        aria-labelledby="documents-stage-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Documents by stage
+              </p>
+
+              <h2 id="documents-stage-title">
+                Do not send paperwork too early.
+              </h2>
+            </div>
+
+            <p>
+              Personal documents should appear only at the stage where
+              they are actually required for an authorised review.
+            </p>
+          </div>
+
+          <div className="admissions-documents-stage-grid">
+            <article className="admissions-documents-stage-card admissions-documents-stage-card--enquiry">
+              <span>Stage 01</span>
+
+              <h3>Initial enquiry</h3>
+
+              <strong>No documents</strong>
+
+              <p>
+                Ask about availability, class, fees, transport,
+                curriculum or a visit without sending certificates.
+              </p>
+            </article>
+
+            <article className="admissions-documents-stage-card admissions-documents-stage-card--application">
+              <span>Stage 02</span>
+
+              <h3>Formal application</h3>
+
+              <strong>Conditional checklist</strong>
+
+              <p>
+                The required evidence depends on the child&apos;s class,
+                previous school, board and admission route.
+              </p>
+            </article>
+
+            <article className="admissions-documents-stage-card admissions-documents-stage-card--verification">
+              <span>Stage 03</span>
+
+              <h3>School verification</h3>
+
+              <strong>Authorised review</strong>
+
+              <p>
+                Staff review only the documents required for the
+                applicable eligibility and admission checks.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-band admissions-documents-privacy">
+        <PageContainer className="admissions-documents-privacy__layout">
+          <div>
+            <p className="eyebrow">
+              Private-document standard
+            </p>
+
+            <h2>
+              Student documents should never behave like public website files.
+            </h2>
+
+            <p>
+              When online document upload is eventually activated,
+              files must remain private and accessible only through
+              the authorised admissions workflow.
+            </p>
+          </div>
+
+          <div className="admissions-documents-privacy__rules">
+            <article>
+              <span>01</span>
+              <strong>Private storage</strong>
+              <p>
+                Applicant documents stay outside public media folders
+                and public URLs.
+              </p>
+            </article>
+
+            <article>
+              <span>02</span>
+              <strong>Controlled access</strong>
+              <p>
+                Only authorised staff should be able to view or
+                download applicant records.
+              </p>
+            </article>
+
+            <article>
+              <span>03</span>
+              <strong>File safety</strong>
+              <p>
+                Upload validation and malware scanning are required
+                before real online submission is enabled.
+              </p>
+            </article>
+
+            <article>
+              <span>04</span>
+              <strong>Access history</strong>
+              <p>
+                Sensitive document access should be auditable rather
+                than anonymous.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-documents-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Not sure what applies to your child?
+            </p>
+
+            <h2>
+              Ask before collecting paperwork.
+            </h2>
+          </div>
+
+          <p>
+            Tell admissions the class and transfer context first.
+            The school can then guide you toward the correct next step.
+          </p>
+
+          <Link
+            className="button button--primary"
+            href="/admissions/enquire"
+          >
+            Make an enquiry
+          </Link>
+        </PageContainer>
+      </section>
+    </>
   );
 }
 
@@ -691,11 +886,13 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   const enquiryPage = key === "enquire";
   const processPage = key === "process";
   const agePage = key === "age-criteria";
+  const documentsPage = key === "documents-required";
 
   const cinematicPage =
     enquiryPage ||
     processPage ||
-    agePage;
+    agePage ||
+    documentsPage;
 
   const heroActions = enquiryPage ? (
     <>
@@ -744,6 +941,22 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
       >
         Open age review tool
       </a>
+    </>
+  ) : documentsPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#documents-checklist"
+      >
+        View document guidance
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions/enquire"
+      >
+        Ask admissions
+      </Link>
     </>
   ) : undefined;
 
@@ -815,6 +1028,28 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         <span aria-hidden="true">&rarr;</span>
       </a>
     </aside>
+  ) : documentsPage ? (
+    <aside
+      className="admissions-cycle-card admissions-documents-hero-card"
+      aria-label="Document checklist guidance"
+    >
+      <div>
+        <span>Document guidance</span>
+        <strong>Conditional</strong>
+      </div>
+
+      <p>Not every document applies to every child</p>
+
+      <small>
+        Requirements depend on class, previous school,
+        board, transfer context and admission category.
+      </small>
+
+      <Link href="/admissions/enquire">
+        Ask which route applies{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </Link>
+    </aside>
   ) : undefined;
 
   return (
@@ -830,6 +1065,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
             "apply",
             "application-status",
             "age-criteria",
+            "documents-required",
           ] as PageKey[]
         ).includes(key)
       }
