@@ -23,20 +23,19 @@ import {
   StatusLookupPrototype,
   VisitRequestPrototype,
 } from "@/components/admissions-forms";
-import { ContactCard } from "@/components/content";
 import { PageContainer } from "@/components/layout";
 import { siteFacts } from "@/app/data/site";
 
 const pageDetails = {
   process: {
     title: "Admission process",
-    eyebrow: "Admissions · Parent journey",
+    eyebrow: "Admissions Â· Parent journey",
     summary: "Eight visible stages separate an initial question from a formal, authorised admission decision.",
   },
   "age-criteria": {
     title: "Age criteria",
-    eyebrow: "Admissions · Eligibility",
-    summary: "Age guidance is generated from an approved Maharashtra rule record—not copied from an old page or typed as a permanent date range.",
+    eyebrow: "Admissions Â· Eligibility",
+    summary: "Age guidance is generated from an approved Maharashtra rule recordâ€”not copied from an old page or typed as a permanent date range.",
   },
   enquire: {
     title: "Make an admissions enquiry",
@@ -47,57 +46,57 @@ const pageDetails = {
 
   apply: {
     title: "Start an application",
-    eyebrow: "Admissions · Formal application",
+    eyebrow: "Admissions Â· Formal application",
     summary: "Review the planned seven-step mobile application and the privacy and security gates required before it can accept real information.",
   },
   "application-status": {
     title: "Application status",
-    eyebrow: "Admissions · Parent tracking",
-    summary: "A parent-safe view of progress, actions and deadlines—protected by the application reference, registered mobile and a one-time password.",
+    eyebrow: "Admissions Â· Parent tracking",
+    summary: "A parent-safe view of progress, actions and deadlinesâ€”protected by the application reference, registered mobile and a one-time password.",
   },
   "documents-required": {
     title: "Documents required",
-    eyebrow: "Admissions · Conditional checklist",
+    eyebrow: "Admissions Â· Conditional checklist",
     summary: "The documents depend on the class, admission category, previous board and transfer context. They are not required for a short enquiry.",
   },
   fees: {
     title: "Admission fees",
-    eyebrow: "Admissions · Approved schedules",
+    eyebrow: "Admissions Â· Approved schedules",
     summary: "Fee information will be shown only with its academic year, approving authority, effective date and controlled public document.",
   },
   faq: {
     title: "Admissions FAQ",
-    eyebrow: "Admissions · Quick answers",
+    eyebrow: "Admissions Â· Quick answers",
     summary: "Plain-language answers about availability, age, documents, transfers, RTE and the review environment.",
   },
   contact: {
     title: "Contact admissions",
-    eyebrow: "Admissions · Help",
+    eyebrow: "Admissions Â· Help",
     summary: "Use the verified general school channels while a dedicated admissions contact and service standard await approval.",
   },
   rte: {
     title: "RTE 25% admissions",
-    eyebrow: "Admissions · Official Maharashtra process",
+    eyebrow: "Admissions Â· Official Maharashtra process",
     summary: "The regular SSKEMS enquiry and application are not the official RTE application. Parents must use the Maharashtra Government process.",
   },
   "class-9-and-11-transfers": {
     title: "Class IX and XI transfers",
-    eyebrow: "Admissions · Special review",
+    eyebrow: "Admissions Â· Special review",
     summary: "Prior-class, board, subject and timing rules make these applications different from elementary entry.",
   },
   school: {
     title: "School admissions",
-    eyebrow: "Admissions · Classes I–VIII",
+    eyebrow: "Admissions Â· Classes Iâ€“VIII",
     summary: "A Maharashtra-specific route for age, previous-class eligibility, documents, availability and family support.",
   },
   "senior-secondary": {
     title: "Senior-secondary admissions",
-    eyebrow: "Admissions · Classes IX–XII",
+    eyebrow: "Admissions Â· Classes IXâ€“XII",
     summary: "Direct-entry and transfer rules, programme confirmation and subject availability must be checked before an application is invited.",
   },
   visit: {
     title: "Visit SSKEMS",
-    eyebrow: "Admissions · School visit",
+    eyebrow: "Admissions Â· School visit",
     summary: "Speak with the school, understand routines and request any accessibility or communication support before your visit.",
   },
 } as const;
@@ -1245,7 +1244,313 @@ function FaqPage() {
 
 function ContactPage() {
   return (
-    <section className="admissions-band" aria-labelledby="contact-options-title"><PageContainer><SectionHeading eyebrow="Verified public channels" title="Contact the school office"><p>No dedicated admissions contact has been approved yet, so the site uses the verified school office details.</p></SectionHeading><div className="admissions-contact-grid" id="contact-options-title"><ContactCard title="School office" phone={siteFacts.phone} email={siteFacts.email} hours={`${siteFacts.workingHours.weekdays}; ${siteFacts.workingHours.saturday}`} /><ContactCard title="Principal's office" phone={siteFacts.mobile} email={siteFacts.principalEmail} hours="Contact the school office to arrange a suitable time" /><article className="contact-topic-card"><span>Include in your message</span><h3>Help us route the question</h3><ul><li>Academic year and class sought</li><li>Whether the question is about fees, transport, a visit or accessibility</li><li>Your preferred contact method and time</li></ul><p>Do not email sensitive certificates or detailed medical records unless the school provides an approved secure channel.</p></article></div></PageContainer></section>
+    <>
+      <section
+        id="contact-channels"
+        className="admissions-band admissions-contact-v2"
+        aria-labelledby="contact-channels-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Verified public channels
+              </p>
+
+              <h2 id="contact-channels-title">
+                Contact the school office.
+              </h2>
+            </div>
+
+            <p>
+              A separate admissions contact has not yet been approved,
+              so admissions questions currently use the verified
+              SSKEMS school-office channels.
+            </p>
+          </div>
+
+          <div className="admissions-contact-v2__grid">
+            <article className="admissions-contact-v2__card admissions-contact-v2__card--primary">
+              <span>01 ? Main channel</span>
+
+              <p>School office</p>
+
+              <h3>
+                General admissions help
+              </h3>
+
+              <div className="admissions-contact-v2__details">
+                <div>
+                  <small>Telephone</small>
+
+                  <a href={`tel:${siteFacts.phone.replaceAll(" ", "")}`}>
+                    {siteFacts.phone}
+                  </a>
+                </div>
+
+                <div>
+                  <small>Email</small>
+
+                  <a href={`mailto:${siteFacts.email}`}>
+                    {siteFacts.email}
+                  </a>
+                </div>
+
+                <div>
+                  <small>Office hours</small>
+
+                  <strong>
+                    {siteFacts.workingHours.weekdays}
+                  </strong>
+
+                  <strong>
+                    {siteFacts.workingHours.saturday}
+                  </strong>
+                </div>
+              </div>
+
+              <div className="admissions-contact-v2__card-actions">
+                <a
+                  className="button button--primary"
+                  href={`tel:${siteFacts.phone.replaceAll(" ", "")}`}
+                >
+                  Call school office
+                </a>
+
+                <a
+                  className="admissions-contact-v2__text-link"
+                  href={`mailto:${siteFacts.email}`}
+                >
+                  Send an email{" "}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </article>
+
+
+            <article className="admissions-contact-v2__card">
+              <span>02 ? Escalation channel</span>
+
+              <p>Principal office</p>
+
+              <h3>
+                Arrange the right conversation.
+              </h3>
+
+              <div className="admissions-contact-v2__details">
+                <div>
+                  <small>Mobile</small>
+
+                  <a href={`tel:${siteFacts.mobile}`}>
+                    {siteFacts.mobile}
+                  </a>
+                </div>
+
+                <div>
+                  <small>Email</small>
+
+                  <a href={`mailto:${siteFacts.principalEmail}`}>
+                    {siteFacts.principalEmail}
+                  </a>
+                </div>
+
+                <div>
+                  <small>Timing</small>
+
+                  <strong>
+                    Contact the school office to arrange a suitable time.
+                  </strong>
+                </div>
+              </div>
+
+              <div className="admissions-contact-v2__card-actions">
+                <a
+                  className="button button--secondary"
+                  href={`tel:${siteFacts.mobile}`}
+                >
+                  Call principal office
+                </a>
+
+                <a
+                  className="admissions-contact-v2__text-link"
+                  href={`mailto:${siteFacts.principalEmail}`}
+                >
+                  Send an email{" "}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-contact-message"
+        aria-labelledby="contact-message-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Help us route your question
+              </p>
+
+              <h2 id="contact-message-title">
+                A useful message can be very short.
+              </h2>
+            </div>
+
+            <p>
+              You do not need to explain the entire admission history
+              or send documents just to ask an initial question.
+            </p>
+          </div>
+
+          <div className="admissions-contact-message__grid">
+            <article>
+              <span>01</span>
+
+              <p>Tell us</p>
+
+              <h3>
+                Academic year and class
+              </h3>
+
+              <small>
+                Mention the academic year and the class you are
+                considering for the child.
+              </small>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <p>Choose the topic</p>
+
+              <h3>
+                What do you need help with?
+              </h3>
+
+              <small>
+                For example: availability, fees, transport, curriculum,
+                accessibility or a school visit.
+              </small>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <p>Tell us how to reply</p>
+
+              <h3>
+                Preferred contact method
+              </h3>
+
+              <small>
+                Include whether you prefer a phone call or email
+                response and any useful timing information.
+              </small>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-contact-location"
+        aria-labelledby="contact-location-title"
+      >
+        <PageContainer className="admissions-contact-location__layout">
+          <div>
+            <p className="eyebrow">
+              Visit or write to the school
+            </p>
+
+            <h2 id="contact-location-title">
+              SSKEMS ? Veral
+            </h2>
+
+            <p>
+              This is the reviewed public postal address currently
+              used by the school website.
+            </p>
+          </div>
+
+          <address>
+            <span>School address</span>
+
+            <strong>
+              {siteFacts.name}
+            </strong>
+
+            <p>
+              {siteFacts.location}
+            </p>
+
+            <Link href="/admissions/visit">
+              Plan a school visit{" "}
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </address>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-contact-privacy">
+        <PageContainer className="admissions-contact-privacy__layout">
+          <div>
+            <p className="eyebrow">
+              Protect student information
+            </p>
+
+            <h2>
+              Do not email sensitive documents with a first enquiry.
+            </h2>
+          </div>
+
+          <div className="admissions-contact-privacy__content">
+            <p>
+              Aadhaar, certificates, marksheets, bank details,
+              income evidence and detailed medical records do not
+              belong in an ordinary admissions email.
+            </p>
+
+            <p>
+              If a document is later required, use only the
+              school-approved process for that admission stage.
+            </p>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-contact-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Prefer the guided route?
+            </p>
+
+            <h2>
+              Start with the short admissions enquiry.
+            </h2>
+          </div>
+
+          <p>
+            The enquiry page helps structure your question without
+            collecting certificates or unnecessary applicant details.
+          </p>
+
+          <Link
+            className="button button--primary"
+            href="/admissions/enquire"
+          >
+            Make an enquiry
+          </Link>
+        </PageContainer>
+      </section>
+    </>
   );
 }
 
@@ -1260,19 +1565,19 @@ function RtePage() {
 
 function TransfersPage() {
   return (
-    <section className="admissions-band" aria-labelledby="transfer-rules-title"><PageContainer><SectionHeading eyebrow="CBSE admission rules" title="Prior class, timing and authority matter" /><div className="transfer-rule-grid" id="transfer-rules-title"><article><span>Class IX</span><h3>Passed Class VIII</h3><p>The previous institution must be CBSE-affiliated, another recognised board, or recognised by the relevant State education department.</p></article><article><span>Class XI</span><h3>Passed Class X or equivalent</h3><p>Subject combinations, prerequisites and the programme actually offered by SSKEMS still require confirmation.</p></article><article><span>Class IX–XII</span><h3>After 31 August</h3><p>Admission after 31 August requires prior permission from the competent authority except in specified late-result circumstances. Attendance feasibility also matters.</p></article></div><p className="admissions-source-note">Official source: <a href={officialAdmissionsSources.cbseDirectAdmission} target="_blank" rel="noreferrer">CBSE Direct Admission rules <span className="visually-hidden">(opens in a new tab)</span></a>.</p></PageContainer></section>
+    <section className="admissions-band" aria-labelledby="transfer-rules-title"><PageContainer><SectionHeading eyebrow="CBSE admission rules" title="Prior class, timing and authority matter" /><div className="transfer-rule-grid" id="transfer-rules-title"><article><span>Class IX</span><h3>Passed Class VIII</h3><p>The previous institution must be CBSE-affiliated, another recognised board, or recognised by the relevant State education department.</p></article><article><span>Class XI</span><h3>Passed Class X or equivalent</h3><p>Subject combinations, prerequisites and the programme actually offered by SSKEMS still require confirmation.</p></article><article><span>Class IXâ€“XII</span><h3>After 31 August</h3><p>Admission after 31 August requires prior permission from the competent authority except in specified late-result circumstances. Attendance feasibility also matters.</p></article></div><p className="admissions-source-note">Official source: <a href={officialAdmissionsSources.cbseDirectAdmission} target="_blank" rel="noreferrer">CBSE Direct Admission rules <span className="visually-hidden">(opens in a new tab)</span></a>.</p></PageContainer></section>
   );
 }
 
 function SchoolPage() {
   return (
-    <section className="admissions-band" aria-labelledby="school-route-title"><PageContainer><SectionHeading eyebrow="Classes I–VIII" title="Maharashtra-specific eligibility"><p>CBSE delegates admission through Class VIII to the applicable State rules. The school must therefore configure Maharashtra age and previous-class rules rather than present a generic “CBSE age rule”.</p></SectionHeading><div className="admissions-policy-grid" id="school-route-title"><article><span>Age</span><h3>Official cut-off record</h3><p>The 2026–27 Maharashtra order and any relaxation must be approved first.</p></article><article><span>Prior learning</span><h3>Previous-class eligibility</h3><p>For classes above entry level, age alone is not enough.</p></article><article><span>Family support</span><h3>Non-selective orientation</h3><p>Interactions help plan language, learning, accessibility, health and transport support; they are not screening tests.</p></article></div></PageContainer></section>
+    <section className="admissions-band" aria-labelledby="school-route-title"><PageContainer><SectionHeading eyebrow="Classes Iâ€“VIII" title="Maharashtra-specific eligibility"><p>CBSE delegates admission through Class VIII to the applicable State rules. The school must therefore configure Maharashtra age and previous-class rules rather than present a generic â€œCBSE age ruleâ€.</p></SectionHeading><div className="admissions-policy-grid" id="school-route-title"><article><span>Age</span><h3>Official cut-off record</h3><p>The 2026â€“27 Maharashtra order and any relaxation must be approved first.</p></article><article><span>Prior learning</span><h3>Previous-class eligibility</h3><p>For classes above entry level, age alone is not enough.</p></article><article><span>Family support</span><h3>Non-selective orientation</h3><p>Interactions help plan language, learning, accessibility, health and transport support; they are not screening tests.</p></article></div></PageContainer></section>
   );
 }
 
 function SeniorSecondaryPage() {
   return (
-    <section className="admissions-band" aria-labelledby="senior-rules-title"><PageContainer><SectionHeading eyebrow="Classes IX–XII" title="Programme and transfer rules before promotion"><p><a href={officialAdmissionsSources.cbseSaras} target="_blank" rel="noreferrer">CBSE SARAS records SSKEMS as a Senior Secondary school <span className="visually-hidden">(opens in a new tab)</span></a>. A separately named Junior College or Maharashtra FYJC pathway must not be presented as current until management confirms its board and programme.</p></SectionHeading><div className="admissions-policy-grid" id="senior-rules-title"><article><span>Class X</span><h3>Restricted, not ordinary open entry</h3><p>Completion of Class IX and the specific CBSE transfer conditions must be checked.</p></article><article><span>Class XI</span><h3>Programme confirmation required</h3><p>A passed Class X or recognised equivalent, approved subjects and actual school availability are required.</p></article><article><span>Class XII</span><h3>Restricted, not ordinary open entry</h3><p>Completion of Class XI and the applicable transfer conditions must be checked.</p></article></div><div className="fyjc-note"><strong>Important FYJC distinction</strong><p>Maharashtra’s centralised Class XI portal applies to its State Board process. Do not direct a CBSE applicant there as mandatory unless SSKEMS confirms that the intended programme is governed by FYJC.</p><a href={officialAdmissionsSources.maharashtraClassEleven} target="_blank" rel="noreferrer">View the official Maharashtra FYJC portal <span className="visually-hidden">(opens in a new tab)</span></a></div></PageContainer></section>
+    <section className="admissions-band" aria-labelledby="senior-rules-title"><PageContainer><SectionHeading eyebrow="Classes IXâ€“XII" title="Programme and transfer rules before promotion"><p><a href={officialAdmissionsSources.cbseSaras} target="_blank" rel="noreferrer">CBSE SARAS records SSKEMS as a Senior Secondary school <span className="visually-hidden">(opens in a new tab)</span></a>. A separately named Junior College or Maharashtra FYJC pathway must not be presented as current until management confirms its board and programme.</p></SectionHeading><div className="admissions-policy-grid" id="senior-rules-title"><article><span>Class X</span><h3>Restricted, not ordinary open entry</h3><p>Completion of Class IX and the specific CBSE transfer conditions must be checked.</p></article><article><span>Class XI</span><h3>Programme confirmation required</h3><p>A passed Class X or recognised equivalent, approved subjects and actual school availability are required.</p></article><article><span>Class XII</span><h3>Restricted, not ordinary open entry</h3><p>Completion of Class XI and the applicable transfer conditions must be checked.</p></article></div><div className="fyjc-note"><strong>Important FYJC distinction</strong><p>Maharashtraâ€™s centralised Class XI portal applies to its State Board process. Do not direct a CBSE applicant there as mandatory unless SSKEMS confirms that the intended programme is governed by FYJC.</p><a href={officialAdmissionsSources.maharashtraClassEleven} target="_blank" rel="noreferrer">View the official Maharashtra FYJC portal <span className="visually-hidden">(opens in a new tab)</span></a></div></PageContainer></section>
   );
 }
 
@@ -1338,6 +1643,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   const documentsPage = key === "documents-required";
   const feesPage = key === "fees";
   const faqPage = key === "faq";
+  const contactPage = key === "contact";
 
   const cinematicPage =
     enquiryPage ||
@@ -1345,7 +1651,8 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
     agePage ||
     documentsPage ||
     feesPage ||
-    faqPage;
+    faqPage ||
+    contactPage;
 
   const heroActions = enquiryPage ? (
     <>
@@ -1441,6 +1748,22 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         href="/admissions/enquire"
       >
         Ask admissions
+      </Link>
+    </>
+  ) : contactPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#contact-channels"
+      >
+        View contact options
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions/enquire"
+      >
+        Make an enquiry
       </Link>
     </>
   ) : undefined;
@@ -1581,6 +1904,28 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         <span aria-hidden="true">&rarr;</span>
       </a>
     </aside>
+  ) : contactPage ? (
+    <aside
+      className="admissions-cycle-card admissions-contact-hero-card"
+      aria-label="Verified admissions contact channels"
+    >
+      <div>
+        <span>Verified channels</span>
+        <strong>School office</strong>
+      </div>
+
+      <p>No dedicated admissions contact published yet</p>
+
+      <small>
+        Admissions questions currently use the verified
+        general school-office and principal-office channels.
+      </small>
+
+      <a href="#contact-channels">
+        View contact details{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
   ) : undefined;
 
   return (
@@ -1599,6 +1944,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
             "documents-required",
             "fees",
             "faq",
+            "contact",
           ] as PageKey[]
         ).includes(key)
       }

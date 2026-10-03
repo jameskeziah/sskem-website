@@ -4938,3 +4938,610 @@ details > div p {
     transition: none;
   }
 }
+
+
+/* =========================================
+   ADMISSIONS EXPERIENCE V2 - CONTACT
+   ========================================= */
+
+.admissions-contact-hero-card {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.4rem;
+
+  background: rgba(6, 21, 34, 0.54);
+
+  box-shadow:
+    0 2rem 5rem
+    rgba(0, 0, 0, 0.26);
+
+  backdrop-filter: blur(16px);
+}
+
+.admissions-contact-hero-card span,
+.admissions-contact-hero-card > p {
+  color: #ffb4b9;
+}
+
+.admissions-contact-hero-card strong {
+  color: #fff;
+}
+
+.admissions-contact-hero-card small {
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+}
+
+.admissions-contact-hero-card a {
+  color: #fff;
+}
+
+
+/* Hero */
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-contact-hero-card) {
+  min-height: auto;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-contact-hero-card)
+h1 {
+  max-width: 10ch;
+  font-size: clamp(4rem, 6.4vw, 6.8rem);
+}
+
+
+/* Verified contact channels */
+
+.admissions-contact-v2 {
+  padding-block: clamp(5rem, 9vw, 8rem);
+
+  background:
+    radial-gradient(
+      circle at 92% 5%,
+      rgba(239, 127, 137, 0.11),
+      transparent 24rem
+    ),
+    #f7f4ee;
+}
+
+.admissions-contact-v2__grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.admissions-contact-v2__card {
+  display: flex;
+
+  min-height: 34rem;
+
+  flex-direction: column;
+
+  gap: 1rem;
+
+  padding:
+    clamp(1.6rem, 3vw, 2.5rem);
+
+  border:
+    1px solid
+    rgba(8, 26, 42, 0.1);
+
+  border-radius: 1.35rem;
+
+  background: #fff;
+}
+
+.admissions-contact-v2__card--primary {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-contact-v2__card > span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-contact-v2__card > p {
+  margin-top: auto;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-contact-v2__card h3 {
+  max-width: 10ch;
+  margin: 0;
+
+  color: inherit;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(2.6rem, 4vw, 4.7rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-contact-v2__details {
+  display: grid;
+
+  margin-top: 1.25rem;
+
+  border-top:
+    1px solid
+    rgba(8, 26, 42, 0.13);
+}
+
+.admissions-contact-v2__card--primary
+.admissions-contact-v2__details {
+  border-top-color:
+    rgba(255, 255, 255, 0.17);
+}
+
+.admissions-contact-v2__details > div {
+  display: grid;
+  gap: 0.3rem;
+
+  padding:
+    1rem 0;
+
+  border-bottom:
+    1px solid
+    rgba(8, 26, 42, 0.13);
+}
+
+.admissions-contact-v2__card--primary
+.admissions-contact-v2__details > div {
+  border-bottom-color:
+    rgba(255, 255, 255, 0.17);
+}
+
+.admissions-contact-v2__details small {
+  opacity: 0.6;
+
+  font-size: 0.68rem;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admissions-contact-v2__details a,
+.admissions-contact-v2__details strong {
+  color: inherit;
+
+  font-size: 1rem;
+  font-weight: 700;
+
+  overflow-wrap: anywhere;
+}
+
+.admissions-contact-v2__card-actions {
+  display: flex;
+
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap:
+    1rem 1.4rem;
+
+  margin-top: 1rem;
+}
+
+.admissions-contact-v2__card--primary
+.button--primary {
+  background: #ef7f89;
+}
+
+.admissions-contact-v2__card
+.button--secondary {
+  border-color:
+    rgba(8, 26, 42, 0.3);
+}
+
+.admissions-contact-v2__text-link {
+  color: inherit;
+  font-weight: 800;
+}
+
+
+/* Message guidance */
+
+.admissions-contact-message {
+  background: #fff;
+}
+
+.admissions-contact-message__grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.admissions-contact-message__grid article {
+  display: flex;
+
+  min-height: 21rem;
+
+  flex-direction: column;
+
+  padding: 1.75rem;
+
+  border-radius: 1.2rem;
+
+  background: #f2f4f5;
+}
+
+.admissions-contact-message__grid
+article:first-child {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-contact-message__grid
+article:nth-child(2) {
+  background: #efd8d1;
+}
+
+.admissions-contact-message__grid
+article > span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-contact-message__grid
+article > p {
+  margin-top: auto;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-contact-message__grid h3 {
+  margin:
+    0.5rem 0 1rem;
+
+  color: inherit;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(2rem, 3vw, 3.2rem);
+
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.admissions-contact-message__grid small {
+  color: var(--text-secondary);
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.admissions-contact-message__grid
+article:first-child small {
+  color:
+    rgba(255, 255, 255, 0.7);
+}
+
+
+/* Location */
+
+.admissions-contact-location {
+  background: #f2ece6;
+}
+
+.admissions-contact-location__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(18rem, 0.7fr);
+
+  align-items: center;
+
+  gap:
+    clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-contact-location__layout
+> div:first-child {
+  display: grid;
+  gap: 1rem;
+}
+
+.admissions-contact-location h2 {
+  max-width: 10ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3.2rem, 5vw, 5.7rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-contact-location
+> div
+> div:first-child
+> p:last-child {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.admissions-contact-location address {
+  display: grid;
+  gap: 1rem;
+
+  padding: 2rem;
+
+  border-radius: 1.2rem;
+
+  background: #fff;
+
+  box-shadow:
+    0 1.25rem 3rem
+    rgba(8, 26, 42, 0.06);
+
+  font-style: normal;
+}
+
+.admissions-contact-location address > span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-contact-location address > strong {
+  font-family:
+    var(--font-family-heading);
+
+  font-size: 1.8rem;
+  font-weight: 500;
+
+  line-height: 1.05;
+}
+
+.admissions-contact-location address > p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.admissions-contact-location address > a {
+  font-weight: 800;
+}
+
+
+/* Privacy */
+
+.admissions-contact-privacy {
+  padding-block:
+    clamp(4.5rem, 8vw, 7rem);
+
+  background: #081a2a;
+  color: #fff;
+}
+
+.admissions-contact-privacy__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1fr);
+
+  gap:
+    clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-contact-privacy__layout
+> div:first-child {
+  display: grid;
+  gap: 1rem;
+}
+
+.admissions-contact-privacy h2 {
+  max-width: 11ch;
+  margin: 0;
+
+  color: #fff;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3rem, 5vw, 5.4rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-contact-privacy__content {
+  display: grid;
+  align-content: center;
+  gap: 1.25rem;
+}
+
+.admissions-contact-privacy__content p {
+  color:
+    rgba(255, 255, 255, 0.7);
+
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+
+/* Closing */
+
+.admissions-contact-closing {
+  padding-block:
+    clamp(4.5rem, 8vw, 7rem);
+
+  background: #efb8ad;
+}
+
+.admissions-contact-closing > div {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1fr)
+    auto;
+
+  align-items: end;
+
+  gap:
+    clamp(2rem, 5vw, 5rem);
+}
+
+.admissions-contact-closing h2 {
+  max-width: 10ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3rem, 5vw, 5.5rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-contact-closing
+> div > p {
+  color: #553b3b;
+  line-height: 1.65;
+}
+
+
+/* Tablet */
+
+@media (max-width: 70rem) {
+  .admissions-contact-v2__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-contact-v2__card {
+    min-height: 27rem;
+  }
+
+  .admissions-contact-location__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-contact-closing > div {
+    grid-template-columns:
+      1fr 1fr;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-contact-hero-card) {
+    padding-block:
+      3.25rem 3.75rem;
+  }
+
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-contact-hero-card)
+  h1 {
+    font-size:
+      clamp(3.1rem, 14vw, 4.7rem);
+  }
+
+  .admissions-contact-v2,
+  .admissions-contact-message,
+  .admissions-contact-location {
+    padding-block: 3.5rem;
+  }
+
+  .admissions-contact-v2__card {
+    min-height: auto;
+    padding: 1.5rem;
+  }
+
+  .admissions-contact-v2__card h3 {
+    font-size:
+      clamp(2.6rem, 11vw, 3.8rem);
+  }
+
+  .admissions-contact-v2__card-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admissions-contact-v2__card-actions
+  .button {
+    width: 100%;
+  }
+
+  .admissions-contact-message__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-contact-message__grid article {
+    min-height: 17rem;
+  }
+
+  .admissions-contact-location h2,
+  .admissions-contact-privacy h2 {
+    font-size:
+      clamp(2.8rem, 12vw, 4rem);
+  }
+
+  .admissions-contact-privacy__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-contact-closing > div {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-contact-closing
+  .button {
+    width: 100%;
+  }
+}
