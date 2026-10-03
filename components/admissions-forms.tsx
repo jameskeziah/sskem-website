@@ -70,57 +70,221 @@ export function EnquiryFormPrototype() {
 
   function review(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setMessage("Review complete. No enquiry was submitted, stored or sent from this environment.");
+
+    setMessage(
+      "Review complete. Nothing was submitted, stored or sent from this preview.",
+    );
   }
 
   return (
-    <form className="admissions-form" onSubmit={review} aria-describedby="enquiry-review-boundary">
-      <div className="admissions-form__heading">
-        <p className="eyebrow">Short enquiry prototype</p>
-        <h2>Tell admissions what you need</h2>
-        <p id="enquiry-review-boundary"><strong>Review mode:</strong> submissions are disabled. Use example information only; this form is not collecting real personal data.</p>
+    <form
+      id="enquiry-form"
+      className="admissions-form admissions-enquiry-form"
+      onSubmit={review}
+      aria-describedby="enquiry-review-boundary"
+    >
+      <div className="admissions-form__heading admissions-enquiry-form__heading">
+        <p className="eyebrow">Short enquiry</p>
+
+        <h2>What can admissions help you with?</h2>
+
+        <div
+          className="admissions-enquiry-form__notice"
+          id="enquiry-review-boundary"
+        >
+          <strong>Preview only</strong>
+
+          <p>
+            Real submission is not active yet. Use example information
+            while reviewing this page. Nothing entered here is sent or stored.
+          </p>
+        </div>
       </div>
-      <div className="admissions-form__grid">
-        <FormField id="enquiry-parent-name" label="Parent or guardian name">
-          <Input name="parentName" autoComplete="name" required />
+
+      <div className="admissions-form__grid admissions-enquiry-form__grid">
+        <FormField
+          id="enquiry-parent-name"
+          label="Parent or guardian name"
+        >
+          <Input
+            name="parentName"
+            autoComplete="name"
+            required
+          />
         </FormField>
-        <FormField id="enquiry-mobile" label="Mobile number" hint="Use an example number in this review environment.">
-          <Input name="mobile" type="tel" autoComplete="tel" inputMode="tel" required />
+
+        <FormField
+          id="enquiry-mobile"
+          label="Mobile number"
+          hint="Use an example number while this page is in preview."
+        >
+          <Input
+            name="mobile"
+            type="tel"
+            autoComplete="tel"
+            inputMode="tel"
+            required
+          />
         </FormField>
-        <FormField id="enquiry-child-name" label="Child's name">
-          <Input name="childName" autoComplete="off" required />
-        </FormField>
-        <FormField id="enquiry-class" label="Class sought">
-          <Select name="classSought" defaultValue="" required>
-            <option value="" disabled>Select a class</option>
-            {admissionClassOptions.map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
+
+        <FormField
+          id="enquiry-class"
+          label="Class you are considering"
+        >
+          <Select
+            name="classSought"
+            defaultValue=""
+            required
+          >
+            <option value="" disabled>
+              Select a class
+            </option>
+
+            {admissionClassOptions.map((option) => (
+              <option
+                value={option.value}
+                key={option.value}
+              >
+                {option.label}
+              </option>
+            ))}
           </Select>
         </FormField>
-        <FormField id="enquiry-year" label="Academic year">
-          <Select name="academicYear" defaultValue={admissionsCycle.academicYear} required>
-            <option>{admissionsCycle.academicYear}</option>
+
+        <FormField
+          id="enquiry-year"
+          label="Academic year"
+        >
+          <Select
+            name="academicYear"
+            defaultValue={admissionsCycle.academicYear}
+            required
+          >
+            <option>
+              {admissionsCycle.academicYear}
+            </option>
           </Select>
         </FormField>
+
+        <FormField
+          id="enquiry-topic"
+          label="What do you need help with?"
+        >
+          <Select
+            name="enquiryTopic"
+            defaultValue=""
+            required
+          >
+            <option value="" disabled>
+              Choose a topic
+            </option>
+
+            <option value="availability">
+              Class availability
+            </option>
+
+            <option value="fees">
+              Fees
+            </option>
+
+            <option value="curriculum">
+              Curriculum or academics
+            </option>
+
+            <option value="transport">
+              Transport
+            </option>
+
+            <option value="visit">
+              School visit
+            </option>
+
+            <option value="accessibility">
+              Accessibility or support
+            </option>
+
+            <option value="process">
+              Admission process
+            </option>
+
+            <option value="other">
+              Something else
+            </option>
+          </Select>
+        </FormField>
+
         <RadioGroup
           legend="Preferred contact method"
           name="preferredContactMethod"
           defaultValue="phone"
           required
-          options={[{ label: "Phone", value: "phone" }, { label: "Email", value: "email" }]}
+          options={[
+            { label: "Phone", value: "phone" },
+            { label: "Email", value: "email" },
+          ]}
         />
-        <FormField id="enquiry-email" label="Email address" optional>
-          <Input name="email" type="email" autoComplete="email" />
+
+        <FormField
+          id="enquiry-email"
+          label="Email address"
+          hint="Add this if you would prefer an email response."
+          optional
+        >
+          <Input
+            name="email"
+            type="email"
+            autoComplete="email"
+          />
         </FormField>
-        <FormField id="enquiry-question" label="Question or message" optional>
-          <Textarea name="question" rows={4} />
+
+        <FormField
+          id="enquiry-question"
+          label="Your question"
+          hint="A short message is enough."
+          optional
+        >
+          <Textarea
+            name="question"
+            rows={5}
+          />
         </FormField>
       </div>
-      <Checkbox id="enquiry-consent" name="contactConsent" label="I consent to be contacted about this admissions enquiry" required />
-      <div className="admissions-form__actions">
-        <Button type="submit">Review enquiry</Button>
-        <span>Operational submission activates only after privacy, routing and notification approval.</span>
+
+      <div className="admissions-enquiry-form__privacy">
+        <strong>No documents are needed here.</strong>
+
+        <p>
+          Do not upload or send Aadhaar, certificates, marksheets,
+          bank details or detailed medical information with an enquiry.
+        </p>
       </div>
-      <p id={statusId} className="admissions-form__status" role="status" aria-live="polite">{message}</p>
+
+      <Checkbox
+        id="enquiry-consent"
+        name="contactConsent"
+        label="I consent to be contacted about this admissions enquiry"
+        required
+      />
+
+      <div className="admissions-form__actions admissions-enquiry-form__actions">
+        <Button type="submit">
+          Review enquiry
+        </Button>
+
+        <span>
+          Actual submission will activate only after privacy,
+          routing and notification controls are approved.
+        </span>
+      </div>
+
+      <p
+        id={statusId}
+        className="admissions-form__status"
+        role="status"
+        aria-live="polite"
+      >
+        {message}
+      </p>
     </form>
   );
 }

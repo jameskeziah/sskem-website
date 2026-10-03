@@ -1901,3 +1901,416 @@ a:first-child p {
     transition: none;
   }
 }
+
+
+/* =========================================
+   ADMISSIONS EXPERIENCE V2 - ENQUIRY
+   ========================================= */
+
+.admissions-enquiry-hero-card {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.4rem;
+  background: rgba(6, 21, 34, 0.54);
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(16px);
+}
+
+.admissions-enquiry-hero-card span,
+.admissions-enquiry-hero-card > p {
+  color: #ffb4b9;
+}
+
+.admissions-enquiry-hero-card strong {
+  color: #fff;
+}
+
+.admissions-enquiry-hero-card small {
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+}
+
+.admissions-enquiry-hero-card a {
+  color: #fff;
+}
+
+.admissions-enquiry-v2 {
+  padding-block: clamp(5rem, 9vw, 8rem);
+
+  background:
+    radial-gradient(
+      circle at 8% 10%,
+      rgba(239, 127, 137, 0.12),
+      transparent 22rem
+    ),
+    #f6f3ed;
+}
+
+.admissions-enquiry-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(16rem, 0.58fr)
+    minmax(0, 1.42fr);
+
+  align-items: start;
+  gap: clamp(2.5rem, 6vw, 6rem);
+}
+
+.admissions-enquiry-intro {
+  position: sticky;
+  top: 7rem;
+
+  display: grid;
+  gap: 1.5rem;
+}
+
+.admissions-enquiry-intro > h2 {
+  max-width: 9ch;
+  margin: 0;
+
+  color: #081a2a;
+  font-family: var(--font-family-heading);
+  font-size: clamp(3rem, 5vw, 5.8rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-enquiry-intro > p:not(.eyebrow) {
+  max-width: 32rem;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.admissions-enquiry-intro__points {
+  display: grid;
+  gap: 0;
+  margin-top: 0.5rem;
+
+  border-top: 1px solid rgba(8, 26, 42, 0.14);
+}
+
+.admissions-enquiry-intro__points > div {
+  display: grid;
+  gap: 0.4rem;
+
+  padding: 1.35rem 0;
+
+  border-bottom: 1px solid rgba(8, 26, 42, 0.14);
+}
+
+.admissions-enquiry-intro__points span {
+  color: #d95e70;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-enquiry-intro__points strong {
+  color: #081a2a;
+}
+
+.admissions-enquiry-intro__points p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.admissions-enquiry-form {
+  max-width: none;
+  margin: 0;
+
+  gap: 2rem;
+
+  padding: clamp(1.5rem, 4vw, 3rem);
+
+  border: 1px solid rgba(8, 26, 42, 0.1);
+  border-radius: 1.5rem;
+
+  background: #fff;
+
+  box-shadow:
+    0 1.5rem 4rem
+    rgba(8, 26, 42, 0.08);
+}
+
+.admissions-enquiry-form__heading {
+  max-width: 38rem;
+}
+
+.admissions-enquiry-form__heading h2 {
+  max-width: 12ch;
+  font-size: clamp(2.7rem, 4.4vw, 4.9rem);
+  letter-spacing: -0.05em;
+  line-height: 0.94;
+}
+
+.admissions-enquiry-form__heading > p:last-child {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.admissions-enquiry-form__notice {
+  display: grid;
+  gap: 0.35rem;
+
+  padding: 1rem 1.15rem;
+
+  border-left: 4px solid #e9a345;
+  border-radius: 0 0.75rem 0.75rem 0;
+
+  background: #fff7e8;
+}
+
+.admissions-enquiry-form__notice strong {
+  color: #6b450e;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admissions-enquiry-form__notice p {
+  color: #6f5b3d;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.admissions-enquiry-form__grid {
+  gap: 1.4rem 1.5rem;
+}
+
+.admissions-enquiry-form__privacy {
+  display: grid;
+  gap: 0.35rem;
+
+  padding: 1.2rem 1.3rem;
+
+  border: 1px solid rgba(239, 127, 137, 0.26);
+  border-radius: 0.9rem;
+
+  background: rgba(239, 127, 137, 0.08);
+}
+
+.admissions-enquiry-form__privacy strong {
+  color: #8f3445;
+}
+
+.admissions-enquiry-form__privacy p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.admissions-enquiry-form__actions {
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(8, 26, 42, 0.1);
+}
+
+.admissions-enquiry-form__actions .button {
+  min-height: 3.2rem;
+  padding-inline: 1.6rem;
+  border-radius: 999px;
+}
+
+.enquiry-boundaries-section {
+  background: #fff;
+}
+
+.enquiry-boundaries--v2 {
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.enquiry-boundary-card {
+  min-height: 18rem;
+  padding: 1.75rem;
+
+  border: 0 !important;
+  border-radius: 1.2rem;
+
+  background: #f2f4f5 !important;
+}
+
+.enquiry-boundary-card > span {
+  color: #d95e70;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.enquiry-boundary-card h3 {
+  max-width: 10ch;
+  font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+  line-height: 1;
+}
+
+.enquiry-boundary-card p {
+  color: var(--text-secondary);
+  line-height: 1.58;
+}
+
+.enquiry-boundary-card--now {
+  background: #0d3049 !important;
+  color: #fff;
+}
+
+.enquiry-boundary-card--now h3,
+.enquiry-boundary-card--now p {
+  color: inherit;
+}
+
+.enquiry-boundary-card--later {
+  background: #efe2da !important;
+}
+
+.enquiry-boundary-card--never {
+  background: #f4eeee !important;
+}
+
+@media (max-width: 70rem) {
+  .admissions-enquiry-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-enquiry-intro {
+    position: static;
+    max-width: 44rem;
+  }
+}
+
+@media (max-width: 48rem) {
+  .admissions-enquiry-v2 {
+    padding-block: 3.5rem;
+  }
+
+  .admissions-enquiry-layout {
+    gap: 2.5rem;
+  }
+
+  .admissions-enquiry-intro > h2 {
+    font-size: clamp(2.8rem, 13vw, 4.2rem);
+  }
+
+  .admissions-enquiry-form {
+    padding: 1.25rem;
+    border-radius: 1.1rem;
+  }
+
+  .admissions-enquiry-form__heading h2 {
+    font-size: clamp(2.45rem, 11vw, 3.7rem);
+  }
+
+  .admissions-enquiry-form__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-enquiry-form__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admissions-enquiry-form__actions .button {
+    width: 100%;
+  }
+
+  .enquiry-boundaries--v2 {
+    grid-template-columns: 1fr;
+  }
+
+  .enquiry-boundary-card {
+    min-height: auto;
+  }
+}
+
+
+/* =========================================
+   ADMISSIONS ENQUIRY V2 - VIEWPORT POLISH
+   ========================================= */
+
+/*
+ * The enquiry page sits below the full site header
+ * and admissions navigation, so it should not use
+ * the same tall hero proportions as /admissions.
+ */
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-enquiry-hero-card) {
+  min-height: auto;
+
+  padding-block:
+    clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-enquiry-hero-card)
+h1 {
+  max-width: 11ch;
+
+  font-size:
+    clamp(3.8rem, 6.4vw, 6.8rem);
+
+  line-height: 0.9;
+}
+
+
+/* Give the explanatory column enough room */
+
+.admissions-enquiry-layout {
+  grid-template-columns:
+    minmax(20rem, 0.72fr)
+    minmax(0, 1.28fr);
+
+  gap:
+    clamp(2.5rem, 5vw, 5rem);
+}
+
+.admissions-enquiry-intro > h2 {
+  max-width: 12ch;
+
+  font-size:
+    clamp(2.8rem, 4vw, 4.8rem);
+
+  line-height: 0.96;
+}
+
+
+/* Tablet remains stacked */
+
+@media (max-width: 70rem) {
+  .admissions-enquiry-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-enquiry-intro > h2 {
+    max-width: 12ch;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-enquiry-hero-card) {
+    padding-block:
+      3.25rem 3.75rem;
+  }
+
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-enquiry-hero-card)
+  h1 {
+    font-size:
+      clamp(3rem, 13vw, 4.6rem);
+  }
+
+  .admissions-enquiry-intro > h2 {
+    max-width: 12ch;
+
+    font-size:
+      clamp(2.6rem, 11vw, 3.8rem);
+  }
+}

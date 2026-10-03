@@ -40,10 +40,12 @@ const pageDetails = {
     summary: "Age guidance is generated from an approved Maharashtra rule record—not copied from an old page or typed as a permanent date range.",
   },
   enquire: {
-    title: "Make an enquiry",
-    eyebrow: "Admissions · First contact",
-    summary: "A deliberately short first step for availability, fees, curriculum, transport, visits or accessibility questions.",
+    title: "Make an admissions enquiry",
+    eyebrow: "Admissions ? First contact",
+    summary:
+      "Ask a simple question about class availability, curriculum, fees, transport, visits or the right next step. No certificates are needed at this stage.",
   },
+
   apply: {
     title: "Start an application",
     eyebrow: "Admissions · Formal application",
@@ -172,16 +174,101 @@ function AgeCriteriaPage() {
 function EnquirePage() {
   return (
     <>
-      <PageContainer><AdmissionsReviewNotice /></PageContainer>
-      <section className="admissions-band" aria-label="Enquiry form prototype"><PageContainer><EnquiryFormPrototype /></PageContainer></section>
-      <section className="admissions-band admissions-band--soft" aria-labelledby="enquiry-boundaries-title">
-        <PageContainer className="enquiry-boundaries">
-          <SectionHeading eyebrow="Privacy by stage" title="Certificates do not belong in an enquiry" />
-          <div id="enquiry-boundaries-title">
-            <h3>Ask now</h3><p>Availability, academic year, intended class, transport, visit, accessibility, curriculum, fees and callback preference.</p>
+      <section
+        className="admissions-band admissions-enquiry-v2"
+        aria-labelledby="enquiry-form-title"
+      >
+        <PageContainer className="admissions-enquiry-layout">
+          <aside className="admissions-enquiry-intro">
+            <p className="eyebrow">A simpler first step</p>
+
+            <h2 id="enquiry-form-title">
+              Tell us what you need help with.
+            </h2>
+
+            <p>
+              An initial enquiry should be quick. We only need enough
+              information to understand your question and respond.
+            </p>
+
+            <div className="admissions-enquiry-intro__points">
+              <div>
+                <span>01</span>
+                <strong>No certificates</strong>
+                <p>
+                  Birth certificates, marksheets and transfer records
+                  do not belong in this first step.
+                </p>
+              </div>
+
+              <div>
+                <span>02</span>
+                <strong>No payment details</strong>
+                <p>
+                  Bank, card and fee-payment information is never
+                  requested in an enquiry.
+                </p>
+              </div>
+
+              <div>
+                <span>03</span>
+                <strong>One question is enough</strong>
+                <p>
+                  Ask about a class, fees, transport, curriculum,
+                  accessibility or a school visit.
+                </p>
+              </div>
+            </div>
+          </aside>
+
+          <EnquiryFormPrototype />
+        </PageContainer>
+      </section>
+
+      <section
+        className="admissions-band admissions-band--soft enquiry-boundaries-section"
+        aria-labelledby="enquiry-boundaries-title"
+      >
+        <PageContainer className="enquiry-boundaries enquiry-boundaries--v2">
+          <div className="admissions-section-heading">
+            <p className="eyebrow">Privacy by stage</p>
+
+            <h2 id="enquiry-boundaries-title">
+              Share only what this step actually needs.
+            </h2>
+
+            <p>
+              More detailed information belongs later, and only when
+              it is genuinely required for the selected admission route.
+            </p>
           </div>
-          <div><h3>Collect later—only when applicable</h3><p>Age evidence, report cards, transfer records, category documents and restricted support information.</p></div>
-          <div><h3>Never request here</h3><p>Aadhaar, bank details, birth or caste certificates, income evidence, detailed medical history, marksheets or occupation documents.</p></div>
+
+          <div className="enquiry-boundary-card enquiry-boundary-card--now">
+            <span>Now</span>
+            <h3>Good things to ask</h3>
+            <p>
+              Availability, intended class, fees, curriculum, transport,
+              visits, accessibility and callback preference.
+            </p>
+          </div>
+
+          <div className="enquiry-boundary-card enquiry-boundary-card--later">
+            <span>Later</span>
+            <h3>Only when applicable</h3>
+            <p>
+              Age evidence, report cards, transfer records, category
+              documents and relevant support information.
+            </p>
+          </div>
+
+          <div className="enquiry-boundary-card enquiry-boundary-card--never">
+            <span>Not here</span>
+            <h3>Do not send these in an enquiry</h3>
+            <p>
+              Aadhaar, bank details, certificates, detailed medical
+              records, marksheets or income evidence.
+            </p>
+          </div>
         </PageContainer>
       </section>
     </>
@@ -317,7 +404,74 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
 export default async function AdmissionsSubPage({ params }: RouteProps) {
   const { section } = await params;
   const key = pageKey(section);
+
   if (!key) notFound();
+
   const details = pageDetails[key];
-  return <AdmissionsPageFrame eyebrow={details.eyebrow} title={details.title} summary={details.summary} actions={!(["process", "enquire", "apply", "application-status"] as PageKey[]).includes(key)}>{contentFor(key)}</AdmissionsPageFrame>;
+  const enquiryPage = key === "enquire";
+
+  return (
+    <AdmissionsPageFrame
+      eyebrow={details.eyebrow}
+      title={details.title}
+      summary={details.summary}
+      actions={
+        !(
+          [
+            "process",
+            "enquire",
+            "apply",
+            "application-status",
+          ] as PageKey[]
+        ).includes(key)
+      }
+      landing={enquiryPage}
+      heroActions={
+        enquiryPage ? (
+          <>
+            <a
+              className="button button--primary admissions-hero__primary-action"
+              href="#enquiry-form"
+            >
+              Start the enquiry
+            </a>
+
+            <Link
+              className="admissions-hero__secondary-action"
+              href="/admissions"
+            >
+              Admissions overview
+            </Link>
+          </>
+        ) : undefined
+      }
+      heroAside={
+        enquiryPage ? (
+          <aside
+            className="admissions-cycle-card admissions-enquiry-hero-card"
+            aria-label="What you need for an enquiry"
+          >
+            <div>
+              <span>For this first step</span>
+              <strong>Keep it simple</strong>
+            </div>
+
+            <p>You only need</p>
+
+            <small>
+              Your contact details, the class you are considering,
+              and the question you want the school to answer.
+            </small>
+
+            <Link href="/admissions/contact">
+              Prefer to contact the school directly?{" "}
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </aside>
+        ) : undefined
+      }
+    >
+      {contentFor(key)}
+    </AdmissionsPageFrame>
+  );
 }
