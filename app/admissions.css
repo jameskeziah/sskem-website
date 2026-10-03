@@ -7674,3 +7674,628 @@ article:first-child p {
     font-size: clamp(2rem, 9vw, 2.8rem);
   }
 }
+
+
+/* =========================================
+   ADMISSIONS EXPERIENCE V2 - SENIOR SECONDARY
+   ========================================= */
+
+.admissions-senior-hero-card {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.4rem;
+  background: rgba(6, 21, 34, 0.54);
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(16px);
+}
+
+.admissions-senior-hero-card span,
+.admissions-senior-hero-card > p {
+  color: #ffb4b9;
+}
+
+.admissions-senior-hero-card strong {
+  color: #fff;
+}
+
+.admissions-senior-hero-card small {
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+}
+
+.admissions-senior-hero-card a {
+  color: #fff;
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-senior-hero-card) {
+  min-height: auto;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-senior-hero-card)
+h1 {
+  max-width: 10ch;
+  font-size: clamp(3.7rem, 6vw, 6.4rem);
+}
+
+
+/* Class pathways */
+
+.admissions-senior-v2 {
+  padding-block: clamp(5rem, 9vw, 8rem);
+
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      rgba(239, 127, 137, 0.12),
+      transparent 24rem
+    ),
+    #f7f4ee;
+}
+
+.admissions-senior-class-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.admissions-senior-class-grid article {
+  display: flex;
+  min-height: 28rem;
+  flex-direction: column;
+
+  padding: 1.7rem;
+
+  border-radius: 1.2rem;
+  background: #f2f4f5;
+}
+
+.admissions-senior-class-grid
+.admissions-senior-class-card--primary {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-senior-class-grid
+.admissions-senior-class-card--restricted {
+  background: #efd8d1;
+}
+
+.admissions-senior-class-grid span {
+  color: #d95e70;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-senior-class-grid
+.admissions-senior-class-card--primary span {
+  color: #ffb4b9;
+}
+
+.admissions-senior-class-grid article > p {
+  margin-top: auto;
+
+  font-size: 0.69rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.admissions-senior-class-grid h3 {
+  margin: 0.5rem 0 1rem;
+
+  color: inherit;
+
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.85rem, 2.35vw, 2.7rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.97;
+}
+
+.admissions-senior-class-grid small {
+  color: var(--text-secondary);
+  font-size: 0.87rem;
+  line-height: 1.58;
+}
+
+.admissions-senior-class-card--primary small {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.admissions-senior-class-grid article > a {
+  margin-top: 1.2rem;
+  color: inherit;
+  font-weight: 800;
+}
+
+
+/* Verified status */
+
+.admissions-senior-status {
+  background: #fff;
+}
+
+.admissions-senior-status__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(19rem, 0.72fr);
+
+  align-items: center;
+
+  gap: clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-senior-status__layout > div {
+  display: grid;
+  gap: 1rem;
+}
+
+.admissions-senior-status h2 {
+  max-width: 11ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+  font-size: clamp(3rem, 5vw, 5.4rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-senior-status__layout
+> div > p:last-of-type {
+  max-width: 43rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.admissions-senior-status__layout
+> div > a {
+  width: fit-content;
+  color: #0d3049;
+  font-weight: 800;
+}
+
+.admissions-senior-status aside {
+  display: grid;
+  gap: 1.2rem;
+
+  padding: 2rem;
+
+  border-radius: 1.25rem;
+
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-senior-status aside > span {
+  color: #ffb4b9;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-senior-status aside > strong {
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2.2rem, 3.4vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.admissions-senior-status aside > div {
+  display: grid;
+  gap: 0.25rem;
+
+  padding-top: 1rem;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.admissions-senior-status aside p {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.75rem;
+}
+
+.admissions-senior-status aside b {
+  font-size: 1rem;
+}
+
+.admissions-senior-status aside small {
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.6;
+}
+
+
+/* Confirmation */
+
+.admissions-senior-confirm {
+  background: #f3eee8;
+}
+
+.admissions-senior-confirm-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.admissions-senior-confirm-grid article {
+  min-height: 20rem;
+
+  padding: 1.5rem;
+
+  border-radius: 1.05rem;
+
+  background: #fff;
+}
+
+.admissions-senior-confirm-grid span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-senior-confirm-grid h3 {
+  margin: 4rem 0 1rem;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(1.75rem, 2vw, 2.3rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+}
+
+.admissions-senior-confirm-grid p {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.56;
+}
+
+
+/* Journey */
+
+.admissions-senior-journey {
+  background: #081a2a;
+  color: #fff;
+}
+
+.admissions-senior-journey-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.admissions-senior-journey-grid article {
+  min-height: 20rem;
+
+  padding: 1.5rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 1.05rem;
+
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.admissions-senior-journey-grid span {
+  color: #ffb4b9;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-senior-journey-grid h3 {
+  margin: 4rem 0 1rem;
+
+  color: #fff;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(1.75rem, 2vw, 2.3rem);
+  font-weight: 500;
+  line-height: 0.98;
+}
+
+.admissions-senior-journey-grid p {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.88rem;
+  line-height: 1.56;
+}
+
+
+/* FYJC distinction */
+
+.admissions-senior-fyjc {
+  background: #efd8d1;
+}
+
+.admissions-senior-fyjc__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(18rem, 0.65fr);
+
+  align-items: center;
+
+  gap: clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-senior-fyjc h2 {
+  max-width: 12ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(3rem, 5vw, 5.3rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-senior-fyjc__layout
+> div:first-child {
+  display: grid;
+  gap: 1rem;
+}
+
+.admissions-senior-fyjc__layout
+> div:first-child
+> p:last-child {
+  color: #553b3b;
+  line-height: 1.65;
+}
+
+.admissions-senior-fyjc aside {
+  display: grid;
+  gap: 1rem;
+
+  padding: 2rem;
+
+  border-radius: 1.2rem;
+
+  background: #fff;
+}
+
+.admissions-senior-fyjc aside > span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-senior-fyjc aside > strong {
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.admissions-senior-fyjc aside > p {
+  color: var(--text-secondary);
+  line-height: 1.58;
+}
+
+
+/* Official source */
+
+.admissions-senior-source {
+  background: #f7f4ee;
+}
+
+.admissions-senior-source-card {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 3rem;
+
+  padding: 2rem;
+
+  border-radius: 1.2rem;
+
+  background: #fff;
+
+  box-shadow:
+    0 1.25rem 3rem
+    rgba(8, 26, 42, 0.06);
+}
+
+.admissions-senior-source-card
+> div {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.admissions-senior-source-card span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-senior-source-card strong {
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 500;
+}
+
+.admissions-senior-source-card p {
+  max-width: 45rem;
+
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+
+/* Closing */
+
+.admissions-senior-closing {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+
+  background: #efb8ad;
+}
+
+.admissions-senior-closing > div {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1fr)
+    auto;
+
+  align-items: end;
+
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.admissions-senior-closing h2 {
+  max-width: 11ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(3rem, 5vw, 5.4rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-senior-closing
+> div > p {
+  color: #553b3b;
+  line-height: 1.65;
+}
+
+
+/* Tablet */
+
+@media (max-width: 70rem) {
+  .admissions-senior-class-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-senior-status__layout,
+  .admissions-senior-fyjc__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-senior-confirm-grid,
+  .admissions-senior-journey-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-senior-closing > div {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-senior-hero-card) {
+    padding-block: 3.25rem 3.75rem;
+  }
+
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-senior-hero-card)
+  h1 {
+    font-size: clamp(3rem, 13vw, 4.5rem);
+  }
+
+  .admissions-senior-v2,
+  .admissions-senior-status,
+  .admissions-senior-confirm,
+  .admissions-senior-journey,
+  .admissions-senior-fyjc,
+  .admissions-senior-source {
+    padding-block: 3.5rem;
+  }
+
+  .admissions-senior-class-grid,
+  .admissions-senior-confirm-grid,
+  .admissions-senior-journey-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-senior-class-grid article {
+    min-height: 20rem;
+  }
+
+  .admissions-senior-confirm-grid article,
+  .admissions-senior-journey-grid article {
+    min-height: auto;
+  }
+
+  .admissions-senior-confirm-grid h3,
+  .admissions-senior-journey-grid h3 {
+    margin-top: 2.5rem;
+  }
+
+  .admissions-senior-status h2,
+  .admissions-senior-fyjc h2 {
+    font-size: clamp(2.8rem, 12vw, 4rem);
+  }
+
+  .admissions-senior-source-card {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-senior-source-card
+  .button {
+    width: 100%;
+  }
+
+  .admissions-senior-closing > div {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-senior-closing
+  .button {
+    width: 100%;
+  }
+}
+
+/* Batch 13 visual QA: dark-section intro contrast */
+.admissions-senior-journey
+.admissions-section-heading > p:last-child {
+  color: rgba(255, 255, 255, 0.72);
+}

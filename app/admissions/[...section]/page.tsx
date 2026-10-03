@@ -2559,102 +2559,473 @@ function SchoolPage() {
 
 function SeniorSecondaryPage() {
   return (
-    <section
-      className="admissions-band"
-      aria-labelledby="senior-rules-title"
-    >
-      <PageContainer>
-        <SectionHeading
-          eyebrow={"Classes IX\u2013XII"}
-          title="Programme and transfer rules before promotion"
-        >
-          <p>
+    <>
+      <section
+        id="senior-secondary-route"
+        className="admissions-band admissions-senior-v2"
+        aria-labelledby="senior-secondary-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Classes IX to XII
+              </p>
+
+              <h2 id="senior-secondary-title">
+                The admission route changes by class.
+              </h2>
+            </div>
+
+            <p>
+              Senior-secondary admission should begin by identifying
+              the intended class, previous qualification, transfer
+              context and the programme actually available at SSKEMS.
+            </p>
+          </div>
+
+          <div className="admissions-senior-class-grid">
+            <article>
+              <span>Class IX</span>
+
+              <p>Entry after Class VIII</p>
+
+              <h3>
+                Previous-school recognition matters.
+              </h3>
+
+              <small>
+                The student must have completed the qualifying previous
+                class through an applicable recognised route.
+              </small>
+
+              <Link href="/admissions/class-9-and-11-transfers">
+                Review transfer guidance
+                <span aria-hidden="true"> &rarr;</span>
+              </Link>
+            </article>
+
+            <article className="admissions-senior-class-card--restricted">
+              <span>Class X</span>
+
+              <p>Restricted entry</p>
+
+              <h3>
+                Not an ordinary direct-entry class.
+              </h3>
+
+              <small>
+                Completion of Class IX and the applicable CBSE transfer
+                conditions must be reviewed before admission can proceed.
+              </small>
+            </article>
+
+            <article className="admissions-senior-class-card--primary">
+              <span>Class XI</span>
+
+              <p>Programme entry</p>
+
+              <h3>
+                Class X qualification plus programme confirmation.
+              </h3>
+
+              <small>
+                A recognised Class X qualification is only one part of
+                the review. Subjects, programme and actual availability
+                at SSKEMS must also be confirmed.
+              </small>
+
+              <Link href="/admissions/enquire">
+                Ask about Class XI
+                <span aria-hidden="true"> &rarr;</span>
+              </Link>
+            </article>
+
+            <article className="admissions-senior-class-card--restricted">
+              <span>Class XII</span>
+
+              <p>Restricted entry</p>
+
+              <h3>
+                Not an ordinary direct-entry class.
+              </h3>
+
+              <small>
+                Completion of Class XI and the applicable CBSE transfer
+                conditions must be reviewed before admission can proceed.
+              </small>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        id="senior-school-status"
+        className="admissions-band admissions-senior-status"
+        aria-labelledby="senior-school-status-title"
+      >
+        <PageContainer className="admissions-senior-status__layout">
+          <div>
+            <p className="eyebrow">
+              Verified school status
+            </p>
+
+            <h2 id="senior-school-status-title">
+              SSKEMS is recorded by CBSE at Senior Secondary Level.
+            </h2>
+
+            <p>
+              The official CBSE SARAS record identifies Shree Samarth
+              Krupa English Medium School under affiliation number
+              1130851.
+            </p>
+
             <a
               href={officialAdmissionsSources.cbseSaras}
               target="_blank"
               rel="noreferrer"
             >
-              CBSE SARAS records SSKEMS as a Senior Secondary school
+              View the CBSE SARAS record
+              <span className="visually-hidden">
+                {" "}(opens in a new tab)
+              </span>
+              <span aria-hidden="true"> &rarr;</span>
+            </a>
+          </div>
+
+          <aside>
+            <span>CBSE SARAS</span>
+
+            <strong>
+              Senior Secondary Level
+            </strong>
+
+            <div>
+              <p>Affiliation number</p>
+              <b>1130851</b>
+            </div>
+
+            <div>
+              <p>Current record</p>
+              <b>Verify before each admission cycle</b>
+            </div>
+
+            <small>
+              Programme, subjects and seat availability are separate
+              admission questions and are not inferred from affiliation
+              status alone.
+            </small>
+          </aside>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-senior-confirm"
+        aria-labelledby="senior-confirm-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading">
+            <p className="eyebrow">
+              Before applying
+            </p>
+
+            <h2 id="senior-confirm-title">
+              Five things should be clear first.
+            </h2>
+
+            <p>
+              A family should not have to start a formal application
+              before these core admission conditions are understood.
+            </p>
+          </div>
+
+          <div className="admissions-senior-confirm-grid">
+            <article>
+              <span>01</span>
+
+              <h3>
+                Intended class
+              </h3>
+
+              <p>
+                Class IX, X, XI and XII do not all use the same
+                admission pathway.
+              </p>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <h3>
+                Previous qualification
+              </h3>
+
+              <p>
+                The completed previous class or recognised equivalent
+                must fit the intended admission.
+              </p>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <h3>
+                Transfer context
+              </h3>
+
+              <p>
+                Restricted classes and school changes may require
+                additional review under the applicable CBSE conditions.
+              </p>
+            </article>
+
+            <article>
+              <span>04</span>
+
+              <h3>
+                Programme and subjects
+              </h3>
+
+              <p>
+                Especially for Class XI, the programme and subjects
+                actually available at SSKEMS must be confirmed.
+              </p>
+            </article>
+
+            <article>
+              <span>05</span>
+
+              <h3>
+                Current availability
+              </h3>
+
+              <p>
+                Eligibility does not itself confirm that a place is
+                available in the requested class or programme.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-senior-journey"
+        aria-labelledby="senior-journey-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--light">
+            <p className="eyebrow">
+              Recommended journey
+            </p>
+
+            <h2 id="senior-journey-title">
+              Enquire before preparing the full application.
+            </h2>
+
+            <p>
+              This keeps families from collecting documents or choosing
+              subjects before the relevant school pathway is confirmed.
+            </p>
+          </div>
+
+          <div className="admissions-senior-journey-grid">
+            <article>
+              <span>01</span>
+
+              <h3>
+                Identify the class
+              </h3>
+
+              <p>
+                Tell admissions whether the enquiry concerns Class IX,
+                X, XI or XII.
+              </p>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <h3>
+                Share the previous route
+              </h3>
+
+              <p>
+                Provide the previous class, school or board and current
+                academic position.
+              </p>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <h3>
+                Confirm programme availability
+              </h3>
+
+              <p>
+                For Class XI, confirm the programme and subjects that
+                can actually be considered.
+              </p>
+            </article>
+
+            <article>
+              <span>04</span>
+
+              <h3>
+                Review transfer conditions
+              </h3>
+
+              <p>
+                The school can identify whether any restricted-entry or
+                authority requirement applies.
+              </p>
+            </article>
+
+            <article>
+              <span>05</span>
+
+              <h3>
+                Start the formal process
+              </h3>
+
+              <p>
+                Proceed to the correct application and document route
+                only after the pathway is clear.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-senior-fyjc"
+        aria-labelledby="senior-fyjc-title"
+      >
+        <PageContainer className="admissions-senior-fyjc__layout">
+          <div>
+            <p className="eyebrow">
+              Important route distinction
+            </p>
+
+            <h2 id="senior-fyjc-title">
+              CBSE senior secondary and Maharashtra FYJC are not the same route.
+            </h2>
+
+            <p>
+              The Maharashtra Class XI centralised portal is a separate
+              state admissions system. Do not treat it as the automatic
+              route for an SSKEMS applicant unless the intended programme
+              is confirmed as being governed by that process.
+            </p>
+          </div>
+
+          <aside>
+            <span>Maharashtra</span>
+
+            <strong>
+              FYJC portal
+            </strong>
+
+            <p>
+              Use this source only when the relevant state-board
+              admission pathway actually applies.
+            </p>
+
+            <a
+              className="button button--primary"
+              href={officialAdmissionsSources.maharashtraClassEleven}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View Maharashtra FYJC portal
+
               <span className="visually-hidden">
                 {" "}(opens in a new tab)
               </span>
             </a>
-            . A separately named Junior College or Maharashtra FYJC
-            pathway must not be presented as current until management
-            confirms its board and programme.
-          </p>
-        </SectionHeading>
+          </aside>
+        </PageContainer>
+      </section>
 
-        <div
-          className="admissions-policy-grid"
-          id="senior-rules-title"
-        >
-          <article>
-            <span>Class X</span>
 
-            <h3>
-              Restricted, not ordinary open entry
-            </h3>
-
-            <p>
-              Completion of Class IX and the specific CBSE transfer
-              conditions must be checked.
+      <section
+        className="admissions-band admissions-senior-source"
+        aria-labelledby="senior-source-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading">
+            <p className="eyebrow">
+              Official CBSE guidance
             </p>
-          </article>
 
-          <article>
-            <span>Class XI</span>
+            <h2 id="senior-source-title">
+              Transfer and direct-entry conditions should come from the official source.
+            </h2>
+          </div>
 
-            <h3>
-              Programme confirmation required
-            </h3>
+          <div className="admissions-senior-source-card">
+            <div>
+              <span>CBSE</span>
 
-            <p>
-              A passed Class X or recognised equivalent, approved
-              subjects and actual school availability are required.
+              <strong>
+                Direct Admission guidance
+              </strong>
+
+              <p>
+                Review the current CBSE conditions for recognised
+                previous study, qualifying examinations, restricted
+                entry and admission timing.
+              </p>
+            </div>
+
+            <a
+              className="button button--primary"
+              href={officialAdmissionsSources.cbseDirectAdmission}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open CBSE guidance
+
+              <span className="visually-hidden">
+                {" "}(opens in a new tab)
+              </span>
+            </a>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-senior-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Considering Classes IX to XII?
             </p>
-          </article>
 
-          <article>
-            <span>Class XII</span>
-
-            <h3>
-              Restricted, not ordinary open entry
-            </h3>
-
-            <p>
-              Completion of Class XI and the applicable transfer
-              conditions must be checked.
-            </p>
-          </article>
-        </div>
-
-        <div className="fyjc-note">
-          <strong>
-            Important FYJC distinction
-          </strong>
+            <h2>
+              Tell us the class and previous board first.
+            </h2>
+          </div>
 
           <p>
-            Maharashtra&apos;s centralised Class XI portal applies to
-            its State Board process. Do not direct a CBSE applicant
-            there as mandatory unless SSKEMS confirms that the intended
-            programme is governed by FYJC.
+            For Class XI, also tell admissions the programme or
+            subjects you are considering so the school can confirm
+            the correct route before formal application.
           </p>
 
-          <a
-            href={officialAdmissionsSources.maharashtraClassEleven}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            className="button button--primary"
+            href="/admissions/enquire"
           >
-            View the official Maharashtra FYJC portal
-
-            <span className="visually-hidden">
-              {" "}(opens in a new tab)
-            </span>
-          </a>
-        </div>
-      </PageContainer>
-    </section>
+            Make an enquiry
+          </Link>
+        </PageContainer>
+      </section>
+    </>
   );
 }
 
@@ -3009,6 +3380,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   const rtePage = key === "rte";
   const transfersPage = key === "class-9-and-11-transfers";
   const schoolPage = key === "school";
+  const seniorSecondaryPage = key === "senior-secondary";
 
   const cinematicPage =
     enquiryPage ||
@@ -3021,7 +3393,8 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
     visitPage ||
     rtePage ||
     transfersPage ||
-    schoolPage;
+    schoolPage ||
+    seniorSecondaryPage;
 
   const heroActions = enquiryPage ? (
     <>
@@ -3192,6 +3565,22 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         href="#school-admission-route"
       >
         Understand the school route
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions/enquire"
+      >
+        Ask admissions
+      </Link>
+    </>
+  ) : seniorSecondaryPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#senior-secondary-route"
+      >
+        Review class pathways
       </a>
 
       <Link
@@ -3453,6 +3842,29 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         <span aria-hidden="true">&rarr;</span>
       </a>
     </aside>
+  ) : seniorSecondaryPage ? (
+    <aside
+      className="admissions-cycle-card admissions-senior-hero-card"
+      aria-label="Classes IX to XII admissions guidance"
+    >
+      <div>
+        <span>Classes IX to XII</span>
+        <strong>Class-specific review</strong>
+      </div>
+
+      <p>One route does not fit every class</p>
+
+      <small>
+        Previous qualification, transfer conditions, programme
+        availability and the intended class must be reviewed before
+        the formal admission pathway is confirmed.
+      </small>
+
+      <a href="#senior-school-status">
+        See verified school status{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
   ) : undefined;
 
   return (
@@ -3476,6 +3888,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
             "rte",
             "class-9-and-11-transfers",
             "school",
+            "senior-secondary",
           ] as PageKey[]
         ).includes(key)
       }
