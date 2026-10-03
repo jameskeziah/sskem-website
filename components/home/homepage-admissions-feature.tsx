@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { HomeSectionReveal } from "@/components/motion/home-section-reveal";
+
 import { admissionsProcess } from "@/app/data/admissions";
 
 type HomepageAdmissionsCycle = {
@@ -11,13 +13,12 @@ type HomepageAdmissionsCycle = {
 
 export function HomepageAdmissionsFeature({ cycle }: { cycle: HomepageAdmissionsCycle }) {
   return (
-    <section
+    <HomeSectionReveal
       className="home-admissions-feature"
-      aria-labelledby="home-admissions-title"
-      data-homepage-p0="admissions-feature"
+      ariaLabelledby="home-admissions-title"
     >
       <div className="home-shell home-admissions-feature__grid">
-        <div className="home-admissions-feature__intro">
+        <div className="home-admissions-feature__intro" data-home-section-reveal>
           <p className="home-chapter-label"><span>04</span> Admissions · {cycle.academicYear}</p>
           <p className="home-admissions-feature__institution">{cycle.institution}</p>
           <h2 id="home-admissions-title">Begin with the right information.</h2>
@@ -36,7 +37,7 @@ export function HomepageAdmissionsFeature({ cycle }: { cycle: HomepageAdmissions
           </div>
         </div>
 
-        <ol className="home-admissions-feature__steps" aria-label="Admission journey preview">
+        <ol className="home-admissions-feature__steps" data-home-section-reveal aria-label="Admission journey preview">
           {admissionsProcess.slice(0, 4).map((step, index) => (
             <li key={step.title}>
               <span>{String(index + 1).padStart(2, "0")}</span>
@@ -45,6 +46,6 @@ export function HomepageAdmissionsFeature({ cycle }: { cycle: HomepageAdmissions
           ))}
         </ol>
       </div>
-    </section>
+    </HomeSectionReveal>
   );
 }

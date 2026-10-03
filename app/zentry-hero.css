@@ -646,3 +646,58 @@
   .zhero *, .zhero *::before, .zhero *::after { animation: none !important; transition: none !important; }
   .zhero__viewport { clip-path: none !important; }
 }
+
+
+/* =========================================
+   CINEMATIC V2 ? PREVIEW POLISH
+   ========================================= */
+
+@media (min-width: 64rem) {
+  .zhero__preview-wrap {
+    width: clamp(7.6rem, 10vw, 10.3rem);
+  }
+
+  .zhero__preview-label {
+    margin-bottom: 0.4rem;
+    font-size: 0.64rem;
+    opacity: 0.84;
+  }
+
+  .zhero__preview {
+    border-width: 1px;
+    border-radius: 12px;
+  }
+
+  .zhero__preview-wrap:hover .zhero__preview,
+  .zhero__preview:focus-visible {
+    box-shadow:
+      0 8px 24px #071d3350,
+      0 0 0 3px #ffffff24;
+  }
+
+  .zhero__preview-wrap:hover
+  .zhero__preview:not(:disabled) {
+    transform: scale(1.035);
+    box-shadow:
+      0 12px 30px #071d3368,
+      0 0 0 4px #ff82902b;
+  }
+
+  .zhero__preview-symbol {
+    width: 1.7rem;
+    height: 1.7rem;
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 63.999rem) {
+  .zhero .zhero__preview-wrap {
+    width: clamp(6.7rem, 18vw, 9rem);
+  }
+}
+
+@media (max-width: 40rem) {
+  .zhero .zhero__preview-wrap {
+    width: 6.35rem !important;
+  }
+}

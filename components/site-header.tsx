@@ -16,7 +16,7 @@ export type SiteHeaderEditorial = {
     message: string;
     href: string | null;
     linkLabel: string;
-  };
+  } | null;
   contact: {
     phone: string;
     email: string;
@@ -135,17 +135,22 @@ function StaticNavigationFallback({
 export function SiteHeader({
   showBreadcrumb = true,
   editorial,
+  cinematic = false,
 }: {
   showBreadcrumb?: boolean;
+  cinematic?: boolean;
   editorial?: {
-    notice?: SiteHeaderEditorial["notice"] | null;
+    notice?: SiteHeaderEditorial["notice"];
     contact?: SiteHeaderEditorial["contact"];
   };
 } = {}) {
   const activeEditorial: SiteHeaderEditorial = {
-    notice: editorial?.notice ?? defaultEditorial.notice,
-    contact: editorial?.contact ?? defaultEditorial.contact,
-  };
+  notice:
+    editorial?.notice === undefined
+      ? defaultEditorial.notice
+      : editorial.notice,
+  contact: editorial?.contact ?? defaultEditorial.contact,
+};
   const { primaryNavigation, searchableLinks } = usePublicationNavigation();
   const pathname = usePathname();
   const [openDesktop, setOpenDesktop] = useState<string | null>(null);
@@ -298,12 +303,24 @@ export function SiteHeader({
         <a className="skip-link" href="#main-content">Skip to main content</a>
         <a className="skip-link" href="#site-footer">Skip to footer</a>
       </nav>
-      <header ref={headerRef} className="site-header">
-        <NoticeBar>
-          {activeEditorial.notice.message}{activeEditorial.notice.href ? (
-            <> <Link href={activeEditorial.notice.href}>{activeEditorial.notice.linkLabel}</Link>.</>
-          ) : null}
-        </NoticeBar>
+      <header
+  ref={headerRef}
+  className={`site-header${cinematic ? " site-header--cinematic" : ""}`}
+>
+        {activeEditorial.notice ? (
+  <NoticeBar>
+    {activeEditorial.notice.message}
+    {activeEditorial.notice.href ? (
+      <>
+        {" "}
+        <Link href={activeEditorial.notice.href}>
+          {activeEditorial.notice.linkLabel}
+        </Link>
+        .
+      </>
+    ) : null}
+  </NoticeBar>
+) : null}
 
         <div className="utility-bar">
           <div className="page-container utility-bar__inner">

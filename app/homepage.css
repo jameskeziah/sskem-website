@@ -2348,3 +2348,576 @@ body[data-home-preloader="active"] {
     min-height: 17rem;
   }
 }
+
+/* =========================================
+   CINEMATIC V2 ? FOUNDATION / CAMPUS / PATHWAYS
+   ========================================= */
+
+/* Foundation ? editorial breathing room */
+
+.home-manifesto--hybrid {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.home-manifesto--hybrid::after {
+  position: absolute;
+  z-index: 0;
+  top: -12rem;
+  right: -8rem;
+  width: clamp(20rem, 38vw, 38rem);
+  aspect-ratio: 1;
+  border:
+    1px solid
+    color-mix(in srgb, #112c46 10%, transparent);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.home-manifesto--hybrid .home-manifesto__grid {
+  position: relative;
+  z-index: 1;
+  align-items: start;
+}
+
+.home-manifesto--hybrid .home-manifesto__lead {
+  font-size: clamp(1.2rem, 1.8vw, 1.75rem);
+  text-wrap: balance;
+}
+
+.home-manifesto--hybrid .home-language-lines {
+  border-top-color:
+    color-mix(in srgb, #112c46 24%, transparent);
+}
+
+
+/* Campus ? cinematic photographic chapter */
+
+.home-campus--hybrid {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.home-campus--hybrid::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 82% 22%,
+      color-mix(
+        in srgb,
+        var(--campus-accent) 10%,
+        transparent
+      ),
+      transparent 25rem
+    );
+  content: "";
+  pointer-events: none;
+}
+
+.home-campus--hybrid > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-campus--hybrid .home-campus__feature {
+  width: min(calc(100% - 2rem), 92rem);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.home-campus--hybrid .home-campus__feature-media {
+  overflow: hidden;
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--text-on-brand) 16%,
+      transparent
+    );
+  border-radius: clamp(1rem, 2vw, 1.75rem);
+  box-shadow:
+    0 2.5rem 6rem
+    color-mix(
+      in srgb,
+      var(--color-neutral-950) 55%,
+      transparent
+    );
+}
+
+.home-campus--hybrid .home-campus__feature-media img {
+  will-change: transform;
+}
+
+.home-campus--hybrid .home-campus__gallery {
+  gap: clamp(1rem, 2.2vw, 2rem);
+}
+
+.home-campus--hybrid .home-campus__frame {
+  border-radius: clamp(1rem, 1.7vw, 1.5rem);
+  box-shadow:
+    0 1.5rem 3.5rem
+    color-mix(
+      in srgb,
+      var(--color-neutral-950) 32%,
+      transparent
+    );
+}
+
+.home-campus--hybrid .home-campus__frame figcaption {
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--text-on-brand) 14%,
+      transparent
+    );
+  backdrop-filter: blur(12px);
+}
+
+
+/* Pathways ? restrained institutional bento */
+
+.home-pathways--cinematic {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      color-mix(
+        in srgb,
+        var(--color-brand-200) 34%,
+        transparent
+      ),
+      transparent 25rem
+    ),
+    var(--surface-raised);
+}
+
+.home-pathways--cinematic::before {
+  position: absolute;
+  z-index: 0;
+  top: -11rem;
+  left: -11rem;
+  width: 25rem;
+  aspect-ratio: 1;
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--action-primary) 10%,
+      transparent
+    );
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.home-pathways--cinematic > .home-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.home-pathways--cinematic .home-pathways__grid {
+  gap: clamp(0.8rem, 1.5vw, 1.25rem);
+  padding: 0;
+  background: transparent;
+}
+
+.home-pathways--cinematic .home-pathway-card {
+  isolation: isolate;
+  overflow: hidden;
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--border-strong) 72%,
+      transparent
+    );
+  border-radius: clamp(1.1rem, 2vw, 1.65rem);
+  box-shadow:
+    0 1rem 2.5rem
+    color-mix(
+      in srgb,
+      var(--color-neutral-950) 7%,
+      transparent
+    );
+}
+
+.home-pathways--cinematic
+.home-pathway-card::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(
+        in srgb,
+        var(--color-neutral-0) 16%,
+        transparent
+      ),
+      transparent 42%
+    );
+  content: "";
+  pointer-events: none;
+}
+
+.home-pathways--cinematic
+.home-pathway-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-pathways--cinematic
+.home-pathway-card--approved-public-subset:first-child {
+  background:
+    radial-gradient(
+      circle at 84% 10%,
+      color-mix(
+        in srgb,
+        var(--color-blue) 38%,
+        transparent
+      ),
+      transparent 19rem
+    ),
+    var(--color-neutral-950);
+  color: var(--text-on-brand);
+}
+
+.home-pathways--cinematic
+.home-pathway-card--approved-public-subset:nth-child(2) {
+  background:
+    color-mix(
+      in srgb,
+      var(--color-brand-100) 54%,
+      var(--surface-raised)
+    );
+}
+
+.home-pathways--cinematic
+.home-pathway-card--approved-public-subset:nth-child(3) {
+  background:
+    color-mix(
+      in srgb,
+      var(--color-blue) 7%,
+      var(--surface-raised)
+    );
+}
+
+.home-pathways--cinematic
+.home-pathway-card__status {
+  background:
+    color-mix(
+      in srgb,
+      currentColor 5%,
+      transparent
+    );
+}
+
+.home-pathways--cinematic
+.home-pathway-card > a span {
+  transition:
+    transform
+    var(--motion-duration-standard)
+    var(--motion-ease-enter);
+}
+
+
+/* True three-card bento only when all three
+   verified institutional pathways are present. */
+
+@media (min-width: 70.001rem) {
+  .home-pathways--cinematic
+  .home-pathways__grid[data-pathway-count="3"] {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(15rem, auto));
+  }
+
+  .home-pathways--cinematic
+  .home-pathways__grid[data-pathway-count="3"]
+  .home-pathway-card:first-child {
+    min-height: 34rem;
+    grid-column: span 7;
+    grid-row: span 2;
+  }
+
+  .home-pathways--cinematic
+  .home-pathways__grid[data-pathway-count="3"]
+  .home-pathway-card:nth-child(2),
+  .home-pathways--cinematic
+  .home-pathways__grid[data-pathway-count="3"]
+  .home-pathway-card:nth-child(3) {
+    min-height: 16rem;
+    grid-column: span 5;
+  }
+
+  .home-pathways--cinematic
+  .home-pathways__grid[data-pathway-count="3"]
+  .home-pathway-card:first-child h3 {
+    max-width: 9ch;
+    font-size: clamp(4rem, 6.5vw, 6.8rem);
+  }
+
+  .home-pathways--cinematic
+  .home-pathways__grid[data-pathway-count="3"]
+  .home-pathway-card:nth-child(2) h3,
+  .home-pathways--cinematic
+  .home-pathways__grid[data-pathway-count="3"]
+  .home-pathway-card:nth-child(3) h3 {
+    max-width: 12ch;
+    font-size: clamp(2.3rem, 3.5vw, 4rem);
+  }
+
+  .home-pathways--cinematic
+  .home-pathways__grid[data-pathway-count="3"]
+  .home-pathway-card:nth-child(2) p,
+  .home-pathways--cinematic
+  .home-pathways__grid[data-pathway-count="3"]
+  .home-pathway-card:nth-child(3) p {
+    margin-top: 1rem;
+    font-size: var(--font-size-200);
+  }
+}
+
+
+/* Desktop interaction */
+
+@media (hover: hover) and (pointer: fine) {
+  .home-pathways--cinematic .home-pathway-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 1.75rem 4rem
+      color-mix(
+        in srgb,
+        var(--color-neutral-950) 14%,
+        transparent
+      );
+  }
+
+  .home-pathways--cinematic
+  .home-pathway-card--approved-public-subset:first-child:hover {
+    background:
+      radial-gradient(
+        circle at 84% 10%,
+        color-mix(
+          in srgb,
+          var(--color-blue) 43%,
+          transparent
+        ),
+        transparent 19rem
+      ),
+      var(--color-neutral-950);
+    color: var(--text-on-brand);
+  }
+
+  .home-pathways--cinematic
+  .home-pathway-card--approved-public-subset:nth-child(2):hover {
+    background:
+      color-mix(
+        in srgb,
+        var(--color-brand-100) 62%,
+        var(--surface-raised)
+      );
+    color: var(--text-primary);
+  }
+
+  .home-pathways--cinematic
+  .home-pathway-card--approved-public-subset:nth-child(3):hover {
+    background:
+      color-mix(
+        in srgb,
+        var(--color-blue) 11%,
+        var(--surface-raised)
+      );
+    color: var(--text-primary);
+  }
+
+  .home-pathways--cinematic
+  .home-pathway-card--approved-public-subset:nth-child(2):hover p,
+  .home-pathways--cinematic
+  .home-pathway-card--approved-public-subset:nth-child(3):hover p,
+  .home-pathways--cinematic
+  .home-pathway-card--approved-public-subset:nth-child(2):hover
+  .home-pathway-card__number,
+  .home-pathways--cinematic
+  .home-pathway-card--approved-public-subset:nth-child(3):hover
+  .home-pathway-card__number {
+    color: var(--text-secondary);
+  }
+
+  .home-pathways--cinematic
+  .home-pathway-card:hover > a span {
+    transform: translateX(5px);
+  }
+}
+
+
+/* Mobile remains straightforward rather than forcing
+   desktop cinematic composition onto a small screen. */
+
+@media (max-width: 48rem) {
+  .home-manifesto--hybrid::after,
+  .home-pathways--cinematic::before {
+    opacity: 0.45;
+  }
+
+  .home-campus--hybrid .home-campus__feature {
+    width: calc(100% - 1rem);
+  }
+
+  .home-campus--hybrid .home-campus__feature-media {
+    border-radius: 1rem;
+  }
+
+  .home-pathways--cinematic .home-pathway-card {
+    border-radius: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-pathways--cinematic .home-pathway-card,
+  .home-pathways--cinematic .home-pathway-card > a span {
+    transition: none;
+  }
+}
+
+
+/* =========================================
+   CINEMATIC V2 ? FINAL HOMEPAGE POLISH
+   ========================================= */
+
+/* Campus now uses the same deep-ink family as the hero/navigation.
+   The building itself provides the strong pink colour. */
+
+.home-campus--hybrid {
+  --campus-accent: #ef8585;
+
+  background:
+    radial-gradient(
+      circle at 12% 14%,
+      color-mix(
+        in srgb,
+        var(--campus-accent) 10%,
+        transparent
+      ),
+      transparent 26rem
+    ),
+    radial-gradient(
+      circle at 88% 72%,
+      rgba(27, 77, 108, 0.23),
+      transparent 32rem
+    ),
+    linear-gradient(
+      155deg,
+      #12344f 0%,
+      #091e30 48%,
+      #050d16 100%
+    );
+}
+
+/* Give photographs a shared visual baseline without making
+   them look artificially filtered. */
+
+.home-campus--hybrid
+.home-campus__feature-media img,
+.home-campus--hybrid
+.home-campus__frame img {
+  filter:
+    saturate(0.94)
+    contrast(1.035);
+}
+
+.home-campus--hybrid
+.home-campus__frame--courtyard img {
+  filter:
+    brightness(1.1)
+    saturate(0.92)
+    contrast(0.98);
+}
+
+.home-campus--hybrid
+.home-campus__frame--entrance img {
+  filter:
+    saturate(0.91)
+    contrast(1.025);
+}
+
+
+/* Pathway summaries need to remain readable next to the
+   deliberately oversized editorial headings. */
+
+.home-pathways--cinematic
+.home-pathway-card p {
+  line-height: 1.55;
+}
+
+@media (min-width: 70.001rem) {
+  .home-pathways--cinematic
+  .home-pathways__grid[data-pathway-count="3"]
+  .home-pathway-card:nth-child(2) p,
+  .home-pathways--cinematic
+  .home-pathways__grid[data-pathway-count="3"]
+  .home-pathway-card:nth-child(3) p {
+    max-width: 25rem;
+    margin-top: 1rem;
+    font-size: clamp(0.9rem, 0.92vw, 1rem);
+    line-height: 1.58;
+  }
+}
+
+
+/* Lower-page sections retain straightforward usability while
+   gaining slightly stronger spatial hierarchy. */
+
+.home-admissions-feature,
+.home-services,
+.home-invitation {
+  position: relative;
+  overflow: clip;
+}
+
+.home-admissions-feature__steps {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.home-services__links {
+  border-top-color:
+    color-mix(
+      in srgb,
+      var(--text-on-brand) 30%,
+      transparent
+    );
+}
+
+.home-invitation {
+  padding-bottom:
+    clamp(5rem, 11vw, 10rem);
+}
+
+.home-invitation__contact {
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 48rem) {
+  .home-campus--hybrid
+  .home-campus__feature-media img,
+  .home-campus--hybrid
+  .home-campus__frame img,
+  .home-campus--hybrid
+  .home-campus__frame--courtyard img,
+  .home-campus--hybrid
+  .home-campus__frame--entrance img {
+    filter: none;
+  }
+
+  .home-invitation {
+    padding-bottom: 5rem;
+  }
+}

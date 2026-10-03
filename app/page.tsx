@@ -14,6 +14,7 @@ import { HomeHeroMotion } from "@/components/motion/home-hero-motion";
 import { HomeHeroVideoTransition } from "@/components/motion/home-hero-video-transition";
 import { HomePreloaderMotion } from "@/components/motion/home-preloader-motion";
 import { HomeZentryHero } from "@/components/motion/home-zentry-hero";
+import { HomeSectionReveal } from "@/components/motion/home-section-reveal";
 import { siteFacts } from "@/app/data/site";
 import { getHomepageEditorialContent } from "@/lib/cms/homepage-editorial.server";
 import { selectHomepageAchievementArtwork } from "@/lib/homepage-achievement-publication";
@@ -90,6 +91,7 @@ export default async function Home() {
     <>
       <SiteHeader
         showBreadcrumb={false}
+        cinematic
         editorial={{
           notice: editorial.notice ? {
             message: editorial.notice.message,
@@ -256,12 +258,12 @@ export default async function Home() {
   </span>
 </h2>
 
-              <p className="home-manifesto__lead">
+              <p className="home-manifesto__lead" data-foundation-copy>
                 Education should help every learner understand the world, find their voice and move through life with confidence.
               </p>
               <div className="home-language-lines" aria-label="Our educational direction in Marathi and Hindi">
-                <p lang="mr">शिक्षण, संस्कार आणि आत्मविश्वास यांचा समतोल विकास.</p>
-                <p lang="hi">शिक्षा, संस्कार और आत्मविश्वास का संतुलित विकास।</p>
+                <p lang="mr" data-foundation-copy>शिक्षण, संस्कार आणि आत्मविश्वास यांचा समतोल विकास.</p>
+                <p lang="hi" data-foundation-copy>शिक्षा, संस्कार और आत्मविश्वास का संतुलित विकास।</p>
               </div>
             </div>
           </div>
@@ -377,14 +379,14 @@ export default async function Home() {
 
         <HomepageAdmissionsFeature cycle={editorial.admissionsCycle} />
 
-        <section className="home-services" aria-labelledby="services-title">
+        <HomeSectionReveal className="home-services" ariaLabelledby="services-title">
           <div className="home-shell home-services__grid">
-            <div className="home-services__intro">
+            <div className="home-services__intro" data-home-section-reveal>
               <p className="home-chapter-label home-chapter-label--light"><span>05</span> Essential access</p>
               <h2 id="services-title">Trust is built by making important information easy to reach.</h2>
               <p>Admissions guidance, public disclosure and document records remain readable and usable before any animation loads.</p>
             </div>
-            <nav className="home-services__links" aria-label="Essential school information">
+            <nav className="home-services__links" data-home-section-reveal aria-label="Essential school information">
               {serviceLinks.map((item) => (
                 <Link href={item.href} key={item.href}>
                   <span>{item.number}</span>
@@ -395,7 +397,7 @@ export default async function Home() {
               ))}
             </nav>
           </div>
-        </section>
+        </HomeSectionReveal>
 
         {achievementArtwork.length ? (
           <HomeAchievementsMotion publicationMode={privateAchievementReview ? "private-review" : "public"}>
@@ -465,13 +467,13 @@ export default async function Home() {
           </section>
         ) : null}
 
-        <section className="home-invitation" aria-labelledby="invitation-title">
+        <HomeSectionReveal className="home-invitation" ariaLabelledby="invitation-title">
           <div className="home-shell home-invitation__grid">
-            <div>
+            <div data-home-section-reveal>
               <p className="home-chapter-label"><span>{invitationChapter}</span> Begin a conversation</p>
               <h2 id="invitation-title">Your next chapter starts with one clear step.</h2>
             </div>
-            <div className="home-invitation__action">
+            <div className="home-invitation__action" data-home-section-reveal>
               <p>{editorial.admissionsCycle.publicMessage}</p>
               <div className="home-actions">
                 <Link className="home-button home-button--dark" href="/admissions/enquire">Make an enquiry <span aria-hidden="true">→</span></Link>
@@ -483,9 +485,9 @@ export default async function Home() {
               </p>
             </div>
           </div>
-        </section>
+        </HomeSectionReveal>
       </main>
-      <SiteFooter contact={{
+      <SiteFooter cinematic contact={{
         phone: editorial.contact.phone,
         email: editorial.contact.email,
         location: editorial.contact.location,

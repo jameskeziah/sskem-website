@@ -96,7 +96,7 @@ export function HomeZentryHero({
     }
   };
 
-  const revealCopy = (element: HTMLElement) => {
+  const revealCopy = useCallback((element: HTMLElement) => {
     const targets = element.querySelectorAll<HTMLElement>("[data-zhero-intro]");
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       gsap.set(targets, { clearProps: "all" });
@@ -115,7 +115,7 @@ export function HomeZentryHero({
         clearProps: "all",
       },
     );
-  };
+  }, [homeZentrySlides]);
 
   const goTo = useCallback(async (index: number, origin?: HTMLElement | null) => {
     const root = rootRef.current;
@@ -232,7 +232,12 @@ export function HomeZentryHero({
       duration: target.entrance === "energetic" ? 0.76 : target.entrance === "graceful" ? 0.98 : 0.92,
       ease: target.entrance === "energetic" ? "power4.inOut" : "power3.inOut",
     }, 0);
-  }, [failedAssets, homeZentrySlides, homeZentryFallbackPhoto]);
+  }, [
+  failedAssets,
+  homeZentrySlides,
+  homeZentryFallbackPhoto,
+  revealCopy,
+]);
 
   useEffect(() => {
     mountedRef.current = true;

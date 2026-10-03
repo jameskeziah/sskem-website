@@ -20,11 +20,17 @@ const defaultContact: SiteFooterContact = {
   saturday: siteFacts.workingHours.saturday,
 };
 
-export function SiteFooter({ contact = defaultContact }: { contact?: SiteFooterContact } = {}) {
+export function SiteFooter({
+  contact = defaultContact,
+  cinematic = false,
+}: {
+  contact?: SiteFooterContact;
+  cinematic?: boolean;
+} = {}) {
   const { footerNavigationGroups } = usePublicationNavigation();
 
   return (
-    <footer className="site-footer" id="site-footer" tabIndex={-1}>
+    <footer className={`site-footer${cinematic ? " site-footer--cinematic" : ""}`} id="site-footer" tabIndex={-1}>
       <div className="page-container site-footer__grid">
         <div className="site-footer__identity">
           <p className="eyebrow">Established in Veral</p>

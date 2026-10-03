@@ -21,7 +21,25 @@ type MotionConditions = {
 type HomePreloaderMode = "private-review" | "public";
 
 // Keep the brand visible on cached loads; reduced-motion visitors bypass it.
-const homePreloaderMinimumVisibleMs = 1_500;
+const publicHomePreloaderMinimumVisibleMs = 900;
+const privateHomePreloaderMinimumVisibleMs = 1_500;
+const publicHomePreloaderSessionKey = "sskem:home-preloader-shown";
+
+function hasSeenPublicHomePreloader() {
+  try {
+    return window.sessionStorage.getItem(publicHomePreloaderSessionKey) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markPublicHomePreloaderSeen() {
+  try {
+    window.sessionStorage.setItem(publicHomePreloaderSessionKey, "1");
+  } catch {
+    // Storage can be unavailable in privacy-restricted browsers.
+  }
+}
 
 function announceHomeArrivalReady() {
   document.documentElement.dataset[homeArrivalSignal.datasetKey] = "true";
@@ -65,6 +83,13 @@ export function HomePreloaderMotion({ mode = "private-review" }: { mode?: HomePr
     () => {
       const element = root.current;
       if (!element) return;
+
+      if (mode === "public" && hasSeenPublicHomePreloader()) {
+        element.hidden = true;
+        element.dataset.state = "complete";
+        announceHomeArrivalReady();
+        return;
+      }
 
       delete document.documentElement.dataset[homeArrivalSignal.datasetKey];
       const media = gsap.matchMedia();
@@ -110,7 +135,10 @@ export function HomePreloaderMotion({ mode = "private-review" }: { mode?: HomePr
           // Cached media may resolve before the first painted frame. Give the
           // branded preloader enough time to be perceived in either mode.
           if (!conditions.reduce) {
-            const remaining = homePreloaderMinimumVisibleMs - (performance.now() - visibleAt);
+            const minimumVisibleMs = mode === "public"
+              ? publicHomePreloaderMinimumVisibleMs
+              : privateHomePreloaderMinimumVisibleMs;
+            const remaining = minimumVisibleMs - (performance.now() - visibleAt);
             if (remaining > 0) {
               if (!minimumHoldTimer) {
                 minimumHoldTimer = window.setTimeout(() => {
@@ -130,6 +158,7 @@ export function HomePreloaderMotion({ mode = "private-review" }: { mode?: HomePr
           if (conditions.reduce) {
             element.hidden = true;
             element.dataset.state = "complete";
+            if (mode === "public") markPublicHomePreloaderSeen();
             releasePage();
             announceHomeArrivalReady();
             return;
@@ -144,6 +173,7 @@ export function HomePreloaderMotion({ mode = "private-review" }: { mode?: HomePr
             onComplete: () => {
               element.hidden = true;
               element.dataset.state = "complete";
+              if (mode === "public") markPublicHomePreloaderSeen();
               releasePage();
             },
           });

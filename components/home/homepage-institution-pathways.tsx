@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { HomePathwaysMotion } from "@/components/motion/home-pathways-motion";
+
 import { getPublicProgrammeProfile } from "@/app/data/programmes-public-profiles";
 import {
   PROGRAMMES_PUBLICATION_ROUTES,
@@ -57,14 +59,9 @@ export function HomepageInstitutionPathways({
   });
 
   return (
-    <section
-      className="home-pathways"
-      aria-labelledby="pathways-title"
-      data-homepage-p0="institution-pathways"
-      data-private-review={privateReview ? "true" : "false"}
-    >
+    <HomePathwaysMotion privateReview={privateReview}>
       <div className="home-shell">
-        <div className="home-section-heading home-section-heading--split">
+        <div className="home-section-heading home-section-heading--split" data-motion-home-pathway-heading>
           <div>
             <p className="home-chapter-label"><span>03</span> Learning pathways</p>
             <h2 id="pathways-title">Distinct paths. One place to begin.</h2>
@@ -72,10 +69,11 @@ export function HomepageInstitutionPathways({
           <p>Explore the school, Junior College and Institute through their current published profiles.</p>
         </div>
 
-        <div className="home-pathways__grid">
+        <div className="home-pathways__grid" data-pathway-count={pathways.length}>
           {pathways.map((pathway, index) => (
             <article
               className={`home-pathway-card home-pathway-card--${pathway.state}`}
+              data-motion-home-pathway-card
               data-publication-state={pathway.state}
               key={pathway.route}
             >
@@ -101,13 +99,13 @@ export function HomepageInstitutionPathways({
           ))}
         </div>
 
-        <nav className="home-pathways__supporting" aria-label="More ways to explore SSKEMS">
+        <nav className="home-pathways__supporting" data-motion-home-pathway-supporting aria-label="More ways to explore SSKEMS">
           <span>Also explore</span>
           {supportingRoutes.map((route) => (
             <Link href={route.href} key={route.href}>{route.label} <span aria-hidden="true">↗</span></Link>
           ))}
         </nav>
       </div>
-    </section>
+    </HomePathwaysMotion>
   );
 }

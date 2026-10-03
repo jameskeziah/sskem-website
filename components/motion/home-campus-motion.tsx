@@ -196,7 +196,7 @@ if (enhanced) {
 
 
 if (
-  privateReview &&
+  enhanced &&
   conditions.desktop &&
   feature &&
   featureMedia
