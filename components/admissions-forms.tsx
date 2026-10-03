@@ -435,23 +435,82 @@ export function ApplicationJourneyPrototype() {
 
 export function StatusLookupPrototype() {
   return (
-    <form className="status-prototype" onSubmit={(event) => event.preventDefault()}>
-      <div>
-        <p className="eyebrow">Secure lookup blueprint</p>
-        <h2>Parent application status</h2>
-        <p>Review mode only. Authentication and lookup are not active; do not enter real credentials.</p>
+    <form
+      className="status-prototype status-prototype--v2"
+      onSubmit={(event) => event.preventDefault()}
+    >
+      <div className="status-prototype__heading">
+        <p className="eyebrow">
+          Secure lookup preview
+        </p>
+
+        <h2>
+          Parent application status
+        </h2>
+
+        <p>
+          Review mode only. Authentication and lookup are not active.
+          Do not enter real application credentials.
+        </p>
       </div>
-      <FormField id="status-reference" label="Application reference">
-        <Input name="applicationReference" placeholder="Example: APP-••••••" disabled />
-      </FormField>
-      <FormField id="status-mobile" label="Registered mobile number">
-        <Input name="registeredMobile" type="tel" disabled />
-      </FormField>
-      <FormField id="status-otp" label="One-time password (OTP)">
-        <Input name="otp" inputMode="numeric" autoComplete="one-time-code" disabled />
-      </FormField>
-      <Button type="button" disabled>Check status</Button>
-      <p className="status-prototype__note">The production service requires OTP expiry, attempt limits, rate limiting, consented delivery and parent-safe status filtering.</p>
+
+      <div className="status-prototype__fields">
+        <FormField
+          id="status-reference"
+          label="Application reference"
+        >
+          <Input
+            name="applicationReference"
+            placeholder="Example: APP-000000"
+            disabled
+          />
+        </FormField>
+
+        <FormField
+          id="status-mobile"
+          label="Registered mobile number"
+        >
+          <Input
+            name="registeredMobile"
+            type="tel"
+            placeholder="Registered parent mobile"
+            disabled
+          />
+        </FormField>
+
+        <FormField
+          id="status-otp"
+          label="One-time password"
+        >
+          <Input
+            name="otp"
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            placeholder="6-digit OTP"
+            disabled
+          />
+        </FormField>
+      </div>
+
+      <div className="status-prototype__action">
+        <Button type="button" disabled>
+          Check status
+        </Button>
+
+        <span>
+          Lookup is currently disabled.
+        </span>
+      </div>
+
+      <div className="status-prototype__security">
+        <span>Production requirements</span>
+
+        <p>
+          OTP expiry, attempt limits, rate limiting, consented delivery,
+          secure sessions and parent-safe status filtering are required
+          before this service can activate.
+        </p>
+      </div>
     </form>
   );
 }

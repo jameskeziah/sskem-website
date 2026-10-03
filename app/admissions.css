@@ -9085,3 +9085,666 @@ button > small {
     max-width: 100%;
   }
 }
+
+
+/* =========================================
+   ADMISSIONS EXPERIENCE V2 - APPLICATION STATUS
+   ========================================= */
+
+.admissions-status-hero-card {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.4rem;
+  background: rgba(6, 21, 34, 0.54);
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(16px);
+}
+
+.admissions-status-hero-card span,
+.admissions-status-hero-card > p {
+  color: #ffb4b9;
+}
+
+.admissions-status-hero-card strong {
+  color: #fff;
+}
+
+.admissions-status-hero-card small {
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+}
+
+.admissions-status-hero-card a {
+  color: #fff;
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-status-hero-card) {
+  min-height: auto;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-status-hero-card)
+h1 {
+  max-width: 10ch;
+  font-size: clamp(4rem, 6.4vw, 6.8rem);
+}
+
+
+/* Access */
+
+.admissions-status-v2 {
+  padding-block: clamp(5rem, 9vw, 8rem);
+
+  background:
+    radial-gradient(
+      circle at 90% 7%,
+      rgba(239, 127, 137, 0.12),
+      transparent 24rem
+    ),
+    #f7f4ee;
+}
+
+.admissions-status-access-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.2fr)
+    minmax(18rem, 0.65fr);
+
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.status-prototype.status-prototype--v2 {
+  display: grid;
+  gap: 1.5rem;
+
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+
+  border: 0;
+  border-radius: 1.3rem;
+
+  background: #fff;
+
+  box-shadow:
+    0 1.5rem 4rem
+    rgba(8, 26, 42, 0.08);
+}
+
+.status-prototype__heading {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.status-prototype--v2 h2 {
+  max-width: 10ch;
+
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(3rem, 5vw, 5rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.status-prototype__heading
+> p:last-child {
+  max-width: 42rem;
+
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.status-prototype__fields {
+  display: grid;
+  gap: 1rem;
+
+  padding-top: 1rem;
+}
+
+.status-prototype__action {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.status-prototype__action span {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.status-prototype__security {
+  padding: 1.2rem;
+
+  border-left: 3px solid #d95e70;
+
+  background: #f4f5f5;
+}
+
+.status-prototype__security span {
+  display: block;
+
+  margin-bottom: 0.5rem;
+
+  color: #d95e70;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.status-prototype__security p {
+  color: var(--text-secondary);
+  line-height: 1.58;
+}
+
+.admissions-status-access-card {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+
+  padding: 2rem;
+
+  border-radius: 1.25rem;
+
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-status-access-card > span {
+  color: #ffb4b9;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-status-access-card > strong {
+  margin-bottom: 1rem;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2.2rem, 3vw, 3.4rem);
+
+  font-weight: 500;
+  line-height: 0.96;
+}
+
+.admissions-status-access-card > div {
+  display: grid;
+
+  grid-template-columns: 2.5rem 1fr;
+
+  align-items: center;
+
+  gap: 0.8rem;
+
+  padding-block: 1rem;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.13);
+}
+
+.admissions-status-access-card b {
+  color: #ffb4b9;
+  font-size: 0.72rem;
+}
+
+.admissions-status-access-card p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.admissions-status-access-card small {
+  padding-top: 1rem;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.13);
+
+  color: rgba(255, 255, 255, 0.62);
+
+  line-height: 1.6;
+}
+
+
+/* Visible parent history */
+
+.admissions-status-visible {
+  background: #fff;
+}
+
+.admissions-status-visible-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.admissions-status-visible-grid article {
+  min-height: 18rem;
+
+  padding: 1.5rem;
+
+  border-radius: 1rem;
+
+  background: #f3f4f4;
+}
+
+.admissions-status-visible-grid
+article:first-child {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-status-visible-grid
+article:nth-child(3) {
+  background: #efd8d1;
+}
+
+.admissions-status-visible-grid span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-status-visible-grid
+article:first-child span {
+  color: #ffb4b9;
+}
+
+.admissions-status-visible-grid h3 {
+  margin: 3.5rem 0 1rem;
+
+  color: inherit;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(1.8rem, 2.2vw, 2.5rem);
+
+  font-weight: 500;
+  line-height: 0.98;
+}
+
+.admissions-status-visible-grid p {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.admissions-status-visible-grid
+article:first-child p {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+
+/* Status language */
+
+.admissions-status-language {
+  background: #081a2a;
+  color: #fff;
+}
+
+.admissions-status-language
+.admissions-section-heading
+> p:last-child {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.admissions-status-language-list {
+  display: grid;
+}
+
+.admissions-status-language-list article {
+  display: grid;
+
+  grid-template-columns:
+    3rem minmax(12rem, 0.7fr) minmax(0, 1fr);
+
+  align-items: center;
+
+  gap: 1.5rem;
+
+  padding: 1.25rem 0;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.13);
+}
+
+.admissions-status-language-list
+article:last-child {
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.13);
+}
+
+.admissions-status-language-list
+article > span {
+  color: #ffb4b9;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-status-language-list
+article > div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.admissions-status-language-list small {
+  color: rgba(255, 255, 255, 0.48);
+
+  font-size: 0.65rem;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admissions-status-language-list strong {
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 0.95rem;
+}
+
+.admissions-status-language-list p {
+  color: #fff;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(1.35rem, 2vw, 2rem);
+
+  line-height: 1.05;
+}
+
+
+/* Security */
+
+.admissions-status-security {
+  background: #f3eee8;
+}
+
+.admissions-status-security-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.admissions-status-security-grid article {
+  min-height: 19rem;
+
+  padding: 1.6rem;
+
+  border-radius: 1.05rem;
+
+  background: #fff;
+}
+
+.admissions-status-security-grid
+article:nth-child(2),
+.admissions-status-security-grid
+article:nth-child(5) {
+  background: #efd8d1;
+}
+
+.admissions-status-security-grid span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-status-security-grid h3 {
+  margin: 4rem 0 1rem;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2rem, 2.6vw, 2.9rem);
+
+  font-weight: 500;
+  line-height: 0.98;
+}
+
+.admissions-status-security-grid p {
+  color: var(--text-secondary);
+  line-height: 1.58;
+}
+
+
+/* Boundary */
+
+.admissions-status-boundary {
+  background: #efd8d1;
+}
+
+.admissions-status-boundary__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(18rem, 0.65fr);
+
+  align-items: center;
+
+  gap: clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-status-boundary__layout
+> div:first-child {
+  display: grid;
+  gap: 1rem;
+}
+
+.admissions-status-boundary h2 {
+  max-width: 11ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(3rem, 5vw, 5.4rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-status-boundary__layout
+> div:first-child
+> p:last-child {
+  color: #553b3b;
+  line-height: 1.65;
+}
+
+.admissions-status-boundary aside {
+  display: grid;
+  gap: 1rem;
+
+  padding: 2rem;
+
+  border-radius: 1.2rem;
+
+  background: #fff;
+}
+
+.admissions-status-boundary aside span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-status-boundary aside strong {
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2rem, 3vw, 3rem);
+
+  font-weight: 500;
+  line-height: 1;
+}
+
+.admissions-status-boundary aside p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+
+/* Closing */
+
+.admissions-status-closing {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+
+  background: #efb8ad;
+}
+
+.admissions-status-closing > div {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1fr)
+    auto;
+
+  align-items: end;
+
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.admissions-status-closing h2 {
+  max-width: 10ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(3rem, 5vw, 5.4rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-status-closing
+> div > p {
+  color: #553b3b;
+  line-height: 1.65;
+}
+
+
+/* Tablet */
+
+@media (max-width: 70rem) {
+  .admissions-status-access-grid,
+  .admissions-status-boundary__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-status-visible-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-status-security-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-status-closing > div {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-status-hero-card) {
+    padding-block: 3.25rem 3.75rem;
+  }
+
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-status-hero-card)
+  h1 {
+    font-size: clamp(3.1rem, 14vw, 4.6rem);
+  }
+
+  .admissions-status-v2,
+  .admissions-status-visible,
+  .admissions-status-language,
+  .admissions-status-security,
+  .admissions-status-boundary {
+    padding-block: 3.5rem;
+  }
+
+  .status-prototype__action {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .status-prototype__action button {
+    width: 100%;
+  }
+
+  .admissions-status-visible-grid,
+  .admissions-status-security-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-status-visible-grid article,
+  .admissions-status-security-grid article {
+    min-height: auto;
+  }
+
+  .admissions-status-visible-grid h3,
+  .admissions-status-security-grid h3 {
+    margin-top: 2.5rem;
+  }
+
+  .admissions-status-language-list article {
+    grid-template-columns: 2rem 1fr;
+
+    gap: 0.8rem;
+
+    padding-block: 1.2rem;
+  }
+
+  .admissions-status-language-list
+  article > div:last-child {
+    grid-column: 2;
+  }
+
+  .admissions-status-boundary h2 {
+    font-size: clamp(2.8rem, 12vw, 4rem);
+  }
+
+  .admissions-status-closing > div {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-status-closing .button {
+    width: 100%;
+  }
+}

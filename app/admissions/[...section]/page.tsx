@@ -12,7 +12,6 @@ import {
 } from "@/app/data/admissions";
 import {
   AdmissionsPageFrame,
-  AdmissionsReviewNotice,
   ProcessTimeline,
   VerificationValue,
 } from "@/components/admissions";
@@ -116,9 +115,6 @@ const pageDetails = {
 type PageKey = keyof typeof pageDetails;
 type RouteProps = { params: Promise<{ section: string[] }> };
 
-function SectionHeading({ eyebrow, title, children }: { eyebrow: string; title: string; children?: React.ReactNode }) {
-  return <div className="admissions-section-heading"><p className="eyebrow">{eyebrow}</p><h2>{title}</h2>{children}</div>;
-}
 
 function ProcessPage() {
   return (
@@ -920,9 +916,376 @@ function ApplyPage() {
 function StatusPage() {
   return (
     <>
-      <PageContainer><AdmissionsReviewNotice>Status lookup is not connected. The production route will require an application reference, registered mobile number and one-time password (OTP).</AdmissionsReviewNotice></PageContainer>
-      <section className="admissions-band" aria-label="Status lookup prototype"><PageContainer className="status-layout"><StatusLookupPrototype /><div><SectionHeading eyebrow="Parent-safe history" title="Only useful progress is shown"><p>Internal notes, staff discussions and risk flags remain private and are never exposed to parents.</p></SectionHeading><ul className="status-history-fields"><li>Date</li><li>Status</li><li>Parent action required</li><li>Deadline</li><li>Message</li></ul></div></PageContainer></section>
-      <section className="admissions-band admissions-band--soft" aria-labelledby="status-language-title"><PageContainer><SectionHeading eyebrow="Status language" title="Plain words, protected detail" /><div className="admissions-table-wrap"><table className="admissions-table"><caption id="status-language-title">Internal-to-parent status mapping</caption><thead><tr><th scope="col">Workflow state</th><th scope="col">Parent-facing status</th></tr></thead><tbody>{admissionStatusExamples.map(([internal, parent]) => <tr key={internal}><th scope="row">{internal}</th><td data-label="Parent-facing status">{parent}</td></tr>)}</tbody></table></div></PageContainer></section>
+      <section
+        id="status-access"
+        className="admissions-band admissions-status-v2"
+        aria-labelledby="status-access-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Parent application tracking
+              </p>
+
+              <h2 id="status-access-title">
+                Check progress without exposing private school records.
+              </h2>
+            </div>
+
+            <p>
+              The production service is planned to use an application
+              reference, the registered parent mobile number and a
+              one-time password before any application history is shown.
+            </p>
+          </div>
+
+          <div className="admissions-status-access-grid">
+            <StatusLookupPrototype />
+
+            <aside className="admissions-status-access-card">
+              <span>Access model</span>
+
+              <strong>
+                Three-part verification
+              </strong>
+
+              <div>
+                <b>01</b>
+
+                <p>
+                  Application reference
+                </p>
+              </div>
+
+              <div>
+                <b>02</b>
+
+                <p>
+                  Registered mobile number
+                </p>
+              </div>
+
+              <div>
+                <b>03</b>
+
+                <p>
+                  One-time password
+                </p>
+              </div>
+
+              <small>
+                The public prototype remains disabled until secure
+                authentication, OTP delivery and abuse protection are
+                operational.
+              </small>
+            </aside>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-status-visible"
+        aria-labelledby="status-visible-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading">
+            <p className="eyebrow">
+              Parent-safe history
+            </p>
+
+            <h2 id="status-visible-title">
+              Show only information that helps the family act.
+            </h2>
+
+            <p>
+              Internal notes, staff discussion, assessment commentary
+              and operational flags remain private. The parent view
+              should contain only useful application progress.
+            </p>
+          </div>
+
+          <div className="admissions-status-visible-grid">
+            <article>
+              <span>01</span>
+
+              <h3>
+                Date
+              </h3>
+
+              <p>
+                When the visible application event occurred.
+              </p>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <h3>
+                Status
+              </h3>
+
+              <p>
+                A plain-language description of the current stage.
+              </p>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <h3>
+                Parent action
+              </h3>
+
+              <p>
+                What the family needs to do next, if anything.
+              </p>
+            </article>
+
+            <article>
+              <span>04</span>
+
+              <h3>
+                Deadline
+              </h3>
+
+              <p>
+                A relevant date only when a parent action has a deadline.
+              </p>
+            </article>
+
+            <article>
+              <span>05</span>
+
+              <h3>
+                Message
+              </h3>
+
+              <p>
+                A concise explanation or instruction written for families.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-status-language"
+        aria-labelledby="status-language-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--light">
+            <p className="eyebrow">
+              Parent-facing language
+            </p>
+
+            <h2 id="status-language-title">
+              Internal workflow should become clear parent language.
+            </h2>
+
+            <p>
+              Families should see understandable progress rather than
+              internal system labels or staff terminology.
+            </p>
+          </div>
+
+          <div className="admissions-status-language-list">
+            {admissionStatusExamples.map(([internal, parent], index) => (
+              <article key={internal}>
+                <span>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                <div>
+                  <small>
+                    Internal workflow
+                  </small>
+
+                  <strong>
+                    {internal}
+                  </strong>
+                </div>
+
+                <div>
+                  <small>
+                    Parent sees
+                  </small>
+
+                  <p>
+                    {parent}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-status-security"
+        aria-labelledby="status-security-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading">
+            <p className="eyebrow">
+              Activation requirements
+            </p>
+
+            <h2 id="status-security-title">
+              Status lookup should activate only with proper protections.
+            </h2>
+          </div>
+
+          <div className="admissions-status-security-grid">
+            <article>
+              <span>01</span>
+
+              <h3>
+                OTP expiry
+              </h3>
+
+              <p>
+                One-time passwords need short validity periods and
+                secure delivery to the registered contact.
+              </p>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <h3>
+                Attempt limits
+              </h3>
+
+              <p>
+                Repeated reference, mobile or OTP guesses must be
+                throttled and rate-limited.
+              </p>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <h3>
+                Parent-safe filtering
+              </h3>
+
+              <p>
+                Only approved parent-facing status information should
+                leave the internal admissions system.
+              </p>
+            </article>
+
+            <article>
+              <span>04</span>
+
+              <h3>
+                Session protection
+              </h3>
+
+              <p>
+                Authenticated status sessions should expire and should
+                not expose one family&apos;s data to another user.
+              </p>
+            </article>
+
+            <article>
+              <span>05</span>
+
+              <h3>
+                Audit trail
+              </h3>
+
+              <p>
+                Sensitive status access and administrative changes
+                should be traceable.
+              </p>
+            </article>
+
+            <article>
+              <span>06</span>
+
+              <h3>
+                Recovery route
+              </h3>
+
+              <p>
+                Parents need a verified support path if they lose the
+                reference or no longer control the registered number.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-status-boundary"
+        aria-labelledby="status-boundary-title"
+      >
+        <PageContainer className="admissions-status-boundary__layout">
+          <div>
+            <p className="eyebrow">
+              Privacy boundary
+            </p>
+
+            <h2 id="status-boundary-title">
+              Not every internal event belongs in the parent portal.
+            </h2>
+
+            <p>
+              Staff notes, internal discussion, risk flags, operational
+              comments and other restricted information should remain
+              inside authorised school systems.
+            </p>
+          </div>
+
+          <aside>
+            <span>Parent portal principle</span>
+
+            <strong>
+              Useful progress, minimum exposure
+            </strong>
+
+            <p>
+              Parents should receive the information needed to understand
+              progress and complete their next action, without receiving
+              unrelated internal records.
+            </p>
+          </aside>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-status-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Need help with an application?
+            </p>
+
+            <h2>
+              Use the verified school contact route.
+            </h2>
+          </div>
+
+          <p>
+            Online status lookup is not active yet. Do not enter real
+            application references, mobile numbers or OTPs into the
+            preview form.
+          </p>
+
+          <Link
+            className="button button--primary"
+            href="/admissions/contact"
+          >
+            Contact SSKEMS
+          </Link>
+        </PageContainer>
+      </section>
     </>
   );
 }
@@ -3705,6 +4068,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
 
   const enquiryPage = key === "enquire";
   const applyPage = key === "apply";
+  const statusPage = key === "application-status";
   const processPage = key === "process";
   const agePage = key === "age-criteria";
   const documentsPage = key === "documents-required";
@@ -3720,6 +4084,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   const cinematicPage =
     enquiryPage ||
     applyPage ||
+    statusPage ||
     processPage ||
     agePage ||
     documentsPage ||
@@ -3940,6 +4305,22 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         href="/admissions/enquire"
       >
         Enquire before applying
+      </Link>
+    </>
+  ) : statusPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#status-access"
+      >
+        Preview status access
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions/contact"
+      >
+        Contact school
       </Link>
     </>
   ) : undefined;
@@ -4237,6 +4618,29 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
 
       <a href="#application-readiness">
         See application readiness{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
+  ) : statusPage ? (
+    <aside
+      className="admissions-cycle-card admissions-status-hero-card"
+      aria-label="Application status lookup activation"
+    >
+      <div>
+        <span>Parent tracking</span>
+        <strong>Secure lookup</strong>
+      </div>
+
+      <p>Authentication is not active yet</p>
+
+      <small>
+        Production access will require an application reference,
+        registered mobile number and one-time password before
+        parent-safe application history is shown.
+      </small>
+
+      <a href="#status-access">
+        See planned access model{" "}
         <span aria-hidden="true">&rarr;</span>
       </a>
     </aside>
