@@ -113,13 +113,34 @@ test("audits the current repository as one read-only launch decision", async () 
   );
 });
 
-test("runs the composite gate before the specialized public-mode blockers", async () => {
+test("keeps full-site release auditing separate from ordinary builds", async () => {
   const [packageText, auditSource] = await Promise.all([
     readFile(new URL("package.json", projectRoot), "utf8"),
     readFile(new URL("lib/public-release-readiness-audit.mjs", projectRoot), "utf8"),
   ]);
+
   const scripts = JSON.parse(packageText).scripts;
 
-  assert.match(scripts.prebuild, /release:audit.*media:bindings:audit.*documents:bindings:audit.*performance:audit/);
-  assert.doesNotMatch(auditSource, /\b(?:writeFile|appendFile|rename|unlink|rm|mkdir)\s*\(/);
+  assert.equal(scripts.prebuild, "npm run build:integrity");
+  assert.equal(scripts["prebuild:vercel"], "npm run build:integrity");
+
+  assert.match(
+    scripts["build:integrity"],
+    /tokens:build.*assert-publication-safety/,
+  );
+
+  assert.doesNotMatch(
+    scripts.prebuild,
+    /release:audit|migration:matrix:audit|media:bindings:audit|documents:bindings:audit|performance:audit/,
+  );
+
+  assert.match(
+    scripts["release:full-audit"],
+    /release:audit.*media:bindings:audit.*documents:bindings:audit.*performance:audit/,
+  );
+
+  assert.doesNotMatch(
+    auditSource,
+    /\b(?:writeFile|appendFile|rename|unlink|rm|mkdir)\s*\(/,
+  );
 });
