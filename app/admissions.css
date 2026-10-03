@@ -2840,3 +2840,537 @@ article:nth-child(3) p {
     width: 100%;
   }
 }
+
+
+/* =========================================
+   ADMISSIONS EXPERIENCE V2 - AGE CRITERIA
+   ========================================= */
+
+.admissions-age-hero-card {
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.16);
+
+  border-radius: 1.4rem;
+
+  background:
+    rgba(6, 21, 34, 0.54);
+
+  box-shadow:
+    0 2rem 5rem
+    rgba(0, 0, 0, 0.26);
+
+  backdrop-filter: blur(16px);
+}
+
+.admissions-age-hero-card span,
+.admissions-age-hero-card > p {
+  color: #ffb4b9;
+}
+
+.admissions-age-hero-card strong {
+  color: #fff;
+}
+
+.admissions-age-hero-card small {
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  line-height: 1.6;
+}
+
+.admissions-age-hero-card a {
+  color: #fff;
+}
+
+
+/* Reduce Age hero height */
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-age-hero-card) {
+  min-height: auto;
+
+  padding-block:
+    clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-age-hero-card)
+h1 {
+  max-width: 9ch;
+
+  font-size:
+    clamp(4rem, 6.4vw, 6.8rem);
+}
+
+
+/* Current rule status */
+
+.admissions-age-status {
+  padding-block:
+    clamp(5rem, 9vw, 8rem);
+
+  background:
+    radial-gradient(
+      circle at 92% 10%,
+      rgba(239, 127, 137, 0.12),
+      transparent 24rem
+    ),
+    #f7f4ee;
+}
+
+.admissions-age-verification-grid {
+  margin-top: 1rem;
+}
+
+.admissions-age-source-panel {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.5fr)
+    minmax(14rem, 0.5fr);
+
+  gap:
+    clamp(2rem, 5vw, 5rem);
+
+  margin-top: 1.5rem;
+
+  padding:
+    clamp(1.5rem, 3vw, 2.25rem);
+
+  border-radius: 1.15rem;
+
+  background: #0d3049;
+
+  color: #fff;
+}
+
+.admissions-age-source-panel > div:first-child {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.admissions-age-source-panel span {
+  color: #ffb4b9;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-age-source-panel strong {
+  max-width: 20ch;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(1.8rem, 3vw, 3rem);
+
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.admissions-age-source-panel p {
+  max-width: 56rem;
+
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  line-height: 1.65;
+}
+
+.admissions-age-source-links {
+  display: grid;
+  align-content: end;
+  gap: 0.75rem;
+}
+
+.admissions-age-source-links a {
+  padding:
+    0.9rem 1rem;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.16);
+
+  border-radius: 999px;
+
+  color: #fff;
+
+  font-size: 0.85rem;
+  font-weight: 700;
+
+  text-align: center;
+  text-decoration: none;
+}
+
+
+/* Planning baselines */
+
+.admissions-age-baselines {
+  background: #fff;
+}
+
+.admissions-age-baseline-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.admissions-age-baseline-grid article {
+  display: flex;
+
+  min-height: 22rem;
+
+  flex-direction: column;
+
+  padding: 1.6rem;
+
+  border:
+    1px solid
+    rgba(8, 26, 42, 0.1);
+
+  border-radius: 1.2rem;
+
+  background: #f3f4f4;
+}
+
+.admissions-age-baseline-grid
+article:first-child {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-age-baseline-grid
+article:nth-child(2) {
+  background: #efd8d1;
+}
+
+.admissions-age-baseline-grid
+article:nth-child(3) {
+  background: #eef2f3;
+}
+
+.admissions-age-baseline-grid
+article:nth-child(4) {
+  background: #f4ede4;
+}
+
+.admissions-age-baseline-grid
+article > span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-age-baseline-grid
+article > p {
+  margin-top: auto;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-age-baseline-grid h3 {
+  margin:
+    0.5rem 0 1.5rem;
+
+  color: inherit;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(2rem, 2.8vw, 3.1rem);
+
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.admissions-age-baseline-grid
+article > div {
+  display: grid;
+  gap: 0.25rem;
+
+  padding-top: 1rem;
+
+  border-top:
+    1px solid
+    rgba(8, 26, 42, 0.12);
+}
+
+.admissions-age-baseline-grid
+article:first-child > div {
+  border-top-color:
+    rgba(255, 255, 255, 0.2);
+}
+
+.admissions-age-baseline-grid small {
+  opacity: 0.7;
+}
+
+.admissions-age-baseline-grid
+article > div strong {
+  font-size:
+    clamp(1.3rem, 2vw, 1.8rem);
+}
+
+.admissions-age-baseline-grid em {
+  margin-top: 0.8rem;
+
+  opacity: 0.68;
+
+  font-size: 0.74rem;
+  font-style: normal;
+
+  line-height: 1.45;
+}
+
+
+/* Checker */
+
+.admissions-age-checker-section {
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(239, 127, 137, 0.11),
+      transparent 22rem
+    ),
+    #f6f3ed;
+}
+
+.admissions-age-checker-heading {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(16rem, 0.7fr);
+
+  align-items: end;
+
+  gap:
+    clamp(2rem, 5vw, 5rem);
+
+  margin-bottom: 3rem;
+}
+
+.admissions-age-checker-heading > div {
+  display: grid;
+  gap: 1rem;
+}
+
+.admissions-age-checker-heading h2 {
+  max-width: 12ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3rem, 5vw, 5.5rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-age-checker-heading > p {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.admissions-age-checker-section
+.eligibility-checker {
+  max-width: none;
+
+  grid-template-columns:
+    minmax(14rem, 0.58fr)
+    minmax(20rem, 1fr)
+    minmax(15rem, 0.72fr);
+
+  border:
+    1px solid
+    rgba(8, 26, 42, 0.1);
+
+  border-radius: 1.4rem;
+
+  box-shadow:
+    0 1.5rem 4rem
+    rgba(8, 26, 42, 0.07);
+}
+
+.admissions-age-checker-section
+.eligibility-result {
+  background: #fff5e5;
+}
+
+.admissions-age-checker-section
+.eligibility-result > strong {
+  color: #7a4b08;
+}
+
+
+/* Closing */
+
+.admissions-age-closing {
+  padding-block:
+    clamp(4.5rem, 8vw, 7rem);
+
+  background: #efb8ad;
+}
+
+.admissions-age-closing > div {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1fr)
+    auto;
+
+  align-items: end;
+
+  gap:
+    clamp(2rem, 5vw, 5rem);
+}
+
+.admissions-age-closing h2 {
+  max-width: 10ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3rem, 5vw, 5.5rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-age-closing > div > p {
+  color: #553b3b;
+  line-height: 1.65;
+}
+
+
+/* Tablet */
+
+@media (max-width: 70rem) {
+  .admissions-age-baseline-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-age-source-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-age-source-links {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-age-checker-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-age-checker-section
+  .eligibility-checker {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-age-checker-section
+  .eligibility-form {
+    padding:
+      var(--space-24) 0;
+
+    border:
+      0;
+
+    border-top:
+      var(--border-width-default)
+      solid
+      var(--admissions-line);
+
+    border-bottom:
+      var(--border-width-default)
+      solid
+      var(--admissions-line);
+  }
+
+  .admissions-age-closing > div {
+    grid-template-columns:
+      1fr 1fr;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-age-hero-card) {
+    padding-block:
+      3.25rem 3.75rem;
+  }
+
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-age-hero-card)
+  h1 {
+    font-size:
+      clamp(3.1rem, 14vw, 4.7rem);
+  }
+
+  .admissions-age-status,
+  .admissions-age-baselines,
+  .admissions-age-checker-section {
+    padding-block: 3.5rem;
+  }
+
+  .admissions-age-baseline-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-age-baseline-grid article {
+    min-height: 17rem;
+  }
+
+  .admissions-age-source-links {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-age-checker-heading h2 {
+    font-size:
+      clamp(2.8rem, 12vw, 4rem);
+  }
+
+  .admissions-age-checker-section
+  .eligibility-checker {
+    padding: 1.25rem;
+  }
+
+  .admissions-age-closing > div {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-age-closing
+  .button {
+    width: 100%;
+  }
+}

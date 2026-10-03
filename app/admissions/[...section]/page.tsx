@@ -254,35 +254,198 @@ function ProcessPage() {
 function AgeCriteriaPage() {
   return (
     <>
-      <PageContainer><AdmissionsReviewNotice>The calculator is active as a safe review tool, but it returns “Requires manual review” until the current Maharashtra order is archived and approved.</AdmissionsReviewNotice></PageContainer>
-      <section className="admissions-band" aria-labelledby="age-rule-register-title">
+      <section
+        id="age-rule-status"
+        className="admissions-band admissions-age-status"
+        aria-labelledby="age-status-title"
+      >
         <PageContainer>
-          <SectionHeading eyebrow="01 · Rule register" title="Current publication state" />
-          <dl className="admissions-verification-grid" id="age-rule-register-title">
-            <VerificationValue label="Academic year" value={ageRule.academicYear} />
-            <VerificationValue label="Authority" value={ageRule.authority} />
-            <VerificationValue label="Official Maharashtra cut-off" value="Government order required" pending />
-            <VerificationValue label="Source government order" value="Archive record required" pending />
-            <VerificationValue label="Rule verified on" value="Not yet verified" pending />
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">Current rule status</p>
+
+              <h2 id="age-status-title">
+                What can be confirmed today?
+              </h2>
+            </div>
+
+            <p>
+              SSKEMS will publish the exact Maharashtra cut-off date,
+              source order and any applicable relaxation only after the
+              official record is archived and approved.
+            </p>
+          </div>
+
+          <dl className="admissions-verification-grid admissions-age-verification-grid">
+            <VerificationValue
+              label="Academic year"
+              value={ageRule.academicYear}
+            />
+
+            <VerificationValue
+              label="Authority"
+              value={ageRule.authority}
+            />
+
+            <VerificationValue
+              label="Official Maharashtra cut-off"
+              value="Government order required"
+              pending
+            />
+
+            <VerificationValue
+              label="Source government order"
+              value="Archive record required"
+              pending
+            />
           </dl>
-          <p className="admissions-source-note"><a href={officialAdmissionsSources.cbseDirectAdmission} target="_blank" rel="noreferrer">CBSE directs schools to follow the age limits established by the State or Union Territory <span className="visually-hidden">(opens in a new tab)</span></a> where the school is located. The national Grade I age-six baseline is documented by the <a href={officialAdmissionsSources.ministryGradeOneAge} target="_blank" rel="noreferrer">Ministry of Education <span className="visually-hidden">(opens in a new tab)</span></a>, but SSKEMS still needs the exact Maharashtra record for {admissionsCycle.academicYear}.</p>
-        </PageContainer>
-      </section>
-      <section className="admissions-band admissions-band--soft" aria-labelledby="age-baseline-title">
-        <PageContainer className="age-baseline-layout">
-          <SectionHeading eyebrow="02 · Provisional planning baseline" title="Minimum ages awaiting order confirmation">
-            <p>These values support planning only. No date-of-birth window, maximum age or relaxation is published until the exact rule is approved.</p>
-          </SectionHeading>
-          <div className="admissions-table-wrap">
-            <table className="admissions-table">
-              <caption id="age-baseline-title">Provisional entry-level age baselines for planning</caption>
-              <thead><tr><th scope="col">Entry class</th><th scope="col">Minimum-age baseline</th><th scope="col">Status</th></tr></thead>
-              <tbody>{provisionalAgeBaselines.map((row) => <tr key={row.entryClass}><th scope="row">{row.entryClass}</th><td data-label="Minimum-age baseline">{row.minimumAge}</td><td data-label="Status">Requires government-order verification</td></tr>)}</tbody>
-            </table>
+
+          <div className="admissions-age-source-panel">
+            <div>
+              <span>Why this remains pending</span>
+
+              <strong>
+                The checker must follow the approved State rule.
+              </strong>
+
+              <p>
+                CBSE directs schools to follow the age limits established
+                by the applicable State or Union Territory. The national
+                Grade I age-six baseline can support planning, but it does
+                not replace the exact Maharashtra record for the selected
+                academic year.
+              </p>
+            </div>
+
+            <div className="admissions-age-source-links">
+              <a
+                href={officialAdmissionsSources.cbseDirectAdmission}
+                target="_blank"
+                rel="noreferrer"
+              >
+                CBSE admission rules
+                <span className="visually-hidden">
+                  {" "}(opens in a new tab)
+                </span>
+              </a>
+
+              <a
+                href={officialAdmissionsSources.ministryGradeOneAge}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Ministry Grade I baseline
+                <span className="visually-hidden">
+                  {" "}(opens in a new tab)
+                </span>
+              </a>
+            </div>
           </div>
         </PageContainer>
       </section>
-      <section className="admissions-band" aria-label="Age eligibility checker"><PageContainer><AgeEligibilityChecker /></PageContainer></section>
+
+
+      <section
+        className="admissions-band admissions-age-baselines"
+        aria-labelledby="age-baseline-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Provisional planning baseline
+              </p>
+
+              <h2 id="age-baseline-title">
+                A simple starting reference.
+              </h2>
+            </div>
+
+            <p>
+              These minimum-age baselines support planning only.
+              They do not create a final date-of-birth window,
+              maximum age or relaxation rule.
+            </p>
+          </div>
+
+          <div className="admissions-age-baseline-grid">
+            {provisionalAgeBaselines.map((row, index) => (
+              <article key={row.entryClass}>
+                <span>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                <p>Entry class</p>
+
+                <h3>{row.entryClass}</h3>
+
+                <div>
+                  <small>Planning baseline</small>
+                  <strong>{row.minimumAge}</strong>
+                </div>
+
+                <em>Government-order verification required</em>
+              </article>
+            ))}
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        id="age-review-checker"
+        className="admissions-band admissions-age-checker-section"
+        aria-labelledby="age-checker-heading"
+      >
+        <PageContainer>
+          <div className="admissions-age-checker-heading">
+            <div>
+              <p className="eyebrow">
+                Age review tool
+              </p>
+
+              <h2 id="age-checker-heading">
+                Check which review pathway applies.
+              </h2>
+            </div>
+
+            <p>
+              Until the current Maharashtra order is configured,
+              every result safely returns manual review rather than
+              guessing an eligibility decision.
+            </p>
+          </div>
+
+          <AgeEligibilityChecker />
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-age-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Need a class-specific answer?
+            </p>
+
+            <h2>
+              Ask admissions before preparing documents.
+            </h2>
+          </div>
+
+          <p>
+            The school can guide you on the correct class and next step
+            without requiring certificates in the initial enquiry.
+          </p>
+
+          <Link
+            className="button button--primary"
+            href="/admissions/enquire"
+          >
+            Make an enquiry
+          </Link>
+        </PageContainer>
+      </section>
     </>
   );
 }
@@ -527,7 +690,12 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
 
   const enquiryPage = key === "enquire";
   const processPage = key === "process";
-  const cinematicPage = enquiryPage || processPage;
+  const agePage = key === "age-criteria";
+
+  const cinematicPage =
+    enquiryPage ||
+    processPage ||
+    agePage;
 
   const heroActions = enquiryPage ? (
     <>
@@ -560,6 +728,22 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
       >
         Make an enquiry
       </Link>
+    </>
+  ) : agePage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#age-rule-status"
+      >
+        See current rule status
+      </a>
+
+      <a
+        className="admissions-hero__secondary-action"
+        href="#age-review-checker"
+      >
+        Open age review tool
+      </a>
     </>
   ) : undefined;
 
@@ -608,6 +792,29 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         <span aria-hidden="true">&rarr;</span>
       </Link>
     </aside>
+  ) : agePage ? (
+    <aside
+      className="admissions-cycle-card admissions-age-hero-card"
+      aria-label="Age rule publication status"
+    >
+      <div>
+        <span>2026-27 age guidance</span>
+        <strong>Verification required</strong>
+      </div>
+
+      <p>Exact cut-off not yet published</p>
+
+      <small>
+        The Maharashtra government order, exact cut-off date
+        and source record must be approved before a final
+        date-of-birth calculation can be shown.
+      </small>
+
+      <a href="#age-rule-status">
+        See what is confirmed{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
   ) : undefined;
 
   return (
@@ -622,6 +829,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
             "enquire",
             "apply",
             "application-status",
+            "age-criteria",
           ] as PageKey[]
         ).includes(key)
       }
