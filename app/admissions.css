@@ -6723,3 +6723,416 @@ article > a {
     width: 100%;
   }
 }
+
+
+/* =========================================
+   ADMISSIONS EXPERIENCE V2 - TRANSFERS
+   ========================================= */
+
+.admissions-transfer-hero-card {
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 1.4rem;
+  background: rgba(6,21,34,0.54);
+  box-shadow: 0 2rem 5rem rgba(0,0,0,0.26);
+  backdrop-filter: blur(16px);
+}
+
+.admissions-transfer-hero-card span,
+.admissions-transfer-hero-card > p {
+  color: #ffb4b9;
+}
+
+.admissions-transfer-hero-card strong {
+  color: #fff;
+}
+
+.admissions-transfer-hero-card small {
+  color: rgba(255,255,255,0.72);
+  line-height: 1.6;
+}
+
+.admissions-transfer-hero-card a {
+  color: #fff;
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-transfer-hero-card) {
+  min-height: auto;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-transfer-hero-card)
+h1 {
+  max-width: 10ch;
+  font-size: clamp(3.8rem, 6.2vw, 6.6rem);
+}
+
+
+/* Main rules */
+
+.admissions-transfer-v2 {
+  padding-block: clamp(5rem, 9vw, 8rem);
+
+  background:
+    radial-gradient(
+      circle at 90% 8%,
+      rgba(239,127,137,0.12),
+      transparent 24rem
+    ),
+    #f7f4ee;
+}
+
+.admissions-transfer-rule-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 1rem;
+}
+
+.admissions-transfer-rule-card {
+  display: flex;
+  min-height: 25rem;
+  flex-direction: column;
+
+  padding: 2rem;
+
+  border-radius: 1.25rem;
+  background: #f2f4f5;
+}
+
+.admissions-transfer-rule-card--primary {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-transfer-rule-card--accent {
+  background: #efd8d1;
+}
+
+.admissions-transfer-rule-card > span {
+  color: #d95e70;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-transfer-rule-card > p {
+  margin-top: auto;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-transfer-rule-card h3 {
+  margin: 0.5rem 0 1rem;
+
+  color: inherit;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2.2rem, 3.2vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+
+.admissions-transfer-rule-card small {
+  color: var(--text-secondary);
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.admissions-transfer-rule-card--primary small {
+  color: rgba(255,255,255,0.7);
+}
+
+
+/* Confirmation */
+
+.admissions-transfer-confirm {
+  background: #fff;
+}
+
+.admissions-transfer-confirm-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 1rem;
+}
+
+.admissions-transfer-confirm-grid article {
+  min-height: 16rem;
+
+  padding: 1.5rem;
+
+  border: 1px solid rgba(8,26,42,0.1);
+  border-radius: 1rem;
+
+  background: #f5f6f6;
+}
+
+.admissions-transfer-confirm-grid span {
+  color: #d95e70;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.admissions-transfer-confirm-grid strong {
+  display: block;
+
+  margin: 2.3rem 0 0.7rem;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+  font-size: 1.9rem;
+  font-weight: 500;
+}
+
+.admissions-transfer-confirm-grid p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+
+/* Journey */
+
+.admissions-transfer-journey {
+  background: #081a2a;
+  color: #fff;
+}
+
+.admissions-transfer-journey-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 1rem;
+}
+
+.admissions-transfer-journey-grid article {
+  min-height: 21rem;
+
+  padding: 1.6rem;
+
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 1.1rem;
+
+  background: rgba(255,255,255,0.04);
+}
+
+.admissions-transfer-journey-grid span {
+  color: #ffb4b9;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-transfer-journey-grid h3 {
+  margin: 4rem 0 1rem;
+
+  color: #fff;
+
+  font-family: var(--font-family-heading);
+  font-size: clamp(2rem,2.8vw,3rem);
+  font-weight: 500;
+  line-height: 0.98;
+}
+
+.admissions-transfer-journey-grid p {
+  color: rgba(255,255,255,0.68);
+  line-height: 1.58;
+}
+
+
+/* Source */
+
+.admissions-transfer-source {
+  background: #f2ece6;
+}
+
+.admissions-transfer-source__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0,1fr)
+    minmax(18rem,0.65fr);
+
+  align-items: center;
+
+  gap: clamp(3rem,7vw,7rem);
+}
+
+.admissions-transfer-source__layout
+> div:first-child {
+  display: grid;
+  gap: 1rem;
+}
+
+.admissions-transfer-source h2 {
+  max-width: 11ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+  font-size: clamp(3rem,5vw,5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-transfer-source__layout
+> div:first-child > p:last-child {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.admissions-transfer-source aside {
+  display: grid;
+  gap: 1rem;
+
+  padding: 2rem;
+
+  border-radius: 1.2rem;
+
+  background: #fff;
+
+  box-shadow:
+    0 1.25rem 3rem
+    rgba(8,26,42,0.07);
+}
+
+.admissions-transfer-source aside > span {
+  color: #d95e70;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.admissions-transfer-source aside > strong {
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.9rem,3vw,2.9rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.admissions-transfer-source aside > p {
+  color: var(--text-secondary);
+  line-height: 1.58;
+}
+
+
+/* Closing */
+
+.admissions-transfer-closing {
+  padding-block: clamp(4.5rem,8vw,7rem);
+  background: #efb8ad;
+}
+
+.admissions-transfer-closing > div {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0,0.9fr)
+    minmax(0,1fr)
+    auto;
+
+  align-items: end;
+
+  gap: clamp(2rem,5vw,5rem);
+}
+
+.admissions-transfer-closing h2 {
+  max-width: 10ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+  font-size: clamp(3rem,5vw,5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-transfer-closing > div > p {
+  color: #553b3b;
+  line-height: 1.65;
+}
+
+
+/* Tablet */
+
+@media (max-width: 70rem) {
+  .admissions-transfer-confirm-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .admissions-transfer-journey-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .admissions-transfer-source__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-transfer-closing > div {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-transfer-hero-card) {
+    padding-block: 3.25rem 3.75rem;
+  }
+
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-transfer-hero-card)
+  h1 {
+    font-size: clamp(3rem,13vw,4.5rem);
+  }
+
+  .admissions-transfer-v2,
+  .admissions-transfer-confirm,
+  .admissions-transfer-journey,
+  .admissions-transfer-source {
+    padding-block: 3.5rem;
+  }
+
+  .admissions-transfer-rule-grid,
+  .admissions-transfer-confirm-grid,
+  .admissions-transfer-journey-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-transfer-rule-card {
+    min-height: 19rem;
+  }
+
+  .admissions-transfer-confirm-grid article,
+  .admissions-transfer-journey-grid article {
+    min-height: auto;
+  }
+
+  .admissions-transfer-journey-grid h3 {
+    margin-top: 2.5rem;
+  }
+
+  .admissions-transfer-source h2 {
+    font-size: clamp(2.8rem,12vw,4rem);
+  }
+
+  .admissions-transfer-closing > div {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-transfer-closing .button {
+    width: 100%;
+  }
+}

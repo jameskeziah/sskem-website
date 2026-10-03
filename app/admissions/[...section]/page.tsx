@@ -29,75 +29,87 @@ import { siteFacts } from "@/app/data/site";
 const pageDetails = {
   process: {
     title: "Admission process",
-    eyebrow: "Admissions Â· Parent journey",
-    summary: "Eight visible stages separate an initial question from a formal, authorised admission decision.",
+    eyebrow: "Admissions \u00B7 Parent journey",
+    summary:
+      "Eight visible stages separate an initial question from a formal, authorised admission decision.",
   },
   "age-criteria": {
     title: "Age criteria",
-    eyebrow: "Admissions Â· Eligibility",
-    summary: "Age guidance is generated from an approved Maharashtra rule recordâ€”not copied from an old page or typed as a permanent date range.",
+    eyebrow: "Admissions \u00B7 Eligibility",
+    summary:
+      "Age guidance is generated from an approved Maharashtra rule record\u2014not copied from an old page or typed as a permanent date range.",
   },
   enquire: {
     title: "Make an admissions enquiry",
-    eyebrow: "Admissions ? First contact",
+    eyebrow: "Admissions \u00B7 First contact",
     summary:
       "Ask a simple question about class availability, curriculum, fees, transport, visits or the right next step. No certificates are needed at this stage.",
   },
-
   apply: {
     title: "Start an application",
-    eyebrow: "Admissions Â· Formal application",
-    summary: "Review the planned seven-step mobile application and the privacy and security gates required before it can accept real information.",
+    eyebrow: "Admissions \u00B7 Formal application",
+    summary:
+      "Review the planned seven-step mobile application and the privacy and security gates required before it can accept real information.",
   },
   "application-status": {
     title: "Application status",
-    eyebrow: "Admissions Â· Parent tracking",
-    summary: "A parent-safe view of progress, actions and deadlinesâ€”protected by the application reference, registered mobile and a one-time password.",
+    eyebrow: "Admissions \u00B7 Parent tracking",
+    summary:
+      "A parent-safe view of progress, actions and deadlines\u2014protected by the application reference, registered mobile and a one-time password.",
   },
   "documents-required": {
     title: "Documents required",
-    eyebrow: "Admissions Â· Conditional checklist",
-    summary: "The documents depend on the class, admission category, previous board and transfer context. They are not required for a short enquiry.",
+    eyebrow: "Admissions \u00B7 Conditional checklist",
+    summary:
+      "The documents depend on the class, admission category, previous board and transfer context. They are not required for a short enquiry.",
   },
   fees: {
     title: "Admission fees",
-    eyebrow: "Admissions Â· Approved schedules",
-    summary: "Fee information will be shown only with its academic year, approving authority, effective date and controlled public document.",
+    eyebrow: "Admissions \u00B7 Approved schedules",
+    summary:
+      "Fee information will be shown only with its academic year, approving authority, effective date and controlled public document.",
   },
   faq: {
     title: "Admissions FAQ",
-    eyebrow: "Admissions Â· Quick answers",
-    summary: "Plain-language answers about availability, age, documents, transfers, RTE and the review environment.",
+    eyebrow: "Admissions \u00B7 Quick answers",
+    summary:
+      "Plain-language answers about availability, age, documents, transfers, RTE and the review environment.",
   },
   contact: {
     title: "Contact admissions",
-    eyebrow: "Admissions Â· Help",
-    summary: "Use the verified general school channels while a dedicated admissions contact and service standard await approval.",
+    eyebrow: "Admissions \u00B7 Help",
+    summary:
+      "Use the verified general school channels while a dedicated admissions contact and service standard await approval.",
   },
   rte: {
     title: "RTE 25% admissions",
-    eyebrow: "Admissions Â· Official Maharashtra process",
-    summary: "The regular SSKEMS enquiry and application are not the official RTE application. Parents must use the Maharashtra Government process.",
+    eyebrow: "Admissions \u00B7 Official Maharashtra process",
+    summary:
+      "The regular SSKEMS enquiry and application are not the official RTE application. Parents must use the Maharashtra Government process.",
   },
   "class-9-and-11-transfers": {
     title: "Class IX and XI transfers",
-    eyebrow: "Admissions Â· Special review",
-    summary: "Prior-class, board, subject and timing rules make these applications different from elementary entry.",
+    eyebrow: "Admissions \u00B7 Special review",
+    summary:
+      "Prior-class, board, subject and timing rules make these applications different from elementary entry.",
   },
   school: {
     title: "School admissions",
-    eyebrow: "Admissions Â· Classes Iâ€“VIII",
-    summary: "A Maharashtra-specific route for age, previous-class eligibility, documents, availability and family support.",
+    eyebrow: "Admissions \u00B7 Classes I\u2013VIII",
+    summary:
+      "A Maharashtra-specific route for age, previous-class eligibility, documents, availability and family support.",
   },
   "senior-secondary": {
     title: "Senior-secondary admissions",
-    eyebrow: "Admissions Â· Classes IXâ€“XII",
-    summary: "Direct-entry and transfer rules, programme confirmation and subject availability must be checked before an application is invited.",
+    eyebrow: "Admissions \u00B7 Classes IX\u2013XII",
+    summary:
+      "Direct-entry and transfer rules, programme confirmation and subject availability must be checked before an application is invited.",
   },
   visit: {
     title: "Visit SSKEMS",
-    eyebrow: "Admissions Â· School visit",
-    summary: "Speak with the school, understand routines and request any accessibility or communication support before your visit.",
+    eyebrow: "Admissions \u00B7 School visit",
+    summary:
+      "Speak with the school, understand routines and request any accessibility or communication support before your visit.",
   },
 } as const;
 
@@ -1863,19 +1875,480 @@ function RtePage() {
 
 function TransfersPage() {
   return (
-    <section className="admissions-band" aria-labelledby="transfer-rules-title"><PageContainer><SectionHeading eyebrow="CBSE admission rules" title="Prior class, timing and authority matter" /><div className="transfer-rule-grid" id="transfer-rules-title"><article><span>Class IX</span><h3>Passed Class VIII</h3><p>The previous institution must be CBSE-affiliated, another recognised board, or recognised by the relevant State education department.</p></article><article><span>Class XI</span><h3>Passed Class X or equivalent</h3><p>Subject combinations, prerequisites and the programme actually offered by SSKEMS still require confirmation.</p></article><article><span>Class IXâ€“XII</span><h3>After 31 August</h3><p>Admission after 31 August requires prior permission from the competent authority except in specified late-result circumstances. Attendance feasibility also matters.</p></article></div><p className="admissions-source-note">Official source: <a href={officialAdmissionsSources.cbseDirectAdmission} target="_blank" rel="noreferrer">CBSE Direct Admission rules <span className="visually-hidden">(opens in a new tab)</span></a>.</p></PageContainer></section>
+    <>
+      <section
+        id="transfer-rules"
+        className="admissions-band admissions-transfer-v2"
+        aria-labelledby="transfer-rules-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                CBSE transfer review
+              </p>
+
+              <h2 id="transfer-rules-title">
+                Prior class, board and timing all matter.
+              </h2>
+            </div>
+
+            <p>
+              Class IX and XI are not treated like ordinary elementary
+              entry. Previous study, recognition, programme availability
+              and timing must be checked before an application is invited.
+            </p>
+          </div>
+
+          <div className="admissions-transfer-rule-grid">
+            <article className="admissions-transfer-rule-card admissions-transfer-rule-card--primary">
+              <span>Class IX</span>
+
+              <p>Previous study</p>
+
+              <h3>
+                Class VIII must already be completed.
+              </h3>
+
+              <small>
+                The previous institution must fit the applicable
+                recognised-school or recognised-board route before
+                Class IX admission can be reviewed.
+              </small>
+            </article>
+
+            <article className="admissions-transfer-rule-card admissions-transfer-rule-card--accent">
+              <span>Class XI</span>
+
+              <p>Previous qualification</p>
+
+              <h3>
+                Class X or recognised equivalent is required.
+              </h3>
+
+              <small>
+                The subjects and programme actually available at
+                SSKEMS still require confirmation before admission
+                can be invited.
+              </small>
+            </article>
+
+            <article className="admissions-transfer-rule-card">
+              <span>Timing</span>
+
+              <p>Late admission</p>
+
+              <h3>
+                After 31 August needs special attention.
+              </h3>
+
+              <small>
+                The existing CBSE admission guidance requires prior
+                permission from the competent authority in applicable
+                late-admission cases, subject to the stated exceptions.
+              </small>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-transfer-confirm"
+        aria-labelledby="transfer-confirm-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                School confirmation
+              </p>
+
+              <h2 id="transfer-confirm-title">
+                What SSKEMS still needs to check.
+              </h2>
+            </div>
+
+            <p>
+              Meeting a general CBSE condition does not by itself
+              establish that a place, subject combination or valid
+              transfer route is available at SSKEMS.
+            </p>
+          </div>
+
+          <div className="admissions-transfer-confirm-grid">
+            <article>
+              <span>01</span>
+              <strong>Previous institution</strong>
+              <p>
+                The school or board from which the student is moving
+                must fit the applicable recognised route.
+              </p>
+            </article>
+
+            <article>
+              <span>02</span>
+              <strong>Class eligibility</strong>
+              <p>
+                The completed previous class or equivalent qualification
+                must match the entry being considered.
+              </p>
+            </article>
+
+            <article>
+              <span>03</span>
+              <strong>Subjects and programme</strong>
+              <p>
+                For Class XI especially, the programme and subject
+                combination actually offered by SSKEMS must be confirmed.
+              </p>
+            </article>
+
+            <article>
+              <span>04</span>
+              <strong>Availability</strong>
+              <p>
+                A valid transfer route does not guarantee that a seat
+                is available for the requested class or programme.
+              </p>
+            </article>
+
+            <article>
+              <span>05</span>
+              <strong>Timing and authority</strong>
+              <p>
+                Late admission may require additional authority review
+                before the school can proceed.
+              </p>
+            </article>
+
+            <article>
+              <span>06</span>
+              <strong>Attendance feasibility</strong>
+              <p>
+                The timing of entry must still allow the applicable
+                attendance and academic requirements to be met.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-transfer-journey"
+        aria-labelledby="transfer-journey-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--light">
+            <p className="eyebrow">
+              Transfer review journey
+            </p>
+
+            <h2 id="transfer-journey-title">
+              Check first. Apply only when the route is clear.
+            </h2>
+
+            <p>
+              A short enquiry is safer than starting a formal
+              application before the class, programme and transfer
+              conditions have been reviewed.
+            </p>
+          </div>
+
+          <div className="admissions-transfer-journey-grid">
+            <article>
+              <span>01</span>
+
+              <h3>Check previous class</h3>
+
+              <p>
+                Confirm the completed class or equivalent qualification
+                relevant to the intended entry.
+              </p>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <h3>Make an enquiry</h3>
+
+              <p>
+                Tell SSKEMS the class, previous school or board and
+                intended programme before preparing paperwork.
+              </p>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <h3>School reviews the route</h3>
+
+              <p>
+                Recognition, programme availability, timing and any
+                authority requirements can then be checked.
+              </p>
+            </article>
+
+            <article>
+              <span>04</span>
+
+              <h3>Apply when invited</h3>
+
+              <p>
+                Move to formal application only after the relevant
+                transfer pathway has been confirmed.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-transfer-source"
+        aria-labelledby="transfer-source-title"
+      >
+        <PageContainer className="admissions-transfer-source__layout">
+          <div>
+            <p className="eyebrow">
+              Controlled official source
+            </p>
+
+            <h2 id="transfer-source-title">
+              Review the CBSE direct-admission guidance.
+            </h2>
+
+            <p>
+              SSKEMS should apply the relevant official admission
+              conditions together with the school&apos;s actual programme,
+              availability and current transfer context.
+            </p>
+          </div>
+
+          <aside>
+            <span>CBSE</span>
+
+            <strong>
+              Direct Admission guidance
+            </strong>
+
+            <p>
+              This is the official source already configured in the
+              SSKEMS admissions data.
+            </p>
+
+            <a
+              className="button button--primary"
+              href={officialAdmissionsSources.cbseDirectAdmission}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open CBSE guidance
+
+              <span className="visually-hidden">
+                {" "}(opens in a new tab)
+              </span>
+            </a>
+          </aside>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-transfer-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Considering a Class IX or XI transfer?
+            </p>
+
+            <h2>
+              Ask before starting the application.
+            </h2>
+          </div>
+
+          <p>
+            Tell admissions the intended class, previous school or
+            board and, for Class XI, the programme or subjects you are
+            considering.
+          </p>
+
+          <Link
+            className="button button--primary"
+            href="/admissions/enquire"
+          >
+            Make an enquiry
+          </Link>
+        </PageContainer>
+      </section>
+    </>
   );
 }
 
 function SchoolPage() {
   return (
-    <section className="admissions-band" aria-labelledby="school-route-title"><PageContainer><SectionHeading eyebrow="Classes Iâ€“VIII" title="Maharashtra-specific eligibility"><p>CBSE delegates admission through Class VIII to the applicable State rules. The school must therefore configure Maharashtra age and previous-class rules rather than present a generic â€œCBSE age ruleâ€.</p></SectionHeading><div className="admissions-policy-grid" id="school-route-title"><article><span>Age</span><h3>Official cut-off record</h3><p>The 2026â€“27 Maharashtra order and any relaxation must be approved first.</p></article><article><span>Prior learning</span><h3>Previous-class eligibility</h3><p>For classes above entry level, age alone is not enough.</p></article><article><span>Family support</span><h3>Non-selective orientation</h3><p>Interactions help plan language, learning, accessibility, health and transport support; they are not screening tests.</p></article></div></PageContainer></section>
+    <section
+      className="admissions-band"
+      aria-labelledby="school-route-title"
+    >
+      <PageContainer>
+        <SectionHeading
+          eyebrow={"Classes I\u2013VIII"}
+          title="Maharashtra-specific eligibility"
+        >
+          <p>
+            CBSE delegates admission through Class VIII to the
+            applicable State rules. The school must therefore
+            configure Maharashtra age and previous-class rules
+            rather than present a generic &ldquo;CBSE age rule&rdquo;.
+          </p>
+        </SectionHeading>
+
+        <div
+          className="admissions-policy-grid"
+          id="school-route-title"
+        >
+          <article>
+            <span>Age</span>
+
+            <h3>
+              Official cut-off record
+            </h3>
+
+            <p>
+              The 2026-27 Maharashtra order and any relaxation
+              must be approved first.
+            </p>
+          </article>
+
+          <article>
+            <span>Prior learning</span>
+
+            <h3>
+              Previous-class eligibility
+            </h3>
+
+            <p>
+              For classes above entry level, age alone is not enough.
+            </p>
+          </article>
+
+          <article>
+            <span>Family support</span>
+
+            <h3>
+              Non-selective orientation
+            </h3>
+
+            <p>
+              Interactions help plan language, learning, accessibility,
+              health and transport support; they are not screening tests.
+            </p>
+          </article>
+        </div>
+      </PageContainer>
+    </section>
   );
 }
 
 function SeniorSecondaryPage() {
   return (
-    <section className="admissions-band" aria-labelledby="senior-rules-title"><PageContainer><SectionHeading eyebrow="Classes IXâ€“XII" title="Programme and transfer rules before promotion"><p><a href={officialAdmissionsSources.cbseSaras} target="_blank" rel="noreferrer">CBSE SARAS records SSKEMS as a Senior Secondary school <span className="visually-hidden">(opens in a new tab)</span></a>. A separately named Junior College or Maharashtra FYJC pathway must not be presented as current until management confirms its board and programme.</p></SectionHeading><div className="admissions-policy-grid" id="senior-rules-title"><article><span>Class X</span><h3>Restricted, not ordinary open entry</h3><p>Completion of Class IX and the specific CBSE transfer conditions must be checked.</p></article><article><span>Class XI</span><h3>Programme confirmation required</h3><p>A passed Class X or recognised equivalent, approved subjects and actual school availability are required.</p></article><article><span>Class XII</span><h3>Restricted, not ordinary open entry</h3><p>Completion of Class XI and the applicable transfer conditions must be checked.</p></article></div><div className="fyjc-note"><strong>Important FYJC distinction</strong><p>Maharashtraâ€™s centralised Class XI portal applies to its State Board process. Do not direct a CBSE applicant there as mandatory unless SSKEMS confirms that the intended programme is governed by FYJC.</p><a href={officialAdmissionsSources.maharashtraClassEleven} target="_blank" rel="noreferrer">View the official Maharashtra FYJC portal <span className="visually-hidden">(opens in a new tab)</span></a></div></PageContainer></section>
+    <section
+      className="admissions-band"
+      aria-labelledby="senior-rules-title"
+    >
+      <PageContainer>
+        <SectionHeading
+          eyebrow={"Classes IX\u2013XII"}
+          title="Programme and transfer rules before promotion"
+        >
+          <p>
+            <a
+              href={officialAdmissionsSources.cbseSaras}
+              target="_blank"
+              rel="noreferrer"
+            >
+              CBSE SARAS records SSKEMS as a Senior Secondary school
+              <span className="visually-hidden">
+                {" "}(opens in a new tab)
+              </span>
+            </a>
+            . A separately named Junior College or Maharashtra FYJC
+            pathway must not be presented as current until management
+            confirms its board and programme.
+          </p>
+        </SectionHeading>
+
+        <div
+          className="admissions-policy-grid"
+          id="senior-rules-title"
+        >
+          <article>
+            <span>Class X</span>
+
+            <h3>
+              Restricted, not ordinary open entry
+            </h3>
+
+            <p>
+              Completion of Class IX and the specific CBSE transfer
+              conditions must be checked.
+            </p>
+          </article>
+
+          <article>
+            <span>Class XI</span>
+
+            <h3>
+              Programme confirmation required
+            </h3>
+
+            <p>
+              A passed Class X or recognised equivalent, approved
+              subjects and actual school availability are required.
+            </p>
+          </article>
+
+          <article>
+            <span>Class XII</span>
+
+            <h3>
+              Restricted, not ordinary open entry
+            </h3>
+
+            <p>
+              Completion of Class XI and the applicable transfer
+              conditions must be checked.
+            </p>
+          </article>
+        </div>
+
+        <div className="fyjc-note">
+          <strong>
+            Important FYJC distinction
+          </strong>
+
+          <p>
+            Maharashtra&apos;s centralised Class XI portal applies to
+            its State Board process. Do not direct a CBSE applicant
+            there as mandatory unless SSKEMS confirms that the intended
+            programme is governed by FYJC.
+          </p>
+
+          <a
+            href={officialAdmissionsSources.maharashtraClassEleven}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View the official Maharashtra FYJC portal
+
+            <span className="visually-hidden">
+              {" "}(opens in a new tab)
+            </span>
+          </a>
+        </div>
+      </PageContainer>
+    </section>
   );
 }
 
@@ -2228,6 +2701,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   const contactPage = key === "contact";
   const visitPage = key === "visit";
   const rtePage = key === "rte";
+  const transfersPage = key === "class-9-and-11-transfers";
 
   const cinematicPage =
     enquiryPage ||
@@ -2238,7 +2712,8 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
     faqPage ||
     contactPage ||
     visitPage ||
-    rtePage;
+    rtePage ||
+    transfersPage;
 
   const heroActions = enquiryPage ? (
     <>
@@ -2385,6 +2860,22 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
       >
         Open configured portal
       </a>
+    </>
+  ) : transfersPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#transfer-rules"
+      >
+        Review transfer rules
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions/enquire"
+      >
+        Ask admissions
+      </Link>
     </>
   ) : undefined;
 
@@ -2592,6 +3083,29 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         <span aria-hidden="true">&rarr;</span>
       </a>
     </aside>
+  ) : transfersPage ? (
+    <aside
+      className="admissions-cycle-card admissions-transfer-hero-card"
+      aria-label="Class IX and XI transfer review"
+    >
+      <div>
+        <span>Special review</span>
+        <strong>Class IX / XI</strong>
+      </div>
+
+      <p>Transfer eligibility is conditional</p>
+
+      <small>
+        Previous class, recognised route, subject or programme
+        availability and admission timing must be reviewed before
+        a formal application is invited.
+      </small>
+
+      <a href="#transfer-rules">
+        See transfer conditions{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
   ) : undefined;
 
   return (
@@ -2613,6 +3127,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
             "contact",
             "visit",
             "rte",
+            "class-9-and-11-transfers",
           ] as PageKey[]
         ).includes(key)
       }
