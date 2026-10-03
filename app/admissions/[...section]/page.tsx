@@ -113,22 +113,138 @@ function SectionHeading({ eyebrow, title, children }: { eyebrow: string; title: 
 function ProcessPage() {
   return (
     <>
-      <section className="admissions-band" aria-labelledby="process-steps-title">
-        <PageContainer className="admissions-process-page">
-          <SectionHeading eyebrow="01 · Parent-facing process" title="From eligibility to confirmation" />
+      <section
+        id="admissions-process-journey"
+        className="admissions-band admissions-process-v2"
+        aria-labelledby="process-steps-title"
+      >
+        <PageContainer className="admissions-process-page admissions-process-page--v2">
+          <div className="admissions-process-v2__intro">
+            <p className="eyebrow">The complete parent journey</p>
+
+            <h2 id="process-steps-title">
+              Eight clear stages. No hidden step.
+            </h2>
+
+            <p>
+              An enquiry is not an application, and an application is
+              not an admission decision. Each stage has a different
+              purpose and a different level of information.
+            </p>
+
+            <div
+              className="admissions-process-phase-row"
+              aria-label="Admission journey phases"
+            >
+              <span>
+                <b>01-03</b>
+                Explore
+              </span>
+
+              <span>
+                <b>04</b>
+                Apply
+              </span>
+
+              <span>
+                <b>05-07</b>
+                Review
+              </span>
+
+              <span>
+                <b>08</b>
+                Confirm
+              </span>
+            </div>
+          </div>
+
           <ProcessTimeline />
         </PageContainer>
       </section>
-      <section className="admissions-band admissions-band--soft" aria-labelledby="process-boundaries-title">
+
+      <section
+        className="admissions-band admissions-process-principles"
+        aria-labelledby="process-boundaries-title"
+      >
         <PageContainer>
-          <SectionHeading eyebrow="02 · Clear boundaries" title="An application is not an admission decision">
-            <p id="process-boundaries-title">Submitting an enquiry or formal application does not guarantee admission. Availability, eligibility, documents and authorised approval still apply.</p>
-          </SectionHeading>
-          <div className="admissions-policy-grid">
-            <article><span>Elementary stage</span><h3>Non-selective orientation</h3><p>A family interaction may identify learning, language, transport, accessibility or health support. It must not become a selection test, parental interview or screening procedure.</p></article>
-            <article><span>Provisional offer</span><h3>Conditions remain visible</h3><p>The class, year, outstanding documents, approved fee schedule and response deadline are stated before acceptance.</p></article>
-            <article><span>Confirmation</span><h3>Authorised register entry</h3><p>Admission is confirmed only after approval, document checks, applicable fee recording and creation of the permanent admission number.</p></article>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">Important boundaries</p>
+
+              <h2 id="process-boundaries-title">
+                What each decision actually means.
+              </h2>
+            </div>
+
+            <p>
+              The process stays useful only when families can distinguish
+              guidance, review, an offer and final confirmation.
+            </p>
           </div>
+
+          <div className="admissions-process-principle-grid">
+            <article>
+              <span>Elementary stage</span>
+
+              <h3>Orientation is not selection</h3>
+
+              <p>
+                A family interaction may identify learning, language,
+                transport, accessibility or health support. It must not
+                become a selection test, parental interview or screening
+                procedure.
+              </p>
+            </article>
+
+            <article>
+              <span>Provisional offer</span>
+
+              <h3>Conditions stay visible</h3>
+
+              <p>
+                The class, academic year, outstanding documents,
+                approved fee schedule and response deadline remain
+                visible before acceptance.
+              </p>
+            </article>
+
+            <article>
+              <span>Final confirmation</span>
+
+              <h3>Admission follows authorised approval</h3>
+
+              <p>
+                Confirmation follows the applicable checks, document
+                verification, authorised fee recording where relevant,
+                and admission-register entry.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+      <section className="admissions-process-help">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">Not sure where to begin?</p>
+
+            <h2>
+              Start with an enquiry, not paperwork.
+            </h2>
+          </div>
+
+          <p>
+            Ask one question about availability, the right class,
+            transport, fees, curriculum or a school visit before
+            moving into a formal application.
+          </p>
+
+          <Link
+            className="button button--primary"
+            href="/admissions/enquire"
+          >
+            Make an enquiry
+          </Link>
         </PageContainer>
       </section>
     </>
@@ -408,7 +524,91 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   if (!key) notFound();
 
   const details = pageDetails[key];
+
   const enquiryPage = key === "enquire";
+  const processPage = key === "process";
+  const cinematicPage = enquiryPage || processPage;
+
+  const heroActions = enquiryPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#enquiry-form"
+      >
+        Start the enquiry
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions"
+      >
+        Admissions overview
+      </Link>
+    </>
+  ) : processPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#admissions-process-journey"
+      >
+        View the 8 stages
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions/enquire"
+      >
+        Make an enquiry
+      </Link>
+    </>
+  ) : undefined;
+
+  const heroAside = enquiryPage ? (
+    <aside
+      className="admissions-cycle-card admissions-enquiry-hero-card"
+      aria-label="What you need for an enquiry"
+    >
+      <div>
+        <span>For this first step</span>
+        <strong>Keep it simple</strong>
+      </div>
+
+      <p>You only need</p>
+
+      <small>
+        Your contact details, the class you are considering,
+        and the question you want the school to answer.
+      </small>
+
+      <Link href="/admissions/contact">
+        Prefer to contact the school directly?{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </Link>
+    </aside>
+  ) : processPage ? (
+    <aside
+      className="admissions-cycle-card admissions-process-hero-card"
+      aria-label="Admissions process summary"
+    >
+      <div>
+        <span>The complete journey</span>
+        <strong>8 stages</strong>
+      </div>
+
+      <p>From first check to confirmation</p>
+
+      <small>
+        Eligibility, enquiry, school contact, application,
+        review, orientation, provisional offer and final
+        admission confirmation remain distinct stages.
+      </small>
+
+      <Link href="/admissions/enquire">
+        Ask a question first{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </Link>
+    </aside>
+  ) : undefined;
 
   return (
     <AdmissionsPageFrame
@@ -425,51 +625,9 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
           ] as PageKey[]
         ).includes(key)
       }
-      landing={enquiryPage}
-      heroActions={
-        enquiryPage ? (
-          <>
-            <a
-              className="button button--primary admissions-hero__primary-action"
-              href="#enquiry-form"
-            >
-              Start the enquiry
-            </a>
-
-            <Link
-              className="admissions-hero__secondary-action"
-              href="/admissions"
-            >
-              Admissions overview
-            </Link>
-          </>
-        ) : undefined
-      }
-      heroAside={
-        enquiryPage ? (
-          <aside
-            className="admissions-cycle-card admissions-enquiry-hero-card"
-            aria-label="What you need for an enquiry"
-          >
-            <div>
-              <span>For this first step</span>
-              <strong>Keep it simple</strong>
-            </div>
-
-            <p>You only need</p>
-
-            <small>
-              Your contact details, the class you are considering,
-              and the question you want the school to answer.
-            </small>
-
-            <Link href="/admissions/contact">
-              Prefer to contact the school directly?{" "}
-              <span aria-hidden="true">&rarr;</span>
-            </Link>
-          </aside>
-        ) : undefined
-      }
+      landing={cinematicPage}
+      heroActions={heroActions}
+      heroAside={heroAside}
     >
       {contentFor(key)}
     </AdmissionsPageFrame>

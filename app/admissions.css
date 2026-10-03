@@ -2314,3 +2314,529 @@ h1 {
       clamp(2.6rem, 11vw, 3.8rem);
   }
 }
+
+
+/* =========================================
+   ADMISSIONS EXPERIENCE V2 - PROCESS
+   ========================================= */
+
+.admissions-process-hero-card {
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.16);
+
+  border-radius: 1.4rem;
+
+  background:
+    rgba(6, 21, 34, 0.54);
+
+  box-shadow:
+    0 2rem 5rem
+    rgba(0, 0, 0, 0.26);
+
+  backdrop-filter: blur(16px);
+}
+
+.admissions-process-hero-card span,
+.admissions-process-hero-card > p {
+  color: #ffb4b9;
+}
+
+.admissions-process-hero-card strong {
+  color: #fff;
+}
+
+.admissions-process-hero-card small {
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  line-height: 1.6;
+}
+
+.admissions-process-hero-card a {
+  color: #fff;
+}
+
+
+/* Reduce process hero height */
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-process-hero-card) {
+  min-height: auto;
+
+  padding-block:
+    clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-process-hero-card)
+h1 {
+  max-width: 10ch;
+
+  font-size:
+    clamp(4rem, 6.5vw, 7rem);
+}
+
+
+/* Main journey */
+
+.admissions-process-v2 {
+  padding-block:
+    clamp(5rem, 9vw, 8rem);
+
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      rgba(239, 127, 137, 0.11),
+      transparent 24rem
+    ),
+    #f7f4ee;
+}
+
+.admissions-process-page--v2 {
+  display: grid;
+
+  grid-template-columns:
+    minmax(17rem, 0.48fr)
+    minmax(0, 1.52fr);
+
+  gap:
+    clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-process-v2__intro {
+  position: sticky;
+  top: 7rem;
+
+  align-self: start;
+
+  display: grid;
+  gap: 1.35rem;
+}
+
+.admissions-process-v2__intro > h2 {
+  max-width: 9ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3.2rem, 5vw, 5.8rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-process-v2__intro > p:not(.eyebrow) {
+  max-width: 31rem;
+
+  color: var(--text-secondary);
+
+  font-size: 1.02rem;
+  line-height: 1.62;
+}
+
+.admissions-process-phase-row {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 0.65rem;
+
+  margin-top: 0.6rem;
+}
+
+.admissions-process-phase-row span {
+  display: grid;
+  gap: 0.15rem;
+
+  padding: 0.85rem 1rem;
+
+  border:
+    1px solid
+    rgba(8, 26, 42, 0.11);
+
+  border-radius: 0.8rem;
+
+  background:
+    rgba(255, 255, 255, 0.58);
+
+  color: #081a2a;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.admissions-process-phase-row b {
+  color: #d95e70;
+
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+}
+
+
+/* Eight-stage card system */
+
+.admissions-process-page--v2
+.admissions-timeline {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.admissions-process-page--v2
+.admissions-timeline li {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    auto 1fr;
+
+  align-content: start;
+
+  min-height: 16rem;
+
+  gap: 1.1rem;
+
+  padding: 1.6rem;
+
+  border:
+    1px solid
+    rgba(8, 26, 42, 0.11);
+
+  border-radius: 1.2rem;
+
+  background: #fff;
+
+  box-shadow:
+    0 0.75rem 2rem
+    rgba(8, 26, 42, 0.035);
+}
+
+.admissions-process-page--v2
+.admissions-timeline li::before {
+  display: none;
+}
+
+.admissions-process-page--v2
+.admissions-timeline__number {
+  width: 2.7rem;
+  height: 2.7rem;
+
+  border-color:
+    rgba(239, 127, 137, 0.38);
+
+  background:
+    rgba(239, 127, 137, 0.08);
+
+  color: #d95e70;
+}
+
+.admissions-process-page--v2
+.admissions-timeline li > div {
+  align-content: start;
+
+  padding-top: 0.2rem;
+}
+
+.admissions-process-page--v2
+.admissions-timeline h3 {
+  font-size:
+    clamp(1.65rem, 2vw, 2.25rem);
+
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.admissions-process-page--v2
+.admissions-timeline p {
+  margin-top: 0.4rem;
+
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+
+/* Apply stage */
+
+.admissions-process-page--v2
+.admissions-timeline li:nth-child(4) {
+  background: #efd0c8;
+}
+
+
+/* Review stages */
+
+.admissions-process-page--v2
+.admissions-timeline li:nth-child(5),
+.admissions-process-page--v2
+.admissions-timeline li:nth-child(6),
+.admissions-process-page--v2
+.admissions-timeline li:nth-child(7) {
+  background: #eef2f3;
+}
+
+
+/* Final confirmation */
+
+.admissions-process-page--v2
+.admissions-timeline li:nth-child(8) {
+  border-color: transparent;
+
+  background: #0d3049;
+
+  color: #fff;
+}
+
+.admissions-process-page--v2
+.admissions-timeline li:nth-child(8)
+h3,
+.admissions-process-page--v2
+.admissions-timeline li:nth-child(8)
+p {
+  color: inherit;
+}
+
+.admissions-process-page--v2
+.admissions-timeline li:nth-child(8)
+.admissions-timeline__number {
+  border-color:
+    rgba(255, 255, 255, 0.18);
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  color: #ffb4b9;
+}
+
+
+/* Process safeguards */
+
+.admissions-process-principles {
+  background: #fff;
+}
+
+.admissions-process-principle-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.admissions-process-principle-grid article {
+  display: grid;
+  align-content: start;
+
+  min-height: 20rem;
+
+  gap: 1rem;
+
+  padding: 2rem;
+
+  border-radius: 1.25rem;
+
+  background: #f3f4f4;
+}
+
+.admissions-process-principle-grid
+article:nth-child(2) {
+  background: #f1dfd7;
+}
+
+.admissions-process-principle-grid
+article:nth-child(3) {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-process-principle-grid span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-process-principle-grid h3 {
+  max-width: 11ch;
+  margin: 0;
+
+  color: inherit;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(2rem, 3vw, 3.3rem);
+
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+}
+
+.admissions-process-principle-grid p {
+  color: var(--text-secondary);
+
+  line-height: 1.62;
+}
+
+.admissions-process-principle-grid
+article:nth-child(3) p {
+  color:
+    rgba(255, 255, 255, 0.76);
+}
+
+
+/* Closing */
+
+.admissions-process-help {
+  padding-block:
+    clamp(4.5rem, 8vw, 7rem);
+
+  background: #efb8ad;
+}
+
+.admissions-process-help > div {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1fr)
+    auto;
+
+  align-items: end;
+
+  gap:
+    clamp(2rem, 5vw, 5rem);
+}
+
+.admissions-process-help h2 {
+  max-width: 9ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3rem, 5vw, 5.5rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-process-help > div > p {
+  color: #553b3b;
+  line-height: 1.65;
+}
+
+.admissions-process-help
+.button {
+  white-space: nowrap;
+}
+
+
+/* Tablet */
+
+@media (max-width: 70rem) {
+  .admissions-process-page--v2 {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-process-v2__intro {
+    position: static;
+
+    max-width: 46rem;
+  }
+
+  .admissions-process-page--v2
+  .admissions-timeline {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-process-help > div {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .admissions-process-help
+  .button {
+    width: fit-content;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-process-hero-card) {
+    padding-block:
+      3.25rem 3.75rem;
+  }
+
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-process-hero-card)
+  h1 {
+    font-size:
+      clamp(3.2rem, 14vw, 4.8rem);
+  }
+
+  .admissions-process-v2 {
+    padding-block:
+      3.5rem;
+  }
+
+  .admissions-process-v2__intro > h2 {
+    max-width: 11ch;
+
+    font-size:
+      clamp(2.8rem, 12vw, 4.2rem);
+  }
+
+  .admissions-process-phase-row {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-process-page--v2
+  .admissions-timeline {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-process-page--v2
+  .admissions-timeline li {
+    min-height: auto;
+  }
+
+  .admissions-process-principle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-process-principle-grid article {
+    min-height: auto;
+  }
+
+  .admissions-process-help > div {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-process-help
+  .button {
+    width: 100%;
+  }
+}
