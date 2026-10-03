@@ -1074,7 +1074,173 @@ function FeesPage() {
 }
 
 function FaqPage() {
-  return <section className="admissions-band" aria-labelledby="faq-title"><PageContainer className="faq-layout"><SectionHeading eyebrow="Frequently asked questions" title="Short answers before you contact us" /><div className="admissions-faq" id="faq-title">{admissionsFaq.map((item) => <details key={item.question}><summary>{item.question}</summary><p>{item.answer}</p></details>)}</div></PageContainer></section>;
+  return (
+    <>
+      <section
+        id="admissions-faq-list"
+        className="admissions-band admissions-faq-v2"
+        aria-labelledby="faq-title"
+      >
+        <PageContainer className="admissions-faq-v2__layout">
+          <aside className="admissions-faq-v2__intro">
+            <p className="eyebrow">
+              Frequently asked questions
+            </p>
+
+            <h2 id="faq-title">
+              Quick answers before you contact us.
+            </h2>
+
+            <p>
+              These answers explain the current admissions position
+              without guessing availability, dates, fees or eligibility.
+            </p>
+
+            <div className="admissions-faq-v2__topics">
+              <span>Availability</span>
+              <span>Age criteria</span>
+              <span>Documents</span>
+              <span>Transfers</span>
+              <span>RTE</span>
+              <span>Language</span>
+            </div>
+          </aside>
+
+          <div
+            className="admissions-faq admissions-faq-v2__list"
+          >
+            {admissionsFaq.map((item, index) => (
+              <details key={item.question}>
+                <summary>
+                  <span>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <strong>
+                    {item.question}
+                  </strong>
+
+                  <i aria-hidden="true">+</i>
+                </summary>
+
+                <div>
+                  <p>{item.answer}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-faq-support"
+        aria-labelledby="faq-support-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Still deciding what to do next?
+              </p>
+
+              <h2 id="faq-support-title">
+                Use the right admissions route.
+              </h2>
+            </div>
+
+            <p>
+              Different questions belong in different parts of the
+              admissions journey. Start with the smallest useful step.
+            </p>
+          </div>
+
+          <div className="admissions-faq-support-grid">
+            <Link href="/admissions/age-criteria">
+              <span>Eligibility</span>
+
+              <h3>
+                Check age guidance
+              </h3>
+
+              <p>
+                Review the current publication status and provisional
+                planning baselines.
+              </p>
+
+              <strong>
+                Age criteria{" "}
+                <span aria-hidden="true">&rarr;</span>
+              </strong>
+            </Link>
+
+            <Link href="/admissions/documents-required">
+              <span>Preparation</span>
+
+              <h3>
+                See document guidance
+              </h3>
+
+              <p>
+                Understand which documents may apply and when they
+                should be provided.
+              </p>
+
+              <strong>
+                Documents{" "}
+                <span aria-hidden="true">&rarr;</span>
+              </strong>
+            </Link>
+
+            <Link href="/admissions/fees">
+              <span>Costs</span>
+
+              <h3>
+                Review fee status
+              </h3>
+
+              <p>
+                See why no unapproved amount is published and where
+                the controlled fee record belongs.
+              </p>
+
+              <strong>
+                Fees{" "}
+                <span aria-hidden="true">&rarr;</span>
+              </strong>
+            </Link>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-faq-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Need an answer for your child?
+            </p>
+
+            <h2>
+              Ask one clear question.
+            </h2>
+          </div>
+
+          <p>
+            A short enquiry is enough to ask about a class,
+            availability, fees, transport, curriculum or a visit.
+          </p>
+
+          <Link
+            className="button button--primary"
+            href="/admissions/enquire"
+          >
+            Make an enquiry
+          </Link>
+        </PageContainer>
+      </section>
+    </>
+  );
 }
 
 function ContactPage() {
@@ -1171,13 +1337,15 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   const agePage = key === "age-criteria";
   const documentsPage = key === "documents-required";
   const feesPage = key === "fees";
+  const faqPage = key === "faq";
 
   const cinematicPage =
     enquiryPage ||
     processPage ||
     agePage ||
     documentsPage ||
-    feesPage;
+    feesPage ||
+    faqPage;
 
   const heroActions = enquiryPage ? (
     <>
@@ -1257,6 +1425,22 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         href="/admissions/enquire"
       >
         Ask for current guidance
+      </Link>
+    </>
+  ) : faqPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#admissions-faq-list"
+      >
+        Browse questions
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions/enquire"
+      >
+        Ask admissions
       </Link>
     </>
   ) : undefined;
@@ -1374,6 +1558,29 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         <span aria-hidden="true">&rarr;</span>
       </a>
     </aside>
+  ) : faqPage ? (
+    <aside
+      className="admissions-cycle-card admissions-faq-hero-card"
+      aria-label="Admissions frequently asked questions"
+    >
+      <div>
+        <span>Quick guidance</span>
+        <strong>{admissionsFaq.length} questions</strong>
+      </div>
+
+      <p>Current admissions answers</p>
+
+      <small>
+        Availability, age, documents, transfers, RTE and
+        language guidance are explained without inventing
+        unapproved information.
+      </small>
+
+      <a href="#admissions-faq-list">
+        Browse the answers{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
   ) : undefined;
 
   return (
@@ -1391,6 +1598,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
             "age-criteria",
             "documents-required",
             "fees",
+            "faq",
           ] as PageKey[]
         ).includes(key)
       }
