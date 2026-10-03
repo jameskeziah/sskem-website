@@ -2187,67 +2187,373 @@ function TransfersPage() {
 
 function SchoolPage() {
   return (
-    <section
-      className="admissions-band"
-      aria-labelledby="school-route-title"
-    >
-      <PageContainer>
-        <SectionHeading
-          eyebrow={"Classes I\u2013VIII"}
-          title="Maharashtra-specific eligibility"
-        >
+    <>
+      <section
+        id="school-admission-route"
+        className="admissions-band admissions-school-v2"
+        aria-labelledby="school-admission-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Classes I to VIII
+              </p>
+
+              <h2 id="school-admission-title">
+                Start with the class. Then check the applicable rule.
+              </h2>
+            </div>
+
+            <p>
+              Admissions through Class VIII must follow the applicable
+              Maharashtra rules together with the student&apos;s previous
+              class, available places and the school&apos;s verified
+              admission process.
+            </p>
+          </div>
+
+          <div className="admissions-school-foundation-grid">
+            <article className="admissions-school-foundation-card admissions-school-foundation-card--primary">
+              <span>01</span>
+
+              <p>Age</p>
+
+              <h3>
+                Use the approved Maharashtra rule.
+              </h3>
+
+              <small>
+                The exact date-of-birth cut-off should be published only
+                after the applicable state record for the admission cycle
+                has been verified.
+              </small>
+            </article>
+
+            <article className="admissions-school-foundation-card admissions-school-foundation-card--accent">
+              <span>02</span>
+
+              <p>Previous class</p>
+
+              <h3>
+                Age alone does not decide every entry.
+              </h3>
+
+              <small>
+                For admission above the initial entry level, previous
+                learning and the class already completed must also be
+                reviewed.
+              </small>
+            </article>
+
+            <article className="admissions-school-foundation-card">
+              <span>03</span>
+
+              <p>School review</p>
+
+              <h3>
+                Availability and support still matter.
+              </h3>
+
+              <small>
+                A family can first enquire about availability,
+                language, learning support, transport and the
+                appropriate next step.
+              </small>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        id="school-rule-status"
+        className="admissions-band admissions-school-status"
+        aria-labelledby="school-rule-status-title"
+      >
+        <PageContainer className="admissions-school-status__layout">
+          <div>
+            <p className="eyebrow">
+              Publication boundary
+            </p>
+
+            <h2 id="school-rule-status-title">
+              What the website can say now.
+            </h2>
+
+            <p>
+              The site can explain the admission pathway without
+              pretending that an unapproved age table or date range
+              is already final.
+            </p>
+          </div>
+
+          <div className="admissions-school-status__cards">
+            <article>
+              <span>Confirmed principle</span>
+
+              <strong>
+                State-specific rules apply
+              </strong>
+
+              <p>
+                Admissions through Class VIII are handled under the
+                applicable State or Union Territory rules rather than
+                a single generic CBSE age table.
+              </p>
+            </article>
+
+            <article>
+              <span>Pending publication</span>
+
+              <strong>
+                Exact Maharashtra cut-off
+              </strong>
+
+              <p>
+                The admission-cycle-specific date, relaxation and source
+                record should remain unpublished until they are approved.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-school-journey"
+        aria-labelledby="school-journey-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading">
+            <p className="eyebrow">
+              Parent journey
+            </p>
+
+            <h2 id="school-journey-title">
+              Four steps before a formal application.
+            </h2>
+
+            <p>
+              Keep the first interaction simple. Families should not
+              need to prepare a full document set before knowing which
+              admission route applies.
+            </p>
+          </div>
+
+          <div className="admissions-school-journey-grid">
+            <article>
+              <span>01</span>
+
+              <h3>
+                Choose the intended class
+              </h3>
+
+              <p>
+                Start with the class the family is considering for the
+                coming admission cycle.
+              </p>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <h3>
+                Review age and previous class
+              </h3>
+
+              <p>
+                The school can identify which state rule and
+                previous-learning check applies.
+              </p>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <h3>
+                Ask about availability
+              </h3>
+
+              <p>
+                Confirm whether the requested class can currently be
+                considered before preparing a formal application.
+              </p>
+            </article>
+
+            <article>
+              <span>04</span>
+
+              <h3>
+                Prepare the correct documents
+              </h3>
+
+              <p>
+                Once the route is clear, use the conditional document
+                guidance for that child&apos;s actual admission context.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-school-support"
+        aria-labelledby="school-support-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--light">
+            <p className="eyebrow">
+              Family support
+            </p>
+
+            <h2 id="school-support-title">
+              Orientation should help the child, not screen the family.
+            </h2>
+
+            <p>
+              Early conversations can help the school understand
+              communication, accessibility, learning, health and
+              transport needs before admission progresses.
+            </p>
+          </div>
+
+          <div className="admissions-school-support-grid">
+            <article>
+              <span>Language</span>
+
+              <h3>
+                Communication needs
+              </h3>
+
+              <p>
+                Families can explain language or communication support
+                that may help during school interaction.
+              </p>
+            </article>
+
+            <article>
+              <span>Learning</span>
+
+              <h3>
+                Classroom support
+              </h3>
+
+              <p>
+                Relevant learning support can be discussed so the school
+                understands the child&apos;s needs appropriately.
+              </p>
+            </article>
+
+            <article>
+              <span>Accessibility</span>
+
+              <h3>
+                Access requirements
+              </h3>
+
+              <p>
+                Parents can raise mobility, accessibility or other
+                practical requirements before a visit or admission step.
+              </p>
+            </article>
+
+            <article>
+              <span>Routine</span>
+
+              <h3>
+                Transport and daily planning
+              </h3>
+
+              <p>
+                Transport questions and practical school-day arrangements
+                can be clarified before a formal application.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-school-source"
+        aria-labelledby="school-source-title"
+      >
+        <PageContainer className="admissions-school-source__layout">
+          <div>
+            <p className="eyebrow">
+              Official framework
+            </p>
+
+            <h2 id="school-source-title">
+              CBSE directs Classes I to VIII to the applicable State rules.
+            </h2>
+
+            <p>
+              SSKEMS therefore should not present a permanent generic
+              CBSE age table for these classes. The applicable
+              Maharashtra record should be verified for the relevant
+              admission cycle.
+            </p>
+          </div>
+
+          <aside>
+            <span>CBSE source</span>
+
+            <strong>
+              Admission bye-laws
+            </strong>
+
+            <p>
+              Review the official admission framework already configured
+              in the SSKEMS admissions data.
+            </p>
+
+            <a
+              className="button button--primary"
+              href={officialAdmissionsSources.cbseExaminationByelaws}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open CBSE bye-laws
+
+              <span className="visually-hidden">
+                {" "}(opens in a new tab)
+              </span>
+            </a>
+          </aside>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-school-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Considering Classes I to VIII?
+            </p>
+
+            <h2>
+              Start with a short enquiry.
+            </h2>
+          </div>
+
           <p>
-            CBSE delegates admission through Class VIII to the
-            applicable State rules. The school must therefore
-            configure Maharashtra age and previous-class rules
-            rather than present a generic &ldquo;CBSE age rule&rdquo;.
+            Tell the school the intended class and the child&apos;s
+            current or most recently completed class. Admissions can
+            then guide you to the appropriate next step.
           </p>
-        </SectionHeading>
 
-        <div
-          className="admissions-policy-grid"
-          id="school-route-title"
-        >
-          <article>
-            <span>Age</span>
-
-            <h3>
-              Official cut-off record
-            </h3>
-
-            <p>
-              The 2026-27 Maharashtra order and any relaxation
-              must be approved first.
-            </p>
-          </article>
-
-          <article>
-            <span>Prior learning</span>
-
-            <h3>
-              Previous-class eligibility
-            </h3>
-
-            <p>
-              For classes above entry level, age alone is not enough.
-            </p>
-          </article>
-
-          <article>
-            <span>Family support</span>
-
-            <h3>
-              Non-selective orientation
-            </h3>
-
-            <p>
-              Interactions help plan language, learning, accessibility,
-              health and transport support; they are not screening tests.
-            </p>
-          </article>
-        </div>
-      </PageContainer>
-    </section>
+          <Link
+            className="button button--primary"
+            href="/admissions/enquire"
+          >
+            Make an enquiry
+          </Link>
+        </PageContainer>
+      </section>
+    </>
   );
 }
 
@@ -2702,6 +3008,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   const visitPage = key === "visit";
   const rtePage = key === "rte";
   const transfersPage = key === "class-9-and-11-transfers";
+  const schoolPage = key === "school";
 
   const cinematicPage =
     enquiryPage ||
@@ -2713,7 +3020,8 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
     contactPage ||
     visitPage ||
     rtePage ||
-    transfersPage;
+    transfersPage ||
+    schoolPage;
 
   const heroActions = enquiryPage ? (
     <>
@@ -2868,6 +3176,22 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         href="#transfer-rules"
       >
         Review transfer rules
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions/enquire"
+      >
+        Ask admissions
+      </Link>
+    </>
+  ) : schoolPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#school-admission-route"
+      >
+        Understand the school route
       </a>
 
       <Link
@@ -3106,6 +3430,29 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         <span aria-hidden="true">&rarr;</span>
       </a>
     </aside>
+  ) : schoolPage ? (
+    <aside
+      className="admissions-cycle-card admissions-school-hero-card"
+      aria-label="Classes I to VIII admission guidance"
+    >
+      <div>
+        <span>Classes I to VIII</span>
+        <strong>State-rule pathway</strong>
+      </div>
+
+      <p>Age guidance remains controlled</p>
+
+      <small>
+        The applicable Maharashtra rule, previous class and current
+        school availability must be checked before a formal admission
+        route is confirmed.
+      </small>
+
+      <a href="#school-rule-status">
+        See rule status{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
   ) : undefined;
 
   return (
@@ -3128,6 +3475,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
             "visit",
             "rte",
             "class-9-and-11-transfers",
+            "school",
           ] as PageKey[]
         ).includes(key)
       }

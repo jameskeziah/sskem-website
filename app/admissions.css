@@ -7136,3 +7136,541 @@ h1 {
     width: 100%;
   }
 }
+
+
+/* =========================================
+   ADMISSIONS EXPERIENCE V2 - SCHOOL
+   ========================================= */
+
+.admissions-school-hero-card {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.4rem;
+  background: rgba(6, 21, 34, 0.54);
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(16px);
+}
+
+.admissions-school-hero-card span,
+.admissions-school-hero-card > p {
+  color: #ffb4b9;
+}
+
+.admissions-school-hero-card strong {
+  color: #fff;
+}
+
+.admissions-school-hero-card small {
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+}
+
+.admissions-school-hero-card a {
+  color: #fff;
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-school-hero-card) {
+  min-height: auto;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-school-hero-card)
+h1 {
+  max-width: 10ch;
+  font-size: clamp(4rem, 6.4vw, 6.8rem);
+}
+
+
+/* Foundation */
+
+.admissions-school-v2 {
+  padding-block: clamp(5rem, 9vw, 8rem);
+
+  background:
+    radial-gradient(
+      circle at 90% 7%,
+      rgba(239, 127, 137, 0.12),
+      transparent 24rem
+    ),
+    #f7f4ee;
+}
+
+.admissions-school-foundation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.admissions-school-foundation-card {
+  display: flex;
+  min-height: 25rem;
+  flex-direction: column;
+
+  padding: 2rem;
+
+  border-radius: 1.25rem;
+  background: #f2f4f5;
+}
+
+.admissions-school-foundation-card--primary {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-school-foundation-card--accent {
+  background: #efd8d1;
+}
+
+.admissions-school-foundation-card > span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-school-foundation-card > p {
+  margin-top: auto;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-school-foundation-card h3 {
+  margin: 0.5rem 0 1rem;
+
+  color: inherit;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2.2rem, 3.2vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+
+.admissions-school-foundation-card small {
+  color: var(--text-secondary);
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.admissions-school-foundation-card--primary small {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* Status */
+
+.admissions-school-status {
+  background: #fff;
+}
+
+.admissions-school-status__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.8fr)
+    minmax(0, 1.2fr);
+
+  gap: clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-school-status__layout > div:first-child {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.admissions-school-status h2 {
+  max-width: 9ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-school-status__layout
+> div:first-child
+> p:last-child {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.admissions-school-status__cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.admissions-school-status__cards article {
+  display: grid;
+  gap: 0.8rem;
+
+  padding: 2rem;
+
+  border-radius: 1.2rem;
+
+  background: #f3f4f4;
+}
+
+.admissions-school-status__cards
+article:first-child {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-school-status__cards span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-school-status__cards
+article:first-child span {
+  color: #ffb4b9;
+}
+
+.admissions-school-status__cards strong {
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.admissions-school-status__cards p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.admissions-school-status__cards
+article:first-child p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* Journey */
+
+.admissions-school-journey {
+  background: #f3eee8;
+}
+
+.admissions-school-journey-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.admissions-school-journey-grid article {
+  min-height: 21rem;
+
+  padding: 1.6rem;
+
+  border-radius: 1.1rem;
+
+  background: #fff;
+}
+
+.admissions-school-journey-grid span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-school-journey-grid h3 {
+  margin: 4rem 0 1rem;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2rem, 2.8vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.admissions-school-journey-grid p {
+  color: var(--text-secondary);
+  line-height: 1.58;
+}
+
+
+/* Support */
+
+.admissions-school-support {
+  background: #081a2a;
+  color: #fff;
+}
+
+.admissions-school-support-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.admissions-school-support-grid article {
+  min-height: 21rem;
+
+  padding: 1.6rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 1.1rem;
+
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.admissions-school-support-grid span {
+  color: #ffb4b9;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-school-support-grid h3 {
+  margin: 4rem 0 1rem;
+
+  color: #fff;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(2rem, 2.8vw, 3rem);
+  font-weight: 500;
+  line-height: 0.98;
+}
+
+.admissions-school-support-grid p {
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.58;
+}
+
+
+/* Source */
+
+.admissions-school-source {
+  background: #f2ece6;
+}
+
+.admissions-school-source__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(18rem, 0.65fr);
+
+  align-items: center;
+
+  gap: clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-school-source__layout
+> div:first-child {
+  display: grid;
+  gap: 1rem;
+}
+
+.admissions-school-source h2 {
+  max-width: 11ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-school-source__layout
+> div:first-child
+> p:last-child {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.admissions-school-source aside {
+  display: grid;
+  gap: 1rem;
+
+  padding: 2rem;
+
+  border-radius: 1.2rem;
+
+  background: #fff;
+
+  box-shadow:
+    0 1.25rem 3rem
+    rgba(8, 26, 42, 0.07);
+}
+
+.admissions-school-source aside > span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-school-source aside > strong {
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(1.9rem, 3vw, 2.9rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.admissions-school-source aside > p {
+  color: var(--text-secondary);
+  line-height: 1.58;
+}
+
+
+/* Closing */
+
+.admissions-school-closing {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  background: #efb8ad;
+}
+
+.admissions-school-closing > div {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1fr)
+    auto;
+
+  align-items: end;
+
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.admissions-school-closing h2 {
+  max-width: 10ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family: var(--font-family-heading);
+
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-school-closing
+> div > p {
+  color: #553b3b;
+  line-height: 1.65;
+}
+
+
+/* Tablet */
+
+@media (max-width: 70rem) {
+  .admissions-school-status__layout,
+  .admissions-school-source__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-school-journey-grid,
+  .admissions-school-support-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-school-closing > div {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-school-hero-card) {
+    padding-block: 3.25rem 3.75rem;
+  }
+
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-school-hero-card)
+  h1 {
+    font-size: clamp(3.1rem, 14vw, 4.7rem);
+  }
+
+  .admissions-school-v2,
+  .admissions-school-status,
+  .admissions-school-journey,
+  .admissions-school-support,
+  .admissions-school-source {
+    padding-block: 3.5rem;
+  }
+
+  .admissions-school-foundation-grid,
+  .admissions-school-journey-grid,
+  .admissions-school-support-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-school-foundation-card {
+    min-height: 19rem;
+  }
+
+  .admissions-school-journey-grid article,
+  .admissions-school-support-grid article {
+    min-height: auto;
+  }
+
+  .admissions-school-journey-grid h3,
+  .admissions-school-support-grid h3 {
+    margin-top: 2.5rem;
+  }
+
+  .admissions-school-status h2,
+  .admissions-school-source h2 {
+    font-size: clamp(2.8rem, 12vw, 4rem);
+  }
+
+  .admissions-school-closing > div {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-school-closing .button {
+    width: 100%;
+  }
+}
+
+/* Batch 12 visual QA fix */
+.admissions-school-support-grid h3 {
+  font-size: clamp(1.65rem, 1.7vw, 2rem);
+  letter-spacing: -0.035em;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 48rem) {
+  .admissions-school-support-grid h3 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+}
