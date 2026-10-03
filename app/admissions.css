@@ -5545,3 +5545,611 @@ article:first-child small {
     width: 100%;
   }
 }
+
+
+/* =========================================
+   ADMISSIONS EXPERIENCE V2 - VISIT
+   ========================================= */
+
+.admissions-visit-hero-card {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.4rem;
+  background: rgba(6, 21, 34, 0.54);
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(16px);
+}
+
+.admissions-visit-hero-card span,
+.admissions-visit-hero-card > p {
+  color: #ffb4b9;
+}
+
+.admissions-visit-hero-card strong {
+  color: #fff;
+}
+
+.admissions-visit-hero-card small {
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+}
+
+.admissions-visit-hero-card a {
+  color: #fff;
+}
+
+
+/* Hero */
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-visit-hero-card) {
+  min-height: auto;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.admissions-page--landing
+.admissions-hero:has(.admissions-visit-hero-card)
+h1 {
+  max-width: 10ch;
+  font-size: clamp(4rem, 6.4vw, 6.8rem);
+}
+
+
+/* Main visit planning */
+
+.admissions-visit-v2 {
+  padding-block: clamp(5rem, 9vw, 8rem);
+
+  background:
+    radial-gradient(
+      circle at 8% 8%,
+      rgba(239, 127, 137, 0.11),
+      transparent 22rem
+    ),
+    #f7f4ee;
+}
+
+.admissions-visit-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(18rem, 0.62fr)
+    minmax(0, 1.38fr);
+
+  align-items: start;
+
+  gap:
+    clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-visit-intro {
+  position: sticky;
+  top: 7rem;
+
+  display: grid;
+  gap: 1.4rem;
+}
+
+.admissions-visit-intro > h2 {
+  max-width: 10ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3rem, 5vw, 5.5rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-visit-intro > p:not(.eyebrow) {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.admissions-visit-intro__points {
+  display: grid;
+
+  border-top:
+    1px solid
+    rgba(8, 26, 42, 0.13);
+}
+
+.admissions-visit-intro__points > div {
+  display: grid;
+  gap: 0.35rem;
+
+  padding: 1.15rem 0;
+
+  border-bottom:
+    1px solid
+    rgba(8, 26, 42, 0.13);
+}
+
+.admissions-visit-intro__points span {
+  color: #d95e70;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.admissions-visit-intro__points strong {
+  color: #081a2a;
+}
+
+.admissions-visit-intro__points p {
+  color: var(--text-secondary);
+
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.admissions-visit-office {
+  display: grid;
+  gap: 0.35rem;
+
+  padding: 1.2rem;
+
+  border-radius: 1rem;
+
+  background: #0d3049;
+
+  color: #fff;
+}
+
+.admissions-visit-office > span {
+  color: #ffb4b9;
+
+  font-size: 0.68rem;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admissions-visit-office > a {
+  width: fit-content;
+
+  color: #fff;
+
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.admissions-visit-office small {
+  color:
+    rgba(255, 255, 255, 0.65);
+}
+
+
+/* Visit preview form */
+
+.admissions-visit-form {
+  max-width: none;
+  margin: 0;
+
+  padding:
+    clamp(1.5rem, 4vw, 3rem);
+
+  border:
+    1px solid
+    rgba(8, 26, 42, 0.1);
+
+  border-radius: 1.4rem;
+
+  background: #fff;
+
+  box-shadow:
+    0 1.5rem 4rem
+    rgba(8, 26, 42, 0.07);
+}
+
+.admissions-visit-form__heading h2 {
+  font-size:
+    clamp(2.8rem, 4.5vw, 4.9rem);
+
+  letter-spacing: -0.05em;
+  line-height: 0.94;
+}
+
+.admissions-visit-form__heading > p:last-child {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.admissions-visit-form__notice {
+  display: grid;
+  gap: 0.35rem;
+
+  padding: 1rem 1.15rem;
+
+  border-left:
+    4px solid
+    #e9a345;
+
+  border-radius:
+    0 0.8rem 0.8rem 0;
+
+  background: #fff7e8;
+}
+
+.admissions-visit-form__notice strong {
+  color: #6b450e;
+}
+
+.admissions-visit-form__notice p {
+  color: #6f5b3d;
+
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.admissions-visit-form__status {
+  display: grid;
+  gap: 0.25rem;
+
+  padding: 1rem 1.1rem;
+
+  border-radius: 0.8rem;
+
+  background:
+    rgba(239, 127, 137, 0.08);
+}
+
+.admissions-visit-form__status span {
+  color: #c44c60;
+
+  font-size: 0.68rem;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+
+/* Preparation */
+
+.admissions-visit-prepare {
+  background: #fff;
+}
+
+.admissions-visit-prepare-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.admissions-visit-prepare-grid article {
+  display: flex;
+
+  min-height: 21rem;
+
+  flex-direction: column;
+
+  padding: 1.75rem;
+
+  border-radius: 1.2rem;
+
+  background: #f2f4f5;
+}
+
+.admissions-visit-prepare-grid
+article:first-child {
+  background: #0d3049;
+  color: #fff;
+}
+
+.admissions-visit-prepare-grid
+article:nth-child(2) {
+  background: #efd8d1;
+}
+
+.admissions-visit-prepare-grid
+article > span {
+  color: #d95e70;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.admissions-visit-prepare-grid
+article > p {
+  margin-top: auto;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admissions-visit-prepare-grid h3 {
+  margin:
+    0.5rem 0 1rem;
+
+  color: inherit;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(2rem, 3vw, 3.2rem);
+
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.admissions-visit-prepare-grid small {
+  color: var(--text-secondary);
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.admissions-visit-prepare-grid
+article:first-child small {
+  color:
+    rgba(255, 255, 255, 0.7);
+}
+
+
+/* Discuss section */
+
+.admissions-visit-discuss {
+  background: #081a2a;
+  color: #fff;
+}
+
+.admissions-visit-discuss-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.admissions-visit-discuss-grid article {
+  min-height: 16rem;
+
+  padding: 1.5rem;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  border-radius: 1rem;
+
+  background:
+    rgba(255, 255, 255, 0.04);
+}
+
+.admissions-visit-discuss-grid span {
+  color: #ffb4b9;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.admissions-visit-discuss-grid strong {
+  display: block;
+
+  margin:
+    2.5rem 0 0.75rem;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    1.9rem;
+
+  font-weight: 500;
+}
+
+.admissions-visit-discuss-grid p {
+  color:
+    rgba(255, 255, 255, 0.68);
+
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+
+/* Privacy */
+
+.admissions-visit-privacy {
+  padding-block:
+    clamp(4.5rem, 8vw, 7rem);
+
+  background: #f2ece6;
+}
+
+.admissions-visit-privacy__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1fr);
+
+  gap:
+    clamp(3rem, 7vw, 7rem);
+}
+
+.admissions-visit-privacy h2 {
+  max-width: 11ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3rem, 5vw, 5.4rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-visit-privacy__layout
+> div:last-child {
+  display: grid;
+  align-content: center;
+  gap: 1.2rem;
+}
+
+.admissions-visit-privacy__layout
+> div:last-child p {
+  color: var(--text-secondary);
+
+  line-height: 1.68;
+}
+
+
+/* Closing */
+
+.admissions-visit-closing {
+  padding-block:
+    clamp(4.5rem, 8vw, 7rem);
+
+  background: #efb8ad;
+}
+
+.admissions-visit-closing > div {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1fr)
+    auto;
+
+  align-items: end;
+
+  gap:
+    clamp(2rem, 5vw, 5rem);
+}
+
+.admissions-visit-closing h2 {
+  max-width: 10ch;
+  margin: 0;
+
+  color: #081a2a;
+
+  font-family:
+    var(--font-family-heading);
+
+  font-size:
+    clamp(3rem, 5vw, 5.5rem);
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.admissions-visit-closing
+> div > p {
+  color: #553b3b;
+
+  line-height: 1.65;
+}
+
+
+/* Tablet */
+
+@media (max-width: 70rem) {
+  .admissions-visit-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-visit-intro {
+    position: static;
+    max-width: 44rem;
+  }
+
+  .admissions-visit-discuss-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admissions-visit-closing > div {
+    grid-template-columns:
+      1fr 1fr;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 48rem) {
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-visit-hero-card) {
+    padding-block:
+      3.25rem 3.75rem;
+  }
+
+  .admissions-page--landing
+  .admissions-hero:has(.admissions-visit-hero-card)
+  h1 {
+    font-size:
+      clamp(3.1rem, 14vw, 4.7rem);
+  }
+
+  .admissions-visit-v2,
+  .admissions-visit-prepare,
+  .admissions-visit-discuss {
+    padding-block: 3.5rem;
+  }
+
+  .admissions-visit-intro > h2,
+  .admissions-visit-privacy h2 {
+    font-size:
+      clamp(2.8rem, 12vw, 4rem);
+  }
+
+  .admissions-visit-form {
+    padding: 1.25rem;
+  }
+
+  .admissions-visit-form__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-visit-prepare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-visit-prepare-grid article {
+    min-height: 17rem;
+  }
+
+  .admissions-visit-discuss-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-visit-discuss-grid article {
+    min-height: auto;
+  }
+
+  .admissions-visit-privacy__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-visit-closing > div {
+    grid-template-columns: 1fr;
+  }
+
+  .admissions-visit-closing
+  .button {
+    width: 100%;
+  }
+}

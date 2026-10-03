@@ -354,19 +354,87 @@ export function StatusLookupPrototype() {
 
 export function VisitRequestPrototype() {
   return (
-    <form className="admissions-form admissions-form--compact" onSubmit={(event) => event.preventDefault()}>
-      <div className="admissions-form__heading">
-        <p className="eyebrow">Visit request blueprint</p>
-        <h2>Plan a school visit</h2>
-        <p><strong>Review mode:</strong> visit booking is not active. Contact the school office to arrange a current appointment.</p>
+    <form
+      className="admissions-form admissions-form--compact admissions-visit-form"
+      onSubmit={(event) => event.preventDefault()}
+    >
+      <div className="admissions-form__heading admissions-visit-form__heading">
+        <p className="eyebrow">
+          Visit request preview
+        </p>
+
+        <h2>
+          Plan a school visit.
+        </h2>
+
+        <div className="admissions-visit-form__notice">
+          <strong>
+            Online booking is not active.
+          </strong>
+
+          <p>
+            These fields show the information a future visit request
+            may use. Contact the school office for a real appointment.
+          </p>
+        </div>
       </div>
-      <div className="admissions-form__grid">
-        <FormField id="visit-parent" label="Parent or guardian name"><Input disabled /></FormField>
-        <FormField id="visit-mobile" label="Mobile number"><Input type="tel" disabled /></FormField>
-        <FormField id="visit-date" label="Preferred visit date"><Input type="date" disabled /></FormField>
-        <FormField id="visit-support" label="Accessibility or communication support" optional><Textarea rows={3} disabled /></FormField>
+
+      <div className="admissions-form__grid admissions-visit-form__grid">
+        <FormField
+          id="visit-parent"
+          label="Parent or guardian name"
+        >
+          <Input disabled />
+        </FormField>
+
+        <FormField
+          id="visit-mobile"
+          label="Mobile number"
+        >
+          <Input
+            type="tel"
+            disabled
+          />
+        </FormField>
+
+        <FormField
+          id="visit-date"
+          label="Preferred visit date"
+          hint="The school office must confirm the actual appointment."
+        >
+          <Input
+            type="date"
+            disabled
+          />
+        </FormField>
+
+        <FormField
+          id="visit-support"
+          label="Accessibility or communication support"
+          hint="For example mobility, interpretation or communication support."
+          optional
+        >
+          <Textarea
+            rows={4}
+            disabled
+          />
+        </FormField>
       </div>
-      <Button type="button" disabled>Request a visit</Button>
+
+      <div className="admissions-visit-form__status">
+        <span>Current route</span>
+
+        <strong>
+          Arrange the appointment through the school office.
+        </strong>
+      </div>
+
+      <Button
+        type="button"
+        disabled
+      >
+        Online request unavailable
+      </Button>
     </form>
   );
 }

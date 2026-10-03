@@ -1583,7 +1583,291 @@ function SeniorSecondaryPage() {
 
 function VisitPage() {
   return (
-    <><PageContainer><AdmissionsReviewNotice>Online visit booking is not active. The verified school office can arrange a current appointment.</AdmissionsReviewNotice></PageContainer><section className="admissions-band" aria-label="Visit request prototype"><PageContainer><VisitRequestPrototype /></PageContainer></section><section className="admissions-band admissions-band--soft" aria-labelledby="visit-prep-title"><PageContainer><SectionHeading eyebrow="Before you arrive" title="A useful, accessible visit" /><div className="admissions-policy-grid" id="visit-prep-title"><article><span>Confirm</span><h3>Date and arrival point</h3><p>School hours do not automatically mean an admissions appointment is available.</p></article><article><span>Request</span><h3>Accessibility support</h3><p>Tell the office about mobility, communication or interpretation needs when arranging the visit.</p></article><article><span>Ask</span><h3>Bring your priorities</h3><p>Curriculum, routines, support, transport and verified fee guidance can be discussed without bringing sensitive documents.</p></article></div></PageContainer></section></>
+    <>
+      <section
+        id="visit-options"
+        className="admissions-band admissions-visit-v2"
+        aria-labelledby="visit-options-title"
+      >
+        <PageContainer className="admissions-visit-layout">
+          <aside className="admissions-visit-intro">
+            <p className="eyebrow">
+              Plan before you arrive
+            </p>
+
+            <h2 id="visit-options-title">
+              Make the school visit useful.
+            </h2>
+
+            <p>
+              A visit is a chance to understand routines, ask practical
+              questions and discuss any accessibility or communication
+              support your family may need.
+            </p>
+
+            <div className="admissions-visit-intro__points">
+              <div>
+                <span>01</span>
+                <strong>Arrange the appointment</strong>
+                <p>
+                  School opening hours do not automatically mean an
+                  admissions appointment is available.
+                </p>
+              </div>
+
+              <div>
+                <span>02</span>
+                <strong>Share support needs early</strong>
+                <p>
+                  Tell the office about mobility, communication or
+                  interpretation needs when arranging the visit.
+                </p>
+              </div>
+
+              <div>
+                <span>03</span>
+                <strong>Bring questions, not paperwork</strong>
+                <p>
+                  Curriculum, routines, transport and fee guidance can
+                  be discussed without bringing sensitive documents.
+                </p>
+              </div>
+            </div>
+
+            <div className="admissions-visit-office">
+              <span>Current booking route</span>
+
+              <strong>
+                Contact the school office
+              </strong>
+
+              <a
+                href={`tel:${siteFacts.phone.replaceAll(" ", "")}`}
+              >
+                {siteFacts.phone}
+              </a>
+
+              <small>
+                {siteFacts.workingHours.weekdays}
+              </small>
+
+              <small>
+                {siteFacts.workingHours.saturday}
+              </small>
+            </div>
+          </aside>
+
+          <VisitRequestPrototype />
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-visit-prepare"
+        aria-labelledby="visit-prepare-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                Before you arrive
+              </p>
+
+              <h2 id="visit-prepare-title">
+                Three things to confirm first.
+              </h2>
+            </div>
+
+            <p>
+              A confirmed appointment and a little preparation make
+              it much easier for the school to give your family useful
+              guidance during the visit.
+            </p>
+          </div>
+
+          <div className="admissions-visit-prepare-grid">
+            <article>
+              <span>01</span>
+
+              <p>Confirm</p>
+
+              <h3>
+                Date and arrival point
+              </h3>
+
+              <small>
+                Ask the office to confirm the appointment date,
+                reporting location and any arrival instructions.
+              </small>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <p>Request</p>
+
+              <h3>
+                Accessibility support
+              </h3>
+
+              <small>
+                Mention mobility, interpretation or communication
+                requirements while arranging the appointment.
+              </small>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <p>Prepare</p>
+
+              <h3>
+                Your priority questions
+              </h3>
+
+              <small>
+                Write down the things that matter most to your family
+                so the visit stays focused.
+              </small>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-visit-discuss"
+        aria-labelledby="visit-discuss-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--light">
+            <p className="eyebrow">
+              What can you discuss?
+            </p>
+
+            <h2 id="visit-discuss-title">
+              Use the visit to understand daily school life.
+            </h2>
+
+            <p>
+              The visit can answer practical questions without turning
+              the first meeting into a document-verification exercise.
+            </p>
+          </div>
+
+          <div className="admissions-visit-discuss-grid">
+            <article>
+              <span>01</span>
+              <strong>Curriculum</strong>
+              <p>
+                Ask about the applicable school programme and the
+                learning experience for the class you are considering.
+              </p>
+            </article>
+
+            <article>
+              <span>02</span>
+              <strong>Daily routines</strong>
+              <p>
+                Understand timings, arrival, departure and the practical
+                rhythm of the school day.
+              </p>
+            </article>
+
+            <article>
+              <span>03</span>
+              <strong>Student support</strong>
+              <p>
+                Discuss language, accessibility or other relevant
+                support without sending detailed private records.
+              </p>
+            </article>
+
+            <article>
+              <span>04</span>
+              <strong>Transport</strong>
+              <p>
+                Ask about the current transport position and which
+                details still need school confirmation.
+              </p>
+            </article>
+
+            <article>
+              <span>05</span>
+              <strong>Fee guidance</strong>
+              <p>
+                Request the authorised current schedule rather than
+                relying on an old amount or forwarded message.
+              </p>
+            </article>
+
+            <article>
+              <span>06</span>
+              <strong>Next step</strong>
+              <p>
+                Confirm whether your family should enquire further,
+                prepare documents or move toward formal application.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-visit-privacy">
+        <PageContainer className="admissions-visit-privacy__layout">
+          <div>
+            <p className="eyebrow">
+              First visit, minimal data
+            </p>
+
+            <h2>
+              You normally do not need sensitive documents just to visit.
+            </h2>
+          </div>
+
+          <div>
+            <p>
+              Do not bring or email Aadhaar, bank information, detailed
+              medical records or other sensitive records simply to ask
+              initial admissions questions.
+            </p>
+
+            <p>
+              If a document later becomes relevant, follow the approved
+              process for that stage of admission.
+            </p>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-visit-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Ready to arrange a visit?
+            </p>
+
+            <h2>
+              Contact the school office first.
+            </h2>
+          </div>
+
+          <p>
+            Online visit booking is not active yet. The verified school
+            office can confirm a suitable appointment.
+          </p>
+
+          <Link
+            className="button button--primary"
+            href="/admissions/contact"
+          >
+            Contact SSKEMS
+          </Link>
+        </PageContainer>
+      </section>
+    </>
   );
 }
 
@@ -1644,6 +1928,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   const feesPage = key === "fees";
   const faqPage = key === "faq";
   const contactPage = key === "contact";
+  const visitPage = key === "visit";
 
   const cinematicPage =
     enquiryPage ||
@@ -1652,7 +1937,8 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
     documentsPage ||
     feesPage ||
     faqPage ||
-    contactPage;
+    contactPage ||
+    visitPage;
 
   const heroActions = enquiryPage ? (
     <>
@@ -1764,6 +2050,22 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         href="/admissions/enquire"
       >
         Make an enquiry
+      </Link>
+    </>
+  ) : visitPage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#visit-options"
+      >
+        Plan your visit
+      </a>
+
+      <Link
+        className="admissions-hero__secondary-action"
+        href="/admissions/contact"
+      >
+        Contact school office
       </Link>
     </>
   ) : undefined;
@@ -1926,6 +2228,29 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         <span aria-hidden="true">&rarr;</span>
       </a>
     </aside>
+  ) : visitPage ? (
+    <aside
+      className="admissions-cycle-card admissions-visit-hero-card"
+      aria-label="School visit booking status"
+    >
+      <div>
+        <span>Visit booking</span>
+        <strong>Contact the office</strong>
+      </div>
+
+      <p>Online booking is not active yet</p>
+
+      <small>
+        The verified school office can arrange a suitable
+        appointment and note any accessibility or communication
+        support required for the visit.
+      </small>
+
+      <a href="#visit-options">
+        Plan before you arrive{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
   ) : undefined;
 
   return (
@@ -1945,6 +2270,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
             "fees",
             "faq",
             "contact",
+            "visit",
           ] as PageKey[]
         ).includes(key)
       }
