@@ -1557,8 +1557,306 @@ function ContactPage() {
 function RtePage() {
   return (
     <>
-      <section className="admissions-band" aria-labelledby="rte-route-title"><PageContainer className="rte-route"><div><p className="eyebrow">Separate official route</p><h2 id="rte-route-title">Use the Maharashtra RTE portal</h2><p>The ordinary SSKEMS enquiry or regular school application is not the official RTE 25% application. Use the School Education and Sports Department process and follow the current official notification.</p><a className="button button--primary" href={officialAdmissionsSources.maharashtraRte} target="_blank" rel="noreferrer">Open Maharashtra education portal <span className="visually-hidden">(opens in a new tab)</span></a></div><aside><span>Before production publication</span><strong>Participation must be verified</strong><p>SSKEMS participation, entry class, dates, eligibility rules and post-allotment requirements are not yet approved for this page.</p></aside></PageContainer></section>
-      <section className="admissions-band admissions-band--soft"><PageContainer><div className="admissions-policy-grid"><article><span>Apply</span><h3>Official state process</h3><p>Do not use the regular school form as a substitute.</p></article><article><span>After allotment</span><h3>School verification</h3><p>The school will publish the verified appointment and document procedure.</p></article><article><span>Payments</span><h3>No unofficial charges</h3><p>Report any request that conflicts with the official process.</p></article></div></PageContainer></section>
+      <section
+        id="rte-official-route"
+        className="admissions-band admissions-rte-v2"
+        aria-labelledby="rte-route-title"
+      >
+        <PageContainer className="admissions-rte-route">
+          <div className="admissions-rte-route__copy">
+            <p className="eyebrow">
+              Separate application route
+            </p>
+
+            <h2 id="rte-route-title">
+              Keep the RTE process separate from regular school admission.
+            </h2>
+
+            <p>
+              The regular SSKEMS enquiry and application workflow does
+              not replace the Maharashtra RTE application route.
+              Families using the RTE route should follow the configured
+              Maharashtra Government admissions portal and the applicable
+              current notification.
+            </p>
+
+            <a
+              className="button button--primary"
+              href={officialAdmissionsSources.maharashtraRte}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open configured Maharashtra RTE portal
+
+              <span className="visually-hidden">
+                {" "}(opens in a new tab)
+              </span>
+            </a>
+          </div>
+
+          <aside className="admissions-rte-route__status">
+            <span>
+              SSKEMS publication status
+            </span>
+
+            <strong>
+              School-specific details require verification
+            </strong>
+
+            <p>
+              Participation, entry class, dates, eligibility rules and
+              post-allotment requirements are not being inferred or
+              copied from an older admission cycle.
+            </p>
+
+            <a href="#rte-verification">
+              See what remains pending{" "}
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </aside>
+        </PageContainer>
+      </section>
+
+
+      <section
+        id="rte-verification"
+        className="admissions-band admissions-rte-verification"
+        aria-labelledby="rte-verification-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--split">
+            <div>
+              <p className="eyebrow">
+                School-specific verification
+              </p>
+
+              <h2 id="rte-verification-title">
+                What must be confirmed before SSKEMS publishes it?
+              </h2>
+            </div>
+
+            <p>
+              This page should not turn general RTE information into
+              an SSKEMS-specific promise until the relevant record is
+              approved for the current admission cycle.
+            </p>
+          </div>
+
+          <div className="admissions-rte-verification-grid">
+            <article>
+              <span>01</span>
+
+              <p>Participation</p>
+
+              <h3>
+                Current school participation
+              </h3>
+
+              <strong>Verification required</strong>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <p>Entry route</p>
+
+              <h3>
+                Applicable entry class
+              </h3>
+
+              <strong>Verification required</strong>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <p>Admission cycle</p>
+
+              <h3>
+                Current dates and deadlines
+              </h3>
+
+              <strong>Verification required</strong>
+            </article>
+
+            <article>
+              <span>04</span>
+
+              <p>After allotment</p>
+
+              <h3>
+                School verification procedure
+              </h3>
+
+              <strong>Verification required</strong>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-rte-route-choice"
+        aria-labelledby="rte-route-choice-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading">
+            <p className="eyebrow">
+              Choose the correct route
+            </p>
+
+            <h2 id="rte-route-choice-title">
+              Two routes should not be mixed together.
+            </h2>
+
+            <p>
+              Use the route that applies to the question you are trying
+              to resolve.
+            </p>
+          </div>
+
+          <div className="admissions-rte-route-choice__grid">
+            <article>
+              <span>Regular SSKEMS admission</span>
+
+              <h3>
+                School enquiry and regular admission guidance
+              </h3>
+
+              <p>
+                Use the SSKEMS admissions pages for ordinary questions
+                about classes, visits, fees, documents and the regular
+                school admission process.
+              </p>
+
+              <Link href="/admissions/enquire">
+                Make a regular enquiry{" "}
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </article>
+
+            <article>
+              <span>RTE route</span>
+
+              <h3>
+                Use the configured Maharashtra process
+              </h3>
+
+              <p>
+                Do not treat the regular SSKEMS enquiry or application
+                form as a substitute for the separate RTE application
+                route.
+              </p>
+
+              <a
+                href={officialAdmissionsSources.maharashtraRte}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open configured RTE portal{" "}
+                <span aria-hidden="true">&rarr;</span>
+
+                <span className="visually-hidden">
+                  {" "}(opens in a new tab)
+                </span>
+              </a>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section
+        className="admissions-band admissions-rte-safeguards"
+        aria-labelledby="rte-safeguards-title"
+      >
+        <PageContainer>
+          <div className="admissions-section-heading admissions-section-heading--light">
+            <p className="eyebrow">
+              Process safeguards
+            </p>
+
+            <h2 id="rte-safeguards-title">
+              Keep the route clear at every stage.
+            </h2>
+
+            <p>
+              The website should distinguish the application route,
+              the school verification stage and payment guidance.
+            </p>
+          </div>
+
+          <div className="admissions-rte-safeguard-grid">
+            <article>
+              <span>Apply</span>
+
+              <h3>
+                Separate application route
+              </h3>
+
+              <p>
+                The regular school application should not be presented
+                as the RTE application.
+              </p>
+            </article>
+
+            <article>
+              <span>After allotment</span>
+
+              <h3>
+                Verified school procedure
+              </h3>
+
+              <p>
+                Appointment and document instructions should be
+                published only after the school-specific process is
+                confirmed.
+              </p>
+            </article>
+
+            <article>
+              <span>Payments</span>
+
+              <h3>
+                No unofficial charge
+              </h3>
+
+              <p>
+                Any payment instruction shown on this page must come
+                from an approved, applicable source rather than an
+                informal request.
+              </p>
+            </article>
+          </div>
+        </PageContainer>
+      </section>
+
+
+      <section className="admissions-rte-closing">
+        <PageContainer>
+          <div>
+            <p className="eyebrow">
+              Need help understanding the route?
+            </p>
+
+            <h2>
+              Ask the school without starting the wrong application.
+            </h2>
+          </div>
+
+          <p>
+            A general question can still be directed to SSKEMS while
+            the actual RTE application route remains separate.
+          </p>
+
+          <Link
+            className="button button--primary"
+            href="/admissions/contact"
+          >
+            Contact SSKEMS
+          </Link>
+        </PageContainer>
+      </section>
     </>
   );
 }
@@ -1929,6 +2227,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
   const faqPage = key === "faq";
   const contactPage = key === "contact";
   const visitPage = key === "visit";
+  const rtePage = key === "rte";
 
   const cinematicPage =
     enquiryPage ||
@@ -1938,7 +2237,8 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
     feesPage ||
     faqPage ||
     contactPage ||
-    visitPage;
+    visitPage ||
+    rtePage;
 
   const heroActions = enquiryPage ? (
     <>
@@ -2067,6 +2367,24 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
       >
         Contact school office
       </Link>
+    </>
+  ) : rtePage ? (
+    <>
+      <a
+        className="button button--primary admissions-hero__primary-action"
+        href="#rte-official-route"
+      >
+        Understand the RTE route
+      </a>
+
+      <a
+        className="admissions-hero__secondary-action"
+        href={officialAdmissionsSources.maharashtraRte}
+        target="_blank"
+        rel="noreferrer"
+      >
+        Open configured portal
+      </a>
     </>
   ) : undefined;
 
@@ -2251,6 +2569,29 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
         <span aria-hidden="true">&rarr;</span>
       </a>
     </aside>
+  ) : rtePage ? (
+    <aside
+      className="admissions-cycle-card admissions-rte-hero-card"
+      aria-label="RTE publication status"
+    >
+      <div>
+        <span>Separate route</span>
+        <strong>Verification required</strong>
+      </div>
+
+      <p>School-specific RTE details are not inferred</p>
+
+      <small>
+        Participation, entry class, dates, eligibility and
+        post-allotment instructions remain unpublished until
+        the applicable school record is approved.
+      </small>
+
+      <a href="#rte-verification">
+        See pending verification{" "}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
   ) : undefined;
 
   return (
@@ -2271,6 +2612,7 @@ export default async function AdmissionsSubPage({ params }: RouteProps) {
             "faq",
             "contact",
             "visit",
+            "rte",
           ] as PageKey[]
         ).includes(key)
       }
