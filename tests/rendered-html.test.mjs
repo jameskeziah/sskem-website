@@ -150,7 +150,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /Public release Blocked 5 of 7 launch gates remain blocked\./i);
   assert.match(readableText, /Composite launch gate/i);
   assert.match(readableText, /One result across every release dependency\./i);
-  assert.match(readableText, /Publication approvals Blocked 10 of 37/i);
+  assert.match(readableText, /Publication approvals Blocked 17 of 44/i);
   assert.match(readableText, /Campus media Blocked 0 of 4/i);
   assert.match(readableText, /Appendix IX documents Blocked 0 of 12/i);
   assert.match(readableText, /Homepage media budget Blocked 4 of 5/i);
@@ -431,7 +431,7 @@ test("serves exact unfilled approval requests only to authenticated private revi
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^application\/json\b/i);
   assert.match(response.headers.get("cache-control") ?? "", /private, no-store/i);
-  assert.match(response.headers.get("content-disposition") ?? "", /sskem-approval-request-media-campus-main-2026-09-09\.json/i);
+  assert.match(response.headers.get("content-disposition") ?? "", /sskem-approval-request-media-campus-main-2026-10-01\.json/i);
   assert.equal(response.headers.get("content-security-policy"), "default-src 'none'; sandbox");
 
   const request = JSON.parse(await response.text());
@@ -471,7 +471,7 @@ test("exports the owner-only approval worksheet without private evidence", async
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/csv\b/i);
   assert.match(response.headers.get("cache-control") ?? "", /private, no-store/i);
-  assert.match(response.headers.get("content-disposition") ?? "", /sskem-publication-approval-queue-2026-08-10\.csv/i);
+  assert.match(response.headers.get("content-disposition") ?? "", /sskem-publication-approval-queue-2026-10-01\.csv/i);
 
   const csv = await response.text();
   const rows = csv.trim().split(/\r?\n/);
