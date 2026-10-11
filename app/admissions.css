@@ -2135,7 +2135,7 @@ a:first-child p {
 }
 
 .enquiry-boundary-card > span {
-  color: #d95e70;
+  color: var(--action-primary);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -2161,6 +2161,10 @@ a:first-child p {
 .enquiry-boundary-card--now h3,
 .enquiry-boundary-card--now p {
   color: inherit;
+}
+
+.enquiry-boundary-card--now > span {
+  color: var(--color-brand-200);
 }
 
 .enquiry-boundary-card--later {

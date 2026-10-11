@@ -26,13 +26,13 @@ export function HomepageAdmissionsFeature({ cycle }: { cycle: HomepageAdmissions
             <span>Current position</span>
             <strong>{cycle.publicStatus}</strong>
           </div>
-          <p className="home-admissions-feature__message">{cycle.publicMessage}</p>
+          <p className="home-admissions-feature__message" id="home-admissions-message">{cycle.publicMessage}</p>
           <div className="home-actions">
-            <Link className="home-button home-button--dark" href="/admissions/enquire">
+            <Link className="home-button home-button--dark" href="/admissions/enquire" aria-describedby="home-admissions-message">
               Make an enquiry <span aria-hidden="true">→</span>
             </Link>
             <Link className="home-button home-button--outline-dark" href="/admissions/process">
-              Understand the process
+              Understand the process <span aria-hidden="true">↗</span>
             </Link>
           </div>
         </div>
@@ -40,7 +40,7 @@ export function HomepageAdmissionsFeature({ cycle }: { cycle: HomepageAdmissions
         <ol className="home-admissions-feature__steps" data-home-section-reveal aria-label="Admission journey preview">
           {admissionsProcess.slice(0, 4).map((step, index) => (
             <li key={step.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
+              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               <strong>{step.title}</strong>
             </li>
           ))}

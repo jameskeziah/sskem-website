@@ -2,11 +2,18 @@ import { readFile } from "node:fs/promises";
 
 import { expect, test } from "@playwright/test";
 
+import approvalManifest from "../../content/approval-manifest.json" with { type: "json" };
+import legacyCutoverInventory from "../../content/legacy-cutover-inventory.json" with { type: "json" };
+import siteSettingsMigration from "../../content/editorial-site-settings-migration.json" with { type: "json" };
+
+const governedRecordCount = approvalManifest.records.length;
+const blockedDocuments = approvalManifest.records.filter((record) => record.kind === "document" && record.decision === "blocked");
+
 test("prioritises campus-media approval and filters the canonical queue", async ({ page }) => {
   await page.goto("/publication-review");
 
   await expect(page.getByRole("heading", { level: 1, name: "Approval queue" })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 2, name: "33 governed records" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: `${governedRecordCount} governed records` })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Approved masters become responsive, privacy-clean assets." })).toBeVisible();
   await expect(page.getByText("AVIF · WebP · JPEG")).toBeVisible();
   await expect(page.getByRole("link", { name: "Download campus capture packet" })).toBeVisible();
@@ -14,7 +21,7 @@ test("prioritises campus-media approval and filters the canonical queue", async 
   await expect(page.getByText("External malware-scan evidence and manifest approval remain mandatory.")).toBeVisible();
   const cutover = page.getByRole("region", { name: "Old WordPress links now have a controlled destination." });
   await expect(cutover).toBeVisible();
-  await expect(cutover.getByText("33", { exact: true })).toBeVisible();
+  await expect(cutover.getByText(String(legacyCutoverInventory.records.length), { exact: true })).toBeVisible();
 
   const firstBatch = page.getByRole("region", { name: "Approve the four campus photographs first." });
   await expect(firstBatch.getByText("Start here")).toHaveCount(4);
@@ -24,7 +31,12 @@ test("prioritises campus-media approval and filters the canonical queue", async 
   await page.getByRole("button", { name: "Apply filters" }).click();
 
   await expect(page).toHaveURL(/kind=document&decision=blocked/);
-  await expect(page.getByText("Showing 12 of 33 records.")).toBeVisible();
+  await expect(page.getByText(`Showing ${blockedDocuments.length} of ${governedRecordCount} records.`)).toBeVisible();
+  const queue = page.getByRole("region", { name: "Review every release dependency" });
+  await expect(queue.locator(".review-card")).toHaveCount(blockedDocuments.length);
+  for (const record of blockedDocuments) {
+    await expect(queue.getByRole("heading", { level: 3, name: record.title, exact: true })).toBeVisible();
+  }
 });
 
 test("downloads the private coordination worksheet", async ({ page }) => {
@@ -34,7 +46,7 @@ test("downloads the private coordination worksheet", async ({ page }) => {
   await page.getByRole("link", { name: "Download review worksheet" }).click();
   const download = await downloadPromise;
 
-  expect(download.suggestedFilename()).toBe("sskem-publication-approval-queue-2026-08-10.csv");
+  expect(download.suggestedFilename()).toBe(`sskem-publication-approval-queue-${approvalManifest.updatedOn}.csv`);
 });
 
 test("downloads the owner-only cutover worksheet", async ({ page }) => {
@@ -44,7 +56,7 @@ test("downloads the owner-only cutover worksheet", async ({ page }) => {
   await page.getByRole("link", { name: "Download cutover worksheet" }).click();
   const download = await downloadPromise;
 
-  expect(download.suggestedFilename()).toBe("sskem-legacy-cutover-2026-08-16.csv");
+  expect(download.suggestedFilename()).toBe(`sskem-legacy-cutover-${legacyCutoverInventory.capturedOn}.csv`);
 });
 
 test("downloads the guarded four-shot campus capture packet", async ({ page }) => {
@@ -88,7 +100,12 @@ test("downloads the guarded first site settings migration packet", async ({ page
 
   const packet = JSON.parse(await readFile(path, "utf8"));
   expect(packet.status).toBe("review-required");
-  expect(packet.blockingApprovalRecordIds).toEqual(["claim-complete-address", "claim-public-contact"]);
+  const referencedClaims = new Set(siteSettingsMigration.fields.map((field) => field.approvalRecordId));
+  const blockingClaimIds = approvalManifest.records
+    .filter((record) => referencedClaims.has(record.id) && record.decision !== "approved")
+    .map((record) => record.id)
+    .sort();
+  expect(packet.blockingApprovalRecordIds).toEqual(blockingClaimIds);
   expect(packet.guardrails.externalWritePerformed).toBe(false);
   expect(packet.guardrails.approvalGrantedByPacket).toBe(false);
 });

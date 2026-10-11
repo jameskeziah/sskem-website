@@ -165,6 +165,7 @@ export function SiteHeader({
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
   const searchButtonRef = useRef<HTMLButtonElement>(null);
+  const searchReturnButtonRef = useRef<HTMLButtonElement | null>(null);
   const searchPanelRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const submenuButtons = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -248,7 +249,7 @@ export function SiteHeader({
 
   useEffect(() => {
     if (!searchOpen) return;
-    const returnButton = searchButtonRef.current;
+    const returnButton = searchReturnButtonRef.current ?? searchButtonRef.current;
     setPageInert(true);
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -297,6 +298,11 @@ export function SiteHeader({
     setMobileOpen(false);
   }
 
+  function openSearch(returnButton: HTMLButtonElement | null) {
+    searchReturnButtonRef.current = returnButton;
+    setSearchOpen(true);
+  }
+
   return (
     <>
       <nav className="skip-links" aria-label="Skip links">
@@ -331,7 +337,7 @@ export function SiteHeader({
                 ))}
               </ul>
             </nav>
-            <button ref={searchButtonRef} className="utility-search" type="button" onClick={() => setSearchOpen(true)}>
+            <button ref={searchButtonRef} className="utility-search" type="button" aria-haspopup="dialog" onClick={() => openSearch(searchButtonRef.current)}>
               <span aria-hidden="true">⌕</span> Search
             </button>
           </div>
@@ -398,7 +404,7 @@ export function SiteHeader({
             </ul>
           </nav>
           <Link className="button button--primary header-cta" href="/admissions/apply">Apply for Admission</Link>
-          <IconButton ref={menuButtonRef} className="mobile-menu-button" label="Open navigation" onClick={openMobileNavigation}>
+          <IconButton ref={menuButtonRef} className="mobile-menu-button" label="Open navigation" aria-haspopup="dialog" aria-expanded={mobileOpen} aria-controls={mobileOpen ? "mobile-navigation-drawer" : undefined} onClick={openMobileNavigation}>
             <span aria-hidden="true">☰</span>
           </IconButton>
           </div>
@@ -419,14 +425,14 @@ export function SiteHeader({
       {mobileOpen ? (
         <div className="mobile-drawer-layer" role="presentation">
           <button className="mobile-drawer-backdrop" aria-label="Close navigation" onClick={closeMobileNavigation} />
-          <div className="mobile-drawer" ref={drawerRef} role="dialog" aria-modal="true" aria-labelledby="mobile-navigation-title" aria-describedby="mobile-navigation-description">
+          <div className="mobile-drawer" id="mobile-navigation-drawer" ref={drawerRef} role="dialog" aria-modal="true" aria-labelledby="mobile-navigation-title" aria-describedby="mobile-navigation-description">
             <h2 className="visually-hidden" id="mobile-navigation-title">Site navigation</h2>
             <p className="visually-hidden" id="mobile-navigation-description">Choose a section or press Escape to close this menu.</p>
             <div className="mobile-drawer__header">
               <BrandIdentity />
               <IconButton label="Close navigation" onClick={closeMobileNavigation}><span aria-hidden="true">×</span></IconButton>
             </div>
-            <button className="mobile-search-trigger" type="button" onClick={() => { setMobileOpen(false); setSearchOpen(true); }}>
+            <button className="mobile-search-trigger" type="button" aria-haspopup="dialog" onClick={() => { setMobileOpen(false); openSearch(menuButtonRef.current); }}>
               <span aria-hidden="true">⌕</span> Search the website
             </button>
             <nav aria-label="Mobile primary navigation" className="mobile-navigation">

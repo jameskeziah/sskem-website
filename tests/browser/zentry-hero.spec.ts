@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
 
+test.skip(
+  process.env.HOMEPAGE_REVIEW_MODE === "private" && process.env.HOMEPAGE_ZENTRY_HERO !== "preview",
+  "The private fallback hero is covered by the motion suite; run test:browser:homepage for all seven scenes.",
+);
+
 // This suite is built with HOMEPAGE_REVIEW_MODE=private and
 // HOMEPAGE_ZENTRY_HERO=preview. Draft photos are copied locally and are
 // intentionally NOT uploaded to public preview deployments.
@@ -83,7 +88,10 @@ test("all seven V2 compositions keep meaningful navigation and decorative motifs
     await expect(hero).toHaveAttribute("data-composition-family", family);
     await expect(hero).toHaveAttribute("data-photo-treatment", treatment);
     await expect(hero.locator(".zhero__preview-wrap")).toHaveAttribute("data-preview-position", preview);
-    await expect(hero).toHaveAttribute("data-visual-review", "pending");
+    await expect(hero).toHaveAttribute(
+      "data-visual-review",
+      process.env.HOMEPAGE_ZENTRY_HERO === "preview" && process.env.HOMEPAGE_REVIEW_MODE === "private" ? "pending" : "approved",
+    );
     await expect(hero.locator(`.zhero__motif--${motif}`)).toHaveCount(1);
     await expect(hero.getByRole("link", { name: /Apply for Admission/i })).toHaveAttribute("href", "/admissions/enquire");
     await expect(hero.locator(".zhero__transition-layer")).toHaveCount(0);

@@ -1,0 +1,6 @@
+/* Header and drawer appearance have dedicated snapshots. Hide animated
+   descendants too, without reflowing the component being captured. */
+.site-header,
+.site-header * {
+  visibility: hidden !important;
+}

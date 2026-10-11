@@ -4,17 +4,29 @@ test("desktop submenu is keyboard operated and restores focus", async ({ page })
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
 
-  const toggle = page.getByRole("button", { name: "Show School links" });
+  const toggle = page.getByRole("button", { name: "Show CBSE School links", exact: true });
+  const submenu = page.locator("#desktop-cbse-school");
+  await expect(toggle).toHaveAttribute("aria-controls", "desktop-cbse-school");
+  await expect(submenu).toBeHidden();
   await toggle.focus();
   await expect(toggle).toBeFocused();
   await toggle.press("Enter");
   await expect(toggle).toHaveAttribute("aria-expanded", "true");
-  await expect(page.getByRole("link", { name: /Academics/ })).toHaveCount(0);
+  await expect(submenu).toBeVisible();
+  const overview = submenu.getByRole("link", { name: /Overview/ });
+  const profile = submenu.getByRole("link", { name: /Verified profile/ });
+  await expect(overview).toHaveAttribute("href", "/school");
+  await expect(profile).toHaveAttribute("href", "/school/academics");
+  await toggle.press("Tab");
+  await expect(overview).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(profile).toBeFocused();
 
   await page.keyboard.press("Escape");
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(submenu).toBeHidden();
   await expect(toggle).toBeFocused();
-  await expect(page.getByRole("link", { name: "School", exact: true }).first()).toHaveAttribute("href", "/school");
+  await expect(page.getByRole("navigation", { name: "Primary navigation", exact: true }).getByRole("link", { name: "CBSE School", exact: true })).toHaveAttribute("href", "/school/academics");
 });
 
 test("mobile drawer traps focus, closes with Escape and preserves scroll", async ({ page }) => {
@@ -31,7 +43,7 @@ test("mobile drawer traps focus, closes with Escape and preserves scroll", async
   await expect(page.locator("#main-content")).toHaveAttribute("inert", "");
   expect(await drawer.evaluate((element) => element.contains(document.activeElement))).toBe(true);
 
-  const lastControl = drawer.getByRole("link", { name: "Enquire now", exact: true });
+  const lastControl = drawer.getByRole("link", { name: "Apply for Admission", exact: true });
   await lastControl.focus();
   await page.keyboard.press("Tab");
   expect(await drawer.evaluate((element) => element.contains(document.activeElement))).toBe(true);
@@ -57,13 +69,21 @@ test("mobile navigation opens the current section and closes after navigation", 
 });
 
 test("skip links move keyboard focus to main content and the footer", async ({ page }) => {
+  const waitForNavigation = async () => {
+    await expect(page.locator("#home-title")).toBeVisible();
+    await expect(page.locator(".site-header")).toHaveAttribute("data-navigation-enhanced", "true");
+    await expect(page.locator("[data-motion-component='home-preloader']")).toBeHidden({ timeout: 10_000 });
+  };
+
   await page.goto("/");
+  await waitForNavigation();
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Skip to main content" })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("#main-content")).toBeFocused();
 
   await page.reload();
+  await waitForNavigation();
   await page.keyboard.press("Tab");
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Skip to footer" })).toBeFocused();
@@ -73,7 +93,7 @@ test("skip links move keyboard focus to main content and the footer", async ({ p
 
 test("search dialog moves and restores focus", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/");
+  await page.goto("/school");
 
   const trigger = page.getByRole("button", { name: "Search" });
   await trigger.click();
@@ -96,3 +116,64 @@ test("approved Programme profiles appear in navigation and sitemap", async ({ pa
     expect(sitemapText, route).toContain(route);
   }
 });
+
+for (const width of [320, 375, 768, 1024, 1440]) {
+  test(`homepage navigation stays usable at ${width}px, including the floating header`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.locator(".site-header")).toHaveAttribute("data-navigation-enhanced", "true");
+    await page.evaluate(() => document.fonts.ready);
+
+    const header = page.locator(".header-main");
+    const menuButton = page.getByRole("button", { name: "Open navigation" });
+    const assertHeaderFits = async () => {
+      const layout = await header.evaluate((element) => {
+        const bounds = element.getBoundingClientRect();
+        const visibleChildren = Array.from(element.children).filter((child) => getComputedStyle(child).display !== "none");
+        return {
+          left: bounds.left,
+          right: bounds.right,
+          fits: visibleChildren.every((child) => {
+            const box = child.getBoundingClientRect();
+            return box.left >= bounds.left - 1 && box.right <= bounds.right + 1;
+          }),
+          overflow: element.scrollWidth - element.clientWidth,
+        };
+      });
+      expect(layout.left).toBeGreaterThanOrEqual(0);
+      expect(layout.right).toBeLessThanOrEqual(width);
+      expect(layout.fits).toBe(true);
+      expect(layout.overflow).toBeLessThanOrEqual(1);
+    };
+
+    await assertHeaderFits();
+    if (width < 1217) {
+      await expect(menuButton).toBeVisible();
+      await expect(page.locator(".desktop-navigation")).toBeHidden();
+      await menuButton.press("Enter");
+      const drawer = page.getByRole("dialog", { name: "Site navigation" });
+      await expect(drawer).toBeVisible();
+      await expect(menuButton).toHaveAttribute("aria-expanded", "true");
+      expect(await drawer.evaluate((element) => element.scrollWidth - element.clientWidth)).toBeLessThanOrEqual(1);
+      await expect(drawer.getByRole("link", { name: "Apply for Admission", exact: true })).toHaveAttribute("href", "/admissions/apply");
+      await drawer.getByRole("button", { name: "Search the website" }).press("Enter");
+      await expect(page.getByRole("searchbox", { name: "Search pages" })).toBeFocused();
+      const search = page.getByRole("dialog", { name: "What are you looking for?" });
+      expect(await search.evaluate((element) => element.scrollWidth - element.clientWidth)).toBeLessThanOrEqual(1);
+      await page.keyboard.press("Escape");
+      await expect(menuButton).toBeFocused();
+      await expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    } else {
+      await expect(menuButton).toBeHidden();
+      await expect(page.locator(".desktop-navigation")).toBeVisible();
+      await expect(page.locator(".header-cta")).toHaveAttribute("href", "/admissions/apply");
+    }
+
+    await page.evaluate(() => window.scrollTo(0, 1000));
+    await expect(header).toHaveAttribute("data-floating", "true");
+    await expect(header).toHaveAttribute("data-visible", "true");
+    await assertHeaderFits();
+  });
+}

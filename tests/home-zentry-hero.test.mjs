@@ -98,8 +98,8 @@ test("V2 maintains privacy, motion preferences and truthful image sources", asyn
   assert.ok(!slides.includes("images.openai.com"));
   assert.ok(motifs.includes('aria-hidden="true"'));
   assert.ok(motifs.includes('focusable="false"'));
-  assert.ok(hero.includes('target.entrance === "energetic" ? 0.76'));
-  assert.ok(hero.includes('profile === "graceful" ? 0.13'));
+  assert.ok(hero.includes('duration: motionDurationSeconds.ceremonial'));
+  assert.ok(hero.includes('motionStaggerSeconds.heading + motionStaggerSeconds.interface'));
   assert.ok(hero.includes("prefers-reduced-motion: reduce"));
   assert.ok(css.includes("@media (prefers-reduced-motion: reduce)"));
   assert.ok(css.includes("clip-path: ellipse("));
@@ -206,4 +206,32 @@ test("preview photo is hidden until hover or visible keyboard focus, with touch 
   assert.match(hero, /const start = previewOrigin\?\.getBoundingClientRect\(\) \?\? frame;/);
   // Existing pointer/keyboard click and mobile tap still invoke the same controller.
   assert.match(hero, /onClick=\{\(\) => void goTo\(nextIndex\(activeIndexRef\.current\), previewRef\.current\)\}/);
+});
+
+test("hero navigation names its controlled scene and reflects transition busy state", async () => {
+  const hero = await read("components/motion/home-zentry-hero.tsx");
+  assert.match(hero, /id="home-highlight-scenes"[^>]*aria-busy=\{isBusy\}/);
+  assert.equal((hero.match(/aria-controls="home-highlight-scenes"/g) ?? []).length, 4);
+  assert.match(hero, /className="zhero__progress" role="group" aria-label="Select a hero slide"/);
+  assert.match(hero, /className="zhero__navigation" role="group" aria-label="Hero navigation"/);
+});
+
+test("responsive hero reserves copy space and keeps slide controls at stable sizes", async () => {
+  const css = await read("app/zentry-hero.css");
+  assert.match(css, /container-type:\s*inline-size/);
+  assert.match(css, /\.zhero__heading-line\s*\{[^}]*white-space:\s*normal;[^}]*overflow-wrap:\s*anywhere;/s);
+  assert.match(css, /grid-template-rows:\s*minmax\(14rem, 1fr\) minmax\(27rem, auto\) auto/);
+  assert.match(css, /grid-template-rows:\s*minmax\(12rem, 1fr\) minmax\(26rem, auto\) auto/);
+  assert.match(css, /\.zhero__progress-item\s*\{\s*flex:\s*1 1 0;[^}]*height:\s*2\.75rem;/s);
+  assert.doesNotMatch(css, /\.zhero__progress-item\[data-current="true"\]\s*\{[^}]*width:/s);
+});
+
+test("hero feedback shares motion tokens and autoplay rechecks motion and viewport eligibility", async () => {
+  const hero = await read("components/motion/home-zentry-hero.tsx");
+  const css = await read("app/zentry-hero.css");
+  assert.match(hero, /motionDistancePixels\.revealMobile/);
+  assert.match(hero, /motionEase\.emphasised : motionEase\.enter/);
+  assert.match(hero, /if \(!allowed\.matches \|\| document\.hidden/);
+  assert.match(css, /var\(--motion-duration-fast\) var\(--motion-ease-enter\)/);
+  assert.match(css, /\.zhero__apply:hover, \.zhero__apply:focus-visible,[\s\S]*?transform:\s*none !important/);
 });

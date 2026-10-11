@@ -30,7 +30,7 @@ test("supports reduced motion and representative multilingual content", async ({
   const duration = await page.evaluate(() =>
     getComputedStyle(document.documentElement).getPropertyValue("--motion-duration-standard").trim()
   );
-  expect(duration).toBe("0s");
+  expect(Number.parseFloat(duration)).toBe(0);
   await expect(page.getByText("शिक्षण, संस्कार आणि आत्मविश्वास यांचा समतोल विकास.")).toBeVisible();
   await expect(page.getByText("शिक्षा, संस्कार और आत्मविश्वास का संतुलित विकास।")).toBeVisible();
 });

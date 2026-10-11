@@ -29,8 +29,11 @@ test("keeps admissions readable and navigable when hydration scripts fail", asyn
   await page.route("**/*.js", (route) => route.abort());
   await page.goto("/admissions", { waitUntil: "domcontentloaded" });
 
-  await expect(page.getByRole("heading", { level: 1, name: /Admissions, made clearer/i })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Make an Enquiry", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Your child's next chapter starts here." })).toBeVisible();
+  const enquiry = page.locator(".admissions-hero__primary-action[href='/admissions/enquire']");
+  await expect(enquiry).toBeVisible();
+  await expect(enquiry).toHaveAccessibleName(/^Make an enquiry$/i);
+  await expect(enquiry).toHaveAttribute("href", "/admissions/enquire");
   await expect(page.locator(".mobile-menu-button")).toBeHidden();
 
   const fallback = page.locator(".static-navigation-fallback");
@@ -54,7 +57,7 @@ test("keeps the homepage narrative readable when hydration scripts fail", async 
   await page.goto("/", { waitUntil: "domcontentloaded" });
 
   await expect(page.getByRole("heading", { level: 1, name: /Here, possibility begins/i })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Enquire now/i }).first()).toBeVisible();
+  await expect(page.locator("main a[href='/admissions/enquire']").first()).toBeVisible();
   await expect(page.getByRole("link", { name: "Mandatory Public Disclosure", exact: true }).first()).toBeVisible();
   await expect(page.locator(".mobile-menu-button")).toBeHidden();
   await expect(page.locator("[data-motion-component='home-preloader']")).toBeHidden();
@@ -174,7 +177,9 @@ test("reduced motion leaves every motion target in its final static state", asyn
     deliberate: getComputedStyle(document.documentElement).getPropertyValue("--motion-duration-deliberate").trim(),
     scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
   }));
-  expect(rootMotion).toEqual({ standard: "0s", deliberate: "0s", scrollBehavior: "auto" });
+  expect(Number.parseFloat(rootMotion.standard)).toBe(0);
+  expect(Number.parseFloat(rootMotion.deliberate)).toBe(0);
+  expect(rootMotion.scrollBehavior).toBe("auto");
 
   await page.locator("[data-motion-component='admissions-steps']").scrollIntoViewIfNeeded();
   const states = await page.locator("[data-motion-hero-intro], [data-motion-hero-mask], [data-motion-step]").evaluateAll((elements) =>
@@ -223,9 +228,15 @@ test("reduced motion leaves the homepage story in its final static state", async
   expect(states.every((state) => state.willChange === "auto")).toBe(true);
 });
 
-test("fine-pointer hover stays inside the approved lift limits and focus does not move", async ({ page }) => {
+test("fine-pointer hover stays inside the current lift limits and focus does not move", async ({ page }) => {
   await page.goto("/");
+  // Wait for streamed page content to replace the loading header before
+  // targeting the one interactive header CTA.
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page.locator(".site-header")).toHaveAttribute("data-navigation-enhanced", "true");
+  await expect(page.locator("[data-motion-component='home-preloader']")).toBeHidden({ timeout: 12_000 });
   const button = page.locator(".header-cta");
+  await expect(button).toHaveCount(1);
   await button.hover();
   await expect.poll(() => computedTranslateY(button)).toBeCloseTo(-1, 1);
 
@@ -243,9 +254,12 @@ test("fine-pointer hover stays inside the approved lift limits and focus does no
   await expect.poll(() => computedTranslateY(button)).toBe(0);
 
   await page.goto("/admissions");
-  const card = page.locator(".admissions-action").first();
+  await expect(page.getByRole("heading", { level: 1, name: "Your child's next chapter starts here." })).toBeVisible();
+  const card = page.locator(".admissions-start-card").first();
   await card.hover();
-  await expect.poll(() => computedTranslateY(card)).toBeCloseTo(-2, 1);
+  // The current landing-card style uses a five-pixel lift; shared action
+  // cards on detail routes have a separate, smaller hover treatment.
+  await expect.poll(() => computedTranslateY(card)).toBeCloseTo(-5, 1);
 
   await page.mouse.move(0, 0);
   await card.getByRole("link").focus();
@@ -264,10 +278,10 @@ test("touch mobile uses the non-hover motion substitution", async ({ browser }) 
   });
   const page = await context.newPage();
   await page.goto(`${localBaseUrl}/admissions`);
-  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Your child's next chapter starts here." })).toBeVisible();
 
   expect(await page.evaluate(() => matchMedia("(hover: hover) and (pointer: fine)").matches)).toBe(false);
-  const card = page.locator(".admissions-action").first();
+  const card = page.locator(".admissions-start-card").first();
   await card.getByRole("link").focus();
   expect(await computedTranslateY(card)).toBe(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(1);

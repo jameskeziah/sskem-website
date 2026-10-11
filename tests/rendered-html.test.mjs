@@ -25,7 +25,7 @@ async function render(pathname = "/", headers = { accept: "text/html" }, redirec
 }
 
 function textContent(markup) {
-  return markup
+  return documentMarkup(markup)
     .replace(/<!--.*?-->/gs, "")
     .replace(/<[^>]+>/g, " ")
     .replace(/&amp;/g, "&")
@@ -101,10 +101,10 @@ test("server-renders the current SSKEMS website foundation", async () => {
   assert.match(html, /data-motion-component=["']home-achievements["']/i);
   assert.match(html, /data-homepage-review-mode=["']private-review["']/i);
   assert.match(html, /data-homepage-p0=["']identity-strip["']/i);
-  assert.match(html, /data-homepage-p0=["']institution-pathways["']/i);
-  assert.match(html, /data-homepage-p0=["']admissions-feature["']/i);
+  assert.match(html, /data-motion-component=["']home-pathways["']/i);
+  assert.match(html, /<section\b[^>]*\baria-labelledby=["']home-admissions-title["']/i);
   assert.equal((documentHtml.match(/data-publication-state=["']approved-public-subset["']/gi) ?? []).length, 3);
-  assert.match(textContent(html), /Here, possibility begins\./i);
+  assert.match(textContent(html), /Here\s*,\s*possibility begins\s*\./i);
   assert.match(textContent(html), /Distinct paths\. One place to begin\./i);
   assert.match(textContent(html), /Begin with the right information\./i);
   assert.match(textContent(html), /Admissions information for 2026–27 is being verified\./i);
@@ -127,8 +127,8 @@ test("server-renders admissions motion in its readable final state", async () =>
 
   assert.match(html, /data-motion-component=["']admissions-hero["']/i);
   assert.match(html, /data-motion-component=["']admissions-steps["']/i);
-  assert.match(readableText, /Admissions, made clearer\./i);
-  assert.match(readableText, /Know what comes next\./i);
+  assert.match(readableText, /Your child['’]s next chapter starts here\./i);
+  assert.match(readableText, /A clear route from question to confirmation\./i);
   assert.ok(anchors.some((anchor) => anchor.href === "/admissions/enquire"));
   assert.ok(anchors.some((anchor) => anchor.href === "/admissions/application-status"));
   assert.match(html, /Primary navigation without JavaScript/i);
@@ -138,6 +138,8 @@ test("server-renders admissions motion in its readable final state", async () =>
 });
 
 test("server-renders the private publication approval queue from the manifest", async () => {
+  const manifest = JSON.parse(await readFile(new URL("../content/approval-manifest.json", import.meta.url), "utf8"));
+  const filteredRecords = manifest.records.filter((record) => record.kind === "media" && record.decision === "review-required");
   const response = await render("/publication-review?kind=media&decision=review-required");
   assert.equal(response.status, 200);
 
@@ -158,7 +160,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /Legacy content migration Blocked 0 of 115/i);
   assert.match(readableText, /Review-only treatment Ready 1 of 1/i);
   assert.match(readableText, /Achievement activation 0 of 4 bound 0 approval pair/i);
-  assert.match(readableText, /37 governed records/i);
+  assert.ok(readableText.includes(`${manifest.records.length} governed records`));
   assert.match(readableText, /Approve the four campus photographs first\./i);
   assert.match(readableText, /Guarded update: after independent review, generate the unfilled request/i);
   assert.match(readableText, /Template generation does not approve the record\./i);
@@ -181,7 +183,7 @@ test("server-renders the private publication approval queue from the manifest", 
   assert.match(readableText, /2 media performance blocker\(s\) remain\./i);
   assert.match(readableText, /Exact activation 0 of 12 bound/i);
   assert.match(readableText, /Only a receipt-matched, hash-verified PDF becomes downloadable\./i);
-  assert.match(readableText, /Showing 5 of 37 records\./i);
+  assert.ok(readableText.includes(`Showing ${filteredRecords.length} of ${manifest.records.length} records.`));
   assert.match(html, /media-campus-main/);
   assert.match(html, /media-campus-grounds/);
   assert.match(html, /media-campus-entrance/);
@@ -467,16 +469,18 @@ test("serves exact unfilled approval requests only to authenticated private revi
 });
 
 test("exports the owner-only approval worksheet without private evidence", async () => {
+  const manifest = JSON.parse(await readFile(new URL("../content/approval-manifest.json", import.meta.url), "utf8"));
   const response = await render("/publication-review/export", { accept: "text/csv" });
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/csv\b/i);
   assert.match(response.headers.get("cache-control") ?? "", /private, no-store/i);
-  assert.match(response.headers.get("content-disposition") ?? "", /sskem-publication-approval-queue-2026-10-01\.csv/i);
+  assert.ok((response.headers.get("content-disposition") ?? "").includes(`sskem-publication-approval-queue-${manifest.updatedOn}.csv`));
 
   const csv = await response.text();
   const rows = csv.trim().split(/\r?\n/);
-  assert.equal(rows.length, 34, "Worksheet must contain one header and 37 manifest rows");
+  assert.equal(rows.length, manifest.records.length + 1, "Worksheet must contain one header and every canonical manifest record");
   assert.match(rows[0], /^record_id,kind,title,decision,check_profile/);
+  assert.deepEqual(rows.slice(1).map((row) => row.split(",", 1)[0]), manifest.records.map((record) => record.id));
   assert.match(csv, /media-campus-main,media,Main campus exterior,review-required/);
   assert.match(csv, /document-mpd-c-4,document,Parent Teacher Association list,blocked/);
   assert.doesNotMatch(csv, /[a-z]:\\|file:\/\//i);

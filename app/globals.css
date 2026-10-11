@@ -636,6 +636,11 @@ p {
 .header-main[data-floating="true"] .desktop-navigation__entry:focus-within,
 .header-main[data-floating="true"] .desktop-navigation__entry[data-section-current="true"] {
   background: color-mix(in srgb, var(--color-neutral-0) 12%, transparent);
+  color: var(--color-neutral-0);
+}
+
+.header-main[data-floating="true"] .desktop-navigation__entry:is(:focus-within, [data-section-current="true"]) > :is(a, button) {
+  color: var(--color-neutral-0);
 }
 
 .header-main[data-floating="true"] .desktop-navigation__entry > a[aria-current="page"] {
@@ -655,6 +660,7 @@ p {
 .brand-identity {
   display: inline-flex;
   width: fit-content;
+  min-width: 0;
   min-height: 2.75rem;
   align-items: center;
   gap: var(--space-12);
@@ -684,6 +690,7 @@ p {
 
 .brand-identity__copy {
   display: grid;
+  min-width: 0;
   line-height: 1.2;
 }
 
@@ -984,6 +991,11 @@ p {
   background: var(--surface-raised);
 }
 
+.mobile-drawer__header > .icon-button,
+.search-panel__header > .icon-button {
+  flex: none;
+}
+
 .mobile-search-trigger {
   display: flex;
   min-height: 2.75rem;
@@ -1007,7 +1019,7 @@ p {
 
 .mobile-navigation__entry {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 
 .mobile-navigation__entry a,
@@ -1065,6 +1077,7 @@ p {
   align-items: center;
   color: var(--text-secondary);
   font-size: var(--font-size-200);
+  overflow-wrap: anywhere;
 }
 
 .search-panel {
@@ -1086,6 +1099,7 @@ p {
 
 .search-panel__header > div {
   display: grid;
+  min-width: 0;
   gap: var(--space-8);
 }
 
@@ -1173,9 +1187,21 @@ p {
 
 .site-header--cinematic
   .header-main:not([data-floating="true"])
-  .desktop-navigation__entry:focus-within {
-  background:
-    color-mix(in srgb, var(--color-neutral-0) 11%, transparent);
+  .desktop-navigation__entry:is(:focus-within, [data-section-current="true"]) {
+  background: var(--color-neutral-950);
+  color: var(--color-neutral-0);
+}
+
+.site-header--cinematic
+  .header-main:not([data-floating="true"])
+  .desktop-navigation__entry:is(:focus-within, [data-section-current="true"]) > :is(a, button) {
+  color: var(--color-neutral-0);
+}
+
+.site-header--cinematic
+  .header-main:not([data-floating="true"])
+  .desktop-navigation__entry > a[aria-current="page"] {
+  color: var(--color-brand-200);
 }
 
 .site-header--cinematic
@@ -1205,6 +1231,22 @@ p {
   box-shadow:
     0 0 0 1px
       color-mix(in srgb, var(--color-neutral-0) 20%, transparent);
+}
+
+.site-header--cinematic .header-main {
+  gap: var(--space-12);
+}
+
+.site-header--cinematic .header-cta {
+  padding-inline: var(--space-16);
+  font-size: var(--font-size-200);
+}
+
+.site-header--cinematic .header-main :is(.brand-identity, .header-cta, .mobile-menu-button):focus-visible,
+.site-header--cinematic .desktop-navigation__entry > :focus-visible,
+.header-main[data-floating="true"] :is(.brand-identity, .header-cta, .mobile-menu-button):focus-visible,
+.header-main[data-floating="true"] .desktop-navigation__entry > :focus-visible {
+  outline-color: var(--color-brand-200);
 }
 
 @media (min-width: 64rem) {
@@ -2227,8 +2269,22 @@ p {
   .site-header--cinematic
     .header-main:not([data-floating="true"])
     .desktop-navigation__entry:hover {
-    background:
-      color-mix(in srgb, var(--color-neutral-0) 11%, transparent);
+    background: var(--color-neutral-950);
+    color: var(--color-neutral-0);
+  }
+
+  .site-header--cinematic
+    .header-main:not([data-floating="true"])
+    .desktop-navigation__entry:hover > :is(a, button),
+  .header-main[data-floating="true"] .desktop-navigation__entry:hover > :is(a, button) {
+    color: var(--color-neutral-0);
+  }
+
+  .site-header--cinematic
+    .header-main:not([data-floating="true"])
+    .desktop-navigation__entry:hover > a[aria-current="page"],
+  .header-main[data-floating="true"] .desktop-navigation__entry:hover > a[aria-current="page"] {
+    color: var(--color-brand-200);
   }
 
   a:hover {
@@ -2269,6 +2325,7 @@ p {
   .header-main[data-floating="true"] .mobile-menu-button:hover:not(:disabled) {
     border-color: var(--color-brand-200);
     background: color-mix(in srgb, var(--color-neutral-0) 12%, transparent);
+    color: var(--color-neutral-0);
   }
 }
 
@@ -2416,14 +2473,6 @@ p {
 }
 
 @media (max-width: 24rem) {
-  .brand-identity__copy {
-    display: none;
-  }
-
-  .mobile-drawer .brand-identity__copy {
-    display: grid;
-  }
-
   .mobile-drawer {
     width: 100vw;
   }
@@ -2619,7 +2668,7 @@ p {
 @media (min-width: 70.001rem) {
   .site-header--cinematic[data-navigation-enhanced="true"]
   .header-main[data-floating="true"] {
-    max-width: min(64rem, calc(100% - 2rem));
+    max-width: min(var(--layout-content), calc(100% - (var(--space-16) * 2)));
     min-height: 4.35rem;
     padding-inline: 1rem;
     border-radius: 1.1rem;
@@ -2653,7 +2702,7 @@ p {
   .site-header--cinematic
   .header-main[data-floating="true"]
   .brand-identity__copy span {
-    font-size: 0.68rem;
+    display: none;
   }
 
   .site-header--cinematic
@@ -2669,8 +2718,41 @@ p {
   .site-header--cinematic
   .header-main[data-floating="true"]
   .header-cta {
-    min-height: 2.55rem;
-    padding: 0.65rem 1.15rem;
+    min-height: 2.75rem;
+    padding: var(--space-12) var(--space-16);
+  }
+}
+
+/* Keep the full institutional navigation comfortably spaced before using
+   the keyboard-accessible drawer on smaller laptop screens. */
+@media (max-width: 76rem) {
+  .site-header--cinematic .desktop-navigation,
+  .site-header--cinematic .header-cta {
+    display: none;
+  }
+
+  .site-header--cinematic .header-main {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .site-header--cinematic .mobile-menu-button {
+    display: inline-flex;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-header--cinematic .header-main .header-cta:hover,
+  .header-main[data-floating="true"] .header-cta:hover {
+    border-color: var(--color-brand-200);
+    background: var(--color-brand-200);
+    color: var(--color-brand-950);
+  }
+
+  .mobile-search-trigger:hover,
+  .mobile-navigation__entry:hover,
+  .mobile-navigation > ul > li > ul a:hover,
+  .mobile-drawer__utility a:hover {
+    background: var(--navigation-item-hover);
   }
 }
 

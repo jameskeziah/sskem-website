@@ -186,7 +186,7 @@ export default async function Home() {
 <HomeFoundationMotion>
         <HomepageIdentityStrip />
        
-        <section className="home-manifesto home-manifesto--hybrid">
+        <section className="home-manifesto home-manifesto--hybrid" aria-labelledby="manifesto-title">
           <div className="home-shell home-manifesto__grid">
             
 <div className="home-manifesto__rail">
@@ -314,23 +314,12 @@ export default async function Home() {
             <figure className="home-campus__feature" data-motion-home-campus-feature>
               <div className="home-campus__feature-media" data-motion-home-campus-feature-media>
 
-{privateHomepageReview ? (
-  <SiteImage
-    src="/media/home/hero-drafts/campus.webp"
-    alt="The SSKEMS campus and school building in Veral."
-    width={1800}
-    height={1200}
-    sizes="100vw"
-    unoptimized
-  />
-) : (
   <CampusPicture
     recordId="media-campus-main"
     fallbackSrc="/media/home/campus-main.jpeg"
     alt="The pink and white SSKEMS school building in Veral."
     sizes="100vw"
   />
-)}
 
               </div>
               <figcaption className="home-shell">The SSKEMS campus in Veral</figcaption>

@@ -78,7 +78,7 @@ export function HomepageInstitutionPathways({
               key={pathway.route}
             >
               <div className="home-pathway-card__meta">
-                <span className="home-pathway-card__number">{String(index + 1).padStart(2, "0")}</span>
+                <span className="home-pathway-card__number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
                 <span className="home-pathway-card__status">
                   {pathway.state === "approved-public-subset" ? "Published profile" : "Private review"}
                 </span>
@@ -86,10 +86,14 @@ export function HomepageInstitutionPathways({
               <div>
                 <p className="home-pathway-card__label">{pathway.label}</p>
                 <h3>{pathway.title}</h3>
-                <p>{pathway.summary}</p>
+                <p id={`home-pathway-summary-${index + 1}`}>{pathway.summary}</p>
               </div>
               {pathway.state === "approved-public-subset" ? (
-                <Link href={pathway.route}>
+                <Link
+                  href={pathway.route}
+                  aria-label={`View programme: ${pathway.label}`}
+                  aria-describedby={`home-pathway-summary-${index + 1}`}
+                >
                   View programme <span aria-hidden="true">→</span>
                 </Link>
               ) : (

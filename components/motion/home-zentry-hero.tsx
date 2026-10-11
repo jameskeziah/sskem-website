@@ -8,7 +8,13 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import { homeArrivalSignal } from "@/lib/motion";
+import {
+  homeArrivalSignal,
+  motionDistancePixels,
+  motionDurationSeconds,
+  motionEase,
+  motionStaggerSeconds,
+} from "@/lib/motion";
 import { ZentryMotif } from "@/components/motion/home-zentry-motifs";
 import {
   homeZentryFallbackPhoto as privateFallbackPhoto,
@@ -103,15 +109,22 @@ export function HomeZentryHero({
       return;
     }
     const profile = homeZentrySlides[activeIndexRef.current]?.entrance;
+    const distance = window.matchMedia("(max-width: 40rem)").matches
+      ? motionDistancePixels.revealMobile
+      : window.matchMedia("(max-width: 63.999rem)").matches
+        ? motionDistancePixels.revealTablet
+        : motionDistancePixels.revealDesktop;
     gsap.fromTo(
       targets,
-      { y: profile === "energetic" ? 36 : 26, opacity: 0 },
+      { y: distance, opacity: 0 },
       {
         y: 0,
         opacity: 1,
-        duration: profile === "energetic" ? 0.55 : profile === "graceful" ? 0.84 : 0.72,
-        stagger: profile === "graceful" ? 0.13 : profile === "energetic" ? 0.06 : 0.085,
-        ease: profile === "energetic" ? "power4.out" : "power3.out",
+        duration: profile === "energetic" ? motionDurationSeconds.slow : motionDurationSeconds.ceremonial,
+        stagger: profile === "graceful"
+          ? motionStaggerSeconds.heading + motionStaggerSeconds.interface
+          : profile === "energetic" ? motionStaggerSeconds.cards : motionStaggerSeconds.heading,
+        ease: profile === "energetic" ? motionEase.emphasised : motionEase.enter,
         clearProps: "all",
       },
     );
@@ -221,7 +234,12 @@ export function HomeZentryHero({
       },
     });
     transitionRef.current = timeline;
-    if (text) timeline.to(text, { y: -15, opacity: 0, duration: 0.22, ease: "power2.in" }, 0);
+    if (text) timeline.to(text, {
+      y: -motionDistancePixels.revealMobile,
+      opacity: 0,
+      duration: motionDurationSeconds.fast,
+      ease: motionEase.exit,
+    }, 0);
     timeline.to(layer, {
       x: 0,
       y: 0,
@@ -229,8 +247,8 @@ export function HomeZentryHero({
       scaleY: 1,
       opacity: 1,
       borderRadius: 0,
-      duration: target.entrance === "energetic" ? 0.76 : target.entrance === "graceful" ? 0.98 : 0.92,
-      ease: target.entrance === "energetic" ? "power4.inOut" : "power3.inOut",
+      duration: motionDurationSeconds.ceremonial,
+      ease: target.entrance === "energetic" ? motionEase.emphasised : motionEase.move,
     }, 0);
   }, [
   failedAssets,
@@ -298,7 +316,7 @@ export function HomeZentryHero({
     if (!allowed.matches) return;
     const timer = window.setInterval(() => {
       const root = rootRef.current;
-      if (document.hidden || !visibleRef.current || busyRef.current ||
+      if (!allowed.matches || document.hidden || !visibleRef.current || busyRef.current ||
           root?.matches(":hover, :focus-within")) return;
       void goTo(nextIndex(activeIndexRef.current), previewRef.current);
     }, 10_000);
@@ -320,7 +338,7 @@ export function HomeZentryHero({
       aria-roledescription="carousel"
       aria-label="SSKEMS school highlights"
     >
-      <div ref={viewportRef} className="zhero__viewport">
+      <div ref={viewportRef} id="home-highlight-scenes" className="zhero__viewport" aria-busy={isBusy}>
         <div className="zhero__media" data-motion-home-hero-media aria-hidden="true">
           <Image
             key={slide.image}
@@ -368,6 +386,7 @@ export function HomeZentryHero({
             className="zhero__preview"
             data-next-slide={next.id}
             disabled={isBusy}
+            aria-controls="home-highlight-scenes"
             aria-label={`Expand next slide: ${next.headline}`}
             onClick={() => void goTo(nextIndex(activeIndexRef.current), previewRef.current)}
           >
@@ -388,13 +407,14 @@ export function HomeZentryHero({
           <span className="zhero__count" aria-hidden="true">
             {slide.chapter} <span>—</span> {String(slideCount).padStart(2, "0")}
           </span>
-          <div className="zhero__progress" aria-label="Select a hero slide">
+          <div className="zhero__progress" role="group" aria-label="Select a hero slide">
             {homeZentrySlides.map((item, index) => (
               <button
                 type="button"
                 key={item.id}
                 aria-label={`Show slide ${item.chapter}: ${item.headline}`}
                 aria-current={index === activeIndex ? "true" : undefined}
+                aria-controls="home-highlight-scenes"
                 disabled={isBusy}
                 className="zhero__progress-item"
                 data-current={index === activeIndex ? "true" : "false"}
@@ -402,12 +422,14 @@ export function HomeZentryHero({
               />
             ))}
           </div>
-          <div className="zhero__navigation">
+          <div className="zhero__navigation" role="group" aria-label="Hero navigation">
             <button type="button" disabled={isBusy}
               aria-label="Previous slide"
+              aria-controls="home-highlight-scenes"
               onClick={() => void goTo(previousIndex(activeIndexRef.current))}>←</button>
             <button type="button" disabled={isBusy}
               aria-label="Next slide"
+              aria-controls="home-highlight-scenes"
               onClick={() => void goTo(nextIndex(activeIndexRef.current), previewRef.current)}>→</button>
             <button type="button" className="zhero__autoplay"
               aria-label={paused ? "Resume automatic slides" : "Pause automatic slides"}

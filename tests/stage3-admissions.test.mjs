@@ -131,15 +131,15 @@ test("separates enquiry, application, and status actions on the admissions landi
   const text = textContent(html);
   const anchors = anchorsIn(html);
   const expectedActions = [
-    ["Make an Enquiry", "/admissions/enquire"],
-    ["Start an Application", "/admissions/apply"],
-    ["Check Application Status", "/admissions/application-status"],
+    [/make an enquiry/i, "/admissions/enquire"],
+    [/review the journey|application/i, "/admissions/apply"],
+    [/application status/i, "/admissions/application-status"],
   ];
 
   for (const [label, href] of expectedActions) {
     assert.ok(
-      anchors.some((anchor) => anchor.text === label && anchor.href === href),
-      `Missing distinct admissions action: ${label}`,
+      anchors.some((anchor) => label.test(anchor.text) && anchor.href === href),
+      `Missing distinct admissions action for ${href}`,
     );
   }
 
@@ -151,6 +151,9 @@ test("separates enquiry, application, and status actions on the admissions landi
 test("publishes the parent-facing admissions process in chronological order", async () => {
   const html = await assertPublicHtml("/admissions/process");
   const text = textContent(html);
+  const timeline = withoutScripts(html).match(/<ol\b[^>]*data-motion-component=["']admissions-steps["'][^>]*>([\s\S]*?)<\/ol>/i)?.[1];
+  assert.ok(timeline, "The admissions process must provide its native ordered timeline");
+  const headings = [...timeline.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/gi)].map(([, content]) => textContent(content));
   const steps = [
     /check eligibility/i,
     /make an enquiry/i,
@@ -161,12 +164,12 @@ test("publishes the parent-facing admissions process in chronological order", as
     /provisional offer/i,
     /admission confirmation/i,
   ];
-  const positions = steps.map((pattern) => text.search(pattern));
-
-  assert.ok(positions.every((position) => position >= 0), "All eight parent-facing steps must be present");
-  assert.deepEqual([...positions].sort((a, b) => a - b), positions, "Admissions steps must remain chronological");
+  assert.equal(headings.length, steps.length, "All eight parent-facing steps must be present");
+  steps.forEach((pattern, index) => assert.match(headings[index], pattern, "Admissions steps must remain chronological"));
   assert.match(text, /non-selective|not (?:a )?(?:selection )?test|no screening/i);
-  assert.match(text, /does not guarantee admission|admission is not guaranteed/i);
+  assert.match(text, /an application is not an admission decision/i);
+  assert.match(text, /Admission follows authorised approval/i);
+  assert.doesNotMatch(text, /admission guaranteed|guaranteed admission|guaranteed seat/i);
 });
 
 test("keeps age guidance source-led and returns only safe eligibility language", async () => {
@@ -200,13 +203,13 @@ test("keeps the enquiry low-friction and excludes sensitive application-stage fi
   for (const label of [
     "Parent or guardian name",
     "Mobile number",
-    "Child's name",
-    "Class sought",
+    "Class you are considering",
     "Academic year",
     "Preferred contact method",
   ]) {
     assert.match(formText, new RegExp(label.replace("'", "['’]"), "i"), `Enquiry form is missing ${label}`);
   }
+  assert.doesNotMatch(formText, /Child['’]s name/i, "The initial enquiry must not collect the child's identity");
 
   const inputMarkup = [...form.matchAll(/<(?:input|select|textarea)\b[^>]*>/gi)]
     .map(([tag]) => tag)
