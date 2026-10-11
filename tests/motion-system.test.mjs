@@ -186,8 +186,9 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(homeHeroVideo, /gsap\.killTweensOf\(\[frame, video\]\)/);
   assert.doesNotMatch(homeHeroVideo, /autoPlay|\bloop\b/);
   assert.match(homePreloader, /document\.fonts\?\.ready/);
-  assert.match(homePreloader, /homePreloaderMinimumVisibleMs = 1_500/);
-  assert.ok(homePreloader.includes("homePreloaderMinimumVisibleMs - (performance.now() - visibleAt)"));
+  assert.match(homePreloader, /privateHomePreloaderMinimumVisibleMs = 1_500/);
+  assert.match(homePreloader, /publicHomePreloaderMinimumVisibleMs = 900/);
+  assert.ok(homePreloader.includes("minimumVisibleMs - (performance.now() - visibleAt)"));
   assert.ok(homePreloader.includes("window.clearTimeout(minimumHoldTimer)"));
   assert.match(homePreloader, /data-motion-home-hero-media/);
   assert.match(homePreloader, /motionDurationSeconds\.ceremonial/);
@@ -195,7 +196,9 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(homePreloader, /element\.dataset\.state = "exit-reveal"/);
   assert.match(homePreloader, /onStart:\s*\(\) => \{[\s\S]*?announceHomeArrivalReady\(\)/);
   assert.match(homePreloader, /mode === "public" \? "Welcome" : "Private review"/);
-  assert.doesNotMatch(homePreloader, /sessionStorage|hasSeenHomeEntry|rememberHomeEntry/);
+  assert.match(homePreloader, /hasSeenPublicHomePreloader\(\)/);
+  assert.match(homePreloader, /markPublicHomePreloaderSeen\(\)/);
+  assert.match(homePreloader, /window\.sessionStorage\.setItem/);
   assert.match(homePreloader, /new homepage load starts a fresh branded introduction/);
   assert.match(homePreloader, /scale: 1 \/ motionScale\.imageMaskMaximum/);
   assert.match(homePreloader, /data-motion-component="home-preloader"/);
@@ -215,7 +218,7 @@ test("keeps motion in narrow, scoped and reversible client islands", async () =>
   assert.match(programmesPreview, /data-motion-programme-card/);
   assert.match(homepage, /<HomeHeroMotion\s+reviewMode=/);
   assert.match(homepage, /process\.env\.HOMEPAGE_PUBLIC_PRELOADER === "true"/);
-  assert.match(homepage, /showHomePreloader = privateHomepageReview \|\| publicHomepagePreloader/);
+  assert.match(homepage, /showHomePreloader = privateHomepageReview \|\| publicHomepagePreloader \|\| publicHeroRequested/);
   assert.match(homepage, /<HomePreloaderMotion mode=\{privateHomepageReview \? "private-review" : "public"\} \/>/);
   assert.match(homepage, /preloaderEnabled=\{showHomePreloader\}/);
   assert.match(homeHero, /waitForArrival = privatePrototype \|\| preloaderEnabled/);
@@ -312,13 +315,13 @@ test("keeps essential navigation and content available without JavaScript", asyn
   assert.match(header, /setAttribute\("data-navigation-enhanced", "true"\)/);
   assert.match(header, /href="\/admissions\/enquire"/);
   assert.match(admissions, /<h1>\{title\}<\/h1>/);
-  assert.match(admissions, /<Link href="\/admissions\/contact">Ask the school/);
+  assert.match(admissions, /href="\/admissions\/contact"/);
   assert.doesNotMatch(admissions, /style=\{\{[^}]*opacity:\s*0/);
-  assert.match(homepage, /Here,/);
+  assert.match(homepage, /Here<span className="home-hero__punctuation"/);
   assert.match(homepage, /href="\/admissions\/enquire"/);
   assert.match(homepage, /Mandatory Public Disclosure/);
   assert.match(homepage, /process\.env\.HOMEPAGE_PUBLIC_PRELOADER === "true"/);
-  assert.match(homepage, /showHomePreloader = privateHomepageReview \|\| publicHomepagePreloader/);
+  assert.match(homepage, /showHomePreloader = privateHomepageReview \|\| publicHomepagePreloader \|\| publicHeroRequested/);
   assert.match(homepage, /<HomePreloaderMotion mode=\{privateHomepageReview \? "private-review" : "public"\} \/>/);
   assert.match(homepage, /<HomeHeroVideoTransition asset=\{null\}>/);
   assert.doesNotMatch(homepage, /style=\{\{[^}]*opacity:\s*0/);
