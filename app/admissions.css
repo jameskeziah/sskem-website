@@ -1599,8 +1599,8 @@
   background: #fff;
 
   transition:
-    transform 300ms ease,
-    box-shadow 300ms ease;
+    transform var(--motion-duration-deliberate) var(--motion-ease-enter),
+    box-shadow var(--motion-duration-deliberate) var(--motion-ease-enter);
 }
 
 .admissions-start-card:first-child {
@@ -4703,7 +4703,7 @@ h1 {
   font-style: normal;
 
   transition:
-    transform 220ms ease;
+    transform var(--motion-duration-standard) var(--motion-ease-enter);
 }
 
 .admissions-faq-v2__list
