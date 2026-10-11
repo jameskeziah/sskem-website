@@ -146,7 +146,8 @@ test("publishes a matching schema, audit and guarded recorder command", async ()
   assert.equal(schema.$defs.authority.properties.publicActivationAllowed.const, false);
   assert.match(scripts["poster:decision-record"], /record-homepage-poster-delivery-decision/);
   assert.match(scripts["poster:decision-bindings:audit"], /audit-homepage-poster-delivery-decision-bindings/);
-  assert.match(scripts.prebuild, /poster:decision-bindings:audit/);
+  assert.match(scripts.prebuild, /build:integrity/);
+  assert.match(scripts["release:full-audit"], /poster:decision-bindings:audit/);
   assert.match(scripts["test:contract"], /homepage-poster-delivery-decision-binding\.test\.mjs/);
   assert.match(recorder, /POSTER_DECISION_BINDING_ACKNOWLEDGEMENT/);
   assert.match(recorderLibrary, /record-controlled-poster-delivery-decision/);

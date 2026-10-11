@@ -434,10 +434,14 @@ test("catalogues homepage media and keeps pupil artwork behind publication gates
   assert.match(brief, /LCP ≤ 2\.5 seconds/i);
   assert.match(publicationGuide, /Never place[\s\S]*?consent forms[\s\S]*?private file paths/i);
   assert.match(publicationGuide, /separation of duties/i);
-  assert.match(publicationGate, /Public build blocked by the structured approval manifest/);
+  assert.match(publicationGate, /Approval manifest integrity failed/);
+  assert.match(publicationGate, /Approved public media is missing/);
+  assert.match(publicationGate, /Active homepage achievement publication is invalid/);
   assert.match(publicationGate, /loadApprovalManifest/);
-  assert.match(publicationGate, /HOMEPAGE_REVIEW_MODE === "private"/);
-  assert.match(packageJson.scripts.prebuild, /assert-publication-safety\.mjs/);
+  assert.match(publicationGate, /approvedPublicMedia/);
+  assert.match(publicationGate, /homepageAchievementPublicationSummary/);
+  assert.match(packageJson.scripts.prebuild, /build:integrity/);
+  assert.match(packageJson.scripts["build:integrity"], /assert-publication-safety\.mjs/);
   assert.match(packageJson.scripts["approvals:audit"], /audit-approval-manifest\.mjs/);
   assert.match(packageJson.scripts["approvals:release"], /--release/);
   assert.match(packageJson.scripts["build:review"], /HOMEPAGE_REVIEW_MODE=private/);

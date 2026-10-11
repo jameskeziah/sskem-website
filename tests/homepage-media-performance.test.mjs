@@ -86,7 +86,8 @@ test("wires the read-only audit into every build", async () => {
   ]);
   const packageJson = JSON.parse(packageText);
 
-  assert.match(packageJson.scripts.prebuild, /performance:audit/);
+  assert.match(packageJson.scripts.prebuild, /build:integrity/);
+  assert.match(packageJson.scripts["release:full-audit"], /performance:audit/);
   assert.match(packageJson.scripts["test:contract"], /homepage-media-performance\.test\.mjs/);
   assert.doesNotMatch(scriptText, /writeFile|rename|unlink|rm\(/);
 });

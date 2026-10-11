@@ -132,7 +132,8 @@ test("publishes the guarded command, schema, build audit and operating boundary"
 
   assert.equal(schema.properties.policy.properties.exactSourceHashRequired.const, true);
   assert.equal(schema.properties.policy.properties.sourceReplacementRequiresReapproval.const, true);
-  assert.match(packageJson.scripts.prebuild, /achievements:bindings:audit/);
+  assert.match(packageJson.scripts.prebuild, /build:integrity/);
+  assert.match(packageJson.scripts["release:full-audit"], /achievements:bindings:audit/);
   assert.match(packageJson.scripts["achievements:activate"], /activate-homepage-achievement/);
   assert.match(command, /default mode is read-only/i);
   assert.match(guide, /never add a binding by hand/i);
