@@ -47,7 +47,7 @@ const chapters = [
 /**
  * This is a photographic homepage chapter, not a new media publication path.
  * Render only with the exact public hero projection already verified against
- * the school approval manifest; never fall back to private hero-drafts media.
+ * the school approval manifest; never fall back to unpublished private imagery.
  */
 export function HomepageStorySequence({
   slides,
