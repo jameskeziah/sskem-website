@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { CampusPicture } from "@/components/campus-picture";
 import { HomepageAdmissionsFeature } from "@/components/home/homepage-admissions-feature";
 import { HomepageIdentityStrip } from "@/components/home/homepage-identity-strip";
+import { HomepageStorySequence } from "@/components/home/homepage-story-sequence";
 import { HomepageInstitutionPathways } from "@/components/home/homepage-institution-pathways";
 import { HomeAchievementsMotion } from "@/components/motion/home-achievements-motion";
 import { HomeCampusMotion } from "@/components/motion/home-campus-motion";
@@ -22,6 +23,7 @@ import { getPublicHeroPublication } from "@/lib/home-zentry-publication";
 
 
 import "./homepage.css";
+import "./homepage-story.css";
 import "./zentry-hero.css";
 import { HomeFoundationMotion } from "@/components/home/home-foundation-motion";
 
@@ -71,7 +73,8 @@ export default async function Home() {
   // Public homepage media activates directly from seven individually approved,
   // exact-asset records. No manually configured Vercel flag is needed on each
   // deploy. Reverting an approval or failing its media audit disables it.
-  const publishedHero = !privateHomepageReview ? getPublicHeroPublication() : null;
+  const approvedHeroMedia = getPublicHeroPublication();
+  const publishedHero = !privateHomepageReview ? approvedHeroMedia : null;
   const publicHeroRequested = Boolean(publishedHero?.ready);
   const showHomePreloader = privateHomepageReview || publicHomepagePreloader || publicHeroRequested;
   // Experimental/private components remain isolated from this public rollout.
@@ -185,6 +188,7 @@ export default async function Home() {
 
 <HomeFoundationMotion>
         <HomepageIdentityStrip />
+        <HomepageStorySequence slides={approvedHeroMedia.ready ? approvedHeroMedia.slides : []} />
        
         <section className="home-manifesto home-manifesto--hybrid">
           <div className="home-shell home-manifesto__grid">
