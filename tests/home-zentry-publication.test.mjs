@@ -99,7 +99,13 @@ test("public activation is separately gated and Vercel audits actual production 
   assert.match(script, /sharp\(contents\)\.metadata\(\)/);
   assert.match(script, /auditPublicReleaseReadiness\(\)/);
   assert.match(ignore, /\/public\/media\/home\/hero-drafts\//);
-  assert.match(packageJson.scripts["prebuild:vercel"], /audit-home-zentry-publication/);
+  // The Vinext/Vercel prebuild now runs the shared integrity gate.
+  // Hero SHA-256/WebP and school release checks run as a separate mandatory CI step.
+  const workflow = await readFile(new URL("../.github/workflows/full-homepage-release.yml", import.meta.url), "utf8");
+  assert.match(packageJson.scripts["prebuild:vercel"], /build:integrity/);
+  assert.match(packageJson.scripts["build:integrity"], /assert-publication-safety/);
+  assert.match(packageJson.scripts["hero:publication:audit"], /audit-home-zentry-publication/);
+  assert.match(workflow, /run: npm run hero:publication:audit/);
 });
 
 test("production never activates private-review homepage merely from a stale global flag", async () => {
