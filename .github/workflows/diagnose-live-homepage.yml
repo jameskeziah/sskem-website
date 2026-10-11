@@ -55,9 +55,10 @@ jobs:
                   s.includes("home-hero__desktop-poster")) process.exit(1);
               console.log("VERIFIED LIVE: interactive seven-scene hero + approved production photo; legacy poster absent");
             '; then
-              echo "Production has not switched yet (attempt $attempt)."
-            else
+              echo "Production homepage verified on attempt $attempt."
               exit 0
+            else
+              echo "Production has not switched yet (attempt $attempt)."
             fi
           done
           echo 'Production still serves the legacy hero after expected rollout window.' >&2
