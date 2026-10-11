@@ -8,6 +8,7 @@ import { CampusPicture } from "@/components/campus-picture";
 import { HomepageAdmissionsFeature } from "@/components/home/homepage-admissions-feature";
 import { HomepageIdentityStrip } from "@/components/home/homepage-identity-strip";
 import { HomepageInstitutionPathways } from "@/components/home/homepage-institution-pathways";
+import { HomepageFamilyGuide } from "@/components/home/homepage-family-guide";
 import { HomeAchievementsMotion } from "@/components/motion/home-achievements-motion";
 import { HomeCampusMotion } from "@/components/motion/home-campus-motion";
 import { HomeHeroMotion } from "@/components/motion/home-hero-motion";
@@ -22,6 +23,7 @@ import { getPublicHeroPublication } from "@/lib/home-zentry-publication";
 
 
 import "./homepage.css";
+import "./homepage-family-guide.css";
 import "./zentry-hero.css";
 import { HomeFoundationMotion } from "@/components/home/home-foundation-motion";
 
@@ -82,9 +84,9 @@ export default async function Home() {
   const achievementArtwork = selectHomepageAchievementArtwork({
     mode: privateAchievementReview ? "private-review" : "public",
   });
-  const eventsChapter = achievementArtwork.length ? "07" : "06";
+  const eventsChapter = achievementArtwork.length ? "08" : "07";
   const invitationChapter = String(
-    6 + Number(achievementArtwork.length > 0) + Number(editorial.events.length > 0),
+    7 + Number(achievementArtwork.length > 0) + Number(editorial.events.length > 0),
   ).padStart(2, "0");
 
   return (
@@ -399,12 +401,14 @@ export default async function Home() {
           </div>
         </HomeSectionReveal>
 
+        <HomepageFamilyGuide />
+
         {achievementArtwork.length ? (
           <HomeAchievementsMotion publicationMode={privateAchievementReview ? "private-review" : "public"}>
             <div className="home-shell">
               <div className="home-section-heading home-section-heading--split">
                 <div>
-                  <p className="home-chapter-label"><span>06</span> {privateAchievementReview ? "Publication review" : "Verified achievements"}</p>
+                  <p className="home-chapter-label"><span>07</span> {privateAchievementReview ? "Publication review" : "Verified achievements"}</p>
                   <h2 id="achievements-title">Effort deserves a thoughtful stage.</h2>
                 </div>
                 <div className={`home-achievements__review${privateAchievementReview ? "" : " home-achievements__review--approved"}`} id="achievement-review-note">
