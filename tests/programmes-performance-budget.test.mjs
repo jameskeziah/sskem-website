@@ -62,7 +62,8 @@ test("wires static and runtime Programme performance gates into private review",
   ]);
   const packageJson = JSON.parse(packageText);
 
-  assert.match(packageJson.scripts.prebuild, /programmes:performance:audit/);
+  assert.match(packageJson.scripts.prebuild, /build:integrity/);
+  assert.match(packageJson.scripts["release:full-audit"], /programmes:performance:audit/);
   assert.match(packageJson.scripts["test:qa:programmes:review"], /programmes-performance\.spec\.ts/);
   assert.match(packageJson.scripts["test:contract"], /programmes-performance-budget\.test\.mjs/);
   assert.match(browserSpec, /largest-contentful-paint/);

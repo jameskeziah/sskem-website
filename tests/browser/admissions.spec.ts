@@ -1,20 +1,20 @@
 import { expect, test } from "@playwright/test";
 
-test("admissions hub keeps the three parent journeys distinct", async ({ page }) => {
+test("admissions hub preserves enquiry, visit and application-guide routes", async ({ page }) => {
   await page.goto("/admissions");
 
-  await expect(page.getByRole("heading", { name: /Admissions/i, level: 1 })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Make an Enquiry", exact: true })).toHaveAttribute(
+  await expect(page.getByRole("heading", { name: /Your child.s next chapter starts here/i, level: 1 })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Ask admissions", exact: true })).toHaveAttribute(
     "href",
     "/admissions/enquire",
   );
-  await expect(page.getByRole("link", { name: "Start an Application", exact: true })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "Review the journey", exact: true })).toHaveAttribute(
     "href",
     "/admissions/apply",
   );
-  await expect(page.getByRole("link", { name: "Check Application Status", exact: true })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "Plan your visit", exact: true })).toHaveAttribute(
     "href",
-    "/admissions/application-status",
+    "/admissions/visit",
   );
 });
 
@@ -38,8 +38,8 @@ test("mobile enquiry remains short and does not collect sensitive evidence", asy
   const form = page.locator("form").filter({ has: page.getByLabel(/Parent (?:or|\/) guardian name/i) });
   await expect(form).toBeVisible();
   await expect(form.getByLabel(/Mobile number/i)).toBeVisible();
-  await expect(form.getByLabel(/Child(?:'|’)?s name/i)).toBeVisible();
-  await expect(form.getByLabel("Class sought", { exact: true })).toBeVisible();
+  await expect(form.getByLabel(/Child(?:'|’)?s name/i)).toHaveCount(0);
+  await expect(form.getByLabel("Class you are considering", { exact: true })).toBeVisible();
   await expect(form.getByLabel(/Consent to be contacted|I consent/i)).toBeVisible();
   await expect(form.locator('input[type="file"]')).toHaveCount(0);
 

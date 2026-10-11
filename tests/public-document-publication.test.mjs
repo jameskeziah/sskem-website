@@ -169,7 +169,8 @@ test("wires binding audit and fail-closed runtime projection into the build", as
     readFile(new URL("../docs/document-ingestion.md", import.meta.url), "utf8"),
   ]);
   const packageJson = JSON.parse(packageText);
-  assert.match(packageJson.scripts.prebuild, /documents:bindings:audit/);
+  assert.match(packageJson.scripts.prebuild, /build:integrity/);
+  assert.match(packageJson.scripts["release:full-audit"], /documents:bindings:audit/);
   assert.match(packageJson.scripts["test:contract"], /public-document-publication\.test\.mjs/);
   assert.match(documentData, /createPublicDocumentPublicationIndex/);
   assert.match(documentData, /currentVersion: version/);

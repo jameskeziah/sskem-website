@@ -141,7 +141,8 @@ test("ships an authenticated noindex workspace, guarded export, commands, and da
   assert.match(dashboard, /href="\/publication-review\/migration-matrix"/);
   assert.match(packageJson.scripts["migration:matrix:audit"], /audit-legacy-content-migration/);
   assert.match(packageJson.scripts["migration:matrix:release"], /--release/);
-  assert.match(packageJson.scripts.prebuild, /migration:matrix:audit.*release:audit/);
+  assert.match(packageJson.scripts.prebuild, /build:integrity/);
+  assert.match(packageJson.scripts["release:full-audit"], /migration:matrix:audit.*release:audit/);
   assert.equal(schema.additionalProperties, false);
   assert.equal(schema.properties.records.minItems, 115);
   assert.match(guide, /route continuity is not content migration/i);

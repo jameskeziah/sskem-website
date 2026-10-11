@@ -1599,8 +1599,8 @@
   background: #fff;
 
   transition:
-    transform 300ms ease,
-    box-shadow 300ms ease;
+    transform var(--motion-duration-deliberate) var(--motion-ease-enter),
+    box-shadow var(--motion-duration-deliberate) var(--motion-ease-enter);
 }
 
 .admissions-start-card:first-child {
@@ -4703,7 +4703,7 @@ h1 {
   font-style: normal;
 
   transition:
-    transform 220ms ease;
+    transform var(--motion-duration-standard) var(--motion-ease-enter);
 }
 
 .admissions-faq-v2__list
@@ -8503,8 +8503,7 @@ h1 {
 [role="progressbar"] > span {
   display: block;
 
-  width:
-    calc(var(--application-progress) * 100%);
+  width: 100%;
 
   height: 100%;
 
@@ -8512,7 +8511,9 @@ h1 {
 
   background: #ef7f89;
 
-  transition: width 220ms ease;
+  transform: scaleX(var(--application-progress));
+  transform-origin: left center;
+  transition: transform var(--motion-duration-standard) var(--motion-ease-enter);
 }
 
 .application-prototype__workspace {

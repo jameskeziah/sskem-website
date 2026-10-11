@@ -2449,10 +2449,6 @@ body[data-home-preloader="active"] {
     );
 }
 
-.home-campus--hybrid .home-campus__feature-media img {
-  will-change: transform;
-}
-
 .home-campus--hybrid .home-campus__gallery {
   gap: clamp(1rem, 2.2vw, 2rem);
 }

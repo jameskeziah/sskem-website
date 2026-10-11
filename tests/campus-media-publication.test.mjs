@@ -140,7 +140,8 @@ test("publishes the registry schema and wires the exact binding audit into prebu
 
   assert.equal(schema.properties.registryId.const, "sskem-campus-media-publication-bindings");
   assert.equal(schema.properties.policy.properties.exactVariantHashesRequired.const, true);
-  assert.match(packageJson.scripts.prebuild, /media:bindings:audit/);
+  assert.match(packageJson.scripts.prebuild, /build:integrity/);
+  assert.match(packageJson.scripts["release:full-audit"], /media:bindings:audit/);
   assert.match(packageJson.scripts["media:activate"], /activate-campus-media/);
   assert.match(componentSource, /<source type="image\/avif"/);
   assert.match(componentSource, /<source type="image\/webp"/);
