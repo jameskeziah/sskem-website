@@ -1144,11 +1144,6 @@ p {
     color-mix(in srgb, var(--color-neutral-0) 76%, transparent);
 }
 
-.site-header--cinematic .utility-bar a:hover,
-.site-header--cinematic .utility-search:hover {
-  color: var(--color-neutral-0);
-}
-
 .site-header--cinematic
   .header-main:not([data-floating="true"])
   .brand-identity__copy strong,
@@ -1176,9 +1171,6 @@ p {
     color var(--motion-duration-fast) var(--motion-ease-move);
 }
 
-.site-header--cinematic
-  .header-main:not([data-floating="true"])
-  .desktop-navigation__entry:hover,
 .site-header--cinematic
   .header-main:not([data-floating="true"])
   .desktop-navigation__entry:focus-within {
@@ -2227,6 +2219,18 @@ p {
 @keyframes modal-enter { from { opacity: 0; transform: translateY(calc(-1 * var(--space-16))) scale(0.98); } }
 
 @media (hover: hover) and (pointer: fine) {
+  .site-header--cinematic .utility-bar a:hover,
+  .site-header--cinematic .utility-search:hover {
+    color: var(--color-neutral-0);
+  }
+
+  .site-header--cinematic
+    .header-main:not([data-floating="true"])
+    .desktop-navigation__entry:hover {
+    background:
+      color-mix(in srgb, var(--color-neutral-0) 11%, transparent);
+  }
+
   a:hover {
     text-decoration-thickness: var(--border-width-strong);
   }
