@@ -20,7 +20,7 @@ test("homepage storyline reuses the authorized public hero projection", async ()
   const published = JSON.parse(publication);
   for (const id of ["science", "digital", "skating", "culture"]) {
     const slide = published.slides.find((item) => item.id === id);
-    assert.ok(slide, \`Missing published story image: \${id}\`);
+    assert.ok(slide, `Missing published story image: ${id}`);
     assert.equal(slide.decision, "approved");
     assert.equal(slide.visualReviewStatus, "approved");
     assert.equal(slide.approvedAlt, true);
