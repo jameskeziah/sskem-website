@@ -115,6 +115,14 @@ export default async function Home() {
           <HomeZentryHero />
         ) : publishedHero?.ready ? (
           <HomeZentryHero slides={publishedHero.slides} fallbackPhoto={publishedHero.slides[0].image} />
+        ) : privateHomepageReview && approvedHeroMedia.ready ? (
+          // This preview uses the already-approved public photographs when no
+          // private draft slider was explicitly requested. Do not fall back to
+          // the static poster merely because HOMEPAGE_REVIEW_MODE is private.
+          <HomeZentryHero
+            slides={approvedHeroMedia.slides}
+            fallbackPhoto={approvedHeroMedia.slides[0].image}
+          />
         ) : (
         <HomeHeroMotion
           reviewMode={privateHomepageReview ? "private-review" : "public"}
