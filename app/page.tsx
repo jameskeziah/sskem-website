@@ -73,8 +73,8 @@ export default async function Home() {
   // Public homepage media activates directly from seven individually approved,
   // exact-asset records. No manually configured Vercel flag is needed on each
   // deploy. Reverting an approval or failing its media audit disables it.
-  const approvedHeroMedia = getPublicHeroPublication();
-  const publishedHero = !privateHomepageReview ? approvedHeroMedia : null;
+  const publishedHero = !privateHomepageReview ? getPublicHeroPublication() : null;
+  const approvedHeroMedia = publishedHero ?? getPublicHeroPublication();
   const publicHeroRequested = Boolean(publishedHero?.ready);
   const showHomePreloader = privateHomepageReview || publicHomepagePreloader || publicHeroRequested;
   // Experimental/private components remain isolated from this public rollout.
