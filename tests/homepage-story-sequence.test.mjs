@@ -35,6 +35,9 @@ test("photographic story keeps motion optional and the hero unchanged", async ()
     source("app/homepage-story.css"),
   ]);
   assert.match(page, /<HomeZentryHero slides=\{publishedHero\.slides\} fallbackPhoto=\{publishedHero\.slides\[0\]\.image\} \/>/);
+  assert.match(page, /privateHomepageReview && approvedHeroMedia\.ready/);
+  assert.match(page, /slides=\{approvedHeroMedia\.slides\}/);
+  assert.match(page, /fallbackPhoto=\{approvedHeroMedia\.slides\[0\]\.image\}/);
   assert.match(motion, /"use client";/);
   assert.match(motion, /gsap\.matchMedia\(\)/);
   assert.match(motion, /conditions\.reduce/);
