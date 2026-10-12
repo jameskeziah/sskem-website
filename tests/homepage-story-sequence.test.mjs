@@ -11,7 +11,7 @@ test("homepage storyline reuses the authorized public hero projection", async ()
     source("components/home/homepage-story-sequence.tsx"),
     source("content/home-zentry-publication.json"),
   ]);
-  assert.match(page, /approvedHeroMedia = getPublicHeroPublication\(\)/);
+  assert.match(page, /approvedHeroMedia = publishedHero \?\? getPublicHeroPublication\(\)/);
   assert.match(page, /<HomepageStorySequence slides=\{approvedHeroMedia\.ready \? approvedHeroMedia\.slides : \[\]\} \/>/);
   assert.match(story, /if \(scenes\.length !== chapters\.length\) return null/);
   assert.match(story, /src=\{slide\.image\}/);
