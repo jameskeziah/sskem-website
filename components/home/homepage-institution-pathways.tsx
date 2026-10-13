@@ -133,7 +133,7 @@ export function HomepageInstitutionPathways({
 
         {pathways.length === 0 ? (
           <div className="home-pathways__explore" data-motion-home-pathway-supporting>
-            <Link href="/school/academics" className="home-pathways__explore-tile">
+            <Link href="/student-life" className="home-pathways__explore-tile">
               <SiteImage
                 src="/media/home/story/early-learning.webp"
                 alt=""
@@ -143,7 +143,7 @@ export function HomepageInstitutionPathways({
                 loading="lazy"
                 unoptimized
               />
-              <span>Explore the school <strong>School academics ↗</strong></span>
+              <span>Explore school experiences <strong>Student life ↗</strong></span>
             </Link>
             <Link href="/school/facilities" className="home-pathways__explore-tile">
               <SiteImage
