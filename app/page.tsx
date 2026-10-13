@@ -25,6 +25,7 @@ import { getPublicHeroPublication } from "@/lib/home-zentry-publication";
 import "./homepage.css";
 import "./homepage-story.css";
 import "./homepage-lower.css";
+import "./homepage-campus-clear.css";
 import "./zentry-hero.css";
 import { HomeFoundationMotion } from "@/components/home/home-foundation-motion";
 
