@@ -414,7 +414,20 @@ test("catalogues homepage media and keeps pupil artwork behind publication gates
   ]);
   const packageJson = JSON.parse(packageText);
 
-  for (const file of mediaFiles.slice(0, 4)) {
+  // Campus photography was upgraded to three clearer WebP assets. Keep the
+  // legacy source inventory intact, but assert the paths actually rendered.
+  const activeCampusMedia = [
+    "public/media/home/campus-main.jpeg",
+    "public/media/home/campus-grounds.jpeg",
+    "public/media/home/campus-courtyard.jpeg",
+    "public/media/home/campus-clear/entrance.webp",
+    "public/media/home/campus-clear/building.webp",
+    "public/media/home/campus-clear/grounds.webp",
+  ];
+  for (const file of activeCampusMedia) {
+    const details = await stat(projectFile(file));
+    assert.ok(details.isFile(), `${file} must be a file`);
+    assert.ok(details.size >= 10_000, `${file} is unexpectedly small`);
     assert.match(homepage, new RegExp(file.replace("public", "").replaceAll(".", "\\.")));
   }
   for (const file of mediaFiles.slice(4, -1)) {
