@@ -23,18 +23,21 @@ type HomepagePathway = {
   summary: string;
 };
 
-const pathwayArt: Record<ProgrammesPublicationRoute, { src: string; position: string }> = {
+const pathwayArt: Record<ProgrammesPublicationRoute, { src: string; position: string; caption: string }> = {
   "/school/academics": {
     src: "/media/home/story/early-learning.webp",
     position: "50% 42%",
+    caption: "Early learning",
   },
   "/junior-college": {
-    src: "/media/home/story/science-practical.webp",
+    src: "/media/home/story/science-discovery.webp",
     position: "45% 35%",
+    caption: "Practical learning",
   },
   "/programmes/jee-neet": {
     src: "/media/home/story/computers.webp",
     position: "50% 48%",
+    caption: "Digital learning",
   },
 };
 
@@ -110,7 +113,7 @@ export function HomepageInstitutionPathways({
                   loading="lazy"
                   style={{ objectPosition: pathwayArt[pathway.route].position }}
                 />
-                <span>Moments at SSKEMS</span>
+                <span>{pathwayArt[pathway.route].caption} · SSKEMS</span>
               </div>
               <div className="home-pathway-card__editorial">
                 <p className="home-pathway-card__label">{pathway.label}</p>
@@ -127,6 +130,35 @@ export function HomepageInstitutionPathways({
             </article>
           ))}
         </div>
+
+        {pathways.length === 0 ? (
+          <div className="home-pathways__explore" data-motion-home-pathway-supporting>
+            <Link href="/school/academics" className="home-pathways__explore-tile">
+              <SiteImage
+                src="/media/home/story/early-learning.webp"
+                alt=""
+                width={1400}
+                height={900}
+                sizes="(max-width: 48rem) 100vw, 50vw"
+                loading="lazy"
+                unoptimized
+              />
+              <span>Explore the school <strong>School academics ↗</strong></span>
+            </Link>
+            <Link href="/school/facilities" className="home-pathways__explore-tile">
+              <SiteImage
+                src="/media/home/campus-clear/grounds.webp"
+                alt=""
+                width={1400}
+                height={600}
+                sizes="(max-width: 48rem) 100vw, 50vw"
+                loading="lazy"
+                unoptimized
+              />
+              <span>Explore our spaces <strong>Campus and facilities ↗</strong></span>
+            </Link>
+          </div>
+        ) : null}
 
         <nav className="home-pathways__supporting" data-motion-home-pathway-supporting aria-label="More ways to explore SSKEMS">
           <span>Also explore</span>
