@@ -10,7 +10,6 @@ import {
   motionDurationSeconds,
   motionEase,
   motionMedia,
-  motionScale,
   motionStaggerSeconds,
 } from "@/lib/motion";
 
@@ -26,8 +25,9 @@ type MotionConditions = {
 };
 
 /**
- * Motion enhances a fully readable static narrative.
- * Never pins the page or hides the photographs when JavaScript is unavailable.
+ * An animated enhancement of an entirely readable static story.
+ * Scroll motion belongs only to the new chapter — no global pinning or
+ * interference with the seven-scene hero and its interaction timeline.
  */
 export function HomepageStoryMotion({ children }: { children: ReactNode }) {
   const root = useRef<HTMLElement>(null);
@@ -38,7 +38,6 @@ export function HomepageStoryMotion({ children }: { children: ReactNode }) {
       if (!element) return;
 
       const media = gsap.matchMedia();
-
       media.add(motionMedia, (context) => {
         const conditions = context.conditions as MotionConditions;
         if (conditions.reduce) return;
@@ -53,20 +52,21 @@ export function HomepageStoryMotion({ children }: { children: ReactNode }) {
           "[data-home-story-intro]",
           element,
         );
+
         if (opening.length) {
           gsap.fromTo(
             opening,
-            { y: distance, opacity: 0 },
+            { y: conditions.mobile ? distance * 2 : distance * 4, opacity: 0 },
             {
               y: 0,
               opacity: 1,
-              duration: motionDurationSeconds.slow,
+              duration: motionDurationSeconds.ceremonial,
               stagger: motionStaggerSeconds.heading,
               ease: motionEase.emphasised,
               clearProps: "opacity,transform",
               scrollTrigger: {
                 trigger: element,
-                start: "top 85%",
+                start: "top 88%",
                 once: true,
               },
             },
@@ -85,37 +85,44 @@ export function HomepageStoryMotion({ children }: { children: ReactNode }) {
             scene,
           );
           const progress = scene.querySelector<HTMLElement>("[data-home-story-progress]");
+          const secondary = scene.querySelector<HTMLElement>("[data-home-story-secondary]");
+          const immersive = scene.classList.contains("home-story__scene--science")
+            || scene.classList.contains("home-story__scene--skating");
 
+          // Large opening shutter instead of the previous barely visible 3% zoom.
           if (frame) {
             gsap.fromTo(
               frame,
               {
                 clipPath: conditions.mobile
-                  ? "inset(5% 0% 5% 0% round 1.5rem)"
-                  : "inset(8% 9% 8% 9% round 1.5rem)",
+                  ? "inset(8% 5% 8% 5% round 1.25rem)"
+                  : immersive
+                    ? "inset(12% 20% 12% 20% round 1.5rem)"
+                    : "inset(10% 12% 10% 12% round 1.5rem)",
               },
               {
-                clipPath: "inset(0% 0% 0% 0% round 1.5rem)",
-                duration: motionDurationSeconds.ceremonial,
+                clipPath: "inset(0% 0% 0% 0% round 0rem)",
+                duration: motionDurationSeconds.ceremonial + motionDurationSeconds.standard,
                 ease: motionEase.emphasised,
                 clearProps: "clipPath",
                 scrollTrigger: {
                   trigger: scene,
-                  start: "top 82%",
+                  start: "top 80%",
                   once: true,
                 },
               },
             );
           }
 
+          // Noticeable image depth tied to the scroll position, composited only.
           if (photo && !conditions.mobile) {
             gsap.fromTo(
               photo,
-              { scale: motionScale.imageMaskMaximum },
+              { scale: 1.22, yPercent: -7, transformOrigin: "50% 50%" },
               {
-                scale: 1,
+                scale: 1.06,
+                yPercent: 7,
                 ease: "none",
-                clearProps: "transform",
                 scrollTrigger: {
                   trigger: scene,
                   start: "top bottom",
@@ -129,17 +136,40 @@ export function HomepageStoryMotion({ children }: { children: ReactNode }) {
           if (copy.length) {
             gsap.fromTo(
               copy,
-              { opacity: 0, y: distance },
+              {
+                opacity: 0,
+                y: conditions.mobile ? distance * 2 : distance * 4,
+              },
               {
                 opacity: 1,
                 y: 0,
-                duration: motionDurationSeconds.slow,
-                ease: motionEase.enter,
+                duration: motionDurationSeconds.ceremonial,
+                ease: motionEase.emphasised,
                 stagger: motionStaggerSeconds.heading,
                 clearProps: "opacity,transform",
                 scrollTrigger: {
                   trigger: scene,
-                  start: "top 78%",
+                  start: "top 76%",
+                  once: true,
+                },
+              },
+            );
+          }
+
+          if (secondary) {
+            gsap.fromTo(
+              secondary,
+              { opacity: 0, rotation: conditions.mobile ? 3 : 10, y: distance * 5 },
+              {
+                opacity: 1,
+                rotation: 0,
+                y: 0,
+                duration: motionDurationSeconds.ceremonial + motionDurationSeconds.standard,
+                ease: motionEase.emphasised,
+                clearProps: "opacity,transform",
+                scrollTrigger: {
+                  trigger: scene,
+                  start: "top 70%",
                   once: true,
                 },
               },
@@ -155,7 +185,7 @@ export function HomepageStoryMotion({ children }: { children: ReactNode }) {
                 ease: "none",
                 scrollTrigger: {
                   trigger: scene,
-                  start: "top 85%",
+                  start: "top 80%",
                   end: "bottom 25%",
                   scrub: true,
                 },
