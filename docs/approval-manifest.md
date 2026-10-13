@@ -25,6 +25,24 @@ approved record. Approval also requires at least one controlled evidence
 reference, the approving role and an ISO timestamp. Expired approvals fail the
 audit. A withdrawn record cannot retain a public placement.
 
+## Current homepage owner sign-off (13 October 2026)
+
+The project's consolidated content review is recorded in
+[`content/homepage-owner-approval-2026-10-13.json`](../content/homepage-owner-approval-2026-10-13.json).
+The requester confirmed the current website wording and information as accurate
+and confirmed the 13 newly supplied school photos/video assets are approved for
+public website use. **Do not ask for another blanket review of unchanged copy or
+these same supplied media.** Subsequent corrections should be reviewed as
+specific changes.
+
+This sign-off is a review record, **not** a shortcut around the controlled
+publication manifest. Preserve existing per-record decisions and the separate
+evidence checks for child media, legal rights, official documents and public
+contact/leadership claims until each has a valid controlled record. Do not
+invent evidence IDs or personal approver details, and do not store consent
+forms in GitHub. Production release, domain cutover and SEO indexing remain
+separate decisions.
+
 ## Operating procedure
 
 1. Verify the source in the school's controlled system. For pupil material,

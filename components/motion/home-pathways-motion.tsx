@@ -127,6 +127,53 @@ export function HomePathwaysMotion({
           );
         }
 
+        // The pathway photographs open with a distinct shutter animation.
+        // The text and links are never masked or hidden without JavaScript.
+        cards.forEach((card) => {
+          const imageFrame = card.querySelector<HTMLElement>(
+            ".home-pathway-card__visual",
+          );
+          const photograph = imageFrame?.querySelector<HTMLElement>("img");
+          if (!imageFrame || !photograph) return;
+
+          gsap.fromTo(
+            imageFrame,
+            {
+              clipPath: conditions.mobile
+                ? "inset(0% 8% 0% 8% round 0.8rem)"
+                : "inset(12% 16% 12% 16% round 1rem)",
+            },
+            {
+              clipPath: "inset(0% 0% 0% 0%)",
+              duration: motionDurationSeconds.ceremonial,
+              ease: motionEase.emphasised,
+              clearProps: "clipPath",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 83%",
+                once: true,
+              },
+            },
+          );
+
+          if (conditions.desktop) {
+            gsap.fromTo(
+              photograph,
+              { scale: 1.14 },
+              {
+                scale: 1,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: true,
+                },
+              },
+            );
+          }
+        });
+
         if (supporting) {
           timeline.fromTo(
             supporting,

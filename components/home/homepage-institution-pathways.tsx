@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteImage } from "@/components/media/SiteImage";
 
 import { HomePathwaysMotion } from "@/components/motion/home-pathways-motion";
 
@@ -20,6 +21,24 @@ type HomepagePathway = {
   label: string;
   title: string;
   summary: string;
+};
+
+const pathwayArt: Record<ProgrammesPublicationRoute, { src: string; position: string; caption: string }> = {
+  "/school/academics": {
+    src: "/media/home/story/early-learning.webp",
+    position: "50% 42%",
+    caption: "Early learning",
+  },
+  "/junior-college": {
+    src: "/media/home/story/science-discovery.webp",
+    position: "45% 35%",
+    caption: "Practical learning",
+  },
+  "/programmes/jee-neet": {
+    src: "/media/home/story/computers.webp",
+    position: "50% 48%",
+    caption: "Digital learning",
+  },
 };
 
 const supportingRoutes = [
@@ -64,9 +83,9 @@ export function HomepageInstitutionPathways({
         <div className="home-section-heading home-section-heading--split" data-motion-home-pathway-heading>
           <div>
             <p className="home-chapter-label"><span>03</span> Learning pathways</p>
-            <h2 id="pathways-title">Distinct paths. One place to begin.</h2>
+            <h2 id="pathways-title">Where learning leads next.</h2>
           </div>
-          <p>Explore the school, Junior College and Institute through their current published profiles.</p>
+          <p>Explore the learning opportunities described in the school’s currently published programme profiles.</p>
         </div>
 
         <div className="home-pathways__grid" data-pathway-count={pathways.length}>
@@ -83,7 +102,20 @@ export function HomepageInstitutionPathways({
                   {pathway.state === "approved-public-subset" ? "Published profile" : "Private review"}
                 </span>
               </div>
-              <div>
+              <div className="home-pathway-card__visual" aria-hidden="true">
+                <SiteImage
+                  src={pathwayArt[pathway.route].src}
+                  alt=""
+                  width={1200}
+                  height={800}
+                  sizes="(max-width: 48rem) 100vw, (max-width: 70rem) 50vw, 32vw"
+                  unoptimized
+                  loading="lazy"
+                  style={{ objectPosition: pathwayArt[pathway.route].position }}
+                />
+                <span>{pathwayArt[pathway.route].caption} · SSKEMS</span>
+              </div>
+              <div className="home-pathway-card__editorial">
                 <p className="home-pathway-card__label">{pathway.label}</p>
                 <h3>{pathway.title}</h3>
                 <p>{pathway.summary}</p>
@@ -98,6 +130,35 @@ export function HomepageInstitutionPathways({
             </article>
           ))}
         </div>
+
+        {pathways.length === 0 ? (
+          <div className="home-pathways__explore" data-motion-home-pathway-supporting>
+            <Link href="/student-life" className="home-pathways__explore-tile">
+              <SiteImage
+                src="/media/home/story/early-learning.webp"
+                alt=""
+                width={1400}
+                height={900}
+                sizes="(max-width: 48rem) 100vw, 50vw"
+                loading="lazy"
+                unoptimized
+              />
+              <span>Explore school experiences <strong>Student life ↗</strong></span>
+            </Link>
+            <Link href="/school/facilities" className="home-pathways__explore-tile">
+              <SiteImage
+                src="/media/home/campus-clear/grounds.webp"
+                alt=""
+                width={1400}
+                height={600}
+                sizes="(max-width: 48rem) 100vw, 50vw"
+                loading="lazy"
+                unoptimized
+              />
+              <span>Explore our spaces <strong>Campus and facilities ↗</strong></span>
+            </Link>
+          </div>
+        ) : null}
 
         <nav className="home-pathways__supporting" data-motion-home-pathway-supporting aria-label="More ways to explore SSKEMS">
           <span>Also explore</span>

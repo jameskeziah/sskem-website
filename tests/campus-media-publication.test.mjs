@@ -146,10 +146,14 @@ test("publishes the registry schema and wires the exact binding audit into prebu
   assert.match(componentSource, /<source type="image\/avif"/);
   assert.match(componentSource, /<source type="image\/webp"/);
   assert.match(componentSource, /<source type="image\/jpeg"/);
-  for (const recordId of Object.keys({
-    "media-campus-main": true,
-    "media-campus-grounds": true,
-    "media-campus-entrance": true,
-    "media-campus-courtyard": true,
-  })) assert.match(homepageSource, new RegExp(`recordId=["']${recordId}["']`));
+  // CampusPicture still enforces the exact publication binding contract,
+  // while the homepage now uses the user's clear, optimized campus photographs.
+  assert.match(homepageSource, /<CampusPicture\b/);
+  for (const asset of [
+    "/media/home/campus-clear/entrance.webp",
+    "/media/home/campus-clear/building.webp",
+    "/media/home/campus-clear/grounds.webp",
+  ]) {
+    assert.match(homepageSource, new RegExp(asset.replaceAll(".", "\\.")));
+  }
 });

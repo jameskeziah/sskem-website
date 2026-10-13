@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "recordId": "sskem-homepage-consolidated-owner-approval-2026-10-13",
+  "project": "jameskeziah/sskem-website",
+  "reviewBranch": "feat/homepage-visual-story-20261011",
+  "reviewedBaseRevision": "7703b291f018f4efadc7f9c431bc533e1d686450",
+  "reviewDate": "2026-10-13",
+  "decision": "owner-approved-current-presentation",
+  "source": "Direct project requester confirmation in the website review conversation on 2026-10-13; media approval also noted in PR #16, issue comment 6145052621.",
+  "coverage": {
+    "currentWebsiteContent": "The requester approved the accuracy of the current school website information and wording in this review revision, with changes to be reported later.",
+    "publicUseOfNewHomepageMedia": "The requester separately confirmed the newly supplied campus photographs, school-life photographs, and 31-second campus showcase video were approved for public website use.",
+    "newlySuppliedMediaRepositoryPaths": [
+      "public/media/home/campus-clear/entrance.webp",
+      "public/media/home/campus-clear/building.webp",
+      "public/media/home/campus-clear/grounds.webp",
+      "public/media/home/story/early-learning.webp",
+      "public/media/home/story/science-practical.webp",
+      "public/media/home/story/science-discovery.webp",
+      "public/media/home/story/environment.webp",
+      "public/media/home/story/dance.webp",
+      "public/media/home/story/computers.webp",
+      "public/media/home/story/library.webp",
+      "public/media/home/story/chemistry-room.webp",
+      "public/media/home/story/taekwondo-achievement.webp",
+      "public/media/home/video/sskem-campus-showcase.mp4"
+    ],
+    "hero": "The established seven-slide hero is unchanged and governed by its existing publication records.",
+    "futureChanges": "Corrections and new material require a fresh review only for changed content; no repeated blanket approval is requested for unchanged content."
+  },
+  "boundaries": {
+    "formalPublicationRegistry": "content/approval-manifest.json remains authoritative for individual governed publication records.",
+    "noInferredChecks": "This owner confirmation does not prove separately performed guardian-consent, source-rights, authority, document authenticity, malware-scan, accessibility or statutory-disclosure checks.",
+    "noEvidenceFabrication": "No consent document, signed certificate, private evidence ID, approver identity, or verification timestamp has been invented.",
+    "unaffectedRecords": "Previously blocked results artwork, unverified governance/contact claims, and controlled statutory PDFs stay in their existing recorded publication states.",
+    "publicIndexing": "SEO indexing and the production merge remain separate launch decisions.",
+    "evidenceHandling": "Store private rights, consent, and certificate evidence only in the school's controlled system, not this public repository."
+  }
+}
