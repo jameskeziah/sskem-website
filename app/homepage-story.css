@@ -1,51 +1,51 @@
-/* Homepage photographic story: keep the approved hero untouched.
-   Clear, full-resolution images and readable static content are the baseline. */
+/* Cinematic editorial story, isolated from the existing seven-slide hero.
+   Images and text are fully visible without JS or with reduced motion. */
 .home-story {
+  --story-ink: #071b2a;
+  --story-coral: #ffb4a4;
   position: relative;
   isolation: isolate;
   overflow: clip;
-  padding-block: clamp(5rem, 10vw, 9rem) clamp(4rem, 8vw, 7rem);
-  background:
-    radial-gradient(circle at 95% 5%, #164c6140, transparent 28rem),
-    linear-gradient(180deg, #071725 0%, #0e2b3e 52%, #091c2c 100%);
-  color: #f8f7f2;
+  background: var(--story-ink);
+  color: #fffaf2;
 }
 
 .home-story__intro {
   display: grid;
-  gap: clamp(1rem, 2vw, 2rem);
-  margin-bottom: clamp(4rem, 7vw, 8rem);
+  align-content: center;
+  gap: clamp(1.5rem, 3.3vw, 3rem);
+  min-height: min(83svh, 57rem);
+  padding-block: clamp(5rem, 9vw, 9rem);
 }
 
 .home-story__eyebrow {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
-  width: 100%;
   margin: 0;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #d1e4ee55;
-  color: #a9dce5;
-  font-size: clamp(0.75rem, 1vw, 0.95rem);
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid #d8e8e94d;
+  color: #9ddce2;
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
 .home-story__eyebrow span {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 400;
 }
 
 .home-story__intro h2 {
-  max-width: 13ch;
+  max-width: 14ch;
   margin: 0;
   font-family: var(--home-display);
-  font-size: clamp(4.25rem, 10vw, 10rem);
+  font-size: clamp(4.25rem, 10.5vw, 11.2rem);
   font-stretch: condensed;
   font-weight: 850;
-  letter-spacing: -0.07em;
+  letter-spacing: -0.075em;
   line-height: 0.86;
   text-wrap: balance;
   text-transform: uppercase;
@@ -53,57 +53,47 @@
 
 .home-story__intro h2 em {
   display: block;
-  color: #ffb0a8;
+  color: var(--story-coral);
   font-style: normal;
 }
 
 .home-story__lead {
   justify-self: end;
-  max-width: 36rem;
+  max-width: 37rem;
   margin: 0;
-  color: #d8e7ed;
-  font-size: clamp(1.05rem, 1.65vw, 1.45rem);
+  color: #d2e5e8;
+  font-size: clamp(1.1rem, 1.65vw, 1.45rem);
   line-height: 1.6;
 }
 
-.home-story__scenes {
-  display: grid;
-  gap: clamp(4rem, 10vw, 10rem);
+.home-story__scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  color: #a8d8dd;
+  font-size: 0.73rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
+
+.home-story__scroll-cue span { font-size: 1.35rem; }
+
+/* Shared photographic and accessible narrative foundation. */
+.home-story__scenes { display: grid; gap: 0; }
 
 .home-story__scene {
-  display: grid;
-  width: min(calc(100% - clamp(2rem, 8vw, 8rem)), 94rem);
-  min-height: min(74svh, 52rem);
-  grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
-  align-items: center;
-  gap: clamp(2rem, 5vw, 7rem);
-  margin-inline: auto;
-}
-
-.home-story__scene:nth-child(even) {
-  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
-}
-
-.home-story__scene:nth-child(even) .home-story__figure {
-  order: 2;
-}
-
-.home-story__scene:nth-child(even) .home-story__content {
-  order: 1;
-}
-
-.home-story__figure {
+  position: relative;
+  isolation: isolate;
   min-width: 0;
-  margin: 0;
 }
+
+.home-story__figure { position: relative; min-width: 0; margin: 0; }
 
 .home-story__frame {
   position: relative;
-  height: clamp(26rem, 58vw, 45rem);
   overflow: hidden;
-  border-radius: 1.5rem;
-  background: #173c4b;
+  background: #1a4555;
 }
 
 .home-story__photo {
@@ -115,78 +105,240 @@
 }
 
 .home-story__figure figcaption {
-  margin-top: 1rem;
-  color: #bad2dc;
-  font-size: 0.75rem;
-  font-weight: 750;
+  color: inherit;
+  font-size: 0.7rem;
+  font-weight: 800;
   letter-spacing: 0.13em;
   line-height: 1.5;
   text-transform: uppercase;
 }
 
 .home-story__content {
+  position: relative;
+  z-index: 3;
   display: grid;
-  gap: clamp(1.25rem, 2vw, 2rem);
   align-content: center;
+  gap: clamp(1rem, 2.1vw, 2.1rem);
   min-width: 0;
 }
 
 .home-story__scene-label {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.25rem;
   margin: 0;
-  color: #ffc2b4;
-  font-size: clamp(0.72rem, 0.94vw, 0.9rem);
-  font-weight: 800;
-  letter-spacing: 0.15em;
+  color: var(--story-coral);
+  font-size: clamp(0.7rem, 0.85vw, 0.88rem);
+  font-weight: 850;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
 }
 
 .home-story__scene-label span {
   display: grid;
-  width: 3rem;
-  height: 3rem;
+  width: 3.25rem;
+  height: 3.25rem;
   place-items: center;
-  border: 1px solid #ffc2b48c;
+  border: 1px solid currentColor;
   border-radius: 50%;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   letter-spacing: 0;
 }
 
 .home-story__content h3 {
-  max-width: 13ch;
   margin: 0;
   font-family: var(--home-display);
-  font-size: clamp(3.1rem, 5.2vw, 6rem);
+  font-size: clamp(3.4rem, 6.4vw, 7.3rem);
   font-weight: 850;
-  letter-spacing: -0.065em;
-  line-height: 0.96;
+  letter-spacing: -0.07em;
+  line-height: 0.92;
   text-wrap: balance;
   text-transform: uppercase;
 }
 
 .home-story__description {
-  max-width: 30rem;
+  max-width: 35rem;
   margin: 0;
-  color: #e0e9eb;
-  font-size: clamp(1rem, 1.18vw, 1.18rem);
-  line-height: 1.65;
+  font-size: clamp(1.03rem, 1.25vw, 1.25rem);
+  line-height: 1.6;
 }
 
 .home-story__rule {
-  width: 100%;
-  height: 2px;
-  margin-top: clamp(0.5rem, 2vw, 2rem);
+  width: min(100%, 27rem);
+  height: 3px;
+  margin-top: 1rem;
   overflow: hidden;
-  background: #b7d7dd40;
+  background: #ffffff52;
 }
 
 .home-story__rule span {
   display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--story-coral);
+}
+
+/* Act one: full-screen imagery, typography appears over the photograph. */
+.home-story__scene--science {
+  display: grid;
+  min-height: clamp(40rem, 90svh, 67rem);
+  align-items: end;
+  width: 100%;
+  padding: clamp(2rem, 6vw, 7rem);
+  color: #fffaf2;
+  background: #0d2c41;
+}
+
+.home-story__scene--science .home-story__figure,
+.home-story__scene--skating .home-story__figure {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+}
+
+.home-story__scene--science .home-story__frame,
+.home-story__scene--skating .home-story__frame {
   width: 100%;
   height: 100%;
-  background: #ffb0a8;
+}
+
+.home-story__scene--science::after,
+.home-story__scene--skating::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, #05131ce8 0%, #061823bb 35%, #07172039 78%),
+    linear-gradient(0deg, #06141ba1, transparent 46%);
+}
+
+.home-story__scene--science .home-story__content {
+  max-width: 54rem;
+  padding-bottom: clamp(2rem, 6vw, 5rem);
+}
+
+.home-story__scene--science .home-story__figure figcaption,
+.home-story__scene--skating .home-story__figure figcaption {
+  position: absolute;
+  z-index: 3;
+  right: clamp(1.5rem, 4vw, 5rem);
+  bottom: 2rem;
+  color: #e5f2ef;
+}
+
+.home-story__scene--science .home-story__content h3 {
+  max-width: 11ch;
+  font-size: clamp(4rem, 8.5vw, 10rem);
+}
+
+/* Act two: bright editorial magazine layout with an oversized photo. */
+.home-story__scene--digital {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 7rem);
+  min-height: clamp(39rem, 89svh, 65rem);
+  padding: clamp(4rem, 8vw, 9rem) clamp(1.5rem, 6vw, 7rem);
+  background: #f2ede3;
+  color: #0b2a3b;
+}
+
+.home-story__scene--digital .home-story__figure { align-self: stretch; }
+.home-story__scene--digital .home-story__frame {
+  height: 100%;
+  min-height: 33rem;
+  border-radius: 0.5rem 5rem 0.5rem 0.5rem;
+}
+
+.home-story__scene--digital .home-story__photo {
+  object-position: var(--story-focal-desktop, center);
+}
+
+.home-story__scene--digital .home-story__figure figcaption {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  padding: 0.6rem 0.85rem;
+  background: #0c2437e6;
+  color: #fffaf2;
+}
+
+.home-story__scene--digital .home-story__scene-label { color: #a64b4c; }
+.home-story__scene--digital .home-story__description { color: #345063; }
+.home-story__scene--digital .home-story__rule { background: #143d4b30; }
+.home-story__scene--digital .home-story__rule span { background: #c46061; }
+
+/* Act three: another cinematic shot but with a radically different crop and
+   a powerful left-aligned typographic block. */
+.home-story__scene--skating {
+  display: grid;
+  min-height: clamp(40rem, 90svh, 67rem);
+  align-items: center;
+  padding: clamp(2rem, 7vw, 8rem);
+  color: #fffdf3;
+  background: #0b303a;
+}
+
+.home-story__scene--skating .home-story__content { max-width: 56rem; }
+.home-story__scene--skating .home-story__content h3 {
+  max-width: 10ch;
+  font-size: clamp(4rem, 9vw, 10.5rem);
+}
+.home-story__scene--skating::after {
+  background: linear-gradient(90deg, #061c28e8 0%, #082635d4 36%, #0b263a25 88%);
+}
+.home-story__scene--skating .home-story__scene-label { color: #ffd3a6; }
+.home-story__scene--skating .home-story__rule span { background: #ffd3a6; }
+
+/* Act four: asymmetrical magazine collage with a second approved photograph. */
+.home-story__scene--culture {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 7vw, 9rem);
+  align-items: center;
+  min-height: clamp(41rem, 88svh, 68rem);
+  padding: clamp(5rem, 9vw, 10rem) clamp(1.5rem, 7vw, 8rem);
+  background: #e5ede6;
+  color: #102e3a;
+}
+
+.home-story__scene--culture .home-story__figure {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 0 0 clamp(3rem, 7vw, 7rem) clamp(2rem, 4vw, 4rem);
+}
+.home-story__scene--culture .home-story__content { grid-column: 1; grid-row: 1; }
+.home-story__scene--culture .home-story__frame {
+  height: clamp(25rem, 51vw, 42rem);
+  border-radius: 48% 48% 0.8rem 0.8rem / 22% 22% 0.8rem 0.8rem;
+}
+.home-story__scene--culture .home-story__figure figcaption {
+  margin-top: 1rem;
+  color: #395b61;
+}
+.home-story__scene--culture .home-story__scene-label { color: #ab5460; }
+.home-story__scene--culture .home-story__description { color: #31525e; }
+.home-story__scene--culture .home-story__rule { background: #173c4728; }
+.home-story__scene--culture .home-story__rule span { background: #b65d67; }
+
+.home-story__support-photo {
+  position: absolute;
+  z-index: 2;
+  left: -2rem;
+  bottom: 0;
+  width: 43%;
+  aspect-ratio: 1.06;
+  overflow: hidden;
+  border: clamp(0.3rem, 0.65vw, 0.7rem) solid #e5ede6;
+  border-radius: 0.8rem;
+  background: #123d50;
+  box-shadow: 0 2rem 4rem #071f3133;
+}
+.home-story__support-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .home-story__outro {
@@ -194,111 +346,119 @@
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  margin-top: clamp(5rem, 10vw, 10rem);
-  padding-top: 1.75rem;
-  border-top: 1px solid #dae9ee55;
+  padding-block: clamp(5rem, 9vw, 9rem);
+  border-top: 1px solid #d1edef38;
 }
-
 .home-story__outro p {
   max-width: 38rem;
   margin: 0;
   font-family: var(--home-display);
-  font-size: clamp(1.75rem, 3.2vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
+  font-size: clamp(2rem, 4vw, 4.1rem);
+  font-weight: 850;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
 }
-
 .home-story__outro a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
-  min-height: 3rem;
-  flex-shrink: 0;
-  padding: 0.8rem 1.25rem;
-  border: 1px solid #ffb0a8;
-  border-radius: 99px;
-  color: #fffaf3;
-  font-weight: 750;
+  min-height: 3.5rem;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid var(--story-coral);
+  border-radius: 100px;
+  color: #fffaf2;
+  font-weight: 800;
   text-decoration: none;
-  transition: background-color var(--motion-duration-standard) var(--motion-ease-enter);
 }
-
 .home-story__outro a:focus-visible {
-  outline: 3px solid #ffb0a8;
+  outline: 3px solid var(--story-coral);
   outline-offset: 4px;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .home-story__outro a:hover {
-    background: #ffb0a81c;
-  }
+  .home-story__outro a:hover { background: #ffb4a429; }
 }
 
 @media (max-width: 63.999rem) {
-  .home-story__scene,
-  .home-story__scene:nth-child(even) {
-    width: min(calc(100% - 3rem), 60rem);
-    min-height: 0;
+  .home-story__scene--digital,
+  .home-story__scene--culture {
     grid-template-columns: 1fr;
     gap: 2rem;
+    min-height: 0;
   }
-
-  .home-story__scene:nth-child(even) .home-story__figure,
-  .home-story__scene:nth-child(even) .home-story__content {
-    order: initial;
-  }
-
-  .home-story__frame {
+  .home-story__scene--digital .home-story__frame {
+    min-height: 0;
     height: auto;
     aspect-ratio: 4 / 3;
   }
-
-  .home-story__content h3 {
-    max-width: 17ch;
+  .home-story__scene--culture .home-story__figure,
+  .home-story__scene--culture .home-story__content {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .home-story__scene--culture .home-story__figure { order: 1; }
+  .home-story__scene--culture .home-story__content { order: 2; }
+  .home-story__scene--culture .home-story__frame {
+    height: auto;
+    aspect-ratio: 4 / 3;
   }
 }
 
 @media (max-width: 47.999rem) {
-  .home-story__intro h2 {
-    font-size: clamp(3.45rem, 14vw, 6rem);
+  .home-story__intro {
+    min-height: 0;
+    padding-block: 5rem;
+    gap: 1.6rem;
   }
+  .home-story__intro h2 { font-size: clamp(3.5rem, 13vw, 6rem); }
+  .home-story__lead { justify-self: start; }
 
-  .home-story__lead {
-    justify-self: start;
+  .home-story__scene--science,
+  .home-story__scene--skating {
+    min-height: 79svh;
+    padding: 2rem 1.25rem;
   }
-
-  .home-story__scenes {
-    gap: 5rem;
+  .home-story__scene--science::after,
+  .home-story__scene--skating::after {
+    background: linear-gradient(0deg, #061724ef 0%, #0617249e 43%, #0617241c 100%);
   }
-
-  .home-story__scene,
-  .home-story__scene:nth-child(even) {
-    width: min(calc(100% - 2rem), 37rem);
+  .home-story__scene--science .home-story__content,
+  .home-story__scene--skating .home-story__content {
+    max-width: 100%;
+    align-self: end;
+    padding-bottom: 2rem;
   }
-
-  .home-story__frame {
-    aspect-ratio: 4 / 4.3;
-    border-radius: 1rem;
-  }
-
-  .home-story__photo {
-    object-position: var(--story-focal-mobile, center);
-  }
-
+  .home-story__scene--science .home-story__content h3,
+  .home-story__scene--skating .home-story__content h3,
   .home-story__content h3 {
-    font-size: clamp(2.9rem, 12vw, 4.5rem);
+    font-size: clamp(3rem, 11.8vw, 5.2rem);
   }
-
-  .home-story__outro {
-    align-items: flex-start;
-    flex-direction: column;
+  .home-story__scene--science .home-story__figure figcaption,
+  .home-story__scene--skating .home-story__figure figcaption {
+    right: 1.25rem;
+    bottom: 0.65rem;
+    font-size: 0.61rem;
   }
+  .home-story__photo { object-position: var(--story-focal-mobile, center); }
+  .home-story__scene--digital,
+  .home-story__scene--culture {
+    padding: 4rem 1.25rem 5rem;
+  }
+  .home-story__scene--digital .home-story__frame {
+    aspect-ratio: 4 / 4.4;
+    border-radius: 0.6rem 2.5rem 0.6rem 0.6rem;
+  }
+  .home-story__scene--culture .home-story__figure { padding: 0 0 3rem 1.2rem; }
+  .home-story__scene--culture .home-story__frame { aspect-ratio: 4 / 4.3; }
+  .home-story__support-photo { width: 48%; left: -0.6rem; }
+  .home-story__outro { align-items: flex-start; flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-story__frame,
   .home-story__photo,
+  .home-story__frame,
+  .home-story__support-photo,
   .home-story__outro a {
     transition: none;
   }
