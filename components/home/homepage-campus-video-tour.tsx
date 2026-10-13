@@ -16,7 +16,6 @@ export function HomepageCampusVideoTour() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const fullVideoRef = useRef<HTMLVideoElement>(null);
   const [isInView, setIsInView] = useState(false);
-  const [mayAutoplay, setMayAutoplay] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [manuallyPaused, setManuallyPaused] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -31,7 +30,6 @@ export function HomepageCampusVideoTour() {
       (navigator as Navigator & { connection?: { saveData?: boolean } })
         .connection?.saveData === true;
     const autoAllowed = !reducedMotion.matches && !saveData;
-    setMayAutoplay(autoAllowed);
 
     if (!("IntersectionObserver" in window)) return;
     const observer = new IntersectionObserver(
@@ -76,10 +74,20 @@ export function HomepageCampusVideoTour() {
   }, [isInView, videoLoaded, manuallyPaused, dialogOpen]);
 
   const toggleAmbient = () => {
-    if (!videoLoaded) setVideoLoaded(true);
-    setManuallyPaused((current) => !current);
-    // On reduced-motion / Save-Data devices, the manual click enables play.
-    if (!mayAutoplay) setManuallyPaused(false);
+    if (isPlaying) {
+      ambientRef.current?.pause();
+      setManuallyPaused(true);
+      return;
+    }
+
+    setManuallyPaused(false);
+    setPlaybackBlocked(false);
+    if (!videoLoaded) {
+      setVideoLoaded(true);
+    } else if (isInView && !dialogOpen) {
+      if (ambientRef.current) ambientRef.current.muted = true;
+      void ambientRef.current?.play().catch(() => setPlaybackBlocked(true));
+    }
   };
 
   const openTour = () => {
