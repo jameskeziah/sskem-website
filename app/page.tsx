@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { CampusPicture } from "@/components/campus-picture";
+import { HomepageStoryImage } from "@/components/home/homepage-story-image";
 import { HomepageAdmissionsFeature } from "@/components/home/homepage-admissions-feature";
 import { HomepageIdentityStrip } from "@/components/home/homepage-identity-strip";
 import { HomepageStorySequence } from "@/components/home/homepage-story-sequence";
@@ -81,7 +81,6 @@ export default async function Home() {
   // Experimental/private components remain isolated from this public rollout.
   const zentryHeroPreview = privateHomepageReview && process.env.HOMEPAGE_ZENTRY_HERO === "preview";
   // Full public composition is unlocked separately from private review features.
-  const upgradedCampus = privateHomepageReview || Boolean(publishedHero?.ready);
   const privateAchievementReview = privateHomepageReview;
   const achievementArtwork = selectHomepageAchievementArtwork({
     mode: privateAchievementReview ? "private-review" : "public",
@@ -284,108 +283,64 @@ export default async function Home() {
         </HomeFoundationMotion>
 
         <HomeCampusMotion privateReview={privateHomepageReview} publicEnhanced={Boolean(publishedHero?.ready)}>
-          <div className="home-campus__editorial-intro home-shell">
-            <div className="home-campus__intro-copy">
-            <div className="home-campus__heading" data-motion-home-campus-copy>
-              <p className="home-chapter-label home-chapter-label--light"><span>02</span> The campus</p>
-              <h2 id="campus-title">
-                {upgradedCampus ? (
-                  <>
-                    <span className="visually-hidden">{campusHeading}</span>
-                    <span className="home-campus__title-words" aria-hidden="true">
-                      {campusHeading.split(" ").map((word, index) => (
-                        <span className="home-campus__title-word" data-motion-home-campus-word key={`${word}-${index}`}>
-                          {word}
-                        </span>
-                      ))}
-                    </span>
-                  </>
-                ) : campusHeading}
-              </h2>
-
-{upgradedCampus ? (
-  <div
-    className="home-campus__orbit"
-    aria-hidden="true"
-  >
-    <span className="home-campus__orbit-symbol">
-      ✦
-    </span>
-
-    <span className="home-campus__orbit-note">
-      LOOK CLOSER.
-      <br />
-      THERE&apos;S MORE TO DISCOVER.
-    </span>
-  </div>
-) : null}
-
-              <p>The spaces behind the school day, from the entrance to the grounds where so many moments begin.</p>
+          <div className="home-shell home-campus__clarity-layout">
+            <div className="home-campus__clarity-heading" data-motion-home-campus-copy>
+              <p className="home-chapter-label home-chapter-label--light">
+                <span>02</span> The campus
+              </p>
+              <h2 id="campus-title">{campusHeading}</h2>
+              <p>
+                From the entrance to the school grounds, a clear look at
+                the spaces where learning and everyday school life meet.
+              </p>
             </div>
-          </div>
 
-          {upgradedCampus ? (
-            <figure className="home-campus__feature" data-motion-home-campus-feature>
-              <div className="home-campus__feature-media" data-motion-home-campus-feature-media>
+            <div className="home-campus__clarity-grid">
+              <figure className="home-campus__feature home-campus__clarity-primary" data-motion-home-campus-feature>
+                <div className="home-campus__feature-media" data-motion-home-campus-feature-media>
+                  <HomepageStoryImage
+                    newSrc="/media/home/campus-clear/entrance.webp"
+                    src="/media/home/campus-main.jpeg"
+                    alt="Front entrance and name board of Shree Samarth Krupa English Medium School in Veral."
+                    width={1600}
+                    height={900}
+                    sizes="(max-width: 48rem) 100vw, (max-width: 70rem) 92vw, 62vw"
+                  />
+                </div>
+                <figcaption>01 / Main school entrance</figcaption>
+              </figure>
 
-{privateHomepageReview ? (
-  <SiteImage
-    src={approvedHeroMedia.ready ? approvedHeroMedia.slides[0].image : "/media/home/campus-main.jpeg"}
-    alt="The SSKEMS campus and school building in Veral."
-    width={1800}
-    height={1200}
-    sizes="100vw"
-    unoptimized
-  />
-) : (
-  <CampusPicture
-    recordId="media-campus-main"
-    fallbackSrc="/media/home/campus-main.jpeg"
-    alt="The pink and white SSKEMS school building in Veral."
-    sizes="100vw"
-  />
-)}
-
+              <div className="home-campus__clarity-support">
+                <figure className="home-campus__frame home-campus__clarity-secondary" data-motion-home-campus-frame>
+                  <HomepageStoryImage
+                    newSrc="/media/home/campus-clear/building.webp"
+                    src="/media/home/campus-grounds.jpeg"
+                    alt="Wide exterior view of the pink and white SSKEMS school building."
+                    width={1138}
+                    height={441}
+                    sizes="(max-width: 48rem) 100vw, (max-width: 70rem) 92vw, 34vw"
+                  />
+                  <figcaption>02 / School building</figcaption>
+                </figure>
+                <figure className="home-campus__frame home-campus__clarity-secondary" data-motion-home-campus-frame>
+                  <HomepageStoryImage
+                    newSrc="/media/home/campus-clear/grounds.webp"
+                    src="/media/home/campus-courtyard.jpeg"
+                    alt="Open school ground with the SSKEMS building visible behind it."
+                    width={1400}
+                    height={500}
+                    sizes="(max-width: 48rem) 100vw, (max-width: 70rem) 92vw, 34vw"
+                  />
+                  <figcaption>03 / School grounds</figcaption>
+                </figure>
               </div>
-              <figcaption>The SSKEMS campus in Veral</figcaption>
-            </figure>
-          ) : null}
-          </div>
-
-          <div className="home-shell">
-            <div className="home-campus__gallery">
-              <figure className="home-campus__frame home-campus__frame--grounds" data-motion-home-campus-frame>
-                <CampusPicture
-                  recordId="media-campus-grounds"
-                  fallbackSrc="/media/home/campus-grounds.jpeg"
-                  alt="SSKEMS school building seen across the open grounds."
-                  sizes="(max-width: 768px) 100vw, 68vw"
-                />
-                <figcaption>Across the grounds</figcaption>
-              </figure>
-              <figure className="home-campus__frame home-campus__frame--entrance" data-motion-home-campus-frame>
-                <CampusPicture
-                  recordId="media-campus-entrance"
-                  fallbackSrc="/media/home/campus-entrance.jpeg"
-                  alt="The front entrance of the SSKEMS school building."
-                  sizes="(max-width: 768px) 100vw, 35vw"
-                />
-                <figcaption>At the entrance</figcaption>
-              </figure>
-              <figure className="home-campus__frame home-campus__frame--courtyard" data-motion-home-campus-frame>
-                <CampusPicture
-                  recordId="media-campus-courtyard"
-                  fallbackSrc="/media/home/campus-courtyard.jpeg"
-                  alt="A shaded view of the SSKEMS campus from the grounds."
-                  sizes="(max-width: 768px) 100vw, 42vw"
-                />
-                <figcaption>Campus perspective</figcaption>
-              </figure>
             </div>
 
             <div className="home-campus__closing" data-motion-home-campus-copy>
               <p>One campus. Many beginnings.</p>
-              <Link href="/school/facilities">Explore the campus <span aria-hidden="true">→</span></Link>
+              <Link href="/school/facilities">
+                Explore the campus <span aria-hidden="true">→</span>
+              </Link>
             </div>
           </div>
         </HomeCampusMotion>
