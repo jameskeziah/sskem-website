@@ -61,7 +61,7 @@ const eventDateFormatter = new Intl.DateTimeFormat("en-IN", {
   timeZone: "Asia/Kolkata",
 });
 
-const campusHeading = "A closer look at where the day begins.";
+const campusHeading = "A place to learn. A place to belong.";
 
 export default async function Home() {
   const editorial = await getHomepageEditorialContent();
@@ -283,7 +283,8 @@ export default async function Home() {
         </HomeFoundationMotion>
 
         <HomeCampusMotion privateReview={privateHomepageReview} publicEnhanced={Boolean(publishedHero?.ready)}>
-          <div className="home-shell">
+          <div className="home-campus__editorial-intro home-shell">
+            <div className="home-campus__intro-copy">
             <div className="home-campus__heading" data-motion-home-campus-copy>
               <p className="home-chapter-label home-chapter-label--light"><span>02</span> The campus</p>
               <h2 id="campus-title">
@@ -318,7 +319,7 @@ export default async function Home() {
   </div>
 ) : null}
 
-              <p>Three views of the SSKEMS campus and grounds in Veral.</p>
+              <p>The spaces behind the school day, from the entrance to the grounds where so many moments begin.</p>
             </div>
           </div>
 
@@ -345,9 +346,10 @@ export default async function Home() {
 )}
 
               </div>
-              <figcaption className="home-shell">The SSKEMS campus in Veral</figcaption>
+              <figcaption>The SSKEMS campus in Veral</figcaption>
             </figure>
           ) : null}
+          </div>
 
           <div className="home-shell">
             <div className="home-campus__gallery">
@@ -395,8 +397,8 @@ export default async function Home() {
           <div className="home-shell home-services__grid">
             <div className="home-services__intro" data-home-section-reveal>
               <p className="home-chapter-label home-chapter-label--light"><span>05</span> Essential access</p>
-              <h2 id="services-title">Trust is built by making important information easy to reach.</h2>
-              <p>Admissions guidance, public disclosure and document records remain readable and usable before any animation loads.</p>
+              <h2 id="services-title">Everything important, within reach.</h2>
+              <p>Admissions information, school disclosures and document records in one clear place. Find what you need and keep moving forward.</p>
             </div>
             <nav className="home-services__links" data-home-section-reveal aria-label="Essential school information">
               {serviceLinks.map((item) => (
@@ -483,7 +485,7 @@ export default async function Home() {
           <div className="home-shell home-invitation__grid">
             <div data-home-section-reveal>
               <p className="home-chapter-label"><span>{invitationChapter}</span> Begin a conversation</p>
-              <h2 id="invitation-title">Your next chapter starts with one clear step.</h2>
+              <h2 id="invitation-title">See what comes next.</h2>
             </div>
             <div className="home-invitation__action" data-home-section-reveal>
               <p>{editorial.admissionsCycle.publicMessage}</p>
