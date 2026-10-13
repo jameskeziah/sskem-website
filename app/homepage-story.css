@@ -565,6 +565,6 @@
 @media (max-width: 24rem) {
   .home-story__support-photo--dance,
   .home-story__support-photo--chemistry {
-    display: none;
+    visibility: hidden;
   }
 }
