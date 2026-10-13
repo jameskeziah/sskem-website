@@ -52,7 +52,7 @@ export async function POST(request: Request) {
   const backend = backendOrigin();
   const branchId = process.env.SSKEMS_CRM_BRANCH_ID || "";
   const tenant = process.env.SSKEMS_CRM_TENANT_SLUG || "";
-  if (!backend || !/^\d+$/.test(branchId) || !/^[a-z0-9-]{2,80}$/.test(tenant)) {
+  if (!backend || !/^[a-zA-Z0-9_-]{1,80}$/.test(branchId) || !/^[a-z0-9-]{2,80}$/.test(tenant)) {
     return respond("Online enquiries are temporarily unavailable.", 503);
   }
 
