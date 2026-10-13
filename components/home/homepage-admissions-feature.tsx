@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteImage } from "@/components/media/SiteImage";
 
 import { HomeSectionReveal } from "@/components/motion/home-section-reveal";
 
@@ -21,7 +22,7 @@ export function HomepageAdmissionsFeature({ cycle }: { cycle: HomepageAdmissions
         <div className="home-admissions-feature__intro" data-home-section-reveal>
           <p className="home-chapter-label"><span>04</span> Admissions · {cycle.academicYear}</p>
           <p className="home-admissions-feature__institution">{cycle.institution}</p>
-          <h2 id="home-admissions-title">Begin with the right information.</h2>
+          <h2 id="home-admissions-title">Your next step, made simple.</h2>
           <div className="home-admissions-feature__status">
             <span>Current position</span>
             <strong>{cycle.publicStatus}</strong>
@@ -37,7 +38,20 @@ export function HomepageAdmissionsFeature({ cycle }: { cycle: HomepageAdmissions
           </div>
         </div>
 
-        <ol className="home-admissions-feature__steps" data-home-section-reveal aria-label="Admission journey preview">
+        <div className="home-admissions-feature__journey" data-home-section-reveal>
+          <figure className="home-admissions-feature__photo">
+            <SiteImage
+              src="/media/home/story/environment.webp"
+              alt="SSKEMS students and teachers working together on a tree-planting activity."
+              width={1400}
+              height={900}
+              sizes="(max-width: 70rem) 100vw, 38vw"
+              loading="lazy"
+              unoptimized
+            />
+            <figcaption>Every school journey is built on shared experiences.</figcaption>
+          </figure>
+        <ol className="home-admissions-feature__steps" aria-label="Admission journey preview">
           {admissionsProcess.slice(0, 4).map((step, index) => (
             <li key={step.title}>
               <span>{String(index + 1).padStart(2, "0")}</span>
@@ -45,6 +59,7 @@ export function HomepageAdmissionsFeature({ cycle }: { cycle: HomepageAdmissions
             </li>
           ))}
         </ol>
+        </div>
       </div>
     </HomeSectionReveal>
   );
