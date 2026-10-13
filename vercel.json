@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "sskem-website.vercel.app"
+        }
+      ],
+      "destination": "https://www.sskemschool.com/:path*",
+      "permanent": true
+    }
+  ]
+}
