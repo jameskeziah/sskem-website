@@ -463,3 +463,26 @@
     transition: none;
   }
 }
+
+
+/* The school philosophy follows the cinematic journey as a quieter interlude,
+   not another 100vh-sized hero or a duplicate photographic gallery. */
+.home-foundation-flow .home-manifesto--hybrid {
+  padding-block: clamp(3.5rem, 6vw, 6.5rem);
+  background: #f2ede3;
+}
+.home-foundation-flow .home-manifesto--hybrid .home-manifesto__grid {
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+.home-foundation-flow .home-manifesto--hybrid .home-manifesto__grid h2 {
+  max-width: 19ch;
+  font-size: clamp(2.6rem, 5.2vw, 5.7rem);
+  line-height: 0.99;
+}
+.home-foundation-flow .home-manifesto--hybrid .home-manifesto__lead {
+  margin-top: clamp(1.5rem, 2.5vw, 2.5rem);
+}
+.home-foundation-flow .home-manifesto--hybrid .home-language-lines {
+  margin-top: clamp(1.5rem, 2.5vw, 2.5rem);
+}
