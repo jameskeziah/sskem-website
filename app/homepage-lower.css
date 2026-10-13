@@ -1,0 +1,498 @@
+/* SSKEMS homepage / lower-half art direction.
+ * Intentionally scoped: the seven-slide hero and its motion styles are unchanged.
+ * Each chapter has a different layout, with a compact path toward admissions.
+ */
+
+.home-foundation-flow .home-manifesto--hybrid {
+  position: relative;
+  padding-block: clamp(3rem, 5vw, 5.5rem);
+  background: #f2ede3;
+}
+.home-foundation-flow .home-manifesto--hybrid .home-manifesto__grid {
+  grid-template-columns: minmax(9rem, 0.26fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 5rem);
+}
+.home-foundation-flow .home-manifesto--hybrid .home-manifesto__rail { gap: 1.5rem; }
+.home-foundation-flow .home-manifesto--hybrid .home-manifesto__sunburst {
+  width: clamp(4.5rem, 8vw, 7.5rem);
+}
+.home-foundation-flow .home-manifesto--hybrid .home-manifesto__grid h2 {
+  max-width: 26ch;
+  font-size: clamp(2.4rem, 4.65vw, 5.25rem);
+  line-height: 0.97;
+}
+.home-foundation-flow .home-manifesto--hybrid .home-manifesto__lead {
+  max-width: 42rem;
+  margin: clamp(1rem, 2.3vw, 2rem) 0 0;
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  line-height: 1.6;
+}
+.home-foundation-flow .home-manifesto--hybrid .home-language-lines {
+  max-width: 54rem;
+  margin: clamp(1.5rem, 2.5vw, 2rem) 0 0;
+  padding-top: 1rem;
+}
+
+/* Campus: one compact architectural magazine spread, then a triptych.
+ * The feature photograph no longer creates a second full-width hero. */
+.home-campus--hybrid {
+  padding-block: clamp(3.5rem, 7vw, 7rem);
+  background: linear-gradient(150deg, #092537 0%, #061b2c 70%, #123649 100%);
+}
+.home-campus--hybrid .home-campus__editorial-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 6rem);
+  margin-bottom: clamp(2rem, 5vw, 5rem);
+}
+.home-campus--hybrid .home-campus__intro-copy { position: relative; }
+.home-campus--hybrid .home-campus__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: clamp(1.2rem, 2vw, 2rem);
+  margin-bottom: 0;
+}
+.home-campus--hybrid .home-campus__heading h2 {
+  max-width: 13ch;
+  margin: 0;
+  font-size: clamp(2.7rem, 5.4vw, 5.8rem);
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+}
+.home-campus--hybrid .home-campus__heading > p:last-child {
+  max-width: 27rem;
+  margin: 0;
+  color: #c4d7dc;
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  line-height: 1.65;
+}
+.home-campus--hybrid .home-campus__orbit {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  grid-column: auto;
+  grid-row: auto;
+  margin-top: 0.25rem;
+  opacity: 0.7;
+}
+.home-campus--hybrid .home-campus__orbit-note { visibility: hidden; }
+.home-campus--hybrid .home-campus__feature {
+  min-width: 0;
+  margin: 0;
+}
+.home-campus--hybrid .home-campus__feature-media {
+  width: 100%;
+  aspect-ratio: 1.46;
+  overflow: hidden;
+  border: 1px solid #fff3;
+  border-radius: 1.2rem;
+  box-shadow: 0 2rem 4.5rem #0004;
+}
+.home-campus--hybrid .home-campus__feature-media img {
+  object-position: 49% 50%;
+}
+.home-campus--hybrid .home-campus__feature figcaption {
+  width: auto;
+  margin: 0;
+  padding-top: 0.8rem;
+  color: #c5e4e7;
+  font-size: 0.72rem;
+}
+.home-campus--hybrid .home-campus__gallery {
+  grid-template-columns: 1.4fr 0.95fr 1.15fr;
+  grid-template-rows: none;
+  align-items: stretch;
+  gap: clamp(0.75rem, 1.6vw, 1.5rem);
+}
+.home-campus--hybrid .home-campus__gallery .home-campus__frame {
+  width: 100%;
+  min-height: 0;
+  grid-column: auto;
+  grid-row: auto;
+  align-self: stretch;
+  aspect-ratio: 1.25;
+  border: 0;
+  border-radius: 0.9rem;
+}
+.home-campus--hybrid .home-campus__gallery .home-campus__frame--entrance {
+  aspect-ratio: 0.92;
+  margin-top: 2.2rem;
+}
+.home-campus--hybrid .home-campus__gallery .home-campus__frame--courtyard {
+  aspect-ratio: 1.08;
+  margin-top: 0.9rem;
+}
+.home-campus--hybrid .home-campus__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.home-campus--hybrid .home-campus__closing {
+  align-items: center;
+  margin-top: clamp(1.75rem, 4vw, 3rem);
+  padding-top: clamp(1rem, 2vw, 1.6rem);
+}
+.home-campus--hybrid .home-campus__closing p {
+  max-width: 24ch;
+  font-size: clamp(1.45rem, 2.5vw, 2.7rem);
+  line-height: 1.2;
+}
+.home-campus--hybrid .home-campus__closing a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid #ffb9a7a8;
+  border-radius: 99px;
+  color: #ffe4d2;
+  text-decoration: none;
+}
+
+/* Pathways: photo-led programme navigation, not another wall of typography.
+ * Images illustrate school life rather than proving programme-specific claims. */
+.home-pathways--cinematic {
+  padding-block: clamp(4.5rem, 7vw, 7rem);
+  background: #f5f1e8;
+}
+.home-pathways--cinematic .home-section-heading {
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+.home-pathways--cinematic .home-section-heading h2 {
+  max-width: 16ch;
+  margin-top: 1.1rem;
+  font-size: clamp(2.7rem, 5vw, 5.6rem);
+  line-height: 0.98;
+}
+.home-pathways--cinematic .home-section-heading--split > p {
+  max-width: 24rem;
+  line-height: 1.65;
+}
+.home-pathways--cinematic .home-pathways__grid,
+.home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  grid-template-rows: auto;
+  gap: clamp(0.85rem, 1.4vw, 1.3rem);
+  padding: 0;
+  background: transparent;
+}
+.home-pathways--cinematic .home-pathways__grid .home-pathway-card,
+.home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card {
+  display: flex;
+  min-height: 0;
+  grid-column: auto;
+  grid-row: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
+  padding: 0;
+  border: 1px solid #17394b26;
+  border-radius: 1.15rem;
+  background: #ffffff;
+  color: #143245;
+  box-shadow: 0 0.8rem 2rem #082a4010;
+}
+.home-pathways--cinematic .home-pathways__grid .home-pathway-card::before {
+  content: none;
+}
+.home-pathways--cinematic .home-pathways__grid .home-pathway-card:first-child,
+.home-pathways--cinematic .home-pathways__grid .home-pathway-card:nth-child(2),
+.home-pathways--cinematic .home-pathways__grid .home-pathway-card:nth-child(3) {
+  background: #ffffff;
+  color: #143245;
+}
+.home-pathways--cinematic .home-pathway-card__meta {
+  min-height: 3.5rem;
+  padding: 0.75rem 1.1rem;
+  color: #335267;
+}
+.home-pathways--cinematic .home-pathway-card__status {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+}
+.home-pathways--cinematic .home-pathway-card__visual {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.58;
+  overflow: hidden;
+  background: #e8e4d9;
+}
+.home-pathways--cinematic .home-pathway-card__visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--motion-duration-ceremonial) var(--motion-ease-enter);
+}
+.home-pathways--cinematic .home-pathway-card__visual span {
+  position: absolute;
+  left: 0.85rem;
+  bottom: 0.85rem;
+  z-index: 1;
+  max-width: calc(100% - 1.7rem);
+  padding: 0.4rem 0.7rem;
+  border-radius: 99px;
+  background: #061e2bdc;
+  color: #fffaf3;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.home-pathways--cinematic .home-pathway-card__editorial {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  padding: clamp(1.15rem, 1.8vw, 1.8rem);
+}
+.home-pathways--cinematic .home-pathway-card__editorial .home-pathway-card__label {
+  margin: 0 !important;
+  color: #925c57;
+  font-size: 0.7rem;
+}
+.home-pathways--cinematic .home-pathways__grid .home-pathway-card h3,
+.home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:first-child h3,
+.home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(2) h3,
+.home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(3) h3 {
+  max-width: 15ch;
+  font-size: clamp(1.9rem, 2.65vw, 2.85rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+.home-pathways--cinematic .home-pathways__grid .home-pathway-card p {
+  max-width: 35ch;
+  margin: 0;
+  color: #485d68;
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.58;
+}
+.home-pathways--cinematic .home-pathways__grid .home-pathway-card > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: auto clamp(1.15rem, 1.8vw, 1.8rem) 0;
+  padding: 1rem 0 1.25rem;
+  border-top: 1px solid #1d455030;
+  color: #113f50;
+  font-size: 0.91rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+.home-pathways--cinematic .home-pathway-card__withheld {
+  margin: auto 1.2rem 1.2rem;
+  color: #70595a;
+  font-size: 0.8rem;
+}
+.home-pathways--cinematic .home-pathways__supporting {
+  margin-top: clamp(2rem, 3.5vw, 3rem);
+}
+@media (hover: hover) and (pointer: fine) {
+  .home-pathways--cinematic .home-pathway-card:hover .home-pathway-card__visual img {
+    transform: scale(1.07);
+  }
+}
+
+/* Admissions: an informative warm panel, real activity image, clear steps. */
+.home-admissions-feature {
+  padding-block: clamp(4rem, 7vw, 7rem);
+  background: #f0d8c9;
+  color: #102b3b;
+}
+.home-admissions-feature__grid {
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 6rem);
+}
+.home-admissions-feature h2 {
+  max-width: 13ch;
+  font-size: clamp(2.8rem, 5.5vw, 6rem);
+  line-height: 0.97;
+}
+.home-admissions-feature__institution { color: #3b5362; }
+.home-admissions-feature__message {
+  max-width: 39rem;
+  line-height: 1.65;
+}
+.home-admissions-feature__status {
+  border-color: #47606e4d;
+  background: #fff7f09c;
+}
+.home-admissions-feature__journey {
+  overflow: hidden;
+  border-radius: 1.1rem;
+  background: #0a2437;
+  box-shadow: 0 1.4rem 4rem #1b32362b;
+}
+.home-admissions-feature__photo {
+  position: relative;
+  margin: 0;
+  height: clamp(14rem, 22vw, 19rem);
+  overflow: hidden;
+}
+.home-admissions-feature__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 47%;
+}
+.home-admissions-feature__photo figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 2.3rem 1.3rem 0.9rem;
+  background: linear-gradient(transparent, #061f2acc);
+  color: #fff9ef;
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+.home-admissions-feature__steps {
+  overflow: visible;
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.home-admissions-feature__steps li {
+  min-height: 4.3rem;
+  padding: 0.85rem 1.25rem;
+  border-bottom-color: #ffffff2b;
+}
+.home-admissions-feature__steps li:last-child { border-bottom: 0; }
+
+/* Quick access and final invitation: supporting roles, not competing heroes. */
+.home-services {
+  padding-block: clamp(4.2rem, 7vw, 7.5rem);
+  background: #0b2636;
+}
+.home-services__grid {
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 6vw, 7rem);
+}
+.home-services__intro h2 {
+  max-width: 15ch;
+  font-size: clamp(2.6rem, 4.6vw, 4.9rem);
+  line-height: 1.03;
+}
+.home-services__intro > p:last-child {
+  max-width: 31rem;
+  color: #c0d9df;
+  font-size: clamp(0.98rem, 1.2vw, 1.1rem);
+  line-height: 1.6;
+}
+.home-services__links a { min-height: 6.7rem; }
+.home-services__links strong { font-size: clamp(1.35rem, 2vw, 2rem); }
+.home-invitation {
+  padding-block: clamp(4rem, 7vw, 7rem);
+  background: linear-gradient(125deg, #ecd9c8 0%, #f6ede3 65%, #dce8e1 100%);
+}
+.home-invitation__grid {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.75fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+.home-invitation h2 {
+  max-width: 12ch;
+  font-size: clamp(3rem, 6.5vw, 6.6rem);
+  line-height: 0.97;
+}
+.home-invitation__action {
+  padding: clamp(1.3rem, 2.8vw, 2.8rem);
+  border: 1px solid #26465320;
+  border-radius: 1.1rem;
+  background: #ffffff90;
+  box-shadow: 0 0.6rem 2rem #112b3610;
+}
+.home-invitation__action > p:first-child {
+  max-width: 31rem;
+  line-height: 1.6;
+}
+
+/* Tablets and phones: no desktop-only compositions or overflow. */
+@media (max-width: 70rem) {
+  .home-campus--hybrid .home-campus__editorial-intro {
+    grid-template-columns: 1fr 1fr;
+  }
+  .home-pathways--cinematic .home-pathways__grid,
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  }
+  .home-admissions-feature__grid,
+  .home-services__grid,
+  .home-invitation__grid {
+    grid-template-columns: 1fr;
+  }
+  .home-admissions-feature__journey { max-width: 50rem; width: 100%; }
+}
+@media (max-width: 48rem) {
+  .home-foundation-flow .home-manifesto--hybrid .home-manifesto__grid {
+    grid-template-columns: 1fr;
+  }
+  .home-foundation-flow .home-manifesto--hybrid .home-manifesto__grid h2 {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+  }
+  .home-foundation-flow .home-manifesto--hybrid .home-manifesto__sunburst {
+    width: 4.1rem;
+  }
+  .home-campus--hybrid .home-campus__editorial-intro {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+  .home-campus--hybrid .home-campus__heading h2 {
+    font-size: clamp(2.8rem, 10vw, 4.4rem);
+  }
+  .home-campus--hybrid .home-campus__orbit { width: 3.75rem; height: 3.75rem; }
+  .home-campus--hybrid .home-campus__feature-media {
+    aspect-ratio: 1.58;
+    border-radius: 0.85rem;
+  }
+  .home-campus--hybrid .home-campus__gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
+  .home-campus--hybrid .home-campus__gallery .home-campus__frame--grounds {
+    grid-column: 1 / -1;
+    aspect-ratio: 1.75;
+  }
+  .home-campus--hybrid .home-campus__gallery .home-campus__frame--entrance,
+  .home-campus--hybrid .home-campus__gallery .home-campus__frame--courtyard {
+    grid-column: auto;
+    margin: 0;
+    aspect-ratio: 0.95;
+  }
+  .home-campus--hybrid .home-campus__closing {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .home-pathways--cinematic .home-section-heading h2 {
+    font-size: clamp(2.7rem, 10vw, 4.3rem);
+  }
+  .home-pathways--cinematic .home-pathways__grid,
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] {
+    grid-template-columns: 1fr;
+  }
+  .home-pathways--cinematic .home-pathway-card__visual {
+    aspect-ratio: 1.85;
+  }
+  .home-admissions-feature h2 {
+    font-size: clamp(2.7rem, 10vw, 4.3rem);
+  }
+  .home-services__intro h2 {
+    font-size: clamp(2.5rem, 9vw, 4rem);
+  }
+  .home-invitation h2 {
+    font-size: clamp(2.9rem, 10vw, 4.4rem);
+  }
+  .home-invitation__action { padding: 1.35rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-pathways--cinematic .home-pathway-card__visual img {
+    transition: none;
+  }
+}
