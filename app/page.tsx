@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { CampusPicture } from "@/components/campus-picture";
 import { HomepageStoryImage } from "@/components/home/homepage-story-image";
+import { HomepageCampusVideoTour } from "@/components/home/homepage-campus-video-tour";
 import { HomepageAdmissionsFeature } from "@/components/home/homepage-admissions-feature";
 import { HomepageIdentityStrip } from "@/components/home/homepage-identity-strip";
 import { HomepageStorySequence } from "@/components/home/homepage-story-sequence";
@@ -340,9 +341,12 @@ export default async function Home() {
 
             <div className="home-campus__closing" data-motion-home-campus-copy>
               <p>One campus. Many beginnings.</p>
-              <Link href="/school/facilities">
-                Explore the campus <span aria-hidden="true">→</span>
-              </Link>
+              <div className="home-campus__closing-actions">
+                <HomepageCampusVideoTour />
+                <Link href="/school/facilities">
+                  Explore the campus <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
           </div>
         </HomeCampusMotion>
