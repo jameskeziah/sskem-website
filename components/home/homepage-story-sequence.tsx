@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 
-import { SiteImage } from "@/components/media/SiteImage";
+import { HomepageStoryImage } from "@/components/home/homepage-story-image";
 import { HomepageStoryMotion } from "@/components/home/homepage-story-motion";
 import type { HomeZentrySlide } from "@/lib/home-zentry-slides";
 
@@ -9,45 +9,52 @@ const chapters = [
   {
     id: "science",
     number: "01",
-    label: "Curiosity",
-    title: "It starts with a question.",
+    label: "Early learning",
+    title: "Every journey starts with curiosity.",
     description:
-      "A closer look, a new idea, a moment of discovery. Learning starts when curiosity has room to grow.",
-    caption: "Science and discovery",
+      "The earliest discoveries begin with colour, imagination and the confidence to ask one more question.",
+    caption: "Learning through creativity",
+    image: "/media/home/story/early-learning.webp",
+    alt: "Young SSKEMS students drawing at colourful desks with a teacher in their classroom.",
   },
   {
     id: "digital",
     number: "02",
-    label: "Discovery",
-    title: "Ideas become possibilities.",
+    label: "Learning by doing",
+    title: "Where questions become discoveries.",
     description:
-      "In classrooms and digital spaces, students discover new ways to think, make and solve.",
-    caption: "Learning through technology",
+      "Experiments, observation and collaboration bring learning out of the textbook and into real life.",
+    caption: "Science in action",
+    image: "/media/home/story/science-practical.webp",
+    alt: "SSKEMS students in white laboratory coats working with science equipment.",
   },
   {
     id: "skating",
     number: "03",
-    label: "Confidence",
-    title: "Beyond the classroom.",
+    label: "Beyond the classroom",
+    title: "Growing together. Beyond four walls.",
     description:
-      "Learning isn't only about what happens at a desk. It's also movement, courage, teamwork and trying again.",
-    caption: "Movement and outdoor learning",
+      "School life also means teamwork, creative expression, responsibility and experiences that stay with us.",
+    caption: "Learning and caring beyond the classroom",
+    image: "/media/home/story/environment.webp",
+    alt: "SSKEMS students and teachers planting a young tree together outdoors.",
   },
   {
     id: "culture",
     number: "04",
-    label: "Belonging",
-    title: "Every story has a place.",
+    label: "Spaces to explore",
+    title: "Room to imagine what's next.",
     description:
-      "Culture, creativity and sport make school more than a timetable. They make memories and build a community.",
-    caption: "Culture and creative expression",
+      "From the computer laboratory to the library and practical workspaces, each environment creates new opportunities to learn.",
+    caption: "Learning spaces at SSKEMS",
+    image: "/media/home/story/computers.webp",
+    alt: "Rows of computers and workstations in an SSKEMS computer laboratory.",
   },
 ] as const;
 
 /**
- * Approved full-resolution photographs, never private draft imagery.
- * The four chapters deliberately alternate visual languages:
- * cinematic opening, magazine spread, kinetic full bleed, layered finale.
+ * The hero stays untouched. Photos below it are the user's real school images
+ * and have independent fallbacks to already-published hero media until installed.
  */
 export function HomepageStorySequence({
   slides,
@@ -61,7 +68,10 @@ export function HomepageStorySequence({
   });
 
   if (scenes.length !== chapters.length) return null;
-  const sport = byId.get("sports");
+
+  const scienceFallback = byId.get("science");
+  const cultureFallback = byId.get("culture");
+  const digitalFallback = byId.get("digital");
 
   return (
     <HomepageStoryMotion>
@@ -73,8 +83,8 @@ export function HomepageStorySequence({
           A school is made <em>of moments.</em>
         </h2>
         <p className="home-story__lead" data-home-story-intro>
-          Follow a day of learning, discovery and expression. Each chapter
-          reveals another part of what makes SSKEMS a place to grow.
+          Step beyond the hero and discover real moments from classrooms,
+          laboratories, activities and the spaces where students grow.
         </p>
         <span className="home-story__scroll-cue" aria-hidden="true">
           Scroll to explore <span>↓</span>
@@ -82,7 +92,7 @@ export function HomepageStorySequence({
       </div>
 
       <div className="home-story__scenes">
-        {scenes.map(({ id, number, label, title, description, caption, slide }) => {
+        {scenes.map(({ id, number, label, title, description, caption, image, alt, slide }) => {
           const focalStyle = {
             "--story-focal-desktop": slide.imageCrop.desktop,
             "--story-focal-mobile": slide.focalMobile,
@@ -98,30 +108,66 @@ export function HomepageStorySequence({
             >
               <figure className="home-story__figure" style={focalStyle}>
                 <div className="home-story__frame" data-home-story-frame>
-                  <SiteImage
+                  <HomepageStoryImage
                     className="home-story__photo"
                     src={slide.image}
-                    alt={slide.alt}
+                    newSrc={image}
+                    alt={alt}
                     width={1600}
                     height={1000}
                     sizes={immersive ? "100vw" : "(max-width: 48rem) 100vw, 56vw"}
-                    loading="lazy"
-                    unoptimized
-                    data-home-story-photo
                   />
                 </div>
-                {id === "culture" && sport ? (
-                  <div className="home-story__support-photo" data-home-story-secondary>
-                    <SiteImage
-                      src={sport.image}
-                      alt={sport.alt}
-                      width={960}
-                      height={720}
-                      sizes="(max-width: 48rem) 46vw, 24vw"
-                      loading="lazy"
-                      unoptimized
+
+                {id === "digital" && scienceFallback ? (
+                  <div className="home-story__support-photo home-story__support-photo--science" data-home-story-secondary>
+                    <HomepageStoryImage
+                      src={scienceFallback.image}
+                      newSrc="/media/home/story/science-discovery.webp"
+                      alt="SSKEMS students conducting another science practical in a laboratory."
+                      width={1400}
+                      height={933}
+                      sizes="(max-width: 48rem) 42vw, 21vw"
                     />
                   </div>
+                ) : null}
+
+                {id === "skating" && cultureFallback ? (
+                  <div className="home-story__support-photo home-story__support-photo--dance" data-home-story-secondary>
+                    <HomepageStoryImage
+                      src={cultureFallback.image}
+                      newSrc="/media/home/story/dance.webp"
+                      alt="SSKEMS students practising a dance activity together in a mirrored room."
+                      width={1000}
+                      height={662}
+                      sizes="(max-width: 48rem) 40vw, 22vw"
+                    />
+                  </div>
+                ) : null}
+
+                {id === "culture" && digitalFallback ? (
+                  <>
+                    <div className="home-story__support-photo home-story__support-photo--library" data-home-story-secondary>
+                      <HomepageStoryImage
+                        src={digitalFallback.image}
+                        newSrc="/media/home/story/library.webp"
+                        alt="Book cabinets inside the SSKEMS library."
+                        width={1500}
+                        height={993}
+                        sizes="(max-width: 48rem) 46vw, 24vw"
+                      />
+                    </div>
+                    <div className="home-story__support-photo home-story__support-photo--chemistry">
+                      <HomepageStoryImage
+                        src={scienceFallback?.image ?? slide.image}
+                        newSrc="/media/home/story/chemistry-room.webp"
+                        alt="Science laboratory workbenches and equipment at SSKEMS."
+                        width={1400}
+                        height={731}
+                        sizes="(max-width: 48rem) 35vw, 19vw"
+                      />
+                    </div>
+                  </>
                 ) : null}
                 <figcaption>{caption} · SSKEMS</figcaption>
               </figure>
@@ -131,9 +177,7 @@ export function HomepageStorySequence({
                   <span>{number}</span> / {label}
                 </p>
                 <h3 data-home-story-copy>{title}</h3>
-                <p className="home-story__description" data-home-story-copy>
-                  {description}
-                </p>
+                <p className="home-story__description" data-home-story-copy>{description}</p>
                 <div className="home-story__rule" aria-hidden="true">
                   <span data-home-story-progress />
                 </div>
@@ -144,7 +188,7 @@ export function HomepageStorySequence({
       </div>
 
       <div className="home-shell home-story__outro">
-        <p>And every day brings another opportunity to begin.</p>
+        <p>Every experience adds another chapter.</p>
         <Link href="/school/facilities">
           Explore our campus <span aria-hidden="true">↗</span>
         </Link>
