@@ -1,0 +1,606 @@
+/* Final homepage chapters: an editorial journey, not another hero.
+ * No changes to the seven-slide hero, campus video, or publication decisions.
+ */
+
+/* Pathways: large flagship photographic card paired with two horizontal stories. */
+.home-pathways--cinematic {
+  background:
+    radial-gradient(circle at 100% 0%, #d6e3d8 0, transparent 38rem),
+    #f4f0e7;
+}
+.home-pathways--cinematic .home-section-heading h2 {
+  max-width: 13ch;
+  letter-spacing: -0.065em;
+}
+.home-pathways--cinematic .home-pathways__grid .home-pathway-card {
+  isolation: isolate;
+  overflow: hidden;
+  transition: border-color 250ms ease, box-shadow 250ms ease;
+}
+.home-pathways--cinematic .home-pathway-card__meta {
+  position: relative;
+  z-index: 2;
+}
+.home-pathways--cinematic .home-pathway-card__visual img {
+  object-fit: cover;
+  transform-origin: center;
+}
+.home-pathways--cinematic .home-pathway-card__editorial {
+  position: relative;
+  z-index: 2;
+}
+.home-pathways--cinematic .home-pathway-card > a {
+  position: relative;
+  z-index: 2;
+}
+.home-pathways--cinematic .home-pathway-card > a:focus-visible,
+.home-pathways--cinematic .home-pathways__explore-tile:focus-visible {
+  outline: 3px solid #c96959;
+  outline-offset: -5px;
+}
+.home-pathways--cinematic .home-pathway-card > a span {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* When three programme profiles are available, show one large narrative card
+ * and two compact side-by-side cards rather than three repetitive columns. */
+@media (min-width: 70.001rem) {
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    grid-template-rows: repeat(2, minmax(18rem, auto));
+    align-items: stretch;
+    gap: 1.25rem;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card {
+    min-height: 0;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:first-child {
+    position: relative;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    justify-content: flex-end;
+    min-height: 40rem;
+    background: #092739;
+    color: #fffaf2;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:first-child::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(0deg, #041c2af7 0%, #041c2a91 44%, #041c2a0a 85%);
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:first-child .home-pathway-card__visual {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:first-child .home-pathway-card__visual span {
+    top: clamp(4.5rem, 6vw, 6rem);
+    bottom: auto;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:first-child .home-pathway-card__meta {
+    color: #f4f1e8;
+    margin-bottom: auto;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:first-child .home-pathway-card__label {
+    color: #ffc9b9;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:first-child h3 {
+    max-width: 13ch;
+    color: #fffaf2;
+    font-size: clamp(2.6rem, 4.4vw, 5.1rem);
+    line-height: 0.95;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:first-child .home-pathway-card__editorial p {
+    color: #e5eff1;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:first-child > a {
+    color: #fff7ed;
+    border-color: #ffffff7a;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(2),
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(3) {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    align-items: stretch;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(n + 2) .home-pathway-card__visual {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(n + 2) .home-pathway-card__visual span {
+    font-size: 0.58rem;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(n + 2) .home-pathway-card__meta {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 0.9rem 1.2rem 0;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(n + 2) .home-pathway-card__editorial {
+    grid-column: 2;
+    grid-row: 2;
+    align-content: center;
+    padding: 1rem 1.2rem;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(n + 2) .home-pathway-card__editorial h3 {
+    font-size: clamp(1.55rem, 2.1vw, 2.25rem);
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(n + 2) > a,
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(n + 2) .home-pathway-card__withheld {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(n + 2) > a {
+    margin-inline: 1.2rem;
+    padding-block: 0.7rem 1rem;
+  }
+}
+/* If publication has no current programme profiles, show useful evergreen
+ * destinations rather than leaving a large empty homepage chapter. */
+.home-pathways--cinematic .home-pathways__explore {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.85rem, 1.6vw, 1.5rem);
+}
+.home-pathways--cinematic .home-pathways__explore-tile {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: clamp(16rem, 28vw, 25rem);
+  align-items: end;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1.4rem, 3vw, 2.5rem);
+  border-radius: 1.15rem;
+  background: #102c3c;
+  color: #fffaf2;
+  text-decoration: none;
+}
+.home-pathways--cinematic .home-pathways__explore-tile::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(0deg, #031520ed, #0417241c 75%);
+}
+.home-pathways--cinematic .home-pathways__explore-tile img {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.home-pathways--cinematic .home-pathways__explore-tile span {
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.84rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.home-pathways--cinematic .home-pathways__explore-tile strong {
+  max-width: 18ch;
+  font-family: var(--home-display);
+  font-size: clamp(2rem, 3.3vw, 3.65rem);
+  font-weight: 850;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  text-transform: none;
+}
+
+/* Admissions is a chapter of actionable steps, not another repeated photo. */
+.home-admissions-feature {
+  position: relative;
+  overflow: clip;
+  padding-block: clamp(5rem, 8vw, 8.5rem);
+  background: #ebd6c6;
+  color: #122d40;
+}
+.home-admissions-feature::before {
+  content: "04";
+  position: absolute;
+  top: -0.14em;
+  right: -0.05em;
+  pointer-events: none;
+  color: #c77a6540;
+  font-family: var(--home-display);
+  font-size: clamp(18rem, 37vw, 40rem);
+  font-weight: 850;
+  letter-spacing: -0.11em;
+  line-height: 1;
+}
+.home-admissions-feature .home-admissions-feature__grid {
+  position: relative;
+  z-index: 1;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(3rem, 6vw, 7rem);
+}
+.home-admissions-feature__intro { min-width: 0; }
+.home-admissions-feature__intro h2 {
+  max-width: 12ch;
+  font-size: clamp(3.4rem, 6vw, 6.8rem);
+  letter-spacing: -0.075em;
+  line-height: 0.91;
+}
+.home-admissions-feature__intro h2 em {
+  display: block;
+  color: #ae6059;
+  font-style: normal;
+}
+.home-admissions-feature__lead {
+  max-width: 29rem;
+  margin-top: clamp(1rem, 2vw, 1.75rem);
+  font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+  line-height: 1.55;
+}
+.home-admissions-feature__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 33rem;
+  margin-top: 2rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid #7c4b4350;
+  border-radius: 0.8rem;
+  background: #fff9f0ce;
+}
+.home-admissions-feature__status > span {
+  color: #645d5a;
+  font-size: 0.79rem;
+  font-weight: 750;
+}
+.home-admissions-feature__status > strong {
+  color: #20394a;
+  font-size: clamp(0.85rem, 1.1vw, 1.07rem);
+}
+.home-admissions-feature__message { max-width: 32rem; }
+.home-admissions-feature__motion { min-width: 0; width: 100%; }
+.home-admissions-feature__journey {
+  overflow: hidden;
+  border: 1px solid #ffffff47;
+  border-radius: clamp(0.9rem, 1.6vw, 1.35rem);
+  background: #092636;
+  color: #f9f6ef;
+  box-shadow: 0 1.5rem 4.5rem #152c3e26;
+}
+.home-admissions-feature__journey-head,
+.home-admissions-feature__journey-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.6rem) clamp(1.2rem, 2.5vw, 2rem);
+}
+.home-admissions-feature__journey-head {
+  border-bottom: 1px solid #ffffff2c;
+  color: #b5d9dc;
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.home-admissions-feature__journey-head strong {
+  color: #ffc5b4;
+  font-size: 1rem;
+}
+.home-admissions-feature__journey .home-admissions-feature__steps {
+  display: block;
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  list-style: none;
+  background: transparent;
+}
+.home-admissions-feature__journey .home-admissions-feature__steps li {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0, 1fr) 2rem;
+  align-items: center;
+  gap: clamp(0.7rem, 2vw, 1.4rem);
+  min-height: clamp(5.2rem, 8vw, 6.8rem);
+  margin: 0;
+  padding: 1.15rem clamp(1.2rem, 2.5vw, 2rem);
+  border-bottom: 1px solid #ffffff24;
+  background: transparent;
+}
+.home-admissions-feature__journey .home-admissions-feature__steps li:last-child {
+  border-bottom: 0;
+}
+.home-admissions-feature__journey .home-admissions-feature__step-number {
+  display: grid;
+  width: 3.3rem;
+  height: 3.3rem;
+  place-items: center;
+  border: 1px solid #ffc5b468;
+  border-radius: 50%;
+  color: #ffc5b4;
+  font-size: 0.93rem;
+  font-weight: 850;
+}
+.home-admissions-feature__journey .home-admissions-feature__steps strong {
+  color: #fffaf3;
+  font-size: clamp(1.12rem, 2vw, 1.8rem);
+  font-weight: 780;
+  line-height: 1.25;
+}
+.home-admissions-feature__step-mark {
+  color: #efb3a6;
+  font-size: 1.25rem;
+}
+.home-admissions-feature__journey-foot {
+  border-top: 1px solid #ffffff27;
+  background: #123e50;
+  color: #c6e3e6;
+  font-size: 0.85rem;
+}
+.home-admissions-feature__journey-foot a {
+  color: #fff4e9;
+  font-weight: 850;
+  text-underline-offset: 0.25rem;
+}
+.home-admissions-feature__journey-foot a:focus-visible {
+  outline: 3px solid #ffb4a5;
+  outline-offset: 4px;
+}
+
+/* Achievements use their already-approved artwork in a restrained gallery.
+ * Artwork is fitted, never blurred by cover cropping or exaggerated parallax. */
+.home-achievements {
+  padding-block: clamp(4.5rem, 7vw, 7rem);
+  background: #e7eee8;
+  color: #102d3c;
+}
+.home-achievements .home-section-heading {
+  align-items: end;
+  gap: clamp(2rem, 4vw, 4rem);
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+.home-achievements .home-section-heading h2 {
+  max-width: 16ch;
+  font-size: clamp(2.9rem, 5.3vw, 5.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+}
+.home-achievements .home-achievements__review {
+  max-width: 28rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.7rem;
+  font-size: 0.88rem;
+}
+.home-achievements .home-achievements__grid {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 1.7vw, 1.65rem);
+}
+.home-achievements .home-achievement-card {
+  grid-column: span 6;
+  border-color: #29485336;
+  border-radius: 1rem;
+  background: #fffaf3;
+  box-shadow: 0 0.8rem 2.5rem #102a3b10;
+}
+.home-achievements .home-achievement-card:first-child {
+  grid-column: span 7;
+}
+.home-achievements .home-achievement-card:nth-child(2) {
+  grid-column: span 5;
+}
+.home-achievements .home-achievement-card:only-child {
+  grid-column: 1 / -1;
+}
+.home-achievements .home-achievement-card > a:focus-visible {
+  outline: 3px solid #bc6655;
+  outline-offset: -4px;
+}
+.home-achievements .home-achievement-card__media {
+  aspect-ratio: 14 / 5;
+  background: #e8e5dd;
+}
+.home-achievements .home-achievement-card__media img {
+  object-fit: contain;
+  background: #edece6;
+}
+.home-achievements .home-achievement-card__body {
+  gap: 1rem;
+  padding: clamp(1.15rem, 2.3vw, 2.1rem);
+}
+.home-achievements .home-achievement-card__body > strong {
+  color: #15374a;
+  font-size: clamp(1.5rem, 2.6vw, 2.7rem);
+  line-height: 1.05;
+}
+.home-achievements .home-achievement-card__body > small {
+  color: #9b4d41;
+  font-size: 0.9rem;
+}
+
+/* Essential school services: compact institutional utility, not another hero. */
+.home-services {
+  padding-block: clamp(4.2rem, 7vw, 7rem);
+  background: #092537;
+}
+.home-services .home-services__intro h2 {
+  max-width: 18ch;
+  font-size: clamp(2.5rem, 4.4vw, 4.6rem);
+  line-height: 1.02;
+}
+.home-services .home-services__links a {
+  min-height: 6.4rem;
+  padding-inline: clamp(0.6rem, 1.4vw, 1.2rem);
+  border-bottom-color: #c6e4e539;
+}
+.home-services .home-services__links a:focus-visible {
+  outline: 3px solid #ffb4a5;
+  outline-offset: -3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .home-services .home-services__links a:hover {
+    background: #d8f2f00d;
+    padding-inline: clamp(1.1rem, 1.9vw, 1.9rem);
+  }
+}
+
+/* Last impression: a distinctive editorial invitation, not another image card. */
+.home-invitation {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  padding-block: clamp(5.5rem, 9vw, 10rem);
+  background:
+    radial-gradient(circle at 90% 20%, #fff8ed, transparent 36rem),
+    linear-gradient(135deg, #f0d7c4, #e5ecdf 85%);
+  color: #0c2d3c;
+}
+.home-invitation::before {
+  content: "SSKEMS";
+  position: absolute;
+  z-index: -1;
+  bottom: -0.3em;
+  left: -0.05em;
+  pointer-events: none;
+  color: #123e4911;
+  font-family: var(--home-display);
+  font-size: clamp(9rem, 26vw, 32rem);
+  font-weight: 900;
+  letter-spacing: -0.105em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.home-invitation .home-invitation__grid {
+  position: relative;
+  z-index: 1;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(3rem, 6vw, 7rem);
+}
+.home-invitation h2 {
+  max-width: 10ch;
+  font-size: clamp(4.5rem, 8.2vw, 9rem);
+  line-height: 0.87;
+  letter-spacing: -0.075em;
+}
+.home-invitation__strap {
+  max-width: 35rem;
+  margin-top: clamp(1.5rem, 2.8vw, 2.7rem);
+  color: #335464;
+  font-size: clamp(1.07rem, 1.6vw, 1.55rem);
+  line-height: 1.5;
+}
+.home-invitation .home-invitation__action {
+  padding: clamp(1.5rem, 3.2vw, 3rem);
+  border: 1px solid #17425129;
+  border-radius: 1.2rem;
+  background: #fffef3d6;
+  box-shadow: 0 1.4rem 3rem #142c3d18;
+}
+.home-invitation__action > p:first-child {
+  color: #345063;
+}
+.home-invitation .home-actions {
+  align-items: stretch;
+}
+.home-invitation .home-invitation__contact {
+  gap: 0.8rem 1.1rem;
+}
+.home-invitation .home-invitation__contact a {
+  color: #164659;
+  font-weight: 750;
+}
+
+@media (max-width: 70rem) {
+  .home-admissions-feature .home-admissions-feature__grid,
+  .home-invitation .home-invitation__grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .home-admissions-feature__motion,
+  .home-invitation__action {
+    max-width: 55rem;
+  }
+}
+@media (max-width: 48rem) {
+  .home-pathways--cinematic .home-pathways__explore {
+    grid-template-columns: 1fr;
+  }
+  .home-pathways--cinematic .home-pathways__explore-tile {
+    min-height: 17rem;
+  }
+  .home-pathways--cinematic .home-pathways__grid .home-pathway-card {
+    min-height: 0;
+  }
+  .home-pathways--cinematic .home-pathway-card__visual {
+    aspect-ratio: 1.65;
+  }
+  .home-admissions-feature::before {
+    top: 0.6em;
+    right: -0.16em;
+    font-size: 15rem;
+  }
+  .home-admissions-feature__intro h2 {
+    font-size: clamp(3rem, 11vw, 4.8rem);
+  }
+  .home-admissions-feature__status {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .home-admissions-feature__journey .home-admissions-feature__steps li {
+    grid-template-columns: 2.9rem minmax(0, 1fr) 1.2rem;
+    gap: 0.85rem;
+    padding-inline: 1.1rem;
+  }
+  .home-admissions-feature__journey .home-admissions-feature__step-number {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+  .home-admissions-feature__journey .home-admissions-feature__steps strong {
+    font-size: clamp(1.07rem, 4.5vw, 1.4rem);
+  }
+  .home-admissions-feature__journey-head,
+  .home-admissions-feature__journey-foot {
+    padding-inline: 1.1rem;
+  }
+  .home-achievements .home-achievements__grid {
+    grid-template-columns: 1fr;
+  }
+  .home-achievements .home-achievement-card,
+  .home-achievements .home-achievement-card:first-child,
+  .home-achievements .home-achievement-card:nth-child(2) {
+    grid-column: 1;
+  }
+  .home-achievements .home-section-heading h2,
+  .home-services .home-services__intro h2 {
+    font-size: clamp(2.7rem, 10vw, 4.3rem);
+  }
+  .home-invitation h2 {
+    font-size: clamp(3.9rem, 13vw, 6rem);
+  }
+  .home-invitation .home-invitation__action {
+    padding: 1.4rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-pathways--cinematic .home-pathway-card,
+  .home-achievements .home-achievement-card,
+  .home-services .home-services__links a {
+    transition: none;
+  }
+}
