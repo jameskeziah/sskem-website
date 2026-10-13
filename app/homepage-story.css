@@ -486,3 +486,85 @@
 .home-foundation-flow .home-manifesto--hybrid .home-language-lines {
   margin-top: clamp(1.5rem, 2.5vw, 2.5rem);
 }
+
+
+/* Real school photo art direction. These support images are deliberately
+   smaller than the immersive chapters, preserving their original sharpness. */
+.home-story__scene--science .home-story__photo {
+  object-position: 50% 54%;
+}
+.home-story__scene--digital .home-story__photo {
+  object-position: center 46%;
+}
+.home-story__scene--skating .home-story__photo {
+  object-position: 52% 48%;
+}
+.home-story__scene--culture .home-story__photo {
+  object-position: center;
+}
+.home-story__support-photo--science {
+  left: auto;
+  right: -2rem;
+  bottom: -1.8rem;
+  width: min(38%, 22rem);
+  aspect-ratio: 4 / 3;
+  border-color: #f2ede3;
+}
+.home-story__support-photo--dance {
+  left: auto;
+  right: clamp(1.5rem, 5vw, 6rem);
+  bottom: clamp(4rem, 8vw, 8rem);
+  width: clamp(11rem, 24vw, 24rem);
+  aspect-ratio: 4 / 3;
+  border-color: #f3e9d8;
+  box-shadow: 0 1.5rem 4rem #05152088;
+}
+.home-story__support-photo--library {
+  left: -2rem;
+  bottom: 0;
+  width: 43%;
+  border-color: #e5ede6;
+}
+.home-story__support-photo--chemistry {
+  left: auto;
+  right: -1.5rem;
+  top: -1.8rem;
+  bottom: auto;
+  width: 32%;
+  aspect-ratio: 4 / 3;
+  border-color: #e5ede6;
+}
+
+@media (max-width: 47.999rem) {
+  .home-story__scene--science .home-story__photo {
+    object-position: 45% center;
+  }
+  .home-story__scene--skating .home-story__photo {
+    object-position: 55% center;
+  }
+  .home-story__support-photo--science {
+    right: -0.6rem;
+    bottom: -1.7rem;
+    width: 43%;
+  }
+  .home-story__support-photo--dance {
+    right: 1.25rem;
+    top: 2.5rem;
+    bottom: auto;
+    width: 34%;
+    border-width: 0.3rem;
+  }
+  .home-story__support-photo--chemistry {
+    right: -0.4rem;
+    top: -1.1rem;
+    width: 34%;
+    border-width: 0.25rem;
+  }
+}
+
+@media (max-width: 24rem) {
+  .home-story__support-photo--dance,
+  .home-story__support-photo--chemistry {
+    display: none;
+  }
+}
