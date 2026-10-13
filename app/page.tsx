@@ -328,7 +328,7 @@ export default async function Home() {
 
 {privateHomepageReview ? (
   <SiteImage
-    src="/media/home/hero-drafts/campus.webp"
+    src={approvedHeroMedia.ready ? approvedHeroMedia.slides[0].image : "/media/home/campus-main.jpeg"}
     alt="The SSKEMS campus and school building in Veral."
     width={1800}
     height={1200}
