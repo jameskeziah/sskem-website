@@ -15,7 +15,9 @@ test("homepage storyline reuses the authorized public hero projection", async ()
   assert.match(page, /<HomepageStorySequence slides=\{approvedHeroMedia\.ready \? approvedHeroMedia\.slides : \[\]\} \/>/);
   assert.match(story, /if \(scenes\.length !== chapters\.length\) return null/);
   assert.match(story, /src=\{slide\.image\}/);
-  assert.match(story, /alt=\{slide\.alt\}/);
+  assert.match(story, /alt=\{alt\}/);
+  assert.match(story, /newSrc=\{image\}/);
+  assert.match(story, /media\/home\/story\/early-learning\.webp/);
   assert.doesNotMatch(story, /hero-drafts|campus-main\.jpeg|approvalManifest\.records/);
   const published = JSON.parse(publication);
   for (const id of ["science", "digital", "skating", "culture"]) {
