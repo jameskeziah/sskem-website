@@ -14,7 +14,7 @@ type HomepageAdmissionsCycle = {
 /**
  * Separate the admissions decision from the photographic story.
  * We keep the live cycle status and the actual school process instead of
- * introducing an unapproved "Admissions Open" marketing claim.
+ * inventing any admission availability or unsupported marketing claims.
  */
 export function HomepageAdmissionsFeature({ cycle }: { cycle: HomepageAdmissionsCycle }) {
   return (
