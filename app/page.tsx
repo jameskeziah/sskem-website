@@ -339,10 +339,11 @@ export default async function Home() {
               </div>
             </div>
 
+            <HomepageCampusVideoTour />
+
             <div className="home-campus__closing" data-motion-home-campus-copy>
               <p>One campus. Many beginnings.</p>
               <div className="home-campus__closing-actions">
-                <HomepageCampusVideoTour />
                 <Link href="/school/facilities">
                   Explore the campus <span aria-hidden="true">→</span>
                 </Link>
