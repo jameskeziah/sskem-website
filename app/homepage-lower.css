@@ -293,9 +293,20 @@
 .home-pathways--cinematic .home-pathways__supporting {
   margin-top: clamp(2rem, 3.5vw, 3rem);
 }
+/* Keep hover and scroll-linked GSAP transforms independent. */
 @media (hover: hover) and (pointer: fine) {
-  .home-pathways--cinematic .home-pathway-card:hover .home-pathway-card__visual img {
-    transform: scale(1.07);
+  .home-pathways--cinematic .home-pathway-card:hover {
+    border-color: #245f6c81;
+    box-shadow: 0 1.2rem 2.5rem #082a4022;
+  }
+}
+@media (min-width: 70.001rem) {
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:first-child,
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(2),
+  .home-pathways--cinematic .home-pathways__grid[data-pathway-count="3"] .home-pathway-card:nth-child(3) {
+    min-height: 0;
+    grid-column: auto;
+    grid-row: auto;
   }
 }
 
