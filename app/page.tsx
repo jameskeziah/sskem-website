@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { CampusPicture } from "@/components/campus-picture";
 import { HomepageStoryImage } from "@/components/home/homepage-story-image";
 import { HomepageAdmissionsFeature } from "@/components/home/homepage-admissions-feature";
 import { HomepageIdentityStrip } from "@/components/home/homepage-identity-strip";
