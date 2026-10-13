@@ -118,9 +118,9 @@ export function HomepageStoryMotion({ children }: { children: ReactNode }) {
           if (photo && !conditions.mobile) {
             gsap.fromTo(
               photo,
-              { scale: 1.22, yPercent: -7, transformOrigin: "50% 50%" },
+              { scale: 1.28, yPercent: -7, transformOrigin: "50% 50%" },
               {
-                scale: 1.06,
+                scale: 1.18,
                 yPercent: 7,
                 ease: "none",
                 scrollTrigger: {
