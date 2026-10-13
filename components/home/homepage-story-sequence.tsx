@@ -9,45 +9,45 @@ const chapters = [
   {
     id: "science",
     number: "01",
-    label: "Wonder",
-    title: "Every question opens a door.",
+    label: "Curiosity",
+    title: "It starts with a question.",
     description:
-      "Curiosity becomes discovery when learners can observe, experiment and explore ideas together.",
-    caption: "Exploring science together",
+      "A closer look, a new idea, a moment of discovery. Learning starts when curiosity has room to grow.",
+    caption: "Science and discovery",
   },
   {
     id: "digital",
     number: "02",
-    label: "Possibility",
-    title: "New skills. New horizons.",
+    label: "Discovery",
+    title: "Ideas become possibilities.",
     description:
-      "From the classroom to the computer lab, learning connects today's questions with tomorrow's possibilities.",
+      "In classrooms and digital spaces, students discover new ways to think, make and solve.",
     caption: "Learning through technology",
   },
   {
     id: "skating",
     number: "03",
     label: "Confidence",
-    title: "Growth happens in motion.",
+    title: "Beyond the classroom.",
     description:
-      "Trying something new, building coordination and supporting one another are all part of the experience.",
+      "Learning isn't only about what happens at a desk. It's also movement, courage, teamwork and trying again.",
     caption: "Movement and outdoor learning",
   },
   {
     id: "culture",
     number: "04",
-    label: "Expression",
-    title: "Every voice has a place.",
+    label: "Belonging",
+    title: "Every story has a place.",
     description:
-      "Celebrating creativity and cultural expression gives school life its energy and shared memories.",
-    caption: "Culture and creativity",
+      "Culture, creativity and sport make school more than a timetable. They make memories and build a community.",
+    caption: "Culture and creative expression",
   },
 ] as const;
 
 /**
- * This is a photographic homepage chapter, not a new media publication path.
- * Render only with the exact public hero projection already verified against
- * the school approval manifest; never fall back to unpublished private imagery.
+ * Approved full-resolution photographs, never private draft imagery.
+ * The four chapters deliberately alternate visual languages:
+ * cinematic opening, magazine spread, kinetic full bleed, layered finale.
  */
 export function HomepageStorySequence({
   slides,
@@ -61,20 +61,24 @@ export function HomepageStorySequence({
   });
 
   if (scenes.length !== chapters.length) return null;
+  const sport = byId.get("sports");
 
   return (
     <HomepageStoryMotion>
       <div className="home-shell home-story__intro">
         <p className="home-story__eyebrow" data-home-story-intro>
-          Step inside the story <span aria-hidden="true">↘</span>
+          Beyond the first hello <span aria-hidden="true">↓</span>
         </p>
         <h2 id="home-story-title" data-home-story-intro>
           A school is made <em>of moments.</em>
         </h2>
         <p className="home-story__lead" data-home-story-intro>
-          Beyond the first hello is a world of questions, discovery, expression
-          and growing confidence. Explore the moments that shape a school day.
+          Follow a day of learning, discovery and expression. Each chapter
+          reveals another part of what makes SSKEMS a place to grow.
         </p>
+        <span className="home-story__scroll-cue" aria-hidden="true">
+          Scroll to explore <span>↓</span>
+        </span>
       </div>
 
       <div className="home-story__scenes">
@@ -83,18 +87,16 @@ export function HomepageStorySequence({
             "--story-focal-desktop": slide.imageCrop.desktop,
             "--story-focal-mobile": slide.focalMobile,
           } as CSSProperties;
+          const immersive = id === "science" || id === "skating";
 
           return (
             <article
               key={id}
-              className="home-story__scene"
+              className={`home-story__scene home-story__scene--${id}`}
               data-home-story-scene
               data-home-story-chapter={id}
             >
-              <figure
-                className="home-story__figure"
-                style={focalStyle}
-              >
+              <figure className="home-story__figure" style={focalStyle}>
                 <div className="home-story__frame" data-home-story-frame>
                   <SiteImage
                     className="home-story__photo"
@@ -102,12 +104,25 @@ export function HomepageStorySequence({
                     alt={slide.alt}
                     width={1600}
                     height={1000}
-                    sizes="(max-width: 48rem) 100vw, (max-width: 70rem) 56vw, 59vw"
+                    sizes={immersive ? "100vw" : "(max-width: 48rem) 100vw, 56vw"}
                     loading="lazy"
                     unoptimized
                     data-home-story-photo
                   />
                 </div>
+                {id === "culture" && sport ? (
+                  <div className="home-story__support-photo" data-home-story-secondary>
+                    <SiteImage
+                      src={sport.image}
+                      alt={sport.alt}
+                      width={960}
+                      height={720}
+                      sizes="(max-width: 48rem) 46vw, 24vw"
+                      loading="lazy"
+                      unoptimized
+                    />
+                  </div>
+                ) : null}
                 <figcaption>{caption} · SSKEMS</figcaption>
               </figure>
 
@@ -131,7 +146,7 @@ export function HomepageStorySequence({
       <div className="home-shell home-story__outro">
         <p>And every day brings another opportunity to begin.</p>
         <Link href="/school/facilities">
-          Discover our campus <span aria-hidden="true">↗</span>
+          Explore our campus <span aria-hidden="true">↗</span>
         </Link>
       </div>
     </HomepageStoryMotion>
