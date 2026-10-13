@@ -28,6 +28,7 @@ import "./homepage.css";
 import "./homepage-story.css";
 import "./homepage-lower.css";
 import "./homepage-campus-clear.css";
+import "./homepage-finale.css";
 import "./zentry-hero.css";
 import { HomeFoundationMotion } from "@/components/home/home-foundation-motion";
 
@@ -449,6 +450,9 @@ export default async function Home() {
             <div data-home-section-reveal>
               <p className="home-chapter-label"><span>{invitationChapter}</span> Begin a conversation</p>
               <h2 id="invitation-title">See what comes next.</h2>
+              <p className="home-invitation__strap">
+                Get to know the school, ask your questions and take the next step with confidence.
+              </p>
             </div>
             <div className="home-invitation__action" data-home-section-reveal>
               <p>{editorial.admissionsCycle.publicMessage}</p>
