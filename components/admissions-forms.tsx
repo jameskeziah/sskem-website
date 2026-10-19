@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useId, useState, type CSSProperties } from "react";
+import Script from "next/script";
 
 import {
   admissionClassOptions,
@@ -64,16 +65,46 @@ export function AgeEligibilityChecker() {
   );
 }
 
+const enquiryEnabled =
+  process.env.NEXT_PUBLIC_ADMISSIONS_ENQUIRY_ENABLED === "true" &&
+  Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+
 export function EnquiryFormPrototype() {
   const [message, setMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const statusId = useId();
 
-  function review(event: FormEvent<HTMLFormElement>) {
+  async function review(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!enquiryEnabled) {
+      setMessage("Review complete. Nothing was submitted, stored or sent from this preview.");
+      return;
+    }
 
-    setMessage(
-      "Review complete. Nothing was submitted, stored or sent from this preview.",
-    );
+    const form = event.currentTarget;
+    const values = new FormData(form);
+    setSubmitting(true);
+    setMessage("Sending your enquiry...");
+    try {
+      const response = await fetch("/api/admissions/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...Object.fromEntries(values),
+          contactConsent: values.get("contactConsent") === "on",
+          turnstileToken: String(values.get("cf-turnstile-response") || ""),
+        }),
+      });
+      const result: { message?: string } = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.message || "Unable to send your enquiry.");
+      form.reset();
+      setMessage(result.message || "Your enquiry was sent to the admissions team.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Unable to send your enquiry.");
+    } finally {
+      (window as Window & { turnstile?: { reset: () => void } }).turnstile?.reset();
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -92,11 +123,12 @@ export function EnquiryFormPrototype() {
           className="admissions-enquiry-form__notice"
           id="enquiry-review-boundary"
         >
-          <strong>Preview only</strong>
+          <strong>{enquiryEnabled ? "Admissions enquiry" : "Preview only"}</strong>
 
           <p>
-            Real submission is not active yet. Use example information
-            while reviewing this page. Nothing entered here is sent or stored.
+            {enquiryEnabled
+              ? "Send a short question to the school admissions team. This is not an application and does not guarantee a place."
+              : "Real submission is not active yet. Use example information while reviewing this page. Nothing entered here is sent or stored."}
           </p>
         </div>
       </div>
@@ -113,10 +145,14 @@ export function EnquiryFormPrototype() {
           />
         </FormField>
 
+        <FormField id="enquiry-student-name" label="Child's name">
+          <Input name="studentName" autoComplete="off" required minLength={2} maxLength={100} />
+        </FormField>
+
         <FormField
           id="enquiry-mobile"
           label="Mobile number"
-          hint="Use an example number while this page is in preview."
+          hint={enquiryEnabled ? "Enter an Indian mobile number for the school to contact you." : "Use an example number while this page is in preview."}
         >
           <Input
             name="mobile"
@@ -129,7 +165,7 @@ export function EnquiryFormPrototype() {
 
         <FormField
           id="enquiry-class"
-          label="Class you are considering"
+          label="Class sought"
         >
           <Select
             name="classSought"
@@ -266,14 +302,27 @@ export function EnquiryFormPrototype() {
         required
       />
 
+      <div aria-hidden="true" style={{ position: "absolute", left: "-10000px" }}>
+        <label htmlFor="enquiry-website">Leave this field blank</label>
+        <input id="enquiry-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
+
+      {enquiryEnabled ? (
+        <>
+          <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
+          <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} data-action="sskem-enquiry" />
+        </>
+      ) : null}
+
       <div className="admissions-form__actions admissions-enquiry-form__actions">
-        <Button type="submit">
-          Review enquiry
+        <Button type="submit" disabled={submitting}>
+          {enquiryEnabled ? "Send enquiry" : "Review enquiry"}
         </Button>
 
         <span>
-          Actual submission will activate only after privacy,
-          routing and notification controls are approved.
+          {enquiryEnabled
+            ? "Your details go to the admissions team only. Please do not include identity documents or medical records."
+            : "Actual submission will activate only after privacy, routing and notification controls are approved."}
         </span>
       </div>
 
