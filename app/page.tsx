@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { CampusPicture } from "@/components/campus-picture";
 import { HomepageStoryImage } from "@/components/home/homepage-story-image";
 import { HomepageCampusVideoTour } from "@/components/home/homepage-campus-video-tour";
+import { HomepageYoutubeVideos } from "@/components/home/homepage-youtube-videos";
 import { HomepageAdmissionsFeature } from "@/components/home/homepage-admissions-feature";
 import { HomepageIdentityStrip } from "@/components/home/homepage-identity-strip";
 import { HomepageStorySequence } from "@/components/home/homepage-story-sequence";
@@ -341,6 +342,8 @@ export default async function Home() {
             </div>
 
             <HomepageCampusVideoTour />
+
+            <HomepageYoutubeVideos />
 
             <div className="home-campus__closing" data-motion-home-campus-copy>
               <p>One campus. Many beginnings.</p>

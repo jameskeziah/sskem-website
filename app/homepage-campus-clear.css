@@ -481,3 +481,148 @@
     transition: none;
   }
 }
+
+
+/* Official YouTube videos: click-to-load playlist alongside the school campus tour. */
+.home-campus--clarity .home-campus__youtube {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.75rem);
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  border: 1px solid rgb(255 255 255 / 19%);
+  border-radius: clamp(0.85rem, 1.7vw, 1.4rem);
+  background: linear-gradient(130deg, #17394a 0%, #091f2e 100%);
+}
+.home-campus--clarity .home-campus__youtube-copy {
+  display: grid;
+  justify-items: start;
+  gap: clamp(0.85rem, 1.4vw, 1.3rem);
+}
+.home-campus--clarity .home-campus__youtube-eyebrow {
+  color: #ffb4a5;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.home-campus--clarity .home-campus__youtube h3 {
+  max-width: 15ch;
+  margin: 0;
+  font-family: var(--home-display);
+  font-size: clamp(2.1rem, 3.4vw, 4.4rem);
+  font-weight: 850;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+.home-campus--clarity .home-campus__youtube-copy > p:not(.home-campus__youtube-eyebrow) {
+  max-width: 39rem;
+  color: #d8e8ed;
+  line-height: 1.65;
+}
+.home-campus--clarity .home-campus__youtube-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+}
+.home-campus--clarity .home-campus__youtube-actions button,
+.home-campus--clarity .home-campus__youtube-actions a {
+  display: inline-flex;
+  min-height: 3.1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.1rem;
+  border-radius: 99px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+.home-campus--clarity .home-campus__youtube-actions button {
+  border: 1px solid #ffd6c1;
+  background: #fff1e5;
+  color: #092c3e;
+}
+.home-campus--clarity .home-campus__youtube-actions a {
+  border: 1px solid #ffb4a5;
+  background: transparent;
+  color: #fff1e5;
+}
+.home-campus--clarity .home-campus__youtube-actions button:hover {
+  background: #f9d8c9;
+}
+.home-campus--clarity .home-campus__youtube-actions a:hover {
+  background: #ffffff1a;
+}
+.home-campus--clarity .home-campus__youtube-actions :is(button, a):focus-visible {
+  outline: 3px solid #ffb4a5;
+  outline-offset: 4px;
+}
+.home-campus--clarity .home-campus__youtube-note {
+  font-size: 0.78rem;
+  color: #b2cfda !important;
+}
+.home-campus--clarity .home-campus__youtube-player {
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid #ffffff47;
+  border-radius: 0.9rem;
+  background: #061723;
+}
+.home-campus--clarity .home-campus__youtube-player iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.home-campus--clarity .home-campus__youtube-placeholder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.4rem;
+  text-align: center;
+  background: radial-gradient(circle at 50% 50%, #1e5267 0%, #071c2b 72%);
+}
+.home-campus--clarity .home-campus__youtube-placeholder strong {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+}
+.home-campus--clarity .home-campus__youtube-placeholder > span:last-child {
+  color: #c3dce6;
+  font-size: 0.86rem;
+}
+.home-campus--clarity .home-campus__youtube-play-symbol {
+  display: grid;
+  width: 4.4rem;
+  height: 4.4rem;
+  place-items: center;
+  border: 1px solid #ffc9b6;
+  border-radius: 50%;
+  background: #ffeedf;
+  color: #0b2839;
+  font-size: 1.6rem;
+}
+@media (max-width: 48rem) {
+  .home-campus--clarity .home-campus__youtube {
+    grid-template-columns: 1fr;
+    padding: 1.35rem;
+  }
+  .home-campus--clarity .home-campus__youtube h3 {
+    font-size: clamp(2rem, 9vw, 3.2rem);
+  }
+  .home-campus--clarity .home-campus__youtube-actions {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .home-campus--clarity .home-campus__youtube-actions button,
+  .home-campus--clarity .home-campus__youtube-actions a {
+    width: 100%;
+  }
+}
