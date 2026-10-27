@@ -36,7 +36,14 @@ export function SiteFooter({
           <p className="eyebrow">Established in Veral</p>
           <h2>{siteFacts.shortName}</h2>
           <p>{siteFacts.name}<br />{contact.location}</p>
-          <p><a href={`tel:${contact.phone.replace(/\s/g, "")}`}>{contact.phone}</a><br /><a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+          <p>
+            <a href={`tel:${contact.phone.replace(/\s/g, "")}`}>School: {contact.phone}</a><br />
+            <a href={`tel:${siteFacts.alternativePhone}`}>Alternate: {siteFacts.alternativePhone}</a><br />
+            <a href={`https://wa.me/91${siteFacts.mobile}`} target="_blank" rel="noopener noreferrer">WhatsApp: {siteFacts.mobile}</a><br />
+            <a href={`tel:${siteFacts.principalPhone}`}>Principal: {siteFacts.principalPhone}</a><br />
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          </p>
+          <p className="caption">CBSE Affiliation No. {siteFacts.affiliationNumber} · School Code {siteFacts.schoolCode}</p>
           <p className="caption">{contact.weekdays}<br />{contact.saturday}</p>
         </div>
         {footerNavigationGroups.map((group) => (
@@ -47,7 +54,7 @@ export function SiteFooter({
         ))}
         <section className="site-footer__profiles" aria-labelledby="official-profiles-title">
           <h3 id="official-profiles-title">Official profiles</h3>
-          <p>Social links will appear only after account ownership is verified.</p>
+          <a href={siteFacts.youtubeUrl} target="_blank" rel="noopener noreferrer">SSKEMS on YouTube</a>
         </section>
       </div>
       <div className="site-footer__legal">

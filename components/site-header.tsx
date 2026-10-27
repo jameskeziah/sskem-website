@@ -45,7 +45,7 @@ const focusableSelector = [
 ].join(",");
 
 function setPageInert(inert: boolean) {
-  document.querySelectorAll<HTMLElement>("#main-content, footer, .site-header, .skip-links").forEach((element) => {
+  document.querySelectorAll<HTMLElement>("#main-content, footer, .site-header, .skip-links, .contact-shortcuts").forEach((element) => {
     if (inert) element.setAttribute("inert", "");
     else element.removeAttribute("inert");
   });
