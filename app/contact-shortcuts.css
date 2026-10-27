@@ -1,64 +1,100 @@
-/* Persistent contact actions; no JavaScript required to open either channel. */
+/* Accessible, compact social/contact dock across every public page. */
 .contact-shortcuts {
   position: fixed;
   z-index: 85;
   right: clamp(0.75rem, 2vw, 1.5rem);
   bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   display: grid;
-  justify-items: end;
-  gap: 0.65rem;
+  width: max-content;
+  max-width: calc(100vw - 1.5rem);
+  justify-items: stretch;
+  gap: 0.625rem;
 }
 
 .contact-shortcuts__link {
   display: inline-flex;
-  min-width: 9.5rem;
-  min-height: 3.125rem;
+  width: 10.25rem;
+  min-height: 3.25rem;
   align-items: center;
   justify-content: center;
-  gap: 0.55rem;
-  padding: 0.65rem 1rem;
+  gap: 0.65rem;
+  padding: 0.7rem 0.9rem;
   border: 1px solid rgb(255 255 255 / 22%);
   border-radius: 999px;
-  box-shadow: 0 8px 24px rgb(15 23 42 / 22%);
+  box-shadow: 0 6px 20px rgb(2 16 31 / 26%), inset 0 1px rgb(255 255 255 / 9%);
   color: #fff;
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.91rem;
+  font-weight: 750;
+  letter-spacing: 0.005em;
   line-height: 1.2;
   text-decoration: none;
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 170ms ease, box-shadow 170ms ease, filter 170ms ease;
 }
 
 .contact-shortcuts__link svg {
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 1.43rem;
+  height: 1.43rem;
   flex: none;
 }
 
 .contact-shortcuts__link--whatsapp {
-  background: #176b45;
+  border-color: rgb(133 244 183 / 44%);
+  background: linear-gradient(150deg, #12814a, #086337);
+  box-shadow: 0 7px 22px rgb(8 68 41 / 30%), inset 0 1px rgb(255 255 255 / 18%);
 }
 
 .contact-shortcuts__link--call {
-  background: #0a2a43;
+  border-color: rgb(160 198 229 / 34%);
+  background: linear-gradient(145deg, #133e5b, #09283f);
+}
+
+.contact-shortcuts__link--youtube {
+  border-color: rgb(255 174 174 / 42%);
+  background: linear-gradient(150deg, #c6252c, #9d151c);
+}
+
+.contact-shortcuts__link:focus-visible {
+  outline: 3px solid #ffd88c;
+  outline-offset: 3px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .contact-shortcuts__link:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgb(15 23 42 / 27%);
+    box-shadow: 0 12px 26px rgb(2 16 31 / 32%), inset 0 1px rgb(255 255 255 / 18%);
+    filter: brightness(1.08);
   }
+}
+
+.contact-shortcuts__link:active {
+  transform: translateY(1px);
+  filter: brightness(0.96);
 }
 
 @media (max-width: 30rem) {
   .contact-shortcuts {
     right: 0.75rem;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
     gap: 0.5rem;
   }
 
   .contact-shortcuts__link {
-    min-width: 8.75rem;
+    width: 9.5rem;
     min-height: 3rem;
-    padding-inline: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.86rem;
+  }
+}
+
+@media (max-height: 34rem) {
+  .contact-shortcuts {
+    gap: 0.35rem;
+    bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .contact-shortcuts__link {
+    min-height: 2.75rem;
   }
 }
 
@@ -73,6 +109,7 @@
     border: 2px solid LinkText;
     color: LinkText;
     background: Canvas;
+    box-shadow: none;
   }
 }
 

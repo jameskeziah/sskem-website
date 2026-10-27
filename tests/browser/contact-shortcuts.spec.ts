@@ -1,13 +1,16 @@
 import { expect, test } from "@playwright/test";
 
-test("school contact shortcuts use the correct WhatsApp and calling numbers", async ({ page }) => {
+test("school contact shortcuts link to WhatsApp, office calls and the official YouTube channel", async ({ page }) => {
   await page.goto("/");
   const shortcuts = page.getByRole("navigation", { name: "School contact shortcuts" });
 
-  await expect(shortcuts.getByRole("link", { name: "Message SSKEMS on WhatsApp at 7219819806" }))
+  await expect(shortcuts.getByRole("link", { name: "Chat with SSKEMS on WhatsApp at 7219819806" }))
     .toHaveAttribute("href", /^https:\/\/wa\.me\/917219819806\?text=/);
   await expect(shortcuts.getByRole("link", { name: "Call SSKEMS school office at 7219819814" }))
     .toHaveAttribute("href", "tel:7219819814");
+  await expect(shortcuts.getByRole("link", { name: "Watch videos on the official SSKEMS YouTube channel" }))
+    .toHaveAttribute("href", "https://www.youtube.com/@sskemschoolveral");
+  await expect(shortcuts.locator("a")).toHaveCount(3);
 });
 
 test("contact details and school YouTube link appear on the contact page", async ({ page }) => {
@@ -29,4 +32,17 @@ test("contact shortcuts are inert while the mobile navigation dialog is open", a
   await expect(shortcuts).toHaveAttribute("inert", "");
   await page.keyboard.press("Escape");
   await expect(shortcuts).not.toHaveAttribute("inert", "");
+});
+
+test("three floating actions remain accessible and compact on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto("/");
+  const shortcuts = page.getByRole("navigation", { name: "School contact shortcuts" });
+  await expect(shortcuts.getByRole("link", { name: "Chat with SSKEMS on WhatsApp at 7219819806" })).toBeVisible();
+  await expect(shortcuts.getByRole("link", { name: "Call SSKEMS school office at 7219819814" })).toBeVisible();
+  await expect(shortcuts.getByRole("link", { name: "Watch videos on the official SSKEMS YouTube channel" })).toBeVisible();
+  const rect = await shortcuts.boundingBox();
+  expect(rect).not.toBeNull();
+  expect(rect!.x).toBeGreaterThanOrEqual(0);
+  expect(rect!.x + rect!.width).toBeLessThanOrEqual(375);
 });
