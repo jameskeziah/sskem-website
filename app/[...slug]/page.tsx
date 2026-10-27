@@ -388,7 +388,8 @@ const pageSpecs: Record<string, PageSpec> = {
       {
         title: "Visit or write",
         paragraphs: [
-          `${siteFacts.name}, ${siteFacts.location}. The postal PIN is intentionally omitted while the conflicting source records are resolved.`,
+          `${siteFacts.name}, ${siteFacts.location}.`,
+          `CBSE Affiliation No. ${siteFacts.affiliationNumber}; School Code ${siteFacts.schoolCode}.`,
         ],
       },
     ],
@@ -488,12 +489,26 @@ function SpecialContent({ path }: { path: string }): ReactNode {
                 hours={`${siteFacts.workingHours.weekdays}; ${siteFacts.workingHours.saturday}`}
               />
               <ContactCard
+                title="Alternate school number"
+                phone={siteFacts.alternativePhone}
+                email={siteFacts.email}
+                hours={`${siteFacts.workingHours.weekdays}; ${siteFacts.workingHours.saturday}`}
+              />
+              <ContactCard
                 title="Principal's office"
-                phone={siteFacts.mobile}
+                phone={siteFacts.principalPhone}
                 email={siteFacts.principalEmail}
                 hours="Please contact the office to arrange a suitable time"
               />
             </Grid>
+            <Cluster className="route-page__actions">
+              <a className="button button--primary" href={`https://wa.me/91${siteFacts.mobile}`} target="_blank" rel="noopener noreferrer">
+                Message school on WhatsApp ({siteFacts.mobile})
+              </a>
+              <a className="button button--secondary" href={siteFacts.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                Visit the school YouTube channel
+              </a>
+            </Cluster>
             <Caption>{siteFacts.factStatus}</Caption>
           </Stack>
         </PageContainer>

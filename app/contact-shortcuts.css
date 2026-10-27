@@ -1,0 +1,83 @@
+/* Persistent contact actions; no JavaScript required to open either channel. */
+.contact-shortcuts {
+  position: fixed;
+  z-index: 85;
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  display: grid;
+  justify-items: end;
+  gap: 0.65rem;
+}
+
+.contact-shortcuts__link {
+  display: inline-flex;
+  min-width: 9.5rem;
+  min-height: 3.125rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgb(15 23 42 / 22%);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.contact-shortcuts__link svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  flex: none;
+}
+
+.contact-shortcuts__link--whatsapp {
+  background: #176b45;
+}
+
+.contact-shortcuts__link--call {
+  background: #0a2a43;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-shortcuts__link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgb(15 23 42 / 27%);
+  }
+}
+
+@media (max-width: 30rem) {
+  .contact-shortcuts {
+    right: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .contact-shortcuts__link {
+    min-width: 8.75rem;
+    min-height: 3rem;
+    padding-inline: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-shortcuts__link {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .contact-shortcuts__link {
+    border: 2px solid LinkText;
+    color: LinkText;
+    background: Canvas;
+  }
+}
+
+@media print {
+  .contact-shortcuts {
+    display: none !important;
+  }
+}

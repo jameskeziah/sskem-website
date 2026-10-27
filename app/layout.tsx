@@ -2,9 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { getPublicationNavigation } from "./data/navigation";
 import { PublicationNavigationProvider } from "@/components/navigation/publication-navigation-provider";
+import { ContactShortcuts } from "@/components/contact-shortcuts";
 import tokens from "./design-tokens.json";
 import "./tokens.css";
 import "./globals.css";
+import "./contact-shortcuts.css";
 
 const canonicalOrigin = new URL("https://www.sskemschool.com");
 
@@ -80,6 +82,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <PublicationNavigationProvider initialValue={navigation}>
           {children}
+          <ContactShortcuts />
         </PublicationNavigationProvider>
       </body>
     </html>
