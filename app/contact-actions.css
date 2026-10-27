@@ -1,0 +1,87 @@
+/* Persistent, accessible contact actions for every SSKEMS page. */
+.contact-dock {
+  position: fixed;
+  z-index: 65;
+  right: max(1.25rem, env(safe-area-inset-right));
+  bottom: calc(1.25rem + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.625rem;
+}
+
+.contact-dock__link {
+  display: inline-flex;
+  min-height: 3.25rem;
+  min-width: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d7e2e9;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 8px 26px rgb(10 38 57 / 0.15);
+  color: #0a2a43;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.contact-dock__link svg {
+  display: block;
+  width: 1.35rem;
+  height: 1.35rem;
+  flex: none;
+}
+
+.contact-dock__link--whatsapp {
+  border-color: #168c55;
+  background: #168c55;
+  color: white;
+}
+
+.contact-dock__link:focus-visible {
+  outline: 3px solid #b08a3a;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-dock__link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgb(10 38 57 / 0.22);
+    text-decoration: none;
+  }
+}
+
+@media (max-width: 42rem) {
+  .contact-dock {
+    right: max(0.9rem, env(safe-area-inset-right));
+    bottom: calc(0.9rem + env(safe-area-inset-bottom));
+    gap: 0.55rem;
+  }
+
+  .contact-dock__link {
+    width: 3.25rem;
+    height: 3.25rem;
+    padding: 0;
+  }
+
+  .contact-dock__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-dock__link {
+    transition: none;
+  }
+}
+
+@media print {
+  .contact-dock {
+    display: none;
+  }
+}
