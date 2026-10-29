@@ -40,7 +40,7 @@ export default function MandatoryPublicDisclosurePage() {
         <header className="compliance-hero">
           <PageContainer className="compliance-hero__grid">
             <div>
-              <p className="eyebrow">Appendix IX · SARAS 7.0 source review</p>
+              <p className="eyebrow">Appendix IX – Revised Format</p>
               <h1>Mandatory Public Disclosure</h1>
               <p className="compliance-hero__marathi" lang="mr">अनिवार्य सार्वजनिक प्रकटीकरण</p>
               <p className="lead">{siteFacts.name}</p>
