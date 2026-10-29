@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { infrastructureFacts } from "@/app/data/disclosure";
+import { saras7InspectionVideoUrl } from "@/app/data/saras7-disclosure";
 import { VerificationState } from "@/components/compliance";
 import { Alert } from "@/components/content";
 import { PageContainer } from "@/components/layout";
@@ -24,14 +25,14 @@ export default function InfrastructureInspectionPage() {
           <header className="inner-page-heading">
             <p className="eyebrow">Mandatory Public Disclosure · Section E</p>
             <h1>Infrastructure inspection</h1>
-            <p className="lead">This stable school-controlled page will hold the permanent inspection-video link and its verified context.</p>
+            <p className="lead">The school-supplied SARAS 7.0 file reports a YouTube inspection URL and infrastructure figures, pending independent validation.</p>
           </header>
           <Alert title="Inspection evidence pending" kind="warning">
-            An authorised permanent video URL, inspection date, responsible approver and verified infrastructure measurements are required before publication.
+            The submitted inspection video URL is retained as source evidence only. School management must verify the channel/video, recording context, permanent availability, inspection date and facility figures.
           </Alert>
           <div className="inspection-video-placeholder" role="status">
             <span aria-hidden="true">▶</span>
-            <div><strong>Approved inspection video required</strong><p>No temporary embed or unverified channel link is exposed.</p></div>
+            <div><strong>Inspection video URL supplied in SARAS 7.0</strong><p><a href={saras7InspectionVideoUrl} target="_blank" rel="noreferrer">Review the source-reported inspection video <span className="visually-hidden">(opens in a new tab)</span></a>. This is not an approval of its authenticity or inspection date.</p></div>
           </div>
           <div className="compliance-summary-grid">
             {infrastructureFacts.map((fact) => <div className="compliance-summary-item" key={fact.label}><span>{fact.label}</span><strong>{fact.value}</strong><VerificationState state="approval-required" /></div>)}
