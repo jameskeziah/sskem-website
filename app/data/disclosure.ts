@@ -49,7 +49,7 @@ export const resultRows = saras7Results.map((entry) => ({
   registered: entry.registered,
   passed: entry.passed,
   percentage: entry.reportedPercentage,
-  remarks: "As reported in supplied SARAS 7.0 PDF; awaiting academic-office verification",
+  remarks: `${entry.remarks} (as recorded in SARAS); awaiting academic-office verification`,
 }));
 
 export const teachingStaffSummary: DisclosureFact[] = saras7TeachingSummary.map((entry) => ({
