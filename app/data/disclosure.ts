@@ -1,4 +1,11 @@
 import { mandatoryDocuments } from "./documents";
+import {
+  saras7GeneralInformation,
+  saras7Infrastructure,
+  saras7Results,
+  saras7Source,
+  saras7TeachingSummary,
+} from "./saras7-disclosure";
 import { siteFacts } from "./site";
 
 export type VerificationState = "verified" | "approval-required";
@@ -11,23 +18,23 @@ export type DisclosureFact = {
 };
 
 export const disclosureReview = {
-  reviewedOn: "2 August 2026",
-  approvalState: "Compliance approval pending",
+  reviewedOn: saras7Source.receivedOn,
+  approvalState: saras7Source.status,
   reportEmail: siteFacts.principalEmail,
 };
 
-export const generalInformation: DisclosureFact[] = [
-  { label: "School name", value: siteFacts.name, state: "verified" },
-  { label: "CBSE affiliation number", value: siteFacts.affiliationNumber, state: "verified" },
-  { label: "Affiliation validity", value: "1 April 2022–31 March 2027", state: "verified", note: "The current period is recorded separately from the CBSE SARAS renewal period beginning 1 April 2027." },
-  { label: "School code", value: "30780", state: "verified", note: "Checked against the CBSE-issued upgradation letter." },
-  { label: "Complete address", value: siteFacts.location, state: "verified", note: "Approved for the verified public school profile on 9 September 2026." },
-  { label: "Principal", value: "SYED SHAHED ALI MUJAHED ALI", state: "verified", note: "Full official name in CBSE SARAS affiliation record 1130851; legacy school site uses a shortened form." },
-  { label: "Principal’s qualification", value: "M.Sc., M.Ed., Ph.D.", state: "verified", note: "Checked against the current CBSE SARAS record." },
-  { label: "Official email", value: siteFacts.principalEmail, state: "verified" },
-  { label: "Landline", value: siteFacts.phone, state: "verified" },
-  { label: "Authorised public mobile", value: siteFacts.mobile, state: "verified", note: "Already published on the school’s Mandatory Public Disclosure / SARAS page; retain as school contact only." },
-];
+const corroboratedFields = new Set(["Affiliation number", "School code", "School email"]);
+
+export const generalInformation: DisclosureFact[] = saras7GeneralInformation.map((entry) => ({
+  label: entry.label,
+  value: entry.value,
+  state: corroboratedFields.has(entry.label) ? "verified" : "approval-required",
+  note: entry.label === "Contact number"
+    ? "The supplied SARAS PDF records 7219819805; existing SSKEMS site contact records use other numbers. Confirm the official disclosure contact before approval."
+    : entry.label === "Principal name"
+      ? "Section A uses the abbreviated name; Section F supplies the full name. Confirm the approved public spelling."
+      : "Transcribed from the school-supplied SARAS 7.0 Appendix IX PDF. School approval still required.",
+}));
 
 export const academicLinks = [
   { label: "Current fee structure", href: "/documents/current-fee-structure" },
@@ -36,36 +43,43 @@ export const academicLinks = [
   { label: "Parent Teacher Association", href: "/documents/parent-teacher-association-list" },
 ] as const;
 
-export const resultRows = ["2025–26", "2024–25", "2023–24"].flatMap((year) => [
-  { classLevel: "Class X", year, registered: null, passed: null, percentage: null, remarks: "Approved result record required" },
-  { classLevel: "Class XII", year, registered: null, passed: null, percentage: null, remarks: "Applicability and approved result record required" },
-]);
+export const resultRows = saras7Results.map((entry) => ({
+  classLevel: entry.classLevel,
+  year: entry.year,
+  registered: entry.registered,
+  passed: entry.passed,
+  percentage: entry.reportedPercentage,
+  remarks: "As reported in supplied SARAS 7.0 PDF; awaiting academic-office verification",
+}));
 
-export const teachingStaffSummary = [
-  "Principal",
-  "Vice-principal",
-  "Headmaster or headmistress",
-  "Total number of teachers",
-  "PGT count",
-  "TGT count",
-  "PRT count",
-  "Teacher–section ratio",
-  "Special educator",
-  "Counsellor and wellness teacher",
-].map((label) => ({ label, value: "Approved staff record required", state: "approval-required" as const }));
+export const teachingStaffSummary: DisclosureFact[] = saras7TeachingSummary.map((entry) => ({
+  label: entry.label,
+  value: entry.value,
+  state: "approval-required" as const,
+  note: entry.label === "PRT" ? "The detailed Section F list contains 13 PRT-labelled entries, not 15."
+    : entry.label === "Counsellor and wellness teacher" ? "The detailed Section F list contains 3 WELLNESS TEACHER entries, not 2."
+    : "Reported in SARAS 7.0 PDF; pending signed staffing reconciliation.",
+}));
 
 export const infrastructureFacts = [
-  { label: "Campus area", value: "Documentary and physical verification required", note: "The legacy page records 12,100 square metres; it is not carried forward as approved fact." },
-  { label: "Classroom count and size", value: "Physical verification required", note: "The legacy room count must not be treated automatically as classroom count." },
-  { label: "Laboratory count and size", value: "Physical verification required" },
-  { label: "Computer-laboratory details", value: "Physical verification required" },
-  { label: "Library count and size", value: "Physical verification required" },
-  { label: "Internet availability", value: "Verification required" },
-  { label: "Girls’ toilets", value: "Physical verification required" },
-  { label: "Boys’ toilets", value: "Physical verification required" },
-  { label: "CWSN-accessible toilets", value: "Accessibility verification required" },
-  { label: "Permanent inspection-video link", value: "Approved permanent video required" },
-];
+  ...saras7Infrastructure.map((entry) => ({
+    label: entry.label,
+    value: entry.value,
+    note: entry.label.includes("count and size")
+      ? "Original PDF uses this combined notation. Whether 603 sq m means per room or total area is unspecified."
+      : "Reported in school-supplied SARAS 7.0 PDF; physical and documentary verification pending.",
+  })),
+  {
+    label: "CWSN-accessible toilets",
+    value: "Not specified in supplied PDF",
+    note: "An accessibility verification is required; no quantity has been inferred.",
+  },
+  {
+    label: "Library count and size",
+    value: "Not specified in supplied PDF",
+    note: "Retained as a separate outstanding verification item.",
+  },
+] as const;
 
 export const appendixSections = [
   { id: "section-a", letter: "A", title: "General information" },
@@ -73,4 +87,5 @@ export const appendixSections = [
   { id: "section-c", letter: "C", title: "Results and academics" },
   { id: "section-d", letter: "D", title: "Teaching staff" },
   { id: "section-e", letter: "E", title: "School infrastructure" },
+  { id: "section-f", letter: "F", title: "Teacher details" },
 ] as const;
