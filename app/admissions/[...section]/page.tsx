@@ -506,7 +506,14 @@ function EnquirePage() {
             </div>
           </aside>
 
-          <EnquiryFormPrototype />
+          <EnquiryFormPrototype
+            live={
+              process.env.SSKEMS_CRM_ENQUIRY_ENABLED === "true" &&
+              Boolean(process.env.SSKEMS_CRM_API_ORIGIN) &&
+              Boolean(process.env.SSKEMS_CRM_TENANT_SLUG) &&
+              Boolean(process.env.SSKEMS_CRM_BRANCH_ID)
+            }
+          />
         </PageContainer>
       </section>
 
