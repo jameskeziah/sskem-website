@@ -24,3 +24,11 @@ Source: six-page school-supplied PDF named "Mandatory Disclosure Details _ SARAS
 8. **Quality assurance:** Execute `npm ci`, `npm run lint`, `npx tsc --noEmit --incremental false`, `node --test tests/saras7-disclosure-source.test.mjs`, existing disclosure regression tests and Vercel preview build. Validate desktop/mobile, keyboard and print output. CI and the deployed page have **not** been independently tested by this import process.
 
 This is a **draft PR for review**, not a live deployment or CBSE compliance certificate.
+
+
+## Addendum — original SARAS PDF attachment (7 November 2026)
+
+- The school-supplied original six-page PDF is included without alteration as `public/documents/saras7-appendix-ix-2026.pdf` (197,482 bytes; SHA-256 `61e106852a9ab9f6ba8f19bf30206741c095e68c121aa6a0c3024c90ad8b5d12`).
+- The main disclosure page links to the PDF as **source material only**. It is **not** a certificate of CBSE compliance, a sign-off of staffing/results, or approval of any of the 13 source-linked supporting documents.
+- The PDF download is marked `X-Robots-Tag: noindex, noarchive` pending compliance approval. Existing public-document bindings stay empty.
+- Before merging, have the school review the submitted PDF for authenticity, accuracy and public disclosure of employee names; verify the website download and print view on the preview deployment.

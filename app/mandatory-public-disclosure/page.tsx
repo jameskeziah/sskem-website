@@ -46,6 +46,7 @@ export default function MandatoryPublicDisclosurePage() {
               <p className="lead">{siteFacts.name}</p>
               <div className="compliance-hero__actions">
                 <PrintButton />
+                <a className="button button--secondary" href="/documents/saras7-appendix-ix-2026.pdf" target="_blank" rel="noopener noreferrer">View / download original SARAS 7.0 PDF (6 pages)</a>
                 <a className="button button--quiet" href={`mailto:${disclosureReview.reportEmail}?subject=Broken%20document%20report%20-%20SSKEMS`}>Report a broken document</a>
               </div>
             </div>
@@ -65,7 +66,7 @@ export default function MandatoryPublicDisclosurePage() {
 
         <PageContainer>
           <Alert title="Compliance warning: approved records are still required" kind="warning">
-            The school-supplied SARAS 7.0 Appendix IX file has been transcribed, but this is not a declaration of completed CBSE compliance. Its document links, 2026 results, staffing and facilities still require school approval and evidence checks. Original WordPress PDF references are recorded for validation; downloads continue to use the existing approved-document publication system.
+            The school-supplied SARAS 7.0 Appendix IX file has been transcribed, but this is not a declaration of completed CBSE compliance. Its document links, 2026 results, staffing and facilities still require school approval and evidence checks. The original six-page SARAS source PDF is available above for reference, not as verification or approval of its contents. Original WordPress certificate references are recorded for validation; supporting-document downloads continue to use the existing approved-document publication system.
           </Alert>
 
           <nav className="appendix-index" aria-label="Appendix IX sections">
