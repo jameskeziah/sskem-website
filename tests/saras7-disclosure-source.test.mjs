@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
@@ -79,4 +80,21 @@ test("preserves SARAS source caveats and inspection reference", async () => {
   assert.match(page, /document-approval workflow/);
   assert.match(infrastructure, /inspection date/);
   assert.match(page, /92\.86%/);
+});
+
+
+test("preserves original uploaded SARAS PDF byte-for-byte without approving supporting documents", async () => {
+  const [pdf, page, config, bindings] = await Promise.all([
+    readFile(new URL("public/documents/saras7-appendix-ix-2026.pdf", root)),
+    file("app/mandatory-public-disclosure/page.tsx"),
+    file("next.config.ts"),
+    file("content/public-document-publication-bindings.json"),
+  ]);
+  assert.equal(pdf.length, 197482);
+  assert.equal(createHash("sha256").update(pdf).digest("hex"), "61e106852a9ab9f6ba8f19bf30206741c095e68c121aa6a0c3024c90ad8b5d12");
+  assert.equal(pdf.subarray(0, 5).toString(), "%PDF-");
+  assert.match(page, /href="\/documents\/saras7-appendix-ix-2026\.pdf"/);
+  assert.match(config, /X-Robots-Tag/);
+  assert.match(config, /noindex/);
+  assert.deepEqual(JSON.parse(bindings).bindings, []);
 });
