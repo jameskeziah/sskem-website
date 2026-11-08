@@ -64,16 +64,40 @@ export function AgeEligibilityChecker() {
   );
 }
 
-export function EnquiryFormPrototype() {
+export function EnquiryFormPrototype({ live = false }: { live?: boolean }) {
   const [message, setMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const statusId = useId();
 
-  function review(event: FormEvent<HTMLFormElement>) {
+  async function review(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!live) {
+      setMessage("Review complete. Nothing was submitted, stored or sent from this preview.");
+      return;
+    }
 
-    setMessage(
-      "Review complete. Nothing was submitted, stored or sent from this preview.",
-    );
+    const form = event.currentTarget;
+    const fields = new FormData(form);
+    const enquiry = Object.fromEntries(fields.entries());
+    setMessage("");
+    setSubmitting(true);
+    try {
+      const response = await fetch("/api/admissions/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...enquiry,
+          contactConsent: fields.has("contactConsent"),
+        }),
+      });
+      const body = await response.json() as { message?: string };
+      setMessage(body.message || (response.ok ? "Enquiry received." : "Unable to submit the enquiry."));
+      if (response.ok) form.reset();
+    } catch {
+      setMessage("Online enquiries are temporarily unavailable. Please contact the school.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -92,16 +116,24 @@ export function EnquiryFormPrototype() {
           className="admissions-enquiry-form__notice"
           id="enquiry-review-boundary"
         >
-          <strong>Preview only</strong>
+          <strong>{live ? "School admissions enquiry" : "Preview only"}</strong>
 
           <p>
-            Real submission is not active yet. Use example information
-            while reviewing this page. Nothing entered here is sent or stored.
+            {live
+              ? "With your consent, the information provided here is sent securely to the school's admissions team. An enquiry is not an admission application."
+              : "Real submission is not active yet. Use example information while reviewing this page. Nothing entered here is sent or stored."}
           </p>
         </div>
       </div>
 
       <div className="admissions-form__grid admissions-enquiry-form__grid">
+        {live ? (
+          <div aria-hidden="true" hidden>
+            <label htmlFor="enquiry-website">Leave this blank</label>
+            <input id="enquiry-website" name="website" tabIndex={-1} autoComplete="off" />
+          </div>
+        ) : null}
+
         <FormField
           id="enquiry-parent-name"
           label="Parent or guardian name"
@@ -116,7 +148,7 @@ export function EnquiryFormPrototype() {
         <FormField
           id="enquiry-mobile"
           label="Mobile number"
-          hint="Use an example number while this page is in preview."
+          hint={live ? "Enter a number our admissions team can contact." : "Use an example number while this page is in preview."}
         >
           <Input
             name="mobile"
@@ -267,13 +299,14 @@ export function EnquiryFormPrototype() {
       />
 
       <div className="admissions-form__actions admissions-enquiry-form__actions">
-        <Button type="submit">
-          Review enquiry
+        <Button type="submit" loading={submitting}>
+          {live ? "Submit enquiry" : "Review enquiry"}
         </Button>
 
         <span>
-          Actual submission will activate only after privacy,
-          routing and notification controls are approved.
+          {live
+            ? "An enquiry does not guarantee a school place. Staff will review your request."
+            : "Actual submission will activate only after privacy, routing and notification controls are approved."}
         </span>
       </div>
 
